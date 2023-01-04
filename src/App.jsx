@@ -1,24 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { addList } from "./store/slices/todoSlice";
+import { Route, Routes } from "react-router-dom";
+import Landing from "./pages/landing";
 
-function App() {
-	const dispatch = useDispatch()
-
-	const listNumber = useSelector((state) => {
-		return state.todo.listNumber
-	})
-
-	const handleButton = () => {
-		dispatch(addList())
-	}
-
+const App = () => {
 	return (
 		<>
-			<h1>Hai</h1>
-			<div className="container">
-				<button className="btn btn-primary" onClick={ handleButton }>tambah list</button>
-			</div>
-			<h1>{ listNumber }</h1>
+			<Routes>
+				<Route path="/" element={<Landing />} />
+			</Routes>
 		</>
 	);
 }
