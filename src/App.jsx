@@ -15,7 +15,9 @@ function App() {
 	return (
 		<>
 			<h1>Hai</h1>
-			<button onClick={ handleButton }>tambah list</button>
+			<div className="container">
+				<button className="btn btn-primary" onClick={ handleButton }>tambah list</button>
+			</div>
 			<h1>{ listNumber }</h1>
 		</>
 	);
