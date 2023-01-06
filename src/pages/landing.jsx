@@ -1,11 +1,13 @@
-import Navbar from "../components/navbar"
+import Banner from "../components/banner";
+import Navbar from "../components/navbar";
 
 const Landing = () => {
-	return (
-		<>
-			<Navbar />
-		</>
-	)
-} 
+  return (
+    <>
+      <Navbar />
+      <Banner />
+    </>
+  );
+};
 
-export default Landing
+export default Landing;
