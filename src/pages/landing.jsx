@@ -1,4 +1,5 @@
 import Banner from "../components/banner";
+import KostByCity from "../components/kostByCity";
 import Navbar from "../components/navbar";
 
 const Landing = () => {
@@ -6,6 +7,7 @@ const Landing = () => {
     <>
       <Navbar />
       <Banner />
+      <KostByCity />
     </>
   );
 };
