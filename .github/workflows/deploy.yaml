@@ -54,7 +54,7 @@ jobs:
     - name: Install package Vercel CLI
       run: npm install --global vercel@latest
     - name: Pull Vercel Env Information
-      run: vercel pull --yes --environment=test --token=${{ secrets.VERCEL_TOKEN }}
+      run: vercel pull --yes --environment=development --token=${{ secrets.VERCEL_TOKEN }}
     - name: Build project before deploy to Vercel
       run: vercel build  --prod --token=${{ secrets.VERCEL_TOKEN }}
     - name: Deploy project to Vercel
