@@ -6,8 +6,6 @@ name: Node.js CI Deploy Development
 on:
   push:
     branches: [ "testing" ]
-  pull_request:
-    branches: [ "testing" ]
 
 jobs:
   setup:
