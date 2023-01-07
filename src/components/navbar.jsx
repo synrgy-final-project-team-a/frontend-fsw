@@ -1,30 +1,20 @@
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap"
-import logo from "../assets/images/logo.svg"
+import { Navbar, Container, Nav, Button } from "react-bootstrap"
 
 const NavbarComponent = () => {
 	return (
 		<Navbar bg="light" expand="lg">
-			<Container fluid>
+			<Container>
 				<Navbar.Brand href="#home">
-					<img src="./logo192.png" width="30" height="30" className="d-inline-block align-top" alt="..." />
-					React-Bootstrap
+					<img src="./logo192.png" width="30" height="30" className="d-inline-block align-top mx-2" alt="..." />
+					KOSANKU
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="ms-auto">
-						<Nav.Link href="#home">Home</Nav.Link>
-						<Nav.Link href="#link">Link</Nav.Link>
-						<NavDropdown title="Dropdown" id="basic-nav-dropdown">
-							<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.2">
-								Another action
-							</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item href="#action/3.4">
-								Separated link
-							</NavDropdown.Item>
-						</NavDropdown>
+					<Nav className="ms-auto align-items-center">
+						<Nav.Link href="#home">Cari Kos</Nav.Link>
+						<Nav.Link href="#home">Pusat Bantuan</Nav.Link>
+						<Nav.Link href="#home">Syarat & Ketentuan</Nav.Link>
+						<Button as={Nav.Link} href="#login" variant="outline-success">Success</Button>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
