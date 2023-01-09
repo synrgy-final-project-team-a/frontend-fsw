@@ -1,4 +1,8 @@
 import { useState } from "react";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Form } from "react-bootstrap";
 
 const Search = () => {
 
@@ -34,6 +38,17 @@ const Search = () => {
             </div>
 
             </div>
+
+            {/* <Container>
+              <Row className="height d-flex justify-content-center align-items-center">
+                <Col md={6}>
+                  <Form>
+                    
+                  </Form>
+
+                </Col>
+              </Row>
+            </Container> */}
         </>
     )
 }
