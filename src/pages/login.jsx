@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import '../assets/scss/register.scss';
 
 export default function login() {
   return (
-    <div>login</div>
+    <div>
+      <p>hallo</p>
+    </div>
   )
 }

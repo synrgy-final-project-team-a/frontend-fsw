@@ -5,7 +5,7 @@ import App from './App.jsx';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store';
-import './assets/scss/style.scss';
+// import './assets/scss/style.scss';
 
 const rootStore = store()
 
