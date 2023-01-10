@@ -40,7 +40,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    environtment: testing
     needs: build
 
     # strategy:
