@@ -10,7 +10,7 @@ const Landing = () => {
     <>
       <Navbar />
       <Banner />
-	  <Search />
+      <Search />
       <KostByCity />
       <KostByCampus />
       <FooterComponent />
