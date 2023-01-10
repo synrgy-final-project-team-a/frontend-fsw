@@ -6,7 +6,7 @@ name: Frontend CI Deploy Development
 on:
   push:
     branches:
-      - testing
+      - "testing"
 
 jobs:
   setup:
