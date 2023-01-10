@@ -1,0 +1,56 @@
+import { useState } from "react";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Form } from "react-bootstrap";
+
+const Search = () => {
+
+  const [searchInput, setSeacrhInput] = useState("");
+
+  const handleButtonCariKos = (e) => {
+    console.log(e.target.value);
+  }
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSeacrhInput(e.target.value);
+  }
+    return (
+        <>
+          <div className="container">
+
+            <div className="row height d-flex justify-content-center align-items-center">
+
+              <div className="col-md-6">
+
+                <div className="form">
+                  <i className="fa fa-search"></i>
+                  <input type="text" className="form-control form-input" placeholder="Search anything..." onChange={handleChange} value={searchInput} />
+                  <span className="left-pan"><i className="fa fa-microphone"></i></span>
+                  <button onClick={(e) => handleButtonCariKos(e)}>Cari Kos</button>
+                </div>
+
+                <h1>{searchInput}</h1>
+                
+              </div>
+              
+            </div>
+
+            </div>
+
+            {/* <Container>
+              <Row className="height d-flex justify-content-center align-items-center">
+                <Col md={6}>
+                  <Form>
+                    
+                  </Form>
+
+                </Col>
+              </Row>
+            </Container> */}
+        </>
+    )
+}
+
+export default Search;
