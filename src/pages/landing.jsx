@@ -1,11 +1,17 @@
-import Navbar from "../components/navbar"
+import Banner from "../components/banner";
+import KostByCampus from "../components/kostByCampus";
+import KostByCity from "../components/kostByCity";
+import Navbar from "../components/navbar";
 
 const Landing = () => {
-	return (
-		<>
-			<Navbar />
-		</>
-	)
-} 
+  return (
+    <>
+      <Navbar />
+      <Banner />
+      <KostByCity />
+      <KostByCampus />
+    </>
+  );
+};
 
-export default Landing
+export default Landing;
