@@ -3,6 +3,8 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
+
+
 const Banner = () => {
   let owlNavPrev = '<h1>Prev</h1>'
   let owlNavNext = '<h1>Next</h1>'
