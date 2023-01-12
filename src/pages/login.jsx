@@ -48,7 +48,7 @@ function Login() {
     }
   };
   return (
-    <dev>
+    <div>
       <h1>Login</h1>
       <h2>Silahkan untuk login</h2>
       <Form>
@@ -88,7 +88,7 @@ function Login() {
           Lupa Password
         </Link>{" "}
       </p>
-    </dev>
+    </div>
   );
 }
 

@@ -41,7 +41,7 @@ function ForgetPass() {
     }
   };
   return (
-    <dev>
+    <div>
       <h1>Lupa Password</h1>
       <p>
         Masukin email yang anda gunakan pada saat mendaftar dan kami akan
@@ -61,7 +61,7 @@ function ForgetPass() {
           </Link>{" "}
         </Button>
       </Form>
-    </dev>
+    </div>
   );
 }
 
