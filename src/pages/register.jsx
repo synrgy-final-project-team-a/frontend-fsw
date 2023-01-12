@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import '../assets/scss/register.scss';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const HANDPHONE_REGEX = /^(?=.*[0-9]).{8,24}$/;
@@ -11,6 +14,8 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 //validasi password dengan minimal 1 uppercase letter, 1 angka, dan 1 spesial character. minimal 8 character, maksimal 24 character 
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const namalengkapRef = useRef();
     const nomorhandphoneRef = useRef();
     const emailRef = useRef();
@@ -18,7 +23,7 @@ const Register = () => {
 
     const [namalengkap, setNamaLengkap] = useState('');
 
-    const [nomorhandphone, setNomorhandphone] = useState('');
+    const [phoneNumber, setphoneNumber] = useState('');
     const [validNomorhandphone, setValidNomorhandphone] = useState(false);
     const [nomorhandhopneFocus, setnomorhandphoneFocus] = useState(false);
 
@@ -26,7 +31,7 @@ const Register = () => {
     const [validEmail, setvalidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
 
-    const [pwd, setPwd] = useState('');
+    const [password, setPassword] = useState('');
     const [validPwd, setValidPwd] = useState(false);
     const [pwdFocus, setPwdFocus] = useState(false);
 
@@ -46,11 +51,11 @@ const Register = () => {
     }, [])
 
     useEffect(() => {
-        const result = HANDPHONE_REGEX.test(nomorhandphone);
+        const result = HANDPHONE_REGEX.test(phoneNumber);
         console.log(result);
-        console.log(nomorhandphone);
-        setValidNomorhandphone(HANDPHONE_REGEX.test(nomorhandphone));
-    }, [nomorhandphone])
+        console.log(phoneNumber);
+        setValidNomorhandphone(HANDPHONE_REGEX.test(phoneNumber));
+    }, [phoneNumber])
 
     useEffect(() => {
         emailRef.current.focus();
@@ -64,30 +69,55 @@ const Register = () => {
     }, [email])
 
     useEffect(() => {
-        const result = PWD_REGEX.test(pwd);
+        const result = PWD_REGEX.test(password);
         console.log(result);
-        console.log(pwd);
+        console.log(password);
         console.log(matchPwd);
-        setValidPwd(PWD_REGEX.test(pwd));
-        setValidMatch(pwd === matchPwd);
-    }, [pwd, matchPwd])
+        setValidPwd(PWD_REGEX.test(password));
+        setValidMatch(password === matchPwd);
+    }, [password, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [nomorhandphone ,email, pwd, matchPwd])
+    }, [phoneNumber ,email, password, matchPwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
         const v1 = EMAIL_REGEX.test(email);
-        const v2 = PWD_REGEX.test(pwd);
-        const v3 = HANDPHONE_REGEX.test(nomorhandphone);
+        const v2 = PWD_REGEX.test(password);
+        const v3 = HANDPHONE_REGEX.test(phoneNumber);
         if (!v1 || !v2  || !v3 ){
             setErrMsg("Invalid Entry");
             return;
         }
-        console.log(namalengkap, nomorhandphone, email, pwd);
+
+        try {
+            const payload = {
+                 email, password, namalengkap, phoneNumber
+            };
+      
+            const registResponse = await axios.post(
+              "https://kosanku-bej.up.railway.app/api/register/seeker",
+              payload
+            );
+            if (registResponse.status === 201) {
+              console.log("berhasil Registrasi");
+      
+              const jwtToken = registResponse.data.data.token;
+      
+              localStorage.setItem("user_token", jwtToken);
+      
+              navigate("/");
+            }
+          } catch (err) {
+            console.log("gagal regist:", err);
+          }
+
+        console.log(namalengkap, phoneNumber, email, password);
         setSuccess(true);
+
+        
     }
 
     return (
@@ -123,22 +153,22 @@ const Register = () => {
                         <label htmlFor="nomorhandphone">
                             Nomor Handphone:
                             <FontAwesomeIcon icon={faCheck} className={validNomorhandphone ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validNomorhandphone || !nomorhandphone ? "hide" : "invalid"} />
+                            <FontAwesomeIcon icon={faTimes} className={validNomorhandphone || !phoneNumber? "hide" : "invalid"} />
                         </label>
                         <input
                             type="text"
                             id="nomorhandphone"
                             ref={nomorhandphoneRef}
                             autoComplete="off"
-                            onChange={(e) => setNomorhandphone(e.target.value)}
-                            value={nomorhandphone}
+                            onChange={(e) => setphoneNumber(e.target.value)}
+                            value={phoneNumber}
                             required
                             aria-invalid={validNomorhandphone ? "false" : "true"}
                             aria-describedby="uidnote"
                             onFocus={() => setnomorhandphoneFocus(true)}
                             onBlur={() => setnomorhandphoneFocus(false)}
                         />
-                        <p id="uidnote" className={nomorhandhopneFocus && nomorhandphone && !validNomorhandphone ? "instructions" : "offscreen"}>
+                        <p id="uidnote" className={nomorhandhopneFocus && phoneNumber && !validNomorhandphone ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             must be a number<br />
                             8 to 24 digits.<br />
@@ -173,13 +203,13 @@ const Register = () => {
                         <label htmlFor="password">
                             Password:
                             <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
+                            <FontAwesomeIcon icon={faTimes} className={validPwd || !password ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="password"
                             id="password"
-                            onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
                             required
                             aria-invalid={validPwd ? "false" : "true"}
                             aria-describedby="pwdnote"
@@ -215,14 +245,13 @@ const Register = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validEmail || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                        <button disabled={!validNomorhandphone || !validEmail || !validPwd || !validMatch ? true : false}>Sign Up</button>
                     </form>
                     <p>
-                        Sudah punya akun?
-                        <span className="line">
-                            {/*put router link here*/}
-                            <a href="#">Log in Yuk!</a>
-                        </span> 
+                    Sudah punya akun?
+                    <Link to="./login.jsx" className="font-bold underline text-[#1e40af]">
+                        Log in Yuk!
+                    </Link>{" "}
                     </p>
                 </section>
             )}
