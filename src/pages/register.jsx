@@ -4,18 +4,27 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; //validasi username dengan awalan lower/uppercase letter dan dilanjutkan dengan 3-23 character. minimal 4 character, maksimal 24 karakter
+const HANDPHONE_REGEX = /^(?=.*[0-9]).{8,24}$/;
+//validasi nomor handphone terdiri dari semua angka 0-9. minmal 8 angka maksimal 24 angka 
+const EMAIL_REGEX = /^(?=.*[a-z])(?=.*[@]).{6,32}$/; //validasi email dengan awalan lower/uppercase letter dan dilanjutkan dengan 6-32 character, dan harus menyertakan @. 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 //validasi password dengan minimal 1 uppercase letter, 1 angka, dan 1 spesial character. minimal 8 character, maksimal 24 character 
 
 const Register = () => {
-    const userRef = useRef();
+    const namalengkapRef = useRef();
+    const nomorhandphoneRef = useRef();
+    const emailRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+    const [namalengkap, setNamaLengkap] = useState('');
+
+    const [nomorhandphone, setNomorhandphone] = useState('');
+    const [validNomorhandphone, setValidNomorhandphone] = useState(false);
+    const [nomorhandhopneFocus, setnomorhandphoneFocus] = useState(false);
+
+    const [email, setEmail] = useState('');
+    const [validEmail, setvalidEmail] = useState(false);
+    const [emailFocus, setEmailFocus] = useState(false);
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -29,15 +38,30 @@ const Register = () => {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        userRef.current.focus();
+        namalengkapRef.current.focus();
     }, [])
 
     useEffect(() => {
-        const result = USER_REGEX.test(user);
+        nomorhandphoneRef.current.focus();
+    }, [])
+
+    useEffect(() => {
+        const result = HANDPHONE_REGEX.test(nomorhandphone);
         console.log(result);
-        console.log(user);
-        setValidName(USER_REGEX.test(user));
-    }, [user])
+        console.log(nomorhandphone);
+        setValidNomorhandphone(HANDPHONE_REGEX.test(nomorhandphone));
+    }, [nomorhandphone])
+
+    useEffect(() => {
+        emailRef.current.focus();
+    }, [])
+
+    useEffect(() => {
+        const result = EMAIL_REGEX.test(email);
+        console.log(result);
+        console.log(email);
+        setvalidEmail(EMAIL_REGEX.test(email));
+    }, [email])
 
     useEffect(() => {
         const result = PWD_REGEX.test(pwd);
@@ -50,18 +74,19 @@ const Register = () => {
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd, matchPwd])
+    }, [nomorhandphone ,email, pwd, matchPwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
-        const v1 = USER_REGEX.test(user);
+        const v1 = EMAIL_REGEX.test(email);
         const v2 = PWD_REGEX.test(pwd);
-        if (!v1 || !v2) {
+        const v3 = HANDPHONE_REGEX.test(nomorhandphone);
+        if (!v1 || !v2  || !v3 ){
             setErrMsg("Invalid Entry");
             return;
         }
-        console.log(user, pwd);
+        console.log(namalengkap, nomorhandphone, email, pwd);
         setSuccess(true);
     }
 
@@ -79,29 +104,69 @@ const Register = () => {
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="username">
-                            Username:
-                            <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
+
+                    <label htmlFor="nama lengkap">
+                            Nama Lengkap:
                         </label>
                         <input
                             type="text"
-                            id="username"
-                            ref={userRef}
+                            id="namalengkap"
+                            ref={namalengkapRef}
                             autoComplete="off"
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
+                            onChange={(e) => setNamaLengkap(e.target.value)}
+                            value={namalengkap}
                             required
-                            aria-invalid={validName ? "false" : "true"}
+                            aria-invalid={validEmail ? "false" : "true"}
                             aria-describedby="uidnote"
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
                         />
-                        <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
+
+                        <label htmlFor="nomorhandphone">
+                            Nomor Handphone:
+                            <FontAwesomeIcon icon={faCheck} className={validNomorhandphone ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validNomorhandphone || !nomorhandphone ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            type="text"
+                            id="nomorhandphone"
+                            ref={nomorhandphoneRef}
+                            autoComplete="off"
+                            onChange={(e) => setNomorhandphone(e.target.value)}
+                            value={nomorhandphone}
+                            required
+                            aria-invalid={validNomorhandphone ? "false" : "true"}
+                            aria-describedby="uidnote"
+                            onFocus={() => setnomorhandphoneFocus(true)}
+                            onBlur={() => setnomorhandphoneFocus(false)}
+                        />
+                        <p id="uidnote" className={nomorhandhopneFocus && nomorhandphone && !validNomorhandphone ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
+                            must be a number<br />
+                            8 to 24 digits.<br />
+                        </p>
+
+                        <label htmlFor="email">
+                            Email:
+                            <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            type="text"
+                            id="email"
+                            ref={emailRef}
+                            autoComplete="off"
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            required
+                            aria-invalid={validEmail ? "false" : "true"}
+                            aria-describedby="uidnote"
+                            onFocus={() => setEmailFocus(true)}
+                            onBlur={() => setEmailFocus(false)}
+                        />
+                        <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            must include @<br />
                             4 to 24 characters.<br />
-                            Must begin with a letter.<br />
-                            Letters, numbers, underscores, hyphens allowed.
+                            ex: binar@gmail.com
                         </p>
 
 
@@ -130,7 +195,7 @@ const Register = () => {
 
 
                         <label htmlFor="confirm_pwd">
-                            Confirm Password:
+                            Verifikasi Password:
                             <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
                         </label>
@@ -150,13 +215,13 @@ const Register = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                        <button disabled={!validEmail || !validPwd || !validMatch ? true : false}>Sign Up</button>
                     </form>
                     <p>
-                        Already registered?<br />
+                        Sudah punya akun?
                         <span className="line">
                             {/*put router link here*/}
-                            <a href="#">Sign In</a>
+                            <a href="#">Log in Yuk!</a>
                         </span> 
                     </p>
                 </section>
