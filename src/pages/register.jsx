@@ -121,7 +121,7 @@ const Register = () => {
     }
 
     return (
-        <>
+        <div id="register">
             {success ? (
                 <section>
                     <h1>Success!</h1>
@@ -255,7 +255,7 @@ const Register = () => {
                     </p>
                 </section>
             )}
-        </>
+        </div>
     )
 }
 
