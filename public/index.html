@@ -22,9 +22,36 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
-    <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
   </head>
   <body>
+    <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+      integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        // Testimonial Carousel
+        let owlNavPrev = '<div class="fs-2 mx-2"><i class="text-success bi bi-arrow-left-circle-fill"></i></div>';
+        let owlNavNext = '<div class="fs-2 mx-2"><i class="text-success bi bi-arrow-right-circle-fill"></i></div>';
+        $(".owl-carousel").owlCarousel({
+          center: true,
+          items: 1,
+          loop: true,
+          nav: true,
+          margin: 30,
+          navText: [owlNavPrev, owlNavNext],
+          responsive: {
+            600: {
+              items: 2,
+            },
+          },
+        });
+      });
+    </script>
+
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

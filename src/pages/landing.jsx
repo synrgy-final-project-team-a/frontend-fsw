@@ -4,6 +4,7 @@ import KostByCampus from "../components/kostByCampus";
 import KostByCity from "../components/kostByCity";
 import Navbar from "../components/navbar";
 import Search from "../components/search";
+import Testimonial from "../components/testimonial";
 
 const Landing = () => {
   return (
@@ -13,6 +14,7 @@ const Landing = () => {
       <Search />
       <KostByCity />
       <KostByCampus />
+      <Testimonial />
       <FooterComponent />
     </>
   );
