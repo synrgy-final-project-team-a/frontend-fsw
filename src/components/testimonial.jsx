@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 
 const Testimonial = () => {
   return (
-    <div className="container">
+    <div className="container my-4 d-flex justify-content-center">
       <div className="row">
         <div className="col text-center">
           <Card style={{ width: "18rem" }} className="shadow">
