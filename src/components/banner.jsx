@@ -4,40 +4,21 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
 const Banner = () => {
+  let owlNavPrev = "<h1>Prev</h1>";
+  let owlNavNext = "<h1>Next</h1>";
+
   return (
     <div>
-      <div class="container-fluid">
-        <OwlCarousel items={3} className="owl-theme" loop nav margin={8}>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
+      <div>
+        <OwlCarousel items={1} className="owl-theme banner" loop dots={false} nav navText={[owlNavPrev, owlNavNext]}>
+          <div className="img-banner" class="img-fluid">
+            <img src="https://static.mamikos.com/uploads/cache/data/event/2023-01-11/GWQermw5-540x720.jpg" alt="" />
           </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
+          <div className="img-banner" class="img-fluid">
+            <img src="https://static.mamikos.com/uploads/cache/data/event/2022-12-02/CyvkFN34-540x720.jpg" alt="" />
           </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
-          </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
-          </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
-          </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
-          </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
-          </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
-          </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
-          </div>
-          <div className="img">
-            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
-            oi
+          <div className="img-banner" class="img-fluid">
+            <img src="https://static.mamikos.com/uploads/cache/data/event/2023-01-05/3wehyBKx-540x720.jpg" alt="" />
           </div>
         </OwlCarousel>
       </div>
