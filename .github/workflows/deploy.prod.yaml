@@ -38,7 +38,7 @@ jobs:
       - name: Building the project first
         run: npm run build --if-present
 
-  deploy:
+  deployment:
     runs-on: ubuntu-latest
     needs: build
 
@@ -48,12 +48,12 @@ jobs:
     #     # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Install package Vercel CLI
+      - uses: actions/checkout@v2
+      - name: Install Vercel CLI
         run: npm install --global vercel@latest
-      - name: Pull Vercel Env Information
+      - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build project before deploy to Vercel
-        run: vercel build  --prod --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy project to Vercel
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
