@@ -9,7 +9,7 @@ const Banner = () => {
 
   return (
     <div>
-      <div class="">
+      <div>
         <OwlCarousel items={1} className="owl-theme banner" loop dots={false} nav navText={[owlNavPrev, owlNavNext]}>
           <div className="img-banner" class="img-fluid">
             <img src="https://static.mamikos.com/uploads/cache/data/event/2023-01-11/GWQermw5-540x720.jpg" alt="" />

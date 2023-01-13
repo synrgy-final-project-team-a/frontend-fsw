@@ -1,11 +1,18 @@
 @import "~bootstrap/scss/bootstrap";
+@import "register";
+@import "dita";
 
+<<<<<<< HEAD
+.div2 {
+    color: black;
+=======
 .div1 {
   color: a;
 
   .div2 {
     color: black;
   }
+>>>>>>> c6b0b842d58a859f867b43b12c2c843b813597d4
 }
 
 .gap-36 {
@@ -60,6 +67,10 @@
   position: relative;
 }
 
+<<<<<<< HEAD
+    box-shadow: none;
+    border:none;
+=======
 .form .fa-search {
   position: absolute;
   top: 20px;
@@ -102,4 +113,5 @@
 .img-banner {
   height: 10vh;
   width: 20vw;
+>>>>>>> c6b0b842d58a859f867b43b12c2c843b813597d4
 }
