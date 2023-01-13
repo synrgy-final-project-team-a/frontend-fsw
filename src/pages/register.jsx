@@ -3,7 +3,6 @@ import '../assets/scss/register.scss';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
@@ -14,7 +13,6 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 //validasi password dengan minimal 1 uppercase letter, 1 angka, dan 1 spesial character. minimal 8 character, maksimal 24 character 
 
 const Register = () => {
-    const navigate = useNavigate();
 
     const firstnameRef = useRef();
     const lastnameRef = useRef();
