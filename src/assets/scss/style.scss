@@ -1,60 +1,105 @@
 @import "~bootstrap/scss/bootstrap";
 
 .div1 {
-	color: a;
+  color: a;
 
-	.div2 {
-		color: black;
-	}
+  .div2 {
+    color: black;
+  }
 }
 
-.height{
-
-    height: 100vh;
+.gap-36 {
+  gap: 36px !important;
 }
 
-.form{
-
-    position: relative;
+.nav-link {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
 }
 
-.form .fa-search{
-
-    position: absolute;
-    top:20px;
-    left: 20px;
-    color: #9ca3af;
-
+.btn-login {
+  width: 110px;
+  height: 48px;
+  padding: 12px 30px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
-.form span{
-
-    position: absolute;
-    right: 17px;
-    top: 13px;
-    padding: 2px;
-    border-left: 1px solid #d1d5db;
-
+.gap-36 {
+  gap: 36px !important;
 }
 
-.left-pan{
-    padding-left: 7px;
+.nav-link {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
 }
 
-.left-pan i{
-   
-   padding-left: 10px;
+.btn-login {
+  width: 110px;
+  height: 48px;
+  padding: 12px 30px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
-.form-input{
-
-    height: 55px;
-    text-indent: 33px;
-    border-radius: 10px;
+.height {
+  height: 100vh;
 }
 
-.form-input:focus{
+.form {
+  position: relative;
+}
 
-    box-shadow: none;
-    border:none;
+.form .fa-search {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #9ca3af;
+}
+
+.form span {
+  position: absolute;
+  right: 17px;
+  top: 13px;
+  padding: 2px;
+  border-left: 1px solid #d1d5db;
+}
+
+.left-pan {
+  padding-left: 7px;
+}
+
+.left-pan i {
+  padding-left: 10px;
+}
+
+.form-input {
+  height: 55px;
+  text-indent: 33px;
+  border-radius: 10px;
+}
+
+.form-input:focus {
+  box-shadow: none;
+  border: none;
+}
+
+// banner
+.banner {
+  margin: auto;
+}
+
+.img-banner {
+  height: 10vh;
+  width: 20vw;
 }
