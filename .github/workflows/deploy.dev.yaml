@@ -25,6 +25,12 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup project before build
         run: npm install
+      - name: Test Vercel Token
+        run: echo ${{ secrets.VERCEL_TOKEN }}
+      - name: Test Vercel ORG ID
+        run: echo ${{ secrets.VERCEL_ORG_ID }}
+      - name: Test Vercel PROJECT ID
+        run: echo ${{ secrets.VERCEL_PROJECT_ID }}
 
   build:
     runs-on: ubuntu-latest
