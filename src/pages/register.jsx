@@ -16,12 +16,15 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const Register = () => {
     const navigate = useNavigate();
 
-    const namalengkapRef = useRef();
+    const firstnameRef = useRef();
+    const lastnameRef = useRef();
     const nomorhandphoneRef = useRef();
     const emailRef = useRef();
     const errRef = useRef();
 
-    const [namalengkap, setNamaLengkap] = useState('');
+    const [firstName, setFirstname] = useState('');
+
+    const [lastName, setLastname] = useState('');
 
     const [phoneNumber, setphoneNumber] = useState('');
     const [validNomorhandphone, setValidNomorhandphone] = useState(false);
@@ -43,7 +46,11 @@ const Register = () => {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        namalengkapRef.current.focus();
+        firstnameRef.current.focus();
+    }, [])
+
+    useEffect(() => {
+        lastnameRef.current.focus();
     }, [])
 
     useEffect(() => {
@@ -94,7 +101,7 @@ const Register = () => {
 
         try {
             const payload = {
-                 email, password, namalengkap, phoneNumber
+                 email, password, firstName, lastName, phoneNumber
             };
       
             const registResponse = await axios.post(
@@ -108,14 +115,14 @@ const Register = () => {
       
               localStorage.setItem("user_token", jwtToken);
       
-              navigate("/");
+              setSuccess(true);
             }
           } catch (err) {
             console.log("gagal regist:", err);
           }
 
-        console.log(namalengkap, phoneNumber, email, password);
-        setSuccess(true);
+        console.log(firstName, lastName, phoneNumber, email, password);
+        
 
         
     }
@@ -126,7 +133,9 @@ const Register = () => {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                    <Link to="/login" className="font-bold underline text-[#1e40af]">
+                        Log in Yuk!
+                    </Link>{" "}
                     </p>
                 </section>
             ) : (
@@ -135,20 +144,34 @@ const Register = () => {
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
 
-                    <label htmlFor="nama lengkap">
-                            Nama Lengkap:
+                    <label htmlFor="first name">
+                            First Name:
                         </label>
                         <input
                             type="text"
-                            id="namalengkap"
-                            ref={namalengkapRef}
+                            id="firstname"
+                            ref={firstnameRef}
                             autoComplete="off"
-                            onChange={(e) => setNamaLengkap(e.target.value)}
-                            value={namalengkap}
+                            onChange={(e) => setFirstname(e.target.value)}
+                            value={firstName}
                             required
-                            aria-invalid={validEmail ? "false" : "true"}
                             aria-describedby="uidnote"
                         />
+
+                    <label htmlFor="last name">
+                            Last Name:
+                        </label>
+                        <input
+                            type="text"
+                            id="lastname"
+                            ref={lastnameRef}
+                            autoComplete="off"
+                            onChange={(e) => setLastname(e.target.value)}
+                            value={lastName}
+                            required
+                            aria-describedby="uidnote"
+                        />
+
 
                         <label htmlFor="nomorhandphone">
                             Nomor Handphone:
@@ -249,7 +272,7 @@ const Register = () => {
                     </form>
                     <p>
                     Sudah punya akun?
-                    <Link to="./login.jsx" className="font-bold underline text-[#1e40af]">
+                    <Link to="/login" className="font-bold underline text-[#1e40af]">
                         Log in Yuk!
                     </Link>{" "}
                     </p>
