@@ -165,7 +165,7 @@ function BestKost() {
                     K. Mandi Dalam, Kloset Duduk
                   </p>
                 </Card.Text>
-                <Button size="sm" variant="primary">
+                <Button size="sm" variant="primary" href="/detail-kos">
                   Lihat Detail
                 </Button>
               </Card.Body>
