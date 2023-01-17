@@ -1,5 +1,5 @@
-import image from "../../assets/images/login.png";
-import {Button, Form, Container, Row, Col, Card, Image} from "react-bootstrap"
+// import image from "../../assets/images/login.png";
+import {Button, Form, Container, Row, Col, Card} from "react-bootstrap"
 import '../../assets/scss/mystylesheet.scss';
 import axios from "axios";
 import { useState } from "react";
@@ -57,7 +57,8 @@ function Login() {
         </p>
         <Row className="mt-5">
           <Col>
-            <Image src={image} fluid />
+            <img src="./login.png" alt="..." />
+
           </Col>
           <Col>
             <Card style={{ width: "30rem"}} className="shadow-lg bg-light p-3">
