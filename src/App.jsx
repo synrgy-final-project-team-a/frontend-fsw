@@ -1,17 +1,24 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Landing from "./pages/landing";
-import Register from "./pages/register";
-import Login from "./pages/login";
-import ForgetPass from "./pages/forgetPassword";
+import AdminRoutes from "./routes/admin";
+import PencariRoutes from "./routes/pencari";
 
 const App = () => {
+
+	const routesDefine = (element, path = "") => {
+		return (element.map((el, i) => {
+			if (el.hasOwnProperty('children')) {
+				return routesDefine(el.children, path+el.path)
+			} else if (el.hasOwnProperty('element')) {
+				return <Route key={i} path={path+el.path} element={el.element} />
+			}
+		}))
+	}
+
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/register" element={<Register />} />
-				<Route path="/" element={<Landing />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/verif-email" element={<ForgetPass />} />
+				{routesDefine(PencariRoutes)}
+				{routesDefine(AdminRoutes)}
 			</Routes>
 		</BrowserRouter>
 	);

@@ -9,7 +9,7 @@ function KostByCampus() {
   return (
     <div className="ms-2">
       <h2 className="ms-2">Kos Rekomendasi di UGM</h2>
-      <div class="container-fluid">
+      <div className="container-fluid">
         <OwlCarousel items={5} className="owl-theme" loop nav margin={8}>
           <Card className="mb-2">
             <Card.Img variant="top" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" />
