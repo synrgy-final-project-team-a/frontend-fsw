@@ -1,5 +1,5 @@
-import AdminLayout from "../../layouts/admin.layout"
 import React from "react"
+import AdminLayout from "../../layouts/admin.layout"
 
 function Dashboard() {
     return (

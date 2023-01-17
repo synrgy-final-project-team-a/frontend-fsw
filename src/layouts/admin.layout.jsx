@@ -1,7 +1,7 @@
 import React from "react"
 import FooterComponent from "../components/footer"
 import NavbarComponent from "../components/navbar"
-import AdminRoutes from "../routes/admin"
+import AdminRoutes from "../routes/admin.js"
 
 const AdminLayout = ({ children }) => {
 

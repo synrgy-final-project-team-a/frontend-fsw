@@ -1,3 +1,4 @@
+import React from "react"
 import Dashboard from "../pages/admin/dashboard"
 
 const AdminRoutes = [
@@ -7,6 +8,7 @@ const AdminRoutes = [
 			{
 				name: "Dashboard",
 				path: "/",
+				element: <Dashboard />
 			}
 		]
 	}
