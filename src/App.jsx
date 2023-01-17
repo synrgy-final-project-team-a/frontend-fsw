@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AdminRoutes from "./routes/admin";
 import PencariRoutes from "./routes/pencari";
+import PenyewaRoutes from "./routes/penyewa";
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
 			<Routes>
 				{routesDefine(PencariRoutes)}
 				{routesDefine(AdminRoutes)}
+				{routesDefine(PenyewaRoutes)}
 			</Routes>
 		</BrowserRouter>
 	);
