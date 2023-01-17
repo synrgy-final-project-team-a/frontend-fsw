@@ -2,15 +2,15 @@ import { Navbar, Container, Nav, Button } from "react-bootstrap";
 
 const NavbarComponent = ({ routes }) => {
 
-	// const routesDefine = (element) => {
-	// 	element.map((el, i) => {
-	// 		if (el.hasOwnProperty('element')) {
-	// 			return <Nav.Link key={i} href={el.path}>{el.name}</Nav.Link>
-	// 		} else if (el.hasOwnProperty('children')) {
-	// 			routesDefine(el)
-	// 		}
-	// 	})
-	// }
+	const routesDefine = (element, path = "") => {
+		return (element.map((el, i) => {
+			if (el.hasOwnProperty('children')) {
+				return routesDefine(el.children, path+el.path)
+			} else if(el.hasOwnProperty('name')) {
+				return <Nav.Link key={i} href={path+el.path}>{el.name}</Nav.Link>
+			}
+		}))
+	}
 
 	return (
 		<Navbar bg="light" expand="lg">
@@ -22,10 +22,7 @@ const NavbarComponent = ({ routes }) => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto align-items-center gap-36">
-						<Nav.Link href="/">Home</Nav.Link>
-						<Nav.Link href="#carikos">Cari Kos</Nav.Link>
-						<Nav.Link href="#sewakos">Sewa Kos</Nav.Link>
-						{/* {routes} */}
+						{routesDefine(routes)}
 						<Button as={Nav.Link} href="/login" variant="outline-success" className="btn-login">
 							Masuk
 						</Button>

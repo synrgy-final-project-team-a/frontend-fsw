@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import '../assets/scss/register.scss';
+import '../../assets/scss/register.scss';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
