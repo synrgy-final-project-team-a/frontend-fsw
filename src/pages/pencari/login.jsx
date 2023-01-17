@@ -1,11 +1,6 @@
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Image from "react-bootstrap/Image";
 import image from "../../assets/images/login.png";
+import {Button, Form, Container, Row, Col, Card, Image} from "react-bootstrap"
+import '../../assets/scss/mystylesheet.scss';
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -90,7 +85,7 @@ function Login() {
                     type="button"
                     onClick={(e) => onSubmitButtonHandler(e)}
                     style={{ width: "26rem"}}
-                    className="color-primary"
+                    className="backgournd-color-primary"
                   >
                     <Link
                       to="/"
@@ -106,7 +101,7 @@ function Login() {
                   <span>
                     <Link
                       to="/register"
-                      className="text-dark"
+                      className="color-primary"
                       style={{ textDecoration: "none" }}
                     >
                       Daftar Yuk!
@@ -116,7 +111,7 @@ function Login() {
                 <p className="text-center mt-1">
                   <Link
                     to="/verif-email"
-                    className="text-dark"
+                    className="color-primary"
                     style={{ textDecoration: "none" }}
                   >
                     Lupa Password
@@ -128,7 +123,7 @@ function Login() {
                   type="button"
                   onClick={(e) => onSubmitButtonHandler(e)}
                   style={{ width: "26rem" }}
-                  className="color-primary"
+                  className="backgournd-color-primary"
                 >
                   <Link
                     to="/"
@@ -142,8 +137,8 @@ function Login() {
                   // variant="primary"
                   type="button"
                   onClick={(e) => onSubmitButtonHandler(e)}
-                  style={{ width: "250px" }}
-                  className="mt-2 color-primary"
+                  style={{ width: "26rem" }}
+                  className="mt-2 backgournd-color-primary"
                 >
                   <Link
                     to="/"
