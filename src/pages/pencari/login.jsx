@@ -1,4 +1,3 @@
-// import image from "../../assets/images/login.png";
 import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
 // import PencariLayout from "../../layouts/pencari.layout";
 import "../../assets/scss/mystylesheet.scss";
