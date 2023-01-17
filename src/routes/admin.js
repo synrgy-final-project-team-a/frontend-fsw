@@ -7,7 +7,6 @@ const AdminRoutes = [
 			{
 				name: "Dashboard",
 				path: "/",
-				element: <Dashboard />
 			}
 		]
 	}

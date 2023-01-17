@@ -1,7 +1,7 @@
+import React from "react"
 import FooterComponent from "../components/footer"
 import NavbarComponent from "../components/navbar"
 import AdminRoutes from "../routes/admin"
-import React from "react"
 
 const AdminLayout = ({ children }) => {
 
@@ -9,9 +9,9 @@ const AdminLayout = ({ children }) => {
 
 	return (
 		<>
-			{/* <NavbarComponent /> */}
-			{/* <main>{ children }</main>
-			<FooterComponent /> */}
+			<NavbarComponent />
+			{ children }
+			<FooterComponent />
 		</>
 	)
 }
