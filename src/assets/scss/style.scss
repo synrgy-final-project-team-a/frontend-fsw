@@ -1,12 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
-
-.div1 {
-  color: a;
-
-  .div2 {
-    color: black;
-  }
-}
+@import "register";
 
 .gap-36 {
   gap: 36px !important;
