@@ -1,5 +1,6 @@
 import React from "react"
 import Landing from "../pages/pencari/landing"
+import LoginAs from "../pages/pencari/pilihLoginAs"
 import Login from "../pages/pencari/login"
 import Register from "../pages/pencari/register"
 import ForgetPass from "../pages/pencari/forgetPassword"
@@ -21,8 +22,12 @@ const PencariRoutes = [
 		element: <Landing />,
 	},
 	{
+		path: "/loginAs",
+		element: <LoginAs />,
+	},
+	{
 		path: "/login",
-		element: <Login />,
+		element: <Login />
 	},
 	{
 		path: "/register",
