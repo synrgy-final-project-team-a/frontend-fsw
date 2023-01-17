@@ -3,7 +3,7 @@ import Landing from "./pages/landing";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import ForgetPass from "./pages/forgetPassword";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/admin/dashboard";
 
 const App = () => {
 	return (
@@ -13,7 +13,7 @@ const App = () => {
 				<Route path="/" element={<Landing />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/verif-email" element={<ForgetPass />} />
-				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/admin" element={<Dashboard />} />
 			</Routes>
 		</BrowserRouter>
 	);
