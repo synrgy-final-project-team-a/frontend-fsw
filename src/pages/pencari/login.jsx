@@ -1,6 +1,7 @@
 // import image from "../../assets/images/login.png";
-import {Button, Form, Container, Row, Col, Card} from "react-bootstrap"
-import '../../assets/scss/mystylesheet.scss';
+import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
+import PencariLayout from "../../layouts/pencari.layout";
+import "../../assets/scss/mystylesheet.scss";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -49,19 +50,18 @@ function Login() {
     }
   };
   return (
-    <div>
-      <Container>
-        <h1 className="text-center">Login</h1>
-        <p className="text-center" style={{ fontSize: "24px" }}>
+    <PencariLayout>
+      <Container className="mb-5 mt-5">
+        <h1 className="text-center text-title">Login</h1>
+        <p className="text-center text-subtitle" style={{ fontSize: "24px" }}>
           Silahkan untuk login
         </p>
         <Row className="mt-5">
           <Col>
             <img src="./login.png" alt="..." />
-
           </Col>
           <Col>
-            <Card style={{ width: "30rem"}} className="shadow-lg bg-light p-3">
+            <Card style={{ width: "30rem" }} className="shadow-lg bg-light p-3">
               <Card.Body>
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -85,7 +85,7 @@ function Login() {
                     // // variant="primary"
                     type="button"
                     onClick={(e) => onSubmitButtonHandler(e)}
-                    style={{ width: "26rem"}}
+                    style={{ width: "26rem" }}
                     className="backgournd-color-primary"
                   >
                     <Link
@@ -154,7 +154,7 @@ function Login() {
           </Col>
         </Row>
       </Container>
-    </div>
+    </PencariLayout>
   );
 }
 
