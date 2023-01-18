@@ -1,5 +1,9 @@
 import React from "react"
 import Dashboard from "../pages/admin/dashboard"
+import ForgetPass from "../pages/pencari/forgetPassword"
+import Login from "../pages/pencari/login"
+import Register from "../pages/pencari/register"
+import RegisterAs from "../pages/pencari/registerAs"
 
 const AdminRoutes = [
 	{
@@ -11,6 +15,27 @@ const AdminRoutes = [
 				element: <Dashboard />,
 			}
 		]
+	},
+	{
+		path: "/register",
+		children: [
+			{
+				path: "",
+				element: <RegisterAs />,
+			},
+			{
+				path: "/:role",
+				element: <Register />,
+			}
+		]
+	},
+	{
+		path: "/login",
+		element: <Login />,
+	},
+	{
+		path: "/verif-email",
+		element: <ForgetPass />,
 	}
 ]
 
