@@ -2,8 +2,10 @@ import React from "react"
 import Dashboard from "../pages/admin/dashboard"
 import ForgetPass from "../pages/pencari/forgetPassword"
 import Login from "../pages/pencari/login"
+import PilihLoginAs from "../pages/pencari/pilihLoginAs"
 import Register from "../pages/pencari/register"
 import RegisterAs from "../pages/pencari/registerAs"
+import VerifEmailSukses from "../pages/pencari/successResetPass"
 
 const AdminRoutes = [
 	{
@@ -34,8 +36,20 @@ const AdminRoutes = [
 		element: <Login />,
 	},
 	{
+		path: "/loginAs",
+		element: <PilihLoginAs />,
+	},
+	{
 		path: "/verif-email",
 		element: <ForgetPass />,
+	},
+	{
+		path: "/verif-email",
+		element: <ForgetPass />,
+	},
+	{
+		path: "/verif-email-sukses",
+		element: <VerifEmailSukses />
 	}
 ]
 
