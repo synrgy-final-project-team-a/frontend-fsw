@@ -4,6 +4,7 @@ import LoginAs from "../pages/pencari/pilihLoginAs"
 import Login from "../pages/pencari/login"
 import Register from "../pages/pencari/register"
 import ForgetPass from "../pages/pencari/forgetPassword"
+import VerifEmailSukses from "../pages/pencari/successResetPass"
 
 const PencariRoutes = [
 	{
@@ -36,6 +37,10 @@ const PencariRoutes = [
 	{
 		path: "/verif-email",
 		element: <ForgetPass />,
+	},
+	{
+		path: "/verif-email-sukses",
+		element: <VerifEmailSukses />
 	}
 ]
 

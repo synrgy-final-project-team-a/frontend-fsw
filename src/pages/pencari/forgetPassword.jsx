@@ -73,7 +73,7 @@ function ForgetPass() {
                   className="background-color-primary button-hover"
                 >
                   <Link
-                    to="/"
+                    to="/verif-email-sukses"
                     className="text-light"
                     style={{ textDecoration: "none" }}
                   >
