@@ -1,5 +1,5 @@
 // import image from "../../assets/images/login.png";
-import {Button, Form, Container, Row, Col, Card} from "react-bootstrap"
+import { Button, Form, Container, Row, Col, Card } from "react-bootstrap"
 import '../../assets/scss/mystylesheet.scss';
 import axios from "axios";
 import { useState } from "react";
@@ -61,7 +61,7 @@ function Login() {
 
           </Col>
           <Col>
-            <Card style={{ width: "30rem"}} className="shadow-lg bg-light p-3">
+            <Card style={{ width: "30rem" }} className="shadow-lg bg-light p-3">
               <Card.Body>
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -85,7 +85,7 @@ function Login() {
                     // // variant="primary"
                     type="button"
                     onClick={(e) => onSubmitButtonHandler(e)}
-                    style={{ width: "26rem"}}
+                    style={{ width: "26rem" }}
                     className="backgournd-color-primary"
                   >
                     <Link
