@@ -31,17 +31,21 @@ const TambahUser = () => {
                 <form onSubmit={handleSubmit}>
                     <label>
                         Email:
-                        <input type="email" name="email" value={email} onChange={handleChangeEmail}/>
+                        <input type="email" name="email" value={email} onChange={handleChangeEmail} required/>
                     </label>
                     <label>
                         Password:
-                        <input type="password" name="password" value={password} onChange={handleChangePasword}/>
+                        <input type="password" name="password" value={password} onChange={handleChangePasword} required/>
                     </label>
-                    <select value={role} onChange={handleChangeRole}>
-                        <option value="1">Penyewa Kos</option>
-                        <option value="2">Pencari</option>
-                    </select>
-                    <input type="submit" value="Submit" />
+                    <label>
+                        Role:
+                        <select value={role} onChange={handleChangeRole} required>
+                            <option value="1">Penyewa Kos</option>
+                            <option value="2">Pencari</option>
+                        </select>
+                    </label>
+                    
+                    <input type="submit" value="Tambah" />
                 </form>
 
 
