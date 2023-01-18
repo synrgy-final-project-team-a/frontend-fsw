@@ -28,7 +28,7 @@ export default function SuccessResetPass() {
           className="text-center text color-primary fw-bold"
           style={{ textDecoration: "none" }}
         >
-          Kirim ulang {seconds}
+          Kirim ulang ({seconds})
         </Link>{" "}
       </p>
       <Button
