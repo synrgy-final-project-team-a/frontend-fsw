@@ -82,11 +82,11 @@ const Register = () => {
                     <h3>Buat Akun Barumu</h3>
                 </div>
                 <Row className="mt-5">
-                    <Col lg={6} xs={12} className="align-self-center text-center">
+                    <Col lg={6} xs={12} className="align-self-center text-center d-none d-lg-block">
                         <img src="/login.png" alt="Login" className="img-fluid" />
                     </Col>
                     <Col lg={6} xs={12}>
-                        <div className="mx-5">
+                        <div className="mx-lg-5">
                             <Card>
                                 <Card.Body className="m-3">
                                     <Form onSubmit={handleRegister}>
