@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row } from "react-bootstrap"
+import { Col, Container, Row } from "react-bootstrap"
 import NavbarComponent from "../../components/navbar"
 import PencariRoutes from "../../routes/pencari"
 
@@ -11,18 +11,19 @@ const RegisterAs = () => {
 				<p className="text-center text-subtitle">
 					Saya ingin login sebagai
 				</p>
-				<Row className="mt-5 align-items-center">
-					<Col xs={12} lg={6}>
-						<Button>
-							asdasd
-						</Button>
-						<img src="./pencari.png" alt="..." />
-						<p className="text-subtitle">Pencari Kos</p>
+				<Row className="mt-5">
+					<Col xs={12} lg={6} className="px-lg-5">
+						<a href="/register/pencari">
+							<img src="/pencari.png" className="img-fluid" alt="..." />
+							<p className="text-subtitle text-dark">Pencari Kos</p>
+						</a>
 					</Col>
 					{/* <Col className="vertical-line"></Col> */}
-					<Col>
-						<img src="./penyewa.png" alt="..." />
-						<p className="text-subtitle">Penyedia Kos</p>
+					<Col xs={12} lg={6} className="px-lg-5">
+						<a href="/register/penyewa">
+							<img src="/penyewa.png" className="img-fluid" alt="..." />
+							<p className="text-subtitle text-dark">Penyedia Kos</p>
+						</a>
 					</Col>
 				</Row>
 			</Container>

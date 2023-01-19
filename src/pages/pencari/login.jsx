@@ -50,7 +50,7 @@ function Login() {
 	};
 	return (
 		<>
-			<div className="d-none d-lg-flex">
+			<div className="d-none d-lg-block">
 				<NavbarComponent routes={PencariRoutes} />
 			</div>
 			<Container className="mt-5">

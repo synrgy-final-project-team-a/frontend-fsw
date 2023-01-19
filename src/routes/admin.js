@@ -27,6 +27,10 @@ const AdminRoutes = [
 			{
 				path: "/:role",
 				element: <Register />,
+			},
+			{
+				path: "/verifikasi",
+				// element: <RegisterVerifikasi />,
 			}
 		]
 	},
