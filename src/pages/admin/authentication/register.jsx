@@ -32,15 +32,21 @@ const Register = () => {
         e.preventDefault()
         let failed = false
 
-        const namaLengkap = formRef.current.namaLengkap.value
+        const firstName = formRef.current.firstName.value
+        const lastName = formRef.current.lastName.value
         const nomorHandphone = formRef.current.nomorHandphone.value
         const email = formRef.current.email.value
         const password = formRef.current.password.value
         const verifPassword = formRef.current.verifPassword.value
 
-        if (namaLengkap === "") {
+        if (firstName === "") {
             failed = true
-            setError({ "namaLengkap": "Nama lengkap tidak boleh kosong!" })
+            setError({ "firstName": "First name tidak boleh kosong!" })
+        }
+        
+        if (lastName === "") {
+            failed = true
+            setError({ "lastName": "Last name tidak boleh kosong!" })
         }
 
         if (nomorHandphone === "") {
@@ -80,17 +86,6 @@ const Register = () => {
 
         if (failed) {
             return
-        }
-
-        const nama = namaLengkap.split(' ')
-        let firstName = ""
-        let lastName = ""
-        if (nama.length > 1) {
-            firstName = nama.slice(0, -1).join(' ')
-            lastName = nama.at(-1)
-        } else {
-            firstName = namaLengkap
-            lastName = ""
         }
 
         const payload = {
@@ -162,11 +157,23 @@ const Register = () => {
                                             ""
                                     }
                                     <Form onSubmit={handleRegister}>
-                                        <Form.Group className="mb-3" controlId="formBasicNamaLengkap">
-                                            <Form.Label>Nama Lengkap</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.namaLengkap = ref} type="text" placeholder="Masukan nama lengkap" />
+                                        <Form.Group className="mb-3" controlId="formBasicFirstName">
+                                            <Form.Label>First Name</Form.Label>
+                                            <Form.Control ref={(ref) => formRef.current.firstName = ref} type="text" placeholder="Masukan first name" />
                                             {
-                                                (error.hasOwnProperty("namaLengkap") && error.namaLengkap !== "") ?
+                                                (error.hasOwnProperty("firstName") && error.firstName !== "") ?
+                                                    <Form.Text className="text-danger">
+                                                        {error.firstName}
+                                                    </Form.Text> :
+                                                    ""
+                                            }
+                                        </Form.Group>
+
+                                        <Form.Group className="mb-3" controlId="formBasicLastName">
+                                            <Form.Label>Last Name</Form.Label>
+                                            <Form.Control ref={(ref) => formRef.current.lastName = ref} type="text" placeholder="Masukan last name" />
+                                            {
+                                                (error.hasOwnProperty("lastName") && error.lastName !== "") ?
                                                     <Form.Text className="text-danger">
                                                         {error.namaLengkap}
                                                     </Form.Text> :
