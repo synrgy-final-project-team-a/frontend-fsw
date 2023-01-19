@@ -6,7 +6,7 @@ import NavbarComponent from "../../../components/navbar";
 import PencariRoutes from "../../../routes/pencari";
 import { useDispatch } from "react-redux";
 import { useLoginMutation, useResendOtpMutation } from "../../../store/apis/authentication";
-import { addEmail, addToken } from "../../../store/slices/authSlice";
+import { addEmail } from "../../../store/slices/authSlice";
 
 function Login() {
 	const params = useParams()
