@@ -7,8 +7,8 @@ const registerAs = () => {
 	return (
 		<>
 			<div className="d-none d-lg-block">
-                <NavbarComponent routes={PencariRoutes} />
-            </div>
+				<NavbarComponent routes={PencariRoutes} />
+			</div>
 			<Container className="mt-5">
 				<h1 className="text-center text-title">Register Yuk</h1>
 				<p className="text-center text-subtitle">

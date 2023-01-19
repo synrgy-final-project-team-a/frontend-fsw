@@ -6,7 +6,7 @@ import Register from "../pages/admin/authentication/register"
 import RegisterAs from "../pages/admin/authentication/registerAs"
 import RegisterVerifikasi from "../pages/admin/authentication/registerVerifikasi"
 import ForgetPass from "../pages/admin/authentication/forgetPassword"
-import VerifEmailSukses from "../pages/admin/authentication/forgetPasswordSuccess"
+import ForgetPassSuccess from "../pages/admin/authentication/forgetPasswordSuccess"
 
 const AdminRoutes = [
 	{
@@ -49,7 +49,7 @@ const AdminRoutes = [
 			},
 			{
 				path: "/forgot-password-success",
-				element: <VerifEmailSukses />
+				element: <ForgetPassSuccess />
 			},
 			{
 				path: "/:role",

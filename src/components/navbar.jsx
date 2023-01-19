@@ -6,9 +6,9 @@ const NavbarComponent = ({ routes }) => {
 	const routesDefine = (element, path = "") => {
 		return (element.map((el, i) => {
 			if (el.hasOwnProperty('children')) {
-				return routesDefine(el.children, path+el.path)
-			} else if(el.hasOwnProperty('name')) {
-				return <Nav.Link as={Link} key={i} to={path+el.path}>{el.name}</Nav.Link>
+				return routesDefine(el.children, path + el.path)
+			} else if (el.hasOwnProperty('name')) {
+				return <Nav.Link as={Link} key={i} to={path + el.path}>{el.name}</Nav.Link>
 			} else {
 				return <></>
 			}
@@ -26,7 +26,7 @@ const NavbarComponent = ({ routes }) => {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto align-items-center gap-36">
 						{routesDefine(routes)}
-						<Button as={Link} to="/login" variant="outline-success" className="btn-login">
+						<Button as={Link} to="/login" variant="outline-success">
 							Masuk
 						</Button>
 					</Nav>
