@@ -133,6 +133,7 @@ const Register = () => {
                 setError({ "general": errorRegister.data.message })
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoading])
 
     return (

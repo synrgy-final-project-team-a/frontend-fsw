@@ -11,6 +11,8 @@ const App = () => {
 				return routesDefine(el.children, path+el.path)
 			} else if (el.hasOwnProperty('element')) {
 				return <Route key={i} path={path+el.path} element={el.element} />
+			} else {
+				return <></>
 			}
 		}))
 	}

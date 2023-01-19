@@ -8,6 +8,8 @@ const NavbarComponent = ({ routes }) => {
 				return routesDefine(el.children, path+el.path)
 			} else if(el.hasOwnProperty('name')) {
 				return <Nav.Link key={i} href={path+el.path}>{el.name}</Nav.Link>
+			} else {
+				return <></>
 			}
 		}))
 	}
