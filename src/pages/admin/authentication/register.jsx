@@ -43,6 +43,7 @@ const Register = () => {
             failed = true
             setError({ "firstName": "First name tidak boleh kosong!" })
         }
+        
         if (lastName === "") {
             failed = true
             setError({ "lastName": "Last name tidak boleh kosong!" })
