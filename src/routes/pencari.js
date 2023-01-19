@@ -1,8 +1,5 @@
 import React from "react"
 import Landing from "../pages/pencari/landing"
-import Login from "../pages/pencari/login"
-import Register from "../pages/pencari/register"
-import ForgetPass from "../pages/pencari/forgetPassword"
 
 const PencariRoutes = [
 	{
@@ -20,18 +17,6 @@ const PencariRoutes = [
 		path: "/sewa-kos",
 		element: <Landing />,
 	},
-	{
-		path: "/login",
-		element: <Login />,
-	},
-	{
-		path: "/register",
-		element: <Register />,
-	},
-	{
-		path: "/verif-email",
-		element: <ForgetPass />,
-	}
 ]
 
 export default PencariRoutes
