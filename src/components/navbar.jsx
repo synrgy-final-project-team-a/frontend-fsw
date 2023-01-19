@@ -1,4 +1,5 @@
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const NavbarComponent = ({ routes }) => {
 
@@ -7,7 +8,9 @@ const NavbarComponent = ({ routes }) => {
 			if (el.hasOwnProperty('children')) {
 				return routesDefine(el.children, path+el.path)
 			} else if(el.hasOwnProperty('name')) {
-				return <Nav.Link key={i} href={path+el.path}>{el.name}</Nav.Link>
+				return <Nav.Link as={Link} key={i} to={path+el.path}>{el.name}</Nav.Link>
+			} else {
+				return <></>
 			}
 		}))
 	}
@@ -15,7 +18,7 @@ const NavbarComponent = ({ routes }) => {
 	return (
 		<Navbar bg="light" expand="lg">
 			<Container>
-				<Navbar.Brand href="/">
+				<Navbar.Brand as={Link} to="/">
 					<img src="/logo192.png" width="30" height="30" className="d-inline-block align-top mx-2" alt="..." />
 					KOSANKU
 				</Navbar.Brand>
@@ -23,7 +26,7 @@ const NavbarComponent = ({ routes }) => {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto align-items-center gap-36">
 						{routesDefine(routes)}
-						<Button as={Nav.Link} href="/login" variant="outline-success" className="btn-login">
+						<Button as={Link} to="/login" variant="outline-success" className="btn-login">
 							Masuk
 						</Button>
 					</Nav>

@@ -1,8 +1,9 @@
 import { Col, Container, Row } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import NavbarComponent from "../../../components/navbar"
 import PencariRoutes from "../../../routes/pencari"
 
-const RegisterAs = () => {
+const loginAs = () => {
 	return (
 		<>
 			<div className="d-none d-lg-block">
@@ -15,17 +16,16 @@ const RegisterAs = () => {
 				</p>
 				<Row className="mt-5">
 					<Col xs={12} lg={6} className="px-lg-5">
-						<a href="/register/pencari">
+						<Link to="/login/pencari">
 							<img src="/pencari.png" className="img-fluid" alt="..." />
 							<p className="text-subtitle text-dark">Pencari Kos</p>
-						</a>
+						</Link>
 					</Col>
-					{/* <Col className="vertical-line"></Col> */}
 					<Col xs={12} lg={6} className="px-lg-5">
-						<a href="/register/penyewa">
+						<Link to="/login/penyewa">
 							<img src="/penyewa.png" className="img-fluid" alt="..." />
 							<p className="text-subtitle text-dark">Penyedia Kos</p>
-						</a>
+						</Link>
 					</Col>
 				</Row>
 			</Container>
@@ -33,4 +33,4 @@ const RegisterAs = () => {
 	)
 }
 
-export default RegisterAs
+export default loginAs
