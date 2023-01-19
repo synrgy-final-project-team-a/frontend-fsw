@@ -9,7 +9,7 @@ function KostByLocation() {
           <div className="container">
             <div className="row">
               <div className="col">
-                <table class="table">
+                <table className="table">
                   <tbody>
                     <tr>
                       <th scope="row">1</th>
@@ -31,7 +31,7 @@ function KostByLocation() {
                 </table>
               </div>
               <div className="col">
-                <table class="table">
+                <table className="table">
                   <tbody>
                     <tr>
                       <th scope="row">1</th>
@@ -80,7 +80,7 @@ function KostByLocation() {
           <div className="container">
             <div className="row">
               <div className="col">
-                <table class="table">
+                <table className="table">
                   <tbody>
                     <tr>
                       <th scope="row">1</th>
@@ -102,7 +102,7 @@ function KostByLocation() {
                 </table>
               </div>
               <div className="col">
-                <table class="table">
+                <table className="table">
                   <tbody>
                     <tr>
                       <th scope="row">1</th>

@@ -16,7 +16,7 @@ const NavbarComponent = ({ routes }) => {
 		<Navbar bg="light" expand="lg">
 			<Container>
 				<Navbar.Brand href="/">
-					<img src="./logo192.png" width="30" height="30" className="d-inline-block align-top mx-2" alt="..." />
+					<img src="/logo192.png" width="30" height="30" className="d-inline-block align-top mx-2" alt="..." />
 					KOSANKU
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
