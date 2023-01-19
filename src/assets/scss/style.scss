@@ -1,16 +1,40 @@
 @import "~bootstrap/scss/bootstrap";
 @import "register";
 
+body{
+  font-family: "Raleway";
+}
+
+.navbar {
+  height: 80px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.navbar-nav {
+  margin-right: -60px;
+}
+
 .gap-36 {
   gap: 36px !important;
 }
 
-.nav-link {
-  font-family: "Raleway";
+.logo {
+  width: 259.29px;
+  height: 60px;  
+}
+
+.navbar-brand {
+  margin-left: -50px;
+}
+
+.navbar-link {
+  
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
   line-height: 32px;
+  color: #616161;
 }
 
 .btn-login {
@@ -21,28 +45,8 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
-}
-
-.gap-36 {
-  gap: 36px !important;
-}
-
-.nav-link {
-  font-family: "Raleway";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
-}
-
-.btn-login {
-  width: 110px;
-  height: 48px;
-  padding: 12px 30px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
+  background: #056C73;
+  color: #FFFFFF;
 }
 
 .height {
