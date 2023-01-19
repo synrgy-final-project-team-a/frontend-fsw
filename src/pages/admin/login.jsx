@@ -50,7 +50,7 @@ function Login() {
 	};
 	return (
 		<>
-			<div className="d-none d-lg-flex">
+			<div className="d-none d-lg-block">
 				<NavbarComponent routes={PencariRoutes} />
 			</div>
 			<Container className="mt-5">
@@ -60,7 +60,7 @@ function Login() {
 				</p>
 				<Row className="mt-5 align-items-center">
 					<Col xs={12} lg={6} className="text-center d-none d-lg-flex">
-						<img src="/login.png" className="img-fluid" alt="..." />
+						<img src="/image/login.png" className="img-fluid" alt="..." />
 					</Col>
 					<Col xs={12} lg={6}>
 						<Card className="shadow-lg bg-light p-3">

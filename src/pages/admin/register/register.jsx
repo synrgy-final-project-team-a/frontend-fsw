@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useRef } from "react"
 import {
     Container,
@@ -6,15 +6,27 @@ import {
     Col,
     Card,
     Button,
-    Form
+    Form,
+    Alert
 } from "react-bootstrap"
-import NavbarComponent from "../../components/navbar"
-import PencariRoutes from "../../routes/pencari"
+import { useDispatch } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
+import NavbarComponent from "../../../components/navbar"
+import PencariRoutes from "../../../routes/pencari"
+import { useRegisterMutation } from "../../../store/apis/authentication"
+import { addEmail } from "../../../store/slices/authSlice"
 
 const Register = () => {
 
+    const params = useParams()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const formRef = useRef({})
     const [error, setError] = useState({})
+    const roleParams = params.role
+
+    const [registerHit, { isLoading, isError, error: errorRegister, isSuccess }] = useRegisterMutation()
 
     const handleRegister = (e) => {
         e.preventDefault()
@@ -70,12 +82,65 @@ const Register = () => {
             return
         }
 
+        const nama = namaLengkap.split(' ')
+        let firstName = ""
+        let lastName = ""
+        if (nama.length > 1) {
+            firstName = nama.slice(0, -1).join(' ')
+            lastName = nama.at(-1)
+        } else {
+            firstName = namaLengkap
+            lastName = ""
+        }
+
+        const payload = {
+            "email": email,
+            "password": password,
+            "firstName": firstName,
+            "lastName": lastName,
+            "phoneNumber": nomorHandphone
+        }
+
+        let rolePayload = ""
         
+        if(roleParams === "pencari" || roleParams === "seeker") {
+            rolePayload = "seeker"
+        }
+        if(roleParams === "penyewa" || roleParams === "tennant") {
+            rolePayload = "tennant"
+        }
+
+        try {
+            registerHit({ body: payload, role: rolePayload })
+        } catch (error) {
+            setError({ "general": "Register failed" })
+        }
+
     }
+
+    useEffect(() => {
+        if (isSuccess) {
+            dispatch(addEmail(formRef.current.email.value))
+            navigate('/register/verifikasi')
+        }
+
+        if (isError) {
+            if (Array.isArray(errorRegister.data)) {
+                errorRegister.data.forEach((el) =>
+                    setError({ "general": el.data.message })
+                );
+            } else {
+                setError({ "general": errorRegister.data.message })
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoading])
 
     return (
         <>
-            <NavbarComponent routes={PencariRoutes} />
+            <div className="d-none d-lg-block">
+                <NavbarComponent routes={PencariRoutes} />
+            </div>
             <Container>
                 <div className="text-center mt-5">
                     <h1>Daftar</h1>
@@ -83,12 +148,19 @@ const Register = () => {
                 </div>
                 <Row className="mt-5">
                     <Col lg={6} xs={12} className="align-self-center text-center d-none d-lg-block">
-                        <img src="/login.png" alt="Login" className="img-fluid" />
+                        <img src="/image/login.png" alt="Login" className="img-fluid" />
                     </Col>
                     <Col lg={6} xs={12}>
                         <div className="mx-lg-5">
                             <Card>
                                 <Card.Body className="m-3">
+                                    {
+                                        (error.hasOwnProperty("general") && error.general !== "") ?
+                                            <Alert variant="danger">
+                                                {error.general}
+                                            </Alert> :
+                                            ""
+                                    }
                                     <Form onSubmit={handleRegister}>
                                         <Form.Group className="mb-3" controlId="formBasicNamaLengkap">
                                             <Form.Label>Nama Lengkap</Form.Label>
@@ -151,13 +223,13 @@ const Register = () => {
                                         </Form.Group>
 
                                         <div className="d-grid">
-                                            <Button variant="success" type="submit">
+                                            <Button variant="primary" type="submit">
                                                 Login
                                             </Button>
                                         </div>
 
                                         <div className="mt-2 text-center">
-                                            <strong><p>Sudah punya akun? <a href="/login" className="text-success">Masuk Yuk!</a></p></strong>
+                                            <strong><p>Sudah punya akun? <a href="/login" className="text-primary">Masuk Yuk!</a></p></strong>
                                         </div>
                                     </Form>
                                 </Card.Body>

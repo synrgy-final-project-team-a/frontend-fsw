@@ -1,9 +1,10 @@
 import React from "react"
 import Dashboard from "../pages/admin/dashboard"
-import ForgetPass from "../pages/pencari/forgetPassword"
-import Login from "../pages/pencari/login"
-import Register from "../pages/pencari/register"
-import RegisterAs from "../pages/pencari/registerAs"
+import ForgetPass from "../pages/admin/forgetPassword"
+import Login from "../pages/admin/login"
+import Register from "../pages/admin/register/register"
+import RegisterAs from "../pages/admin/register/registerAs"
+import RegisterVerifikasi from "../pages/admin/register/registerVerifikasi"
 import VerifEmailSukses from "../pages/pencari/successResetPass"
 
 const AdminRoutes = [
@@ -27,6 +28,10 @@ const AdminRoutes = [
 			{
 				path: "/:role",
 				element: <Register />,
+			},
+			{
+				path: "/verifikasi",
+				element: <RegisterVerifikasi />,
 			}
 		]
 	},
