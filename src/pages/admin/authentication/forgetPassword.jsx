@@ -1,90 +1,126 @@
-import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { useState } from "react";
+import { Button, Form, Container, Row, Col, Card, Alert } from "react-bootstrap";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NavbarComponent from "../../../components/navbar";
+import PencariRoutes from "../../../routes/pencari";
+import { useForgotPasswordMutation } from "../../../store/apis/authentication";
+import { useDispatch } from "react-redux";
+import { addEmail } from "../../../store/slices/authSlice";
 
-function ForgetPass() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+const ForgetPass = () => {
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
-  const onChangeEmailHandler = (e) => {
-    const value = e.target.value;
+	const emailRef = useRef("")
+	const [error, setError] = useState("")
+	const [alert, setAlert] = useState("")
 
-    setEmail(value);
-  };
+	const [forgotPassHit, { isLoading, isSuccess, isError, error: errorForgot }] = useForgotPasswordMutation()
 
-  const onSubmitButtonHandler = async (e) => {
-    e.preventDefault();
+	const submitHandle = (e) => {
+		e.preventDefault()
+		let failed = false
 
-    try {
-      const payload = {
-        email,
-      };
+		const email = emailRef.current.value
 
-      const forgetpassResponse = await axios.post(
-        "https://kosanku-bej.up.railway.app/api/forget-password/send",
-        payload
-      );
-      if (forgetpassResponse.status === 201) {
-        console.log("berhasil send email verif");
+		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+			failed = true
+			setError("Email tidak valid!")
+		}
 
-        // const jwtToken = forgetpassResponse.data.data.token;
+		if (email === "") {
+			failed = true
+			setError("Email tidak boleh kosong!")
+		}
 
-        // localStorage.setItem("user_token", jwtToken);
+		if (failed) {
+			return
+		}
 
-        navigate("/login"); 
-      }
-    } catch (err) {
-      console.log("gagal login:", err);
-    }
-  };
-  return (
-    <Container className="mt-5">
-      <h1 className="text-center text-title">Lupa Password</h1>
-      <p className="text-center text-subtitle">
-        Masukan email kamu yang sudah terdaftar
-      </p>
-      <Row className="mt-5 align-items-center">
-        <Col className="col ms-5">
-          <img src="/image/forgetpass.png" alt="..." />
-        </Col>
-        {/* <Col className="vertical-line"></Col> */}
-        <Col className="col">
-          <Card style={{ width: "30rem" }} className="shadow-lg bg-light p-3">
-            <Card.Body>
-              <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Alamat Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Masukan alamat email"
-                    onChange={(e) => onChangeEmailHandler(e)}
-                  />
-                </Form.Group>
-                <p>Masukan email yang anda gunakan pada saat mendaftar dan kami akan mengirimkan link untuk mengubah password anda ke email anda</p>
-                <Button
-                  // // variant="primary"
-                  type="button"
-                  onClick={(e) => onSubmitButtonHandler(e)}
-                  style={{ width: "26rem" }}
-                  className="background-color-primary button-hover"
-                >
-                  <Link
-                    to="/verif-email-sukses"
-                    className="text-light"
-                    style={{ textDecoration: "none" }}
-                  >
-                    Kirim Link Reset
-                  </Link>{" "}
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
-  );
+		const payload = {
+			"email": email
+		}
+
+		try {
+			forgotPassHit(payload)
+		} catch (error) {
+			setAlert("Send link failed!")
+		}
+	}
+
+	useEffect(() => {
+		if (isSuccess) {
+			dispatch(addEmail(emailRef.current.value))
+			navigate('/login/forgot-password-success')
+		}
+
+		if (isError) {
+			if (Array.isArray(errorForgot.data)) {
+				errorForgot.data.forEach((el) =>
+					setAlert(el.data.message)
+				);
+			} else {
+				setAlert(errorForgot.data.message)
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoading])
+
+	return (
+		<>
+			<div className="d-none d-lg-block">
+				<NavbarComponent routes={PencariRoutes} />
+			</div>
+			<Container className="mt-5">
+				<h1 className="text-center text-title">Lupa Password</h1>
+				<p className="text-center text-subtitle">
+					Masukan email kamu yang sudah terdaftar
+				</p>
+				<Row className="mt-5 align-items-center">
+					<Col xs={12} lg={6} className="text-center">
+						<img src="/image/forgetpass.png" className="img-fluid" alt="..." />
+					</Col>
+					<Col xs={12} lg={6}>
+						<Card className="p-3">
+							<Card.Body>
+								{
+									(alert !== "") ?
+										<Alert variant="danger">
+											{alert}
+										</Alert> :
+										""
+								}
+								<Form onSubmit={submitHandle}>
+									<Form.Group className="mb-3" controlId="formBasicEmail">
+										<Form.Label>Alamat Email</Form.Label>
+										<Form.Control
+											type="text"
+											placeholder="Masukan alamat email"
+											ref={emailRef}
+										/>
+										{
+											(error !== "") ?
+												<Form.Text className="text-danger">
+													{error}
+												</Form.Text> :
+												""
+										}
+									</Form.Group>
+									<p>Masukan email yang anda gunakan pada saat mendaftar dan kami akan mengirimkan link untuk mengubah password anda ke email anda</p>
+									<Button
+										variant="primary"
+										type="submit"
+									>
+										Kirim Link Reset
+									</Button>
+								</Form>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+			</Container>
+		</>
+	);
 }
 
 export default ForgetPass;

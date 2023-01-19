@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { useLoginMutation, useResendOtpMutation } from "../../../store/apis/authentication";
 import { addEmail } from "../../../store/slices/authSlice";
 
-function Login() {
+const Login = () => {
 	const params = useParams()
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
@@ -55,7 +55,7 @@ function Login() {
 		try {
 			loginHit(payload)
 		} catch (error) {
-			setError({ "general": "Register failed" })
+			setError({ "general": "Login failed" })
 		}
 	}
 
@@ -71,9 +71,9 @@ function Login() {
 					setError({ "general": el.data.message })
 				);
 			} else {
-				if(errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
+				if (errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
 					dispatch(addEmail(formRef.current.email.value))
-					resendOtpHit({"email": formRef.current.email.value})
+					resendOtpHit({ "email": formRef.current.email.value })
 					navigate('/register/verifikasi')
 				} else {
 					setError({ "general": errorLogin.data.message })
@@ -156,8 +156,7 @@ function Login() {
 									<span>
 										<Link
 											to={`/register/${roleParams}`}
-											className="color-primary fw-bold color-hover"
-											style={{ textDecoration: "none" }}
+											className="text-primary fw-bold text-decoration-none"
 										>
 											Daftar Yuk!
 										</Link>{" "}
@@ -165,9 +164,8 @@ function Login() {
 								</p>
 								<p className="text-center mt-1">
 									<Link
-										to="/verif-email"
-										className="color-primary color-hover"
-										style={{ textDecoration: "none" }}
+										to="/login/forgot-password"
+										className="text-primary text-decoration-none"
 									>
 										Lupa Password
 									</Link>{" "}

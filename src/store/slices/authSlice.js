@@ -27,4 +27,4 @@ export const slice = createSlice({
 
 export const { addToken, addEmail } = slice.actions
 
-export const authPersistReducer =  persistReducer(persistConfig, slice.reducer)
+export const authPersistReducer = persistReducer(persistConfig, slice.reducer)
