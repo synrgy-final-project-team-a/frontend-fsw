@@ -1,6 +1,4 @@
 import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
-// import PencariLayout from "../../layouts/pencari.layout";
-import "../../assets/scss/mystylesheet.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";

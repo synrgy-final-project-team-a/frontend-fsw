@@ -10,7 +10,7 @@ import {
     Alert
 } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import NavbarComponent from "../../../components/navbar"
 import PencariRoutes from "../../../routes/pencari"
 import { useRegisterMutation } from "../../../store/apis/authentication"
@@ -102,11 +102,11 @@ const Register = () => {
         }
 
         let rolePayload = ""
-        
-        if(roleParams === "pencari" || roleParams === "seeker") {
+
+        if (roleParams === "pencari" || roleParams === "seeker") {
             rolePayload = "seeker"
         }
-        if(roleParams === "penyewa" || roleParams === "tennant") {
+        if (roleParams === "penyewa" || roleParams === "tennant") {
             rolePayload = "tennant"
         }
 
@@ -223,13 +223,25 @@ const Register = () => {
                                         </Form.Group>
 
                                         <div className="d-grid">
-                                            <Button variant="primary" type="submit">
-                                                Login
-                                            </Button>
+                                            {
+                                                isLoading ?
+                                                    <Button variant="primary" disabled>
+                                                        Loading
+                                                    </Button> :
+                                                    <Button variant="primary" type="submit">
+                                                        Register
+                                                    </Button>
+                                            }
                                         </div>
 
                                         <div className="mt-2 text-center">
-                                            <strong><p>Sudah punya akun? <a href="/login" className="text-primary">Masuk Yuk!</a></p></strong>
+                                            <strong>
+                                                <p>Sudah punya akun?{" "}
+                                                    <Link to={`/login/${roleParams}`} className="text-primary" style={{ textDecoration: "none" }}>
+                                                        Masuk Yuk!
+                                                    </Link>
+                                                </p>
+                                            </strong>
                                         </div>
                                     </Form>
                                 </Card.Body>

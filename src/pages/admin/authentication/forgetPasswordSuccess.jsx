@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "../../assets/scss/mystylesheet.scss";
 
 export default function SuccessResetPass() {
   const [seconds, setSeconds] = useState(50);

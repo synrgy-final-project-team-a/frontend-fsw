@@ -14,7 +14,7 @@ const authApi = createApi({
 			invalidatesTags: ['Auth'],
 		}),
 		login: build.mutation({
-			query: ({ body }) => ({
+			query: (body) => ({
 				url: `api/login-user`,
 				method: 'POST',
 				body: body,
