@@ -11,10 +11,10 @@ import {
 } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import NavbarComponent from "../../components/navbar"
-import PencariRoutes from "../../routes/pencari"
-import { useRegisterMutation } from "../../store/apis/authentication"
-import { addEmail } from "../../store/slices/authSlice"
+import NavbarComponent from "../../../components/navbar"
+import PencariRoutes from "../../../routes/pencari"
+import { useRegisterMutation } from "../../../store/apis/authentication"
+import { addEmail } from "../../../store/slices/authSlice"
 
 const Register = () => {
 
@@ -101,8 +101,17 @@ const Register = () => {
             "phoneNumber": nomorHandphone
         }
 
+        let rolePayload = ""
+        
+        if(roleParams === "pencari" || roleParams === "seeker") {
+            rolePayload = "seeker"
+        }
+        if(roleParams === "penyewa" || roleParams === "tennant") {
+            rolePayload = "tennant"
+        }
+
         try {
-            registerHit({ body: payload, role: roleParams })
+            registerHit({ body: payload, role: rolePayload })
         } catch (error) {
             setError({ "general": "Register failed" })
         }
@@ -116,9 +125,9 @@ const Register = () => {
         }
 
         if (isError) {
-            if (Array.isArray(errorRegister.data.error)) {
-                errorRegister.data.error.forEach((el) =>
-                    setError({ "general": el.message })
+            if (Array.isArray(errorRegister.data)) {
+                errorRegister.data.forEach((el) =>
+                    setError({ "general": el.data.message })
                 );
             } else {
                 setError({ "general": errorRegister.data.message })
@@ -138,7 +147,7 @@ const Register = () => {
                 </div>
                 <Row className="mt-5">
                     <Col lg={6} xs={12} className="align-self-center text-center d-none d-lg-block">
-                        <img src="/login.png" alt="Login" className="img-fluid" />
+                        <img src="/image/login.png" alt="Login" className="img-fluid" />
                     </Col>
                     <Col lg={6} xs={12}>
                         <div className="mx-lg-5">

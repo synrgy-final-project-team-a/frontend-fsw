@@ -1,11 +1,13 @@
 import { Col, Container, Row } from "react-bootstrap"
-import NavbarComponent from "../../components/navbar"
-import PencariRoutes from "../../routes/pencari"
+import NavbarComponent from "../../../components/navbar"
+import PencariRoutes from "../../../routes/pencari"
 
 const RegisterAs = () => {
 	return (
 		<>
-			<NavbarComponent routes={PencariRoutes} />
+			<div className="d-none d-lg-block">
+                <NavbarComponent routes={PencariRoutes} />
+            </div>
 			<Container className="mt-5">
 				<h1 className="text-center text-title">Login Yuk</h1>
 				<p className="text-center text-subtitle">

@@ -49,7 +49,7 @@ function ForgetPass() {
       </p>
       <Row className="mt-5 align-items-center">
         <Col className="col ms-5">
-          <img src="./forgetpass.png" alt="..." />
+          <img src="/image/forgetpass.png" alt="..." />
         </Col>
         {/* <Col className="vertical-line"></Col> */}
         <Col className="col">
