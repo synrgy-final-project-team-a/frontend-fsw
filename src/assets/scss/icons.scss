@@ -1,0 +1,12 @@
+li#icon-kamar {
+  list-style-image: url(../icons/icon-kamar.png);
+}
+
+li#icon-persen {
+  list-style-image: url(../icons/icon-persen.png);
+}
+
+ul#list-spesifikasi-kos li > span {
+  top: -10px;
+  position: relative;
+}

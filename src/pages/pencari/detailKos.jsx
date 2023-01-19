@@ -7,7 +7,10 @@ import FooterComponent from "../../components/footer";
 const DetailKos = () => {
   return (
     <>
-      <NavbarComponent routes={PencariRoutes} />
+      <div className="d-none d-lg-block">
+        <NavbarComponent routes={PencariRoutes} />
+      </div>
+
       <div className="">
         {/* Tulisan  */}
         <div className="container my-3">
@@ -19,14 +22,14 @@ const DetailKos = () => {
         <Container className="mb-5">
           <Row>
             <Col xs={12} md={8}>
-              <img className="img-fluid" src="https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/download-23.jpg" alt="" />
+              <img className="img-fluid rounded mt-3" src="/image/Kos1.png" alt="" />
             </Col>
-            <Col xs={6} md={4}>
-              <Row>
-                <img className="img-fluid" src="https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/download-23.jpg" alt="" />
+            <Col xs={12} md={4}>
+              <Row className="mt-3">
+                <img className="img-fluid rounded" src="/image/Kos2.png" alt="" />
               </Row>
-              <Row className="mt-2">
-                <img className="img-fluid" src="https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/download-23.jpg" alt="" />
+              <Row className="mt-3">
+                <img className="img-fluid rounded" src="/image/Kos3.png" alt="" />
               </Row>
             </Col>
           </Row>
@@ -36,29 +39,29 @@ const DetailKos = () => {
         {/* Title Kos */}
         <Container className="">
           <Row>
-            <Col md={{ span: 8 }}>
-              <Card bg="light">
+            <Col md={8}>
+              <Card className="shadow-sm">
                 <Card.Body>
                   <Card.Text className="mb-1">
-                    <p className="fw-bold fs-3 my-0">Kosan Citra Garden Manalagi</p>
-                    <p className="my-0">Banaran, Gununug Pati, Semarang</p>
-                    <p className="text-muted fw-bolder fs-6 my-0">Jl. Cempaka Sari Timur, No 123B, 6745B, 2/7 Banaran, Gunung Pati, Semarang</p>
+                    <h1 className="fw-bold my-0 fs-3">Kosan Citra Garden Manalagi</h1>
+                    <p className="my-0 fs-5">Banaran, Gununug Pati, Semarang</p>
+                    <p className="text-muted fs-5 fw-bolder my-0">Jl. Cempaka Sari Timur, No 123B, 6745B, 2/7 Banaran, Gunung Pati, Semarang</p>
                   </Card.Text>
-                  <Badge className="fw-normal" bg="light" text="dark">
-                    Putri
+                  <Badge className="fw-normal text-primary badge-outline" bg="success">
+                    ♂ Pria
                   </Badge>{" "}
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={{ span: 3 }}>
-              <Card>
+            <Col md={3}>
+              <Card className="shadow-sm" bg="success">
                 <Card.Body>
                   <Card.Text>
                     Harga Mulai dari
                     <p className="mb-2">
                       <strong className="fs-4">Rp 850.000</strong> / Bulan
                     </p>
-                    <Button variant="light" className="col-12">
+                    <Button variant="primary" className="col-12">
                       Pilih Tipe Kos
                     </Button>
                   </Card.Text>
@@ -69,18 +72,23 @@ const DetailKos = () => {
         </Container>
 
         {/* Spesifikasi Kos */}
-        <Container className="my-4">
+        <Container className="my-3">
           <Row>
-            <Col md={{ span: 8 }}>
-              <Card>
+            <Col md={8}>
+              <Card className="shadow-sm">
                 <Card.Body>
                   <Card.Text className="mb-1">
-                    <h2 className="fs-3">Spesifikasi Kos</h2>
-                    <ul>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                    </ul>
+                    <h2 className="fs-4 fw-bolder">Spesifikasi Kos</h2>
+                    <Container>
+                      <ul id="list-spesifikasi-kos">
+                        <li id="icon-kamar">
+                          <span>3 x 4 meter</span>{" "}
+                        </li>
+                        <li id="icon-persen">
+                          <span>Gratis biaya listrik</span>{" "}
+                        </li>
+                      </ul>
+                    </Container>
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -89,18 +97,33 @@ const DetailKos = () => {
         </Container>
 
         {/* Fasilitas Kos */}
-        <Container className="my-4">
+        <Container className="my-3">
           <Row>
-            <Col md={{ span: 8 }}>
-              <Card>
+            <Col md={8}>
+              <Card className="shadow-sm">
                 <Card.Body>
                   <Card.Text className="mb-1">
-                    <h2 className="fs-3">Fasilitas Kos</h2>
-                    <ul>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                    </ul>
+                    <h2 className="fs-4 fw-bolder">Fasilitas Kos</h2>
+                    <Container>
+                      <Row>
+                        <Col>
+                          <ul>
+                            <li>Kasur</li>
+                            <li>Tv</li>
+                            <li>Sofa</li>
+                            <li>Kamar mandi dalam</li>
+                          </ul>
+                        </Col>
+                        <Col>
+                          <ul>
+                            <li>Lemari baju</li>
+                            <li>Meja</li>
+                            <li>Berdua sekamar</li>
+                            <li>Jendela</li>
+                          </ul>
+                        </Col>
+                      </Row>
+                    </Container>
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -109,21 +132,33 @@ const DetailKos = () => {
         </Container>
 
         {/* Peraturan Kos */}
-        <Container className="my-4">
+        <Container className="mt-3 mb-4">
           <Row>
-            <Col md={{ span: 8 }}>
-              <Card>
+            <Col md={8}>
+              <Card className="shadow-sm">
                 <Card.Body>
                   <Card.Text className="mb-1">
-                    <h2 className="fs-3">Peraturan Kos</h2>
-                    <ul>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                      <li>Banaran, Gununug Pati, Semarang</li>
-                    </ul>
-                    <p className="mb-1">Banaran, Gununug Pati, Semarang</p>
-                    <p className="my-1">Banaran, Gununug Pati, Semarang</p>
-                    <p className="my-1">Banaran, Gununug Pati, Semarang</p>
+                    <h2 className="fs-4 fw-bolder">Peraturan Kos</h2>
+                    <Container>
+                      <Row>
+                        <Col>
+                          <ul>
+                            <li>Dilarang merokok</li>
+                            <li>Hanya putra</li>
+                            <li>Hormati tetangga</li>
+                            <li>Parkir yang rapi</li>
+                          </ul>
+                        </Col>
+                        <Col>
+                          <ul>
+                            <li>Jam malam: 23:00</li>
+                            <li>Jaga kebersihan</li>
+                            <li>Tidak berisik</li>
+                            <li>Menjaga sopan santun</li>
+                          </ul>
+                        </Col>
+                      </Row>
+                    </Container>
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -135,20 +170,20 @@ const DetailKos = () => {
         {/* Tipe Kamar Kos */}
         <Container>
           {" "}
-          <h1 className="fs-2">Tipe Kamar Kos</h1>
+          <h1 className="fs-2 fw-bolder">Tipe Kamar Kos</h1>
         </Container>
 
         {/* Tipe A */}
         <div>
           <Container>
-            <h5>Tipe A</h5>
+            <h5 className="fw-bolder fs-4">Tipe A</h5>
             <Row>
               <Col xs={6} md={4}>
-                <img className="img-fluid" src="https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/download-23.jpg" alt="" />
+                <img className="img-fluid rounded" src="/image/Kos1.png" alt="" />
               </Col>
-              <Col xs={6} md={4}>
-                <h6>Tipe A</h6>
-                Luas Ruangan: 12 meter.
+              <Col xs={6} md={5}>
+                <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
+                <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
                   <li>Tempat tidur</li>
                   <li>Kamar Mandi dalam dan Heater</li>
@@ -156,15 +191,18 @@ const DetailKos = () => {
                   <li>Free Listrik</li>
                 </ul>
               </Col>
-              <Col xs={6} md={4}>
-                <Card>
+              <Col xs={6} md={3}>
+                <Card className="shadow-sm" bg="success">
                   <Card.Body>
+                    <Badge className="fw-normal text-primary badge-outline mb-3" bg="light">
+                      ♂ Pria
+                    </Badge>{" "}
                     <Card.Text>
                       Harga Mulai dari
-                      <p className="mb-2">
-                        <strong className="fs-4">Rp 850.000</strong> / Bulan
+                      <p className="mb-2 text-muted">
+                        <strong className="fs-4 text-dark">Rp 850.000</strong> / Bulan
                       </p>
-                      <Button variant="light" className="col-12">
+                      <Button variant="light" className="fw-bolder col-12 btn-outline-primary btn-tipe-outline">
                         Pilih Tipe Kos
                       </Button>
                     </Card.Text>
@@ -177,15 +215,15 @@ const DetailKos = () => {
 
         {/* Tipe B */}
         <div>
-          <Container>
-            <h5>Tipe A</h5>
+          <Container className="my-3">
+            <h5 className="fw-bolder fs-4">Tipe A</h5>
             <Row>
               <Col xs={6} md={4}>
-                <img className="img-fluid" src="https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/download-23.jpg" alt="" />
+                <img className="img-fluid rounded" src="/image/Kos1.png" alt="" />
               </Col>
-              <Col xs={6} md={4}>
-                <h6>Tipe A</h6>
-                Luas Ruangan: 12 meter.
+              <Col xs={6} md={5}>
+                <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
+                <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
                   <li>Tempat tidur</li>
                   <li>Kamar Mandi dalam dan Heater</li>
@@ -193,15 +231,18 @@ const DetailKos = () => {
                   <li>Free Listrik</li>
                 </ul>
               </Col>
-              <Col xs={6} md={4}>
-                <Card>
+              <Col xs={6} md={3}>
+                <Card className="shadow-sm" bg="success">
                   <Card.Body>
+                    <Badge className="fw-normal text-primary badge-outline mb-3" bg="light">
+                      ♂ Pria
+                    </Badge>{" "}
                     <Card.Text>
                       Harga Mulai dari
-                      <p className="mb-2">
-                        <strong className="fs-4">Rp 850.000</strong> / Bulan
+                      <p className="mb-2 text-muted">
+                        <strong className="fs-4 text-dark">Rp 850.000</strong> / Bulan
                       </p>
-                      <Button variant="light" className="col-12">
+                      <Button variant="light" className="fw-bolder col-12 btn-outline-primary btn-tipe-outline">
                         Pilih Tipe Kos
                       </Button>
                     </Card.Text>
@@ -214,14 +255,14 @@ const DetailKos = () => {
         {/* Tipe C */}
         <div>
           <Container>
-            <h5>Tipe A</h5>
+            <h5 className="fw-bolder fs-4">Tipe A</h5>
             <Row>
               <Col xs={6} md={4}>
-                <img className="img-fluid" src="https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/download-23.jpg" alt="" />
+                <img className="img-fluid rounded" src="/image/Kos1.png" alt="" />
               </Col>
-              <Col xs={6} md={4}>
-                <h6>Tipe A</h6>
-                Luas Ruangan: 12 meter.
+              <Col xs={6} md={5}>
+                <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
+                <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
                   <li>Tempat tidur</li>
                   <li>Kamar Mandi dalam dan Heater</li>
@@ -229,15 +270,18 @@ const DetailKos = () => {
                   <li>Free Listrik</li>
                 </ul>
               </Col>
-              <Col xs={6} md={4}>
-                <Card>
+              <Col xs={6} md={3}>
+                <Card className="shadow-sm" bg="success">
                   <Card.Body>
+                    <Badge className="fw-normal text-primary badge-outline mb-3" bg="light">
+                      ♂ Pria
+                    </Badge>{" "}
                     <Card.Text>
                       Harga Mulai dari
-                      <p className="mb-2">
-                        <strong className="fs-4">Rp 850.000</strong> / Bulan
+                      <p className="mb-2 text-muted">
+                        <strong className="fs-4 text-dark">Rp 850.000</strong> / Bulan
                       </p>
-                      <Button variant="light" className="col-12">
+                      <Button variant="light" className="fw-bolder col-12 btn-outline-primary btn-tipe-outline">
                         Pilih Tipe Kos
                       </Button>
                     </Card.Text>
@@ -252,14 +296,14 @@ const DetailKos = () => {
         {/* Kosan Menarik di Sekitar Lokasi */}
         <Container className="mt-5">
           {" "}
-          <h2 className="fs-4">Tipe Kamar Kos</h2>
+          <h2 className="fs-4 fw-bolder text-muted">Lihat Kosan Menarik Di Sekitarmu</h2>
         </Container>
         <Container className="mb-5">
           <Row>
             <Col xs={6} md={4}>
               {/* style={{ width: "18rem" }} */}
               <Card className="">
-                <img className="img-fluid" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
+                <img className="img-fluid" src="/image/Kos2.png" alt="" />
                 <Card.Body>
                   <Badge bg="secondary" text="light">
                     Putri
@@ -286,7 +330,7 @@ const DetailKos = () => {
             <Col xs={6} md={4}>
               {/* style={{ width: "18rem" }} */}
               <Card className="">
-                <img className="img-fluid" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
+                <img className="img-fluid" src="/image/Kos2.png" alt="" />
                 <Card.Body>
                   <Badge bg="secondary" text="light">
                     Putri
@@ -313,7 +357,7 @@ const DetailKos = () => {
             <Col xs={6} md={4}>
               {/* style={{ width: "18rem" }} */}
               <Card className="">
-                <img className="img-fluid" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" alt="" />
+                <img className="img-fluid" src="/image/Kos2.png" alt="" />
                 <Card.Body>
                   <Badge bg="secondary" text="light">
                     Putri
