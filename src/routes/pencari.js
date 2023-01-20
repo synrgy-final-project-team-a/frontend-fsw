@@ -1,5 +1,6 @@
 import React from "react"
 import Landing from "../pages/pencari/landing"
+import Profile from "../pages/profilePencari"
 
 const PencariRoutes = [
 	{
@@ -17,6 +18,11 @@ const PencariRoutes = [
 		path: "/sewa-kos",
 		element: <Landing />,
 	},
+	{
+		name: "Profile",
+		path: "/profile",
+		element: <Profile />
+	}
 ]
 
 export default PencariRoutes
