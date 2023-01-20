@@ -8,7 +8,7 @@ const PenyewaLayout = ({ children }) => {
 	return (
 		<>
 			<NavbarComponent routes={PenyewaRoutes} />
-			{ children }
+			{children}
 			<FooterComponent />
 		</>
 	)

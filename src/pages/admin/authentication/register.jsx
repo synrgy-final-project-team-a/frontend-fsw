@@ -10,7 +10,7 @@ import {
     Alert
 } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import NavbarComponent from "../../../components/navbar"
 import PencariRoutes from "../../../routes/pencari"
 import { useRegisterMutation } from "../../../store/apis/authentication"
@@ -32,15 +32,21 @@ const Register = () => {
         e.preventDefault()
         let failed = false
 
-        const namaLengkap = formRef.current.namaLengkap.value
+        const firstName = formRef.current.firstName.value
+        const lastName = formRef.current.lastName.value
         const nomorHandphone = formRef.current.nomorHandphone.value
         const email = formRef.current.email.value
         const password = formRef.current.password.value
         const verifPassword = formRef.current.verifPassword.value
 
-        if (namaLengkap === "") {
+        if (firstName === "") {
             failed = true
-            setError({ "namaLengkap": "Nama lengkap tidak boleh kosong!" })
+            setError({ "firstName": "First name tidak boleh kosong!" })
+        }
+
+        if (lastName === "") {
+            failed = true
+            setError({ "lastName": "Last name tidak boleh kosong!" })
         }
 
         if (nomorHandphone === "") {
@@ -82,17 +88,6 @@ const Register = () => {
             return
         }
 
-        const nama = namaLengkap.split(' ')
-        let firstName = ""
-        let lastName = ""
-        if (nama.length > 1) {
-            firstName = nama.slice(0, -1).join(' ')
-            lastName = nama.at(-1)
-        } else {
-            firstName = namaLengkap
-            lastName = ""
-        }
-
         const payload = {
             "email": email,
             "password": password,
@@ -102,11 +97,11 @@ const Register = () => {
         }
 
         let rolePayload = ""
-        
-        if(roleParams === "pencari" || roleParams === "seeker") {
+
+        if (roleParams === "pencari" || roleParams === "seeker") {
             rolePayload = "seeker"
         }
-        if(roleParams === "penyewa" || roleParams === "tennant") {
+        if (roleParams === "penyewa" || roleParams === "tennant") {
             rolePayload = "tennant"
         }
 
@@ -162,11 +157,23 @@ const Register = () => {
                                             ""
                                     }
                                     <Form onSubmit={handleRegister}>
-                                        <Form.Group className="mb-3" controlId="formBasicNamaLengkap">
-                                            <Form.Label>Nama Lengkap</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.namaLengkap = ref} type="text" placeholder="Masukan nama lengkap" />
+                                        <Form.Group className="mb-3" controlId="formBasicFirstName">
+                                            <Form.Label>First Name</Form.Label>
+                                            <Form.Control ref={(ref) => formRef.current.firstName = ref} type="text" placeholder="Masukan first name" />
                                             {
-                                                (error.hasOwnProperty("namaLengkap") && error.namaLengkap !== "") ?
+                                                (error.hasOwnProperty("firstName") && error.firstName !== "") ?
+                                                    <Form.Text className="text-danger">
+                                                        {error.firstName}
+                                                    </Form.Text> :
+                                                    ""
+                                            }
+                                        </Form.Group>
+
+                                        <Form.Group className="mb-3" controlId="formBasicLastName">
+                                            <Form.Label>Last Name</Form.Label>
+                                            <Form.Control ref={(ref) => formRef.current.lastName = ref} type="text" placeholder="Masukan last name" />
+                                            {
+                                                (error.hasOwnProperty("lastName") && error.lastName !== "") ?
                                                     <Form.Text className="text-danger">
                                                         {error.namaLengkap}
                                                     </Form.Text> :
@@ -223,13 +230,25 @@ const Register = () => {
                                         </Form.Group>
 
                                         <div className="d-grid">
-                                            <Button variant="primary" type="submit">
-                                                Login
-                                            </Button>
+                                            {
+                                                isLoading ?
+                                                    <Button variant="primary" disabled>
+                                                        Loading
+                                                    </Button> :
+                                                    <Button variant="primary" type="submit">
+                                                        Register
+                                                    </Button>
+                                            }
                                         </div>
 
                                         <div className="mt-2 text-center">
-                                            <strong><p>Sudah punya akun? <a href="/login" className="text-primary">Masuk Yuk!</a></p></strong>
+                                            <strong>
+                                                <p>Sudah punya akun?{" "}
+                                                    <Link to={`/login/${roleParams}`} className="text-primary" style={{ textDecoration: "none" }}>
+                                                        Masuk Yuk!
+                                                    </Link>
+                                                </p>
+                                            </strong>
                                         </div>
                                     </Form>
                                 </Card.Body>

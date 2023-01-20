@@ -1,11 +1,12 @@
 import React from "react"
 import Dashboard from "../pages/admin/dashboard"
-import ForgetPass from "../pages/admin/forgetPassword"
-import Login from "../pages/admin/login"
-import Register from "../pages/admin/register/register"
-import RegisterAs from "../pages/admin/register/registerAs"
-import RegisterVerifikasi from "../pages/admin/register/registerVerifikasi"
-import VerifEmailSukses from "../pages/pencari/successResetPass"
+import Login from "../pages/admin/authentication/login"
+import LoginAs from "../pages/admin/authentication/loginAs"
+import Register from "../pages/admin/authentication/register"
+import RegisterAs from "../pages/admin/authentication/registerAs"
+import RegisterVerifikasi from "../pages/admin/authentication/registerVerifikasi"
+import ForgetPass from "../pages/admin/authentication/forgetPassword"
+import ForgetPassSuccess from "../pages/admin/authentication/forgetPasswordSuccess"
 
 const AdminRoutes = [
 	{
@@ -37,20 +38,25 @@ const AdminRoutes = [
 	},
 	{
 		path: "/login",
-		element: <Login />,
+		children: [
+			{
+				path: "",
+				element: <LoginAs />,
+			},
+			{
+				path: "/forgot-password",
+				element: <ForgetPass />,
+			},
+			{
+				path: "/forgot-password-success",
+				element: <ForgetPassSuccess />
+			},
+			{
+				path: "/:role",
+				element: <Login />,
+			},
+		]
 	},
-	{
-		path: "/verif-email",
-		element: <ForgetPass />,
-	},
-	{
-		path: "/verif-email",
-		element: <ForgetPass />,
-	},
-	{
-		path: "/verif-email-sukses",
-		element: <VerifEmailSukses />
-	}
 ]
 
 export default AdminRoutes

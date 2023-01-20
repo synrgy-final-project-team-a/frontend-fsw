@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Alert, Button, Col, Container, Row } from "react-bootstrap"
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 import NavbarComponent from "../../../components/navbar"
 import PencariRoutes from "../../../routes/pencari"
 import { useResendOtpMutation } from "../../../store/apis/authentication"
@@ -17,7 +18,7 @@ const RegisterVerifikasi = () => {
 	const [resendOtpHit, { isLoading, isError, isSuccess, error: errorOtp }] = useResendOtpMutation()
 
 	const handleClick = () => {
-		resendOtpHit({"email": emailOtp})
+		resendOtpHit({ "email": emailOtp })
 	}
 
 	useEffect(() => {
@@ -85,6 +86,16 @@ const RegisterVerifikasi = () => {
 										Kirim ulang email otp
 									</Button>
 						}
+					</Col>
+					<Col xs={12}>
+						<Button
+							variant="primary"
+							as={Link}
+							to="/"
+							className="mt-3"
+						>
+							Homepage
+						</Button>
 					</Col>
 				</Row>
 			</Container>
