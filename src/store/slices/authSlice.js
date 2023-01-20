@@ -8,7 +8,7 @@ const persistConfig = {
 }
 
 const initialState = {
-	token: "",
+	token: {},
 	email: ""
 }
 

@@ -14,33 +14,38 @@ const RegisterVerifikasi = () => {
 	})
 
 	const [countDown, setCountDown] = useState(50)
-	const [error, setError] = useState("")
+	const [error, setError] = useState({})
 	const [resendOtpHit, { isLoading, isError, isSuccess, error: errorOtp }] = useResendOtpMutation()
 
 	const handleClick = () => {
-		resendOtpHit({ "email": emailOtp })
+		try {
+			resendOtpHit({ "email": emailOtp })
+		} catch (error) {
+			setError({ "alert": { "variant": "danger", "message": "Send link failed!" } })
+		}
 	}
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setCountDown(countDown - 1)
-		}, 1000);
-		return () => clearInterval(interval);
+		if (countDown > 0) {
+			setTimeout(() => {
+				setCountDown(countDown - 1)
+			}, 1000);
+		}
 	}, [countDown])
 
 	useEffect(() => {
 		if (isSuccess) {
+			setError({ "alert": { "variant": "success", "message": "Berhasil mengirimkan link!" } })
 			setCountDown(50)
 		}
 
 		if (isError) {
-			console.log(errorOtp)
 			if (Array.isArray(errorOtp.data)) {
 				errorOtp.data.forEach((el) =>
-					setError(el.data.message)
+					setError({ "alert": { "variant": "danger", "message": el.data.message } })
 				);
 			} else {
-				setError(errorOtp.data.message)
+				setError({ "alert": { "variant": "danger", "message": errorOtp.data.message } })
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,9 +61,9 @@ const RegisterVerifikasi = () => {
 					<Col xs={12}>
 						<div className="text-center mt-5">
 							{
-								(error !== "") ?
-									<Alert variant="danger">
-										{error}
+								(error.hasOwnProperty("alert") && error.alert.message !== "") ?
+									<Alert variant={error.alert.variant}>
+										{error.alert.message}
 									</Alert> :
 									""
 							}

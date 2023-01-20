@@ -22,8 +22,8 @@ const authApi = createApi({
 			invalidatesTags: ['Auth'],
 		}),
 		login: build.mutation({
-			query: (body) => ({
-				url: `api/login-user`,
+			query: ({ body, role }) => ({
+				url: `api/login-${role}`,
 				method: 'POST',
 				body: body,
 			}),
@@ -37,15 +37,25 @@ const authApi = createApi({
 			}),
 			invalidatesTags: ['Auth'],
 		}),
+		changePassword: build.mutation({
+			query: (body) => ({
+				url: `api/forget-password/change-password`,
+				method: 'POST',
+				body: body,
+			}),
+			invalidatesTags: ['Auth'],
+		}),
+
 
 	}),
 })
 
 export const {
 	useRegisterMutation,
-	useLoginMutation,
 	useResendOtpMutation,
-	useForgotPasswordMutation
+	useLoginMutation,
+	useForgotPasswordMutation,
+	useChangePasswordMutation
 } = authApi
 
 export default authApi

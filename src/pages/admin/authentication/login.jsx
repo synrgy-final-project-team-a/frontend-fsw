@@ -18,7 +18,7 @@ const Login = () => {
 	const roleParams = params.role
 
 	const [resendOtpHit] = useResendOtpMutation()
-	const [loginHit, { isLoading, isError, error: errorLogin, isSuccess, data: dataLogin }] = useLoginMutation()
+	const [loginHit, { isLoading, isError, error: errorLogin, isSuccess }] = useLoginMutation()
 
 
 	const submitHandler = (e) => {
@@ -28,14 +28,14 @@ const Login = () => {
 		const email = formRef.current.email.value
 		const password = formRef.current.password.value
 
-		if (email === "") {
-			failed = true
-			setError({ "email": "Email tidak boleh kosong!" })
-		}
-
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
 			failed = true
 			setError({ "email": "Email tidak valid!" })
+		}
+
+		if (email === "") {
+			failed = true
+			setError({ "email": "Email tidak boleh kosong!" })
 		}
 
 		if (password === "") {
@@ -52,36 +52,62 @@ const Login = () => {
 			"password": password,
 		}
 
+		let rolePayload = ""
+
+		if (roleParams === "pencari" || roleParams === "seeker") {
+			rolePayload = "seeker"
+		}
+		if (roleParams === "penyewa" || roleParams === "tennant") {
+			rolePayload = "tennant"
+		}
+		if (roleParams === "superadmin") {
+			rolePayload = "superadmin"
+		}
+
 		try {
-			loginHit(payload)
+			loginHit({ body: payload, role: rolePayload })
 		} catch (error) {
-			setError({ "general": "Login failed" })
+			setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
 		}
 	}
 
 	useEffect(() => {
 		if (isSuccess) {
-			console.log("berhasil")
-			console.log(dataLogin)
+			setError({ "alert": { "variant": "success", "message": "Berhasil login!" } })
+			setTimeout(() => {
+				if (roleParams === "penyewa" || roleParams === "tennant") {
+					return navigate('/penyewa')
+				}
+				if (roleParams === "superadmin") {
+					return navigate('/admin')
+				}
+				return navigate('/')
+			}, 500)
 		}
 
 		if (isError) {
 			if (Array.isArray(errorLogin.data)) {
 				errorLogin.data.forEach((el) =>
-					setError({ "general": el.data.message })
+					setError({ "alert": { "variant": "danger", "message": el.data.message } })
 				);
 			} else {
 				if (errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
 					dispatch(addEmail(formRef.current.email.value))
 					resendOtpHit({ "email": formRef.current.email.value })
-					navigate('/register/verifikasi')
+					navigate('/register/verification')
 				} else {
-					setError({ "general": errorLogin.data.message })
+					setError({ "alert": { "variant": "danger", "message": errorLogin.data.message } })
 				}
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoading])
+
+	useEffect(() => {
+		if (roleParams !== "pencari" && roleParams !== "seeker" && roleParams !== "penyewa" && roleParams !== "tennant" && roleParams !== "superadmin") {
+			navigate('/login')
+		}
+	})
 
 	return (
 		<>
@@ -101,9 +127,9 @@ const Login = () => {
 						<Card className="shadow-lg bg-light p-3">
 							<Card.Body>
 								{
-									(error.hasOwnProperty("general") && error.general !== "") ?
-										<Alert variant="danger">
-											{error.general}
+									(error.hasOwnProperty("alert") && error.alert.message !== "") ?
+										<Alert variant={error.alert.variant}>
+											{error.alert.message}
 										</Alert> :
 										""
 								}
