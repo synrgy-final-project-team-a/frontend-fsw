@@ -54,8 +54,13 @@ export const {
 	useRegisterMutation,
 	useResendOtpMutation,
 	useLoginMutation,
+<<<<<<< HEAD
 	useForgotPasswordMutation,
 	useChangePasswordMutation
+=======
+	useResendOtpMutation,
+	useForgotPasswordMutation
+>>>>>>> 5190bcd1e80e47a4256ac1adc37f82ff8dde4d51
 } = authApi
 
 export default authApi
