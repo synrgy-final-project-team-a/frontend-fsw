@@ -6,7 +6,9 @@ import NavbarComponent from "../../../components/navbar";
 import PencariRoutes from "../../../routes/pencari";
 import { useDispatch } from "react-redux";
 import { useLoginMutation, useResendOtpMutation } from "../../../store/apis/authentication";
-import { addEmail } from "../../../store/slices/authSlice";
+import { addEmail, addToken } from "../../../store/slices/authSlice";
+import { useCurrentUserMutation } from "../../../store/apis/users";
+import { addUser } from "../../../store/slices/userSlice";
 
 const Login = () => {
 	const params = useParams()
@@ -18,7 +20,8 @@ const Login = () => {
 	const roleParams = params.role
 
 	const [resendOtpHit] = useResendOtpMutation()
-	const [loginHit, { isLoading, isError, error: errorLogin, isSuccess }] = useLoginMutation()
+	const [loginHit, { isLoading: isLoadingLogin, isError: isErrorLogin, error: errorLogin, isSuccess: isSuccessLogin, data: dataLogin }] = useLoginMutation()
+	const [currentUserHit, { isLoading: isLoadingUser, isError: isErrorUser, error: errorUser, isSuccess: isSuccessUser, data: dataUser }] = useCurrentUserMutation()
 
 
 	const submitHandler = (e) => {
@@ -72,20 +75,38 @@ const Login = () => {
 	}
 
 	useEffect(() => {
-		if (isSuccess) {
-			setError({ "alert": { "variant": "success", "message": "Berhasil login!" } })
-			setTimeout(() => {
-				if (roleParams === "penyewa" || roleParams === "tennant") {
-					return navigate('/penyewa')
+		if (isSuccessLogin) {
+			if (roleParams === "superadmin" && dataLogin.role.includes('ROLE_SUPERUSER')) {
+				dispatch(addToken(dataLogin))
+				try {
+					currentUserHit(dataLogin.access_token)
+				} catch (error) {
+					setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
 				}
-				if (roleParams === "superadmin") {
-					return navigate('/admin')
+			}
+			if ((roleParams === "penyewa" || roleParams === "tennant")) {
+				if (dataLogin.role.includes('ROLE_TN')) {
+					dispatch(addToken(dataLogin))
+					try {
+						currentUserHit(dataLogin.access_token)
+					} catch (error) {
+						setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+					}
 				}
-				return navigate('/')
-			}, 500)
+			}
+			if (roleParams === "pencari" || roleParams === "seeker") {
+				if (dataLogin.role.includes('ROLE_SK')) {
+					dispatch(addToken(dataLogin))
+					try {
+						currentUserHit(dataLogin.access_token)
+					} catch (error) {
+						setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+					}
+				}
+			}
 		}
 
-		if (isError) {
+		if (isErrorLogin) {
 			if (Array.isArray(errorLogin.data)) {
 				errorLogin.data.forEach((el) =>
 					setError({ "alert": { "variant": "danger", "message": el.data.message } })
@@ -101,13 +122,49 @@ const Login = () => {
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoading])
+	}, [isLoadingLogin])
+
+	useEffect(() => {
+		if (isSuccessUser) {
+			if (roleParams === "superadmin") {
+				dispatch(addUser(dataUser.data))
+				return navigate('/penyewa')
+			}
+			if ((roleParams === "penyewa" || roleParams === "tennant")) {
+				dispatch(addUser(dataUser.data))
+				return navigate('/penyewa')
+			}
+			if (roleParams === "pencari" || roleParams === "seeker") {
+				dispatch(addUser(dataUser.data))
+				return navigate('/')
+			}
+			setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+		}
+
+		if (isErrorUser) {
+			if (Array.isArray(errorUser.data)) {
+				errorUser.data.forEach((el) =>
+					setError({ "alert": { "variant": "danger", "message": el.data.message } })
+				);
+			} else {
+				if (errorUser.data.message.hasOwnProperty('is_enabled') && errorUser.data.message.is_enabled === false) {
+					dispatch(addEmail(formRef.current.email.value))
+					resendOtpHit({ "email": formRef.current.email.value })
+					navigate('/register/verification')
+				} else {
+					setError({ "alert": { "variant": "danger", "message": errorUser.data.message } })
+				}
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoadingUser])
 
 	useEffect(() => {
 		if (roleParams !== "pencari" && roleParams !== "seeker" && roleParams !== "penyewa" && roleParams !== "tennant" && roleParams !== "superadmin") {
 			navigate('/login')
 		}
-	})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<>
@@ -167,7 +224,7 @@ const Login = () => {
 									</Form.Group>
 									<div className="d-grid gap-2">
 										{
-											isLoading ?
+											isLoadingLogin ?
 												<Button variant="primary" disabled>
 													Loading
 												</Button> :

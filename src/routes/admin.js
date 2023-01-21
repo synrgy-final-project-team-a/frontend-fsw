@@ -3,6 +3,7 @@ import Dashboard from "../pages/admin/dashboard"
 
 import Login from "../pages/admin/authentication/login"
 import LoginAs from "../pages/admin/authentication/loginAs"
+import LogoutComponent from "../pages/admin/authentication/logout"
 
 import Register from "../pages/admin/authentication/register"
 import RegisterAs from "../pages/admin/authentication/registerAs"
@@ -23,6 +24,10 @@ const AdminRoutes = [
 				element: <Dashboard />,
 			}
 		]
+	},
+	{
+		path: "/logout",
+		element: <LogoutComponent/>
 	},
 	{
 		path: "/register",

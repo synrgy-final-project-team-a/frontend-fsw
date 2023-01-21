@@ -31,6 +31,7 @@ const RegisterVerifikasi = () => {
 				setCountDown(countDown - 1)
 			}, 1000);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [countDown])
 
 	useEffect(() => {

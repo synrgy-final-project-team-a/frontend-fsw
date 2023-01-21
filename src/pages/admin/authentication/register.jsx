@@ -135,7 +135,8 @@ const Register = () => {
         if (roleParams !== "pencari" && roleParams !== "seeker" && roleParams !== "penyewa" && roleParams !== "tennant") {
             navigate('/register')
         }
-    })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>

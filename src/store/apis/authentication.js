@@ -45,8 +45,17 @@ const authApi = createApi({
 			}),
 			invalidatesTags: ['Auth'],
 		}),
-
-
+		logout: build.mutation({
+			query: (token) => ({
+				url: `api/logout`,
+				method: 'GET',
+				headers: {
+					'authorization': `Bearer ${token}`
+				},
+				responseHandler: "text/html"
+			}),
+			invalidatesTags: ['Auth'],
+		}),
 	}),
 })
 
@@ -55,7 +64,8 @@ export const {
 	useResendOtpMutation,
 	useLoginMutation,
 	useForgotPasswordMutation,
-	useChangePasswordMutation
+	useChangePasswordMutation,
+	useLogoutMutation
 } = authApi
 
 export default authApi
