@@ -1,12 +1,18 @@
 import React from "react"
 import Dashboard from "../pages/admin/dashboard"
+
 import Login from "../pages/admin/authentication/login"
 import LoginAs from "../pages/admin/authentication/loginAs"
+import LogoutComponent from "../pages/admin/authentication/logout"
+
 import Register from "../pages/admin/authentication/register"
 import RegisterAs from "../pages/admin/authentication/registerAs"
 import RegisterVerifikasi from "../pages/admin/authentication/registerVerifikasi"
+import RegisterVerifikasiSukses from "../pages/admin/authentication/registerVerifikasiSukses"
+
 import ForgetPass from "../pages/admin/authentication/forgetPassword"
 import ForgetPassSuccess from "../pages/admin/authentication/forgetPasswordSuccess"
+import ForgetPassChange from "../pages/admin/authentication/forgetPasswordChange"
 
 const AdminRoutes = [
 	{
@@ -20,6 +26,10 @@ const AdminRoutes = [
 		]
 	},
 	{
+		path: "/logout",
+		element: <LogoutComponent/>
+	},
+	{
 		path: "/register",
 		children: [
 			{
@@ -31,8 +41,12 @@ const AdminRoutes = [
 				element: <Register />,
 			},
 			{
-				path: "/verifikasi",
+				path: "/verification",
 				element: <RegisterVerifikasi />,
+			},
+			{
+				path: "/verification-success",
+				element: <RegisterVerifikasiSukses />,
 			}
 		]
 	},
@@ -49,7 +63,17 @@ const AdminRoutes = [
 			},
 			{
 				path: "/forgot-password-success",
-				element: <ForgetPassSuccess />
+				children: [
+					{
+						path: "",
+						element: <ForgetPassSuccess />
+					},
+					// Masi on progress
+					{
+						path: "/:otp",
+						element: <ForgetPassChange />
+					},
+				]
 			},
 			{
 				path: "/:role",

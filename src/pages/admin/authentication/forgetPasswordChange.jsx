@@ -1,35 +1,40 @@
 import { Button, Form, Container, Row, Col, Card, Alert } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavbarComponent from "../../../components/navbar";
 import PencariRoutes from "../../../routes/pencari";
-import { useForgotPasswordMutation } from "../../../store/apis/authentication";
-import { useDispatch } from "react-redux";
-import { addEmail } from "../../../store/slices/authSlice";
+import { useChangePasswordMutation } from "../../../store/apis/authentication";
 
-const ForgetPass = () => {
+const ForgetPassChange = () => {
+	const params = useParams()
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
 
 	const formRef = useRef({})
 	const [error, setError] = useState({})
+	const otpParams = params.otp
 
-	const [forgotPassHit, { isLoading, isSuccess, isError, error: errorForgot }] = useForgotPasswordMutation()
+	const [changePassHit, { isSuccess, isError, isLoading, error: errorForgot }] = useChangePasswordMutation()
 
 	const submitHandle = (e) => {
 		e.preventDefault()
 		let failed = false
 
-		const email = formRef.current.email.value
+		const password = formRef.current.password.value
+		const verifPassword = formRef.current.verifPassword.value
 
-		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+		if (password !== verifPassword) {
 			failed = true
-			setError("Email tidak valid!")
+			setError({ "verifPassword": "Verifikasi password salah!" })
 		}
 
-		if (email === "") {
+		if (password === "") {
 			failed = true
-			setError("Email tidak boleh kosong!")
+			setError({ "password": "Password tidak boleh kosong!" })
+		}
+
+		if (verifPassword === "") {
+			failed = true
+			setError({ "verifPassword": "Verifikasi password tidak boleh kosong!" })
 		}
 
 		if (failed) {
@@ -37,20 +42,23 @@ const ForgetPass = () => {
 		}
 
 		const payload = {
-			"email": email
+			"otp": otpParams,
+			"password": password
 		}
 
 		try {
-			forgotPassHit(payload)
+			changePassHit(payload)
 		} catch (error) {
-			setError({ "alert": { "variant": "danger", "message": "Login failed" } })
+			setError({ "alert": { "variant": "danger", "message": "Send link failed!" } })
 		}
 	}
 
 	useEffect(() => {
 		if (isSuccess) {
-			dispatch(addEmail(formRef.current.email.value))
-			navigate('/login/forgot-password-success')
+			setError({ "alert": { "variant": "success", "message": "Berhasil mengubah password!" } })
+			setTimeout(() => {
+				navigate('/login')
+			}, 1500)
 		}
 
 		if (isError) {
@@ -90,27 +98,34 @@ const ForgetPass = () => {
 										""
 								}
 								<Form onSubmit={submitHandle}>
-									<Form.Group className="mb-3" controlId="formBasicEmail">
-										<Form.Label>Alamat Email</Form.Label>
-										<Form.Control
-											type="text"
-											placeholder="Masukan alamat email"
-											ref={(ref) => formRef.current.email = ref}
-										/>
+									<Form.Group className="mb-3" controlId="formBasicPassword">
+										<Form.Label>Password</Form.Label>
+										<Form.Control ref={(ref) => formRef.current.password = ref} type="password" placeholder="Masukan password" />
 										{
-											(error.hasOwnProperty("email") && error.email !== "") ?
+											(error.hasOwnProperty("password") && error.password !== "") ?
 												<Form.Text className="text-danger">
-													{error.email}
+													{error.password}
 												</Form.Text> :
 												""
 										}
 									</Form.Group>
-									<p>Masukan email yang anda gunakan pada saat mendaftar dan kami akan mengirimkan link untuk mengubah password anda ke email anda</p>
+
+									<Form.Group className="mb-3" controlId="formBasicverofPassword">
+										<Form.Label>Verifikasi Password</Form.Label>
+										<Form.Control ref={(ref) => formRef.current.verifPassword = ref} type="password" placeholder="Masukan ulang password" />
+										{
+											(error.hasOwnProperty("verifPassword") && error.verifPassword !== "") ?
+												<Form.Text className="text-danger">
+													{error.verifPassword}
+												</Form.Text> :
+												""
+										}
+									</Form.Group>
 									<Button
 										variant="primary"
 										type="submit"
 									>
-										Kirim Link Reset
+										Ganti Password
 									</Button>
 								</Form>
 							</Card.Body>
@@ -122,4 +137,4 @@ const ForgetPass = () => {
 	);
 }
 
-export default ForgetPass;
+export default ForgetPassChange;

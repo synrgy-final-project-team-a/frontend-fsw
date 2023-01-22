@@ -41,17 +41,12 @@ const Register = () => {
 
         if (firstName === "") {
             failed = true
-            setError({ "firstName": "First name tidak boleh kosong!" })
+            setError({ "firstName": "Nama depan tidak boleh kosong!" })
         }
 
         if (lastName === "") {
             failed = true
-            setError({ "lastName": "Last name tidak boleh kosong!" })
-        }
-
-        if (nomorHandphone === "") {
-            failed = true
-            setError({ "nomorHandphone": "Nomor handphone tidak boleh kosong!" })
+            setError({ "lastName": "Nama belakang tidak boleh kosong!" })
         }
 
         if (!/^[0-9]{10,13}$/i.test(nomorHandphone)) {
@@ -59,14 +54,24 @@ const Register = () => {
             setError({ "nomorHandphone": "Nomor handphone tidak valid!" })
         }
 
-        if (email === "") {
+        if (nomorHandphone === "") {
             failed = true
-            setError({ "email": "Email tidak boleh kosong!" })
+            setError({ "nomorHandphone": "Nomor handphone tidak boleh kosong!" })
         }
 
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
             failed = true
             setError({ "email": "Email tidak valid!" })
+        }
+
+        if (email === "") {
+            failed = true
+            setError({ "email": "Email tidak boleh kosong!" })
+        }
+
+        if (password !== verifPassword) {
+            failed = true
+            setError({ "verifPassword": "Verifikasi password salah!" })
         }
 
         if (password === "") {
@@ -77,11 +82,6 @@ const Register = () => {
         if (verifPassword === "") {
             failed = true
             setError({ "verifPassword": "Verifikasi password tidak boleh kosong!" })
-        }
-
-        if (password !== verifPassword) {
-            failed = true
-            setError({ "verifPassword": "Verifikasi password salah!" })
         }
 
         if (failed) {
@@ -108,7 +108,7 @@ const Register = () => {
         try {
             registerHit({ body: payload, role: rolePayload })
         } catch (error) {
-            setError({ "general": "Register failed" })
+            setError({ "alert": { "variant": "danger", "message": "Register failed!" } })
         }
 
     }
@@ -116,20 +116,27 @@ const Register = () => {
     useEffect(() => {
         if (isSuccess) {
             dispatch(addEmail(formRef.current.email.value))
-            navigate('/register/verifikasi')
+            navigate('/register/verification')
         }
 
         if (isError) {
             if (Array.isArray(errorRegister.data)) {
-                errorRegister.data.forEach((el) =>
-                    setError({ "general": el.data.message })
-                );
-            } else {
-                setError({ "general": errorRegister.data.message })
-            }
+				errorRegister.data.forEach((el) =>
+					setError({ "alert": { "variant": "danger", "message": el.data.message } })
+				);
+			} else {
+				setError({ "alert": { "variant": "danger", "message": errorRegister.data.message } })
+			}
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoading])
+
+    useEffect(() => {
+        if (roleParams !== "pencari" && roleParams !== "seeker" && roleParams !== "penyewa" && roleParams !== "tennant") {
+            navigate('/register')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>
@@ -150,16 +157,16 @@ const Register = () => {
                             <Card>
                                 <Card.Body className="m-3">
                                     {
-                                        (error.hasOwnProperty("general") && error.general !== "") ?
-                                            <Alert variant="danger">
-                                                {error.general}
+                                        (error.hasOwnProperty("alert") && error.alert.message !== "") ?
+                                            <Alert variant={error.alert.variant}>
+                                                {error.alert.message}
                                             </Alert> :
                                             ""
                                     }
                                     <Form onSubmit={handleRegister}>
                                         <Form.Group className="mb-3" controlId="formBasicFirstName">
-                                            <Form.Label>First Name</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.firstName = ref} type="text" placeholder="Masukan first name" />
+                                            <Form.Label>Nama depan</Form.Label>
+                                            <Form.Control ref={(ref) => formRef.current.firstName = ref} type="text" placeholder="Masukan nama depan" />
                                             {
                                                 (error.hasOwnProperty("firstName") && error.firstName !== "") ?
                                                     <Form.Text className="text-danger">
@@ -170,8 +177,8 @@ const Register = () => {
                                         </Form.Group>
 
                                         <Form.Group className="mb-3" controlId="formBasicLastName">
-                                            <Form.Label>Last Name</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.lastName = ref} type="text" placeholder="Masukan last name" />
+                                            <Form.Label>Nama belakang</Form.Label>
+                                            <Form.Control ref={(ref) => formRef.current.lastName = ref} type="text" placeholder="Masukan nama belakang" />
                                             {
                                                 (error.hasOwnProperty("lastName") && error.lastName !== "") ?
                                                     <Form.Text className="text-danger">

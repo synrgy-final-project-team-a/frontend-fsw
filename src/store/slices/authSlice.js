@@ -8,7 +8,7 @@ const persistConfig = {
 }
 
 const initialState = {
-	token: "",
+	token: {},
 	email: ""
 }
 
@@ -21,10 +21,21 @@ export const slice = createSlice({
 		},
 		addEmail: (state, { payload }) => {
 			state.email = payload
+		},
+		emptyToken: (state) => {
+			state.token = {}
+		},
+		emptyEmail: (state) => {
+			state.email = ""
 		}
 	}
 })
 
-export const { addToken, addEmail } = slice.actions
+export const {
+	addToken,
+	addEmail,
+	emptyToken,
+	emptyEmail
+} = slice.actions
 
 export const authPersistReducer = persistReducer(persistConfig, slice.reducer)
