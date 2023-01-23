@@ -80,12 +80,13 @@ const DetailKos = () => {
                   <Card.Text className="mb-1">
                     <h2 className="fs-4 fw-bolder">Spesifikasi Kos</h2>
                     <Container>
-                      <ul id="list-spesifikasi-kos">
-                        <li id="icon-kamar">
-                          <span>3 x 4 meter</span>{" "}
+                      <ul id="">
+                        <li className="list-spesifikasi-kos" id="icon-kamar">
+                          <img src="/icons/icon-kamar.png" alt="" className="listImage" />3 x 4 meter
                         </li>
-                        <li id="icon-persen">
-                          <span>Gratis biaya listrik</span>{" "}
+                        <li className="list-spesifikasi-kos" id="icon-persen">
+                          <img src="/icons/icon-persen.png" alt="" className="listImage" />
+                          Gratis biaya listrik
                         </li>
                       </ul>
                     </Container>
@@ -108,18 +109,41 @@ const DetailKos = () => {
                       <Row>
                         <Col>
                           <ul>
-                            <li>Kasur</li>
-                            <li>Tv</li>
-                            <li>Sofa</li>
-                            <li>Kamar mandi dalam</li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-kasur.png" alt="" className="listImage" /> Kasur
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-tv.png" alt="" className="listImage" />
+                              Tv
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-sofa.png" alt="" className="listImage" />
+                              Sofa
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-kamar-mandi.png" alt="" className="listImage" />
+                              Kamar mandi dalam
+                            </li>
                           </ul>
                         </Col>
                         <Col>
                           <ul>
-                            <li>Lemari baju</li>
-                            <li>Meja</li>
-                            <li>Berdua sekamar</li>
-                            <li>Jendela</li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-lemari.png" alt="" className="listImage" />
+                              Lemari baju
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-meja.png" alt="" className="listImage" />
+                              Meja
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-2user.png" alt="" className="listImage" />
+                              Berdua sekamar
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-jendela.png" alt="" className="listImage" />
+                              Jendela
+                            </li>
                           </ul>
                         </Col>
                       </Row>
@@ -143,18 +167,42 @@ const DetailKos = () => {
                       <Row>
                         <Col>
                           <ul>
-                            <li>Dilarang merokok</li>
-                            <li>Hanya putra</li>
-                            <li>Hormati tetangga</li>
-                            <li>Parkir yang rapi</li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-dilarang.png" alt="" className="listImage" />
+                              Dilarang merokok
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-putra.png" alt="" className="listImage" />
+                              Hanya putra
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-hormat.png" alt="" className="listImage" />
+                              Hormati tetangga
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-parkir.png" alt="" className="listImage" />
+                              Parkir yang rapi
+                            </li>
                           </ul>
                         </Col>
                         <Col>
                           <ul>
-                            <li>Jam malam: 23:00</li>
-                            <li>Jaga kebersihan</li>
-                            <li>Tidak berisik</li>
-                            <li>Menjaga sopan santun</li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-jam-malam.png" alt="" className="listImage" />
+                              Jam malam: 23:00
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-jaga-kebersihan.png" alt="" className="listImage" />
+                              Jaga kebersihan
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-dilarang.png" alt="" className="listImage" />
+                              Tidak berisik
+                            </li>
+                            <li className="list-spesifikasi-kos" id="icon-kamar">
+                              <img src="/icons/icon-menjaga-sopan.png" alt="" className="listImage" />
+                              Menjaga sopan santun
+                            </li>
                           </ul>
                         </Col>
                       </Row>
@@ -185,10 +233,21 @@ const DetailKos = () => {
                 <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
                 <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
-                  <li>Tempat tidur</li>
-                  <li>Kamar Mandi dalam dan Heater</li>
-                  <li>Free Laundry Baju</li>
-                  <li>Free Listrik</li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-kamar.png" alt="" className="listImage" />
+                    Tempat tidur
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-kamar-mandi.png" alt="" className="listImage" />
+                    Kamar Mandi dalam dan Heater
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-laundry.png" alt="" className="listImage" />
+                    Free Laundry Baju
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-listrik.png" alt="" className="listImage" /> Free Listrik
+                  </li>
                 </ul>
               </Col>
               <Col xs={6} md={3}>
@@ -225,10 +284,21 @@ const DetailKos = () => {
                 <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
                 <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
-                  <li>Tempat tidur</li>
-                  <li>Kamar Mandi dalam dan Heater</li>
-                  <li>Free Laundry Baju</li>
-                  <li>Free Listrik</li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-kamar.png" alt="" className="listImage" />
+                    Tempat tidur
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-kamar-mandi.png" alt="" className="listImage" />
+                    Kamar Mandi dalam dan Heater
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-laundry.png" alt="" className="listImage" />
+                    Free Laundry Baju
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-listrik.png" alt="" className="listImage" /> Free Listrik
+                  </li>
                 </ul>
               </Col>
               <Col xs={6} md={3}>
@@ -252,6 +322,7 @@ const DetailKos = () => {
             </Row>
           </Container>
         </div>
+
         {/* Tipe C */}
         <div>
           <Container>
@@ -264,10 +335,21 @@ const DetailKos = () => {
                 <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
                 <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
-                  <li>Tempat tidur</li>
-                  <li>Kamar Mandi dalam dan Heater</li>
-                  <li>Free Laundry Baju</li>
-                  <li>Free Listrik</li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-kamar.png" alt="" className="listImage" />
+                    Tempat tidur
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-kamar-mandi.png" alt="" className="listImage" />
+                    Kamar Mandi dalam dan Heater
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-laundry.png" alt="" className="listImage" />
+                    Free Laundry Baju
+                  </li>
+                  <li className="list-spesifikasi-kos" id="icon-kamar">
+                    <img src="/icons/icon-listrik.png" alt="" className="listImage" /> Free Listrik
+                  </li>
                 </ul>
               </Col>
               <Col xs={6} md={3}>
