@@ -8,7 +8,7 @@ const PencariLayout = ({ children }) => {
 	return (
 		<>
 			<NavbarComponent routes={PencariRoutes} />
-			{ children }
+			{children}
 			<FooterComponent />
 		</>
 	)

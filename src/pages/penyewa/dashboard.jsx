@@ -1,7 +1,7 @@
 import React from "react"
 import PenyewaLayout from "../../layouts/admin.layout"
 
-function Dashboard() {
+const Dashboard = () => {
     return (
         <>
             <PenyewaLayout>
