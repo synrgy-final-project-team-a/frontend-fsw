@@ -15,9 +15,22 @@ const usersApi = createApi({
 			}),
 			invalidatesTags: ['Users'],
 		}),
+		currentUser: build.mutation({
+			query: (token) => ({
+				url: `api/user/detail`,
+				method: 'GET',
+				headers: {
+					'authorization': `Bearer ${token}`
+				}
+			}),
+			invalidatesTags: ['Users'],
+		}),
 	}),
 })
 
-export const { useListUsersMutation } = usersApi
+export const {
+	useListUsersMutation,
+	useCurrentUserMutation
+} = usersApi
 
 export default usersApi
