@@ -14,34 +14,40 @@ const SuccessResetPass = () => {
 	})
 
 	const [seconds, setSeconds] = useState(50);
-	const [error, setError] = useState("")
+	const [error, setError] = useState({})
 
 	const [forgotPassHit, { isLoading, isSuccess, isError, error: errorForgot }] = useForgotPasswordMutation()
 
 	const handleClick = () => {
-		forgotPassHit({ "email": emailOtp })
+		try {
+			forgotPassHit({ "email": emailOtp })
+		} catch (error) {
+            setError({ "alert": { "variant": "danger", "message": "Send link failed!" } })
+        }
 	}
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setSeconds(seconds - 1);
-		}, 1000);
-		return () => clearInterval(interval);
+		if (seconds > 0) {
+			setTimeout(() => {
+				setSeconds(seconds - 1);
+			}, 1000);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [seconds]);
 
 	useEffect(() => {
 		if (isSuccess) {
+			setError({ "alert": { "variant": "success", "message": "Berhasil mengirimkan link!" } })
 			setSeconds(50)
 		}
 
 		if (isError) {
-			console.log(errorForgot)
 			if (Array.isArray(errorForgot.data)) {
 				errorForgot.data.forEach((el) =>
-					setError(el.data.message)
+					setError({ "alert": { "variant": "danger", "message": el.data.message } })
 				);
 			} else {
-				setError(errorForgot.data.message)
+				setError({ "alert": { "variant": "danger", "message": errorForgot.data.message } })
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,9 +63,9 @@ const SuccessResetPass = () => {
 					<Col xs={12}>
 						<div className="text-center mt-5">
 							{
-								(error !== "") ?
-									<Alert variant="danger">
-										{error}
+								(error.hasOwnProperty("alert") && error.alert.message !== "") ?
+									<Alert variant={error.alert.variant}>
+										{error.alert.message}
 									</Alert> :
 									""
 							}

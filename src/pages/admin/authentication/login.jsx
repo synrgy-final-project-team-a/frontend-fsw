@@ -6,7 +6,9 @@ import NavbarComponent from "../../../components/navbar";
 import PencariRoutes from "../../../routes/pencari";
 import { useDispatch } from "react-redux";
 import { useLoginMutation, useResendOtpMutation } from "../../../store/apis/authentication";
-import { addEmail } from "../../../store/slices/authSlice";
+import { addEmail, addToken } from "../../../store/slices/authSlice";
+import { useCurrentUserMutation } from "../../../store/apis/users";
+import { addUser } from "../../../store/slices/userSlice";
 
 const Login = () => {
 	const params = useParams()
@@ -18,7 +20,8 @@ const Login = () => {
 	const roleParams = params.role
 
 	const [resendOtpHit] = useResendOtpMutation()
-	const [loginHit, { isLoading, isError, error: errorLogin, isSuccess, data: dataLogin }] = useLoginMutation()
+	const [loginHit, { isLoading: isLoadingLogin, isError: isErrorLogin, error: errorLogin, isSuccess: isSuccessLogin, data: dataLogin }] = useLoginMutation()
+	const [currentUserHit, { isLoading: isLoadingUser, isError: isErrorUser, error: errorUser, isSuccess: isSuccessUser, data: dataUser }] = useCurrentUserMutation()
 
 
 	const submitHandler = (e) => {
@@ -28,14 +31,14 @@ const Login = () => {
 		const email = formRef.current.email.value
 		const password = formRef.current.password.value
 
-		if (email === "") {
-			failed = true
-			setError({ "email": "Email tidak boleh kosong!" })
-		}
-
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
 			failed = true
 			setError({ "email": "Email tidak valid!" })
+		}
+
+		if (email === "") {
+			failed = true
+			setError({ "email": "Email tidak boleh kosong!" })
 		}
 
 		if (password === "") {
@@ -52,36 +55,116 @@ const Login = () => {
 			"password": password,
 		}
 
+		let rolePayload = ""
+
+		if (roleParams === "pencari" || roleParams === "seeker") {
+			rolePayload = "seeker"
+		}
+		if (roleParams === "penyewa" || roleParams === "tennant") {
+			rolePayload = "tennant"
+		}
+		if (roleParams === "superadmin") {
+			rolePayload = "superadmin"
+		}
+
 		try {
-			loginHit(payload)
+			loginHit({ body: payload, role: rolePayload })
 		} catch (error) {
-			setError({ "general": "Login failed" })
+			setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
 		}
 	}
 
 	useEffect(() => {
-		if (isSuccess) {
-			console.log("berhasil")
-			console.log(dataLogin)
+		if (isSuccessLogin) {
+			if (roleParams === "superadmin" && dataLogin.role.includes('ROLE_SUPERUSER')) {
+				dispatch(addToken(dataLogin))
+				try {
+					currentUserHit(dataLogin.access_token)
+				} catch (error) {
+					setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+				}
+			}
+			if ((roleParams === "penyewa" || roleParams === "tennant")) {
+				if (dataLogin.role.includes('ROLE_TN')) {
+					dispatch(addToken(dataLogin))
+					try {
+						currentUserHit(dataLogin.access_token)
+					} catch (error) {
+						setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+					}
+				}
+			}
+			if (roleParams === "pencari" || roleParams === "seeker") {
+				if (dataLogin.role.includes('ROLE_SK')) {
+					dispatch(addToken(dataLogin))
+					try {
+						currentUserHit(dataLogin.access_token)
+					} catch (error) {
+						setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+					}
+				}
+			}
 		}
 
-		if (isError) {
+		if (isErrorLogin) {
 			if (Array.isArray(errorLogin.data)) {
 				errorLogin.data.forEach((el) =>
-					setError({ "general": el.data.message })
+					setError({ "alert": { "variant": "danger", "message": el.data.message } })
 				);
 			} else {
 				if (errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
 					dispatch(addEmail(formRef.current.email.value))
 					resendOtpHit({ "email": formRef.current.email.value })
-					navigate('/register/verifikasi')
+					navigate('/register/verification')
 				} else {
-					setError({ "general": errorLogin.data.message })
+					setError({ "alert": { "variant": "danger", "message": errorLogin.data.message } })
 				}
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoading])
+	}, [isLoadingLogin])
+
+	useEffect(() => {
+		if (isSuccessUser) {
+			if (roleParams === "superadmin") {
+				dispatch(addUser(dataUser.data))
+				return navigate('/penyewa')
+			}
+			if ((roleParams === "penyewa" || roleParams === "tennant")) {
+				dispatch(addUser(dataUser.data))
+				return navigate('/penyewa')
+			}
+			if (roleParams === "pencari" || roleParams === "seeker") {
+				dispatch(addUser(dataUser.data))
+				return navigate('/')
+			}
+			setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+		}
+
+		if (isErrorUser) {
+			if (Array.isArray(errorUser.data)) {
+				errorUser.data.forEach((el) =>
+					setError({ "alert": { "variant": "danger", "message": el.data.message } })
+				);
+			} else {
+				if (errorUser.data.message.hasOwnProperty('is_enabled') && errorUser.data.message.is_enabled === false) {
+					dispatch(addEmail(formRef.current.email.value))
+					resendOtpHit({ "email": formRef.current.email.value })
+					navigate('/register/verification')
+				} else {
+					setError({ "alert": { "variant": "danger", "message": errorUser.data.message } })
+				}
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoadingUser])
+
+	useEffect(() => {
+		if (roleParams !== "pencari" && roleParams !== "seeker" && roleParams !== "penyewa" && roleParams !== "tennant" && roleParams !== "superadmin") {
+			navigate('/login')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<>
@@ -101,9 +184,9 @@ const Login = () => {
 						<Card className="shadow-lg bg-light p-3">
 							<Card.Body>
 								{
-									(error.hasOwnProperty("general") && error.general !== "") ?
-										<Alert variant="danger">
-											{error.general}
+									(error.hasOwnProperty("alert") && error.alert.message !== "") ?
+										<Alert variant={error.alert.variant}>
+											{error.alert.message}
 										</Alert> :
 										""
 								}
@@ -141,7 +224,7 @@ const Login = () => {
 									</Form.Group>
 									<div className="d-grid gap-2">
 										{
-											isLoading ?
+											isLoadingLogin ?
 												<Button variant="primary" disabled>
 													Loading
 												</Button> :

@@ -129,8 +129,7 @@ body{
 
 // banner
 .banner {
-  padding: 0 205px;
-  
+  padding: 0;
 }
 
 .owl-nav {
@@ -140,6 +139,75 @@ body{
   top: -200px;
   right: 80px;
   position: relative;
+}
+
+// Mobile
+@media only screen and (min-width: 300px) {
+  .banner {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .owl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+// Mobile
+@media only screen and (min-width: 400px) {
+  .banner {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .owl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+  }
+}
+
+// Tablet
+@media only screen and (min-width: 500px) {
+  .owl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+  }
+}
+
+// Tablet
+@media only screen and (min-width: 600px) {
+  .owl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+  }
+}
+
+// Wide Tablet
+@media only screen and (min-width: 700px) {
+  .owl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+  }
+}
+
+// Desktop
+@media only screen and (min-width: 1200px) {
+  .banner {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .owl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 500px;
+  }
 }
 
 // footer
