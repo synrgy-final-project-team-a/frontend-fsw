@@ -2,6 +2,7 @@ import React from "react"
 import Landing from "../pages/pencari/landing"
 import Profile from "../pages/pencari/profile/profilePencari"
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal"
+import EditProfile from "../pages/pencari/profile/editProfile"
 
 const PencariRoutes = [
 	{
@@ -29,6 +30,9 @@ const PencariRoutes = [
 			{
 				path: "/informasi-personal",
 				element: <InformasiPersonal />,
+			},{
+				path: "/edit-profile",
+				element: <EditProfile />,
 			}
 		]
 	}

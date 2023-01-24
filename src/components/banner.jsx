@@ -4,8 +4,8 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
 const Banner = () => {
-	let owlNavPrev = "<h1>Prev</h1>";
-	let owlNavNext = "<h1>Next</h1>";
+  let owlNavPrev = "<img src='/arrow-circle-left.png' />";
+  let owlNavNext = "<img src='/arrow-circle-right.png' />";
 
 	return (
 		<div>

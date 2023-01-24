@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Nav, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Nav, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NavbarComponent from "../../../components/navbar";
 import ProfilMenuComponent from "../../../components/profile";
@@ -29,32 +29,15 @@ export default function InformasiPersonal() {
             </li>
           </ol>
         </Nav>
-        <Row className="mt-5">
-          <Col>
+        <Row className="mt-md-5 ">
+          <Col className="mb-3">
             <ProfilMenuComponent routes={PencariRoutes} />
           </Col>
-          <Col xs={12} lg={9} className="border rounded d-none d-lg-flex">
-            <Container className="m-5">
+          <Col xs={12} lg={9} className="border rounded">
+            <Container className="m-md-5">
               <div className="d-flex justify-content-between">
-                <h6 className="fw-bold">Informasi Personal</h6>
-                {/* <h6>
-                  {" "}
-                  <Link
-                    to="/profile/edit-profile"
-                    className="text-decoration-none text-dark fw-bold"
-                  >
-                    Edit Profil
-                  </Link>
-                </h6>
-                <h6>
-                  {" "}
-                  <Link
-                    to="/profile/informasi-personal"
-                    className="text-decoration-none primary fw-bold"
-                  >
-                    Save
-                  </Link>
-                </h6> */}
+                <h6 className="fw-bold mb-3 mt-3">Informasi Personal</h6>
+
               </div>
               <div className="text-center">
                 <img
