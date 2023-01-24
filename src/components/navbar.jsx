@@ -32,7 +32,7 @@ const NavbarComponent = ({ routes }) => {
 						{routesDefine(routes)}
 						{
 							Object.keys(userData).length === 0 ?
-								<Button as={Link} key={"login"} to="/login" variant="outline-success">
+								<Button as={Link} key={"login"} to="/login" className="btn-login">
 									Masuk
 								</Button> :
 								<NavDropdown key={'profile'} title={userData.first_name} id="basic-nav-dropdown">
