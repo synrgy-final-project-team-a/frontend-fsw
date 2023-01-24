@@ -72,26 +72,54 @@ body{
   color: #9ca3af;
 }
 
-.form span {
+.left-pan {
+  position: absolute;
+  top: 7px;
+  padding-left: 7px;
+  border-right: 1px solid #757575;
+  line-height: 40px;
+  padding-right: 15px;
+  margin-left: 10px;
+
+}
+
+.right-pan {
   position: absolute;
   right: 17px;
-  top: 13px;
+  top: 10px;
   padding: 2px;
-  border-left: 1px solid #d1d5db;
+}
+.carikos-btn {
+  width: 58px;
+  height: 32px;
+  background: #056C73;
+  border: 0px;
+  border-radius: 6px;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #FFFFFF;
 }
 
-.left-pan {
-  padding-left: 7px;
-}
-
-.left-pan i {
-  padding-left: 10px;
-}
 
 .form-input {
   height: 55px;
-  text-indent: 33px;
+  text-indent: 60px;
   border-radius: 10px;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.5px;
+  color: #9E9E9E;
+  background: #FAFDFC;
+  border: 1px solid #ACCED0;
+  border-radius: 6px;
 }
 
 .form-input:focus {
@@ -107,7 +135,11 @@ body{
 
 .owl-nav {
   display: flex;
-  gap: 907px;
+  gap: 1000px;
+  width: fit-content;
+  top: -200px;
+  right: 80px;
+  position: relative;
 }
 
 // footer

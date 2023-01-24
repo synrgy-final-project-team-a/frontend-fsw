@@ -26,7 +26,7 @@ const NavbarComponent = ({ routes }) => {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto align-items-center gap-36">
 						{routesDefine(routes)}
-						<Button as={Link} to="/login" variant="outline-success">
+						<Button as={Link} to="/login" className="btn-login">
 							Masuk
 						</Button>
 					</Nav>

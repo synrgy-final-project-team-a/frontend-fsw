@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-brands-svg-icons";
+import { faMagnifyingGlass, faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+
 
 const Search = () => {
 	const navigate = useNavigate()
@@ -29,10 +33,10 @@ const Search = () => {
 					<div className="col-md-6">
 
 						<div className="form" onClick={routeToSearch}>
-							<i className="fa fa-search"></i>
+							<span className="left-pan"><img src="/search-normal.png" alt="" /></span>
 							<input type="text" className="form-control form-input" placeholder="Search anything..." onChange={handleChange} value={searchInput} />
-							<span className="left-pan"><i className="fa fa-microphone"></i></span>
-							<button onClick={(e) => handleButtonCariKos(e)}>Cari Kos</button>
+							<span className="right-pan"><button className="carikos-btn" onClick={(e) => handleButtonCariKos(e)}>Cari</button></span>
+							
 						</div>
 
 						<h1>{searchInput}</h1>
