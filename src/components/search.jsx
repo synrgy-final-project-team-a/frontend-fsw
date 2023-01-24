@@ -22,7 +22,7 @@ const Search = () => {
 
 	return (
 		<>
-			<div className="container">
+			
 
 				<div className="row height d-flex justify-content-center align-items-center">
 
@@ -41,7 +41,7 @@ const Search = () => {
 
 				</div>
 
-			</div>
+			
 
 			{/* <Container>
               <Row className="height d-flex justify-content-center align-items-center">

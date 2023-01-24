@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import Landing from "../pages/pencari/landing";
 import Login from "../pages/pencari/login";
@@ -39,5 +40,27 @@ const PencariRoutes = [
     element: <DetailKos />,
   },
 ];
+=======
+import React from "react"
+import Landing from "../pages/pencari/landing"
+
+const PencariRoutes = [
+	{
+		name: "Home",
+		path: "/",
+		element: <Landing />,
+	},
+	{
+		name: "Cari Kos",
+		path: "/cari-kos",
+		element: <Landing />,
+	},
+	{
+		name: "Sewa Kos",
+		path: "/sewa-kos",
+		element: <Landing />,
+	},
+]
+>>>>>>> 2711a2e108edc9b317b1860b7bf751e5274e71d5
 
 export default PencariRoutes;

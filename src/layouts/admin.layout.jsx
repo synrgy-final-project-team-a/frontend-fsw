@@ -8,7 +8,7 @@ const AdminLayout = ({ children }) => {
 	return (
 		<>
 			<NavbarComponent routes={AdminRoutes} />
-			{ children }
+			{children}
 			<FooterComponent />
 		</>
 	)
