@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit"
+
+const todoAdapter = createEntityAdapter()
 
 const initialState = {
 	list: [],
@@ -7,14 +9,16 @@ const initialState = {
 
 const slice = createSlice({
 	name: "todo",
-	initialState,
+	initialState: todoAdapter.getInitialState(),
 	reducers: {
-		addList: (state) => {
-			state.listNumber++
-		}
+		todoAdded: todoAdapter.addOne,
+		todosReceived: (state, action) => {
+			console.log(action)
+			todoAdapter.setAll(state, action.payload.todos)
+		},
 	}
 })
 
-export const { addList } = slice.actions
+export const { todoAdded, todosReceived } = slice.actions
 
 export default slice.reducer

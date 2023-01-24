@@ -1,6 +1,11 @@
 import React from "react"
 import Dashboard from "../pages/admin/dashboard"
 
+import Test from "../pages/admin/test"
+import DetilUser from "../pages/admin/users/detiluser"
+import KelolaUser from "../pages/admin/users/listuser"
+import TambahUser from "../pages/admin/users/tambahUser"
+
 import Login from "../pages/admin/authentication/login"
 import LoginAs from "../pages/admin/authentication/loginAs"
 import LogoutComponent from "../pages/admin/authentication/logout"
@@ -20,8 +25,31 @@ const AdminRoutes = [
 		children: [
 			{
 				name: "Dashboard",
-				path: "/",
+				path: "",
 				element: <Dashboard />,
+			},
+			{
+				name: "Test",
+				path: "/test",
+				element: <Test />,
+			},
+			{
+				path: "/users",
+				children: [
+					{
+						name: "Users",
+						path: "",
+						element: <KelolaUser />,
+					},
+					{
+						path: "/tambah",
+						element: <TambahUser />,
+					},
+					{
+						path: "/:id",
+						element: <DetilUser />,
+					}
+				]
 			}
 		]
 	},

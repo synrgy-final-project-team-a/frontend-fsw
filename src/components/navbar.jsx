@@ -13,7 +13,7 @@ const NavbarComponent = ({ routes }) => {
 			if (el.hasOwnProperty('children')) {
 				return routesDefine(el.children, path + el.path)
 			} else if (el.hasOwnProperty('name')) {
-				return <Nav.Link as={Link} key={el.name} to={path + el.path}>{el.name}</Nav.Link>
+				return <Nav.Link className="navbar-link" as={Link} key={el.name} to={path + el.path}>{el.name}</Nav.Link>
 			} else {
 				return <></>
 			}
@@ -21,11 +21,11 @@ const NavbarComponent = ({ routes }) => {
 	}
 
 	return (
-		<Navbar bg="light" expand="lg">
+		<Navbar bg="light" expand="lg" className="navbar">
 			<Container>
 				<Navbar.Brand as={Link} to="/">
-					<img src="/logo192.png" width="30" height="30" className="d-inline-block align-top mx-2" alt="..." />
-					KOSANKU
+					<img src="/kosanku.png" className="d-inline-block align-top mx-1 logo" alt="..." />
+					
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
