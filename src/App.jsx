@@ -8,9 +8,11 @@ const App = () => {
 	const routesDefine = (element, path = "") => {
 		return (element.map((el, i) => {
 			if (el.hasOwnProperty('children')) {
-				return routesDefine(el.children, path+el.path)
+				return routesDefine(el.children, path + el.path)
 			} else if (el.hasOwnProperty('element')) {
-				return <Route key={i} path={path+el.path} element={el.element} />
+				return <Route key={i} path={path + el.path} element={el.element} />
+			} else {
+				return <></>
 			}
 		}))
 	}
