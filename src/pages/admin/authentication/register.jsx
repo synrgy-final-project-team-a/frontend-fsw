@@ -74,7 +74,7 @@ const Register = () => {
             setError({ "verifPassword": "Verifikasi password salah!" })
         }
 
-        if (password.length <= 8) {
+        if (password.length < 8) {
             failed = true
             setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
         }
