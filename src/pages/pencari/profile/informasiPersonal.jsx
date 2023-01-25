@@ -34,9 +34,9 @@ export default function InformasiPersonal() {
             <ProfilMenuComponent routes={PencariRoutes} />
           </Col>
           <Col xs={12} lg={9} className="border rounded">
-            <Container className="m-md-5">
+            <Container>
               <div className="d-flex justify-content-between">
-                <h6 className="fw-bold mb-3 mt-3">Informasi Personal</h6>
+                <h6 className="fw-bold m-5">Informasi Personal</h6>
 
               </div>
               <div className="text-center">
@@ -59,7 +59,7 @@ export default function InformasiPersonal() {
                 </h6>
               </div>
 
-              <Form className="mt-5">
+              <Form className="mt-5 m-lg-5">
                 <Form>
                   <Form.Group className="mb-3 border-0" controlId="formBasicEmail">
                     <Form.Label>

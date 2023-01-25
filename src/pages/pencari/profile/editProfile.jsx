@@ -34,8 +34,8 @@ export default function EditProfile() {
             <ProfilMenuComponent routes={PencariRoutes} />
           </Col>
           <Col xs={12} lg={9} className="border rounded">
-            <Container className="m-md-5">
-              <div className="d-flex justify-content-between mb-3 mt-3">
+            <Container>
+              <div className="d-flex justify-content-between m-5">
                 
                 <h6>
                   {" "}
@@ -77,7 +77,7 @@ export default function EditProfile() {
                 </h6>
               </div>
 
-              <Form className="mt-5">
+              <Form className="mt-5 m-lg-5">
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>

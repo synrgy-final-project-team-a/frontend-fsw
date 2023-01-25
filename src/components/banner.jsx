@@ -7,23 +7,21 @@ const Banner = () => {
   let owlNavPrev = "<img src='/arrow-circle-left.png' />";
   let owlNavNext = "<img src='/arrow-circle-right.png' />";
 
-	return (
-		<div>
-			<div>
-				<OwlCarousel items={1} className="owl-theme banner" loop dots={false} nav navText={[owlNavPrev, owlNavNext]}>
-					<div className="img-fluid">
-						<img src="https://static.mamikos.com/uploads/cache/data/event/2023-01-11/GWQermw5-540x720.jpg" alt="" />
-					</div>
-					<div className="img-fluid">
-						<img src="https://static.mamikos.com/uploads/cache/data/event/2022-12-02/CyvkFN34-540x720.jpg" alt="" />
-					</div>
-					<div className="img-fluid">
-						<img src="https://static.mamikos.com/uploads/cache/data/event/2023-01-05/3wehyBKx-540x720.jpg" alt="" />
-					</div>
-				</OwlCarousel>
-			</div>
-		</div>
-	);
+  return (
+    <div>
+        <OwlCarousel items={1} className="owl-theme banner" loop dots={false} nav navText={[owlNavPrev, owlNavNext]} >
+          <div className="img-fluid">
+            <img src="/banner.png" alt="" />
+          </div>
+          <div className="img-fluid">
+            <img src="/banner.png" alt="" />
+          </div>
+          <div className="img-fluid">
+            <img src="/banner.png" alt="" />
+          </div>
+        </OwlCarousel>
+    </div>
+  );
 };
 
 export default Banner;
