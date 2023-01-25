@@ -1,5 +1,5 @@
 import React from "react"
-import PenyewaLayout from "../../layouts/admin.layout"
+import PenyewaLayout from "../../layouts/penyewa.layout"
 
 const Dashboard = () => {
     return (

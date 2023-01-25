@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 function DetilUser() {
 	const params = useParams()
 	const idUser = params.id
-
 	return (
 		<>
 			<AdminLayout>

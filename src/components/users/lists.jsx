@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { Table, Button, ButtonGroup } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useListUsersMutation } from "../../store/apis/users"
+import { Link } from "react-router-dom";
 
 const ListUsers = () => {
 	const token = useSelector((state) => state.auth.token.access_token)
@@ -13,7 +14,7 @@ const ListUsers = () => {
 	}, [])
 
 	return (
-		<Table striped hover size="sm">
+		<Table striped hover size="sm" className="mt-3">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -32,12 +33,12 @@ const ListUsers = () => {
 							data.data.map((el, i) => {
 								return (
 									<tr key={i}>
-										<td>1</td>
+										<td>{i+1}</td>
 										<th>{`${el.first_name} ${el.last_name}`}</th>
-										<th>Superadmin</th>
+										<th></th>
 										<th>
 											<ButtonGroup>
-												<Button href="/admin/users/2" size="sm" variant="primary">
+												<Button as={Link} to={`/admin/users/${el.id}`} size="sm" variant="primary">
 													detil
 												</Button>
 												<Button size="sm" variant="warning">
