@@ -74,6 +74,11 @@ const Register = () => {
             setError({ "verifPassword": "Verifikasi password salah!" })
         }
 
+        if (password.length <= 8) {
+            failed = true
+            setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
+        }
+
         if (password === "") {
             failed = true
             setError({ "password": "Password tidak boleh kosong!" })
@@ -182,7 +187,7 @@ const Register = () => {
                                             {
                                                 (error.hasOwnProperty("lastName") && error.lastName !== "") ?
                                                     <Form.Text className="text-danger">
-                                                        {error.namaLengkap}
+                                                        {error.lastName}
                                                     </Form.Text> :
                                                     ""
                                             }
