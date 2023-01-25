@@ -28,11 +28,6 @@ const AdminRoutes = [
 				element: <Dashboard />,
 			},
 			{
-				name: "Test",
-				path: "/test",
-				element: <Test />,
-			},
-			{
 				path: "/users",
 				children: [
 					{
