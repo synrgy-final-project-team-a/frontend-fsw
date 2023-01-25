@@ -15,6 +15,16 @@ const usersApi = createApi({
 			}),
 			invalidatesTags: ['Users'],
 		}),
+		oneUser: build.mutation({
+			query: ({ token, id }) => ({
+				url: `api/user/detail/${id}`,
+				method: 'GET',
+				headers: {
+					'authorization': `Bearer ${token}`
+				}
+			}),
+			invalidatesTags: ['Users'],
+		}),
 		currentUser: build.mutation({
 			query: (token) => ({
 				url: `api/user/detail`,
@@ -40,6 +50,7 @@ const usersApi = createApi({
 
 export const {
 	useListUsersMutation,
+	useOneUserMutation,
 	useCurrentUserMutation,
 	useDeleteMutation
 } = usersApi

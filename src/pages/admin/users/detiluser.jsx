@@ -2,10 +2,15 @@ import React from "react"
 import AdminLayout from "../../../layouts/admin.layout"
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function DetilUser() {
 	const params = useParams()
 	const idUser = params.id
+
+	useEffect(() => {
+		
+	}, [])
 	return (
 		<>
 			<AdminLayout>
