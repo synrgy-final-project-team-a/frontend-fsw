@@ -1,8 +1,20 @@
+import { useEffect } from "react";
 import { Navbar, Container, Nav, Button, NavDropdown } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "../store/apis/authentication";
+import { emptyEmail, emptyToken } from "../store/slices/authSlice";
+import { emptyUser } from "../store/slices/userSlice";
 
 const NavbarComponent = ({ routes }) => {
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+
+	const [logoutHit, { isLoading, isSuccess }] = useLogoutMutation()
+
+	const token = useSelector((state) => {
+		return state.auth.token
+	})
 
 	const userData = useSelector((state) => {
 		return state.user.current
@@ -19,6 +31,27 @@ const NavbarComponent = ({ routes }) => {
 			}
 		}))
 	}
+
+	const handleLogout = () => {
+		if (Object.keys(token).length === 0) {
+			dispatch(emptyToken())
+			dispatch(emptyEmail())
+			dispatch(emptyUser())
+			navigate('/')
+		} else {
+			logoutHit(token.access_token)
+		}
+	}
+
+	useEffect(() => {
+		if (isSuccess) {
+			dispatch(emptyToken())
+			dispatch(emptyEmail())
+			dispatch(emptyUser())
+			navigate('/')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoading])
 
 	return (
 		<Navbar bg="light" expand="lg" className="navbar">
@@ -38,7 +71,7 @@ const NavbarComponent = ({ routes }) => {
 								<NavDropdown key={'/profile'} title={userData.first_name} id="basic-nav-dropdown">
 									<NavDropdown.Item as={Link} key={'/me'} to="/me">Profile</NavDropdown.Item>
 									<NavDropdown.Divider />
-									<NavDropdown.Item as={Link} key={'/logout'} to="/logout">Logout</NavDropdown.Item>
+									<NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
 								</NavDropdown>
 						}
 					</Nav>

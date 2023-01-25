@@ -25,12 +25,23 @@ const usersApi = createApi({
 			}),
 			invalidatesTags: ['Users'],
 		}),
+		delete: build.mutation({
+			query: ({ token, id }) => ({
+				url: `api/user/delete/${id}`,
+				method: 'DELETE',
+				headers: {
+					'authorization': `Bearer ${token}`
+				}
+			}),
+			invalidatesTags: ['Users'],
+		}),
 	}),
 })
 
 export const {
 	useListUsersMutation,
-	useCurrentUserMutation
+	useCurrentUserMutation,
+	useDeleteMutation
 } = usersApi
 
 export default usersApi
