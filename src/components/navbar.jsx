@@ -54,7 +54,7 @@ const NavbarComponent = ({ routes }) => {
 	}, [isLoading])
 
 	return (
-		<Navbar bg="light" expand="lg" id="navbar" className="py-0">
+		<Navbar bg="light" expand="lg" id="navbar" className="py-0 bg-dark">
 			<Container fluid className="px-5 mx-5">
 				<Navbar.Brand as={Link} key={"/"} to="/">
 					<img src="/kosanku.png" className="d-inline-block align-top mx-1 logo" alt="..." />
