@@ -7,6 +7,10 @@ import TambahUser from "../pages/admin/users/tambahUser"
 
 import Login from "../pages/admin/authentication/login"
 import LoginAs from "../pages/admin/authentication/loginAs"
+<<<<<<< HEAD
+=======
+import LogoutComponent from "../pages/admin/authentication/logout"
+>>>>>>> a46bfbf3d2d3cd90299d32957a5577a73a71e10f
 
 import Register from "../pages/admin/authentication/register"
 import RegisterAs from "../pages/admin/authentication/registerAs"
