@@ -424,7 +424,7 @@ const DetailKos = () => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col xs={6} lg={4} className="d-none d-lg-flex">
+            <Col xs={6} lg={4} className="d-none d-lg-inline-flex">
               {/* style={{ width: "18rem" }} */}
               <Card className="">
                 <img className="img-fluid" src="/image/Kos2.png" alt="" />
