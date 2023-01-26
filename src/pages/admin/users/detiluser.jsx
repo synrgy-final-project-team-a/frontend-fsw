@@ -66,11 +66,7 @@ function DetilUser() {
 										</tr>
 							}
 						</tbody>
-<<<<<<< HEAD
-					</table>
-=======
 					</Table>
->>>>>>> testing
 				</Container>
 			</AdminLayout>
 		</>
