@@ -11,7 +11,7 @@ const DetailKos = () => {
         <NavbarComponent routes={PencariRoutes} />
       </div>
 
-      <div className="">
+      <div>
         {/* Tulisan  */}
         <div className="container my-3">
           <p>Home / Jawa Tengah / Semarang / Kosan Citra Garden Manalagi</p>
@@ -19,27 +19,23 @@ const DetailKos = () => {
         {/* End Tulisan */}
 
         {/* Gambar Kos */}
-        <Container className="mb-5">
+        <Container>
           <Row>
-            <Col xs={12} md={8}>
-              <img className="img-fluid rounded mt-3" src="/image/Kos1.png" alt="" />
+            <Col xs={12} lg={8}>
+              <img className="img-fluid rounded" src="/image/Kos1.png" alt="" />
             </Col>
-            <Col xs={12} md={4}>
-              <Row className="mt-3">
-                <img className="img-fluid rounded" src="/image/Kos2.png" alt="" />
-              </Row>
-              <Row className="mt-3">
-                <img className="img-fluid rounded" src="/image/Kos3.png" alt="" />
-              </Row>
+            <Col xs={12} lg={4} className="d-none d-lg-flex flex-column justify-content-between">
+              <img className="img-fluid rounded" src="/image/Kos2.png" alt="" />
+              <img className="img-fluid rounded" src="/image/Kos3.png" alt="" />
             </Col>
           </Row>
         </Container>
         {/* End Gambar Kos */}
 
         {/* Title Kos */}
-        <Container className="">
-          <Row>
-            <Col md={8}>
+        <Container>
+          <Row className="d-sm-flex ">
+            <Col xs={12} md={8} lg={8}>
               <Card className="shadow-sm mt-3">
                 <Card.Body>
                   <Card.Text className="mb-1">
@@ -47,21 +43,21 @@ const DetailKos = () => {
                     <p className="my-0 fs-5">Banaran, Gununug Pati, Semarang</p>
                     <p className="text-muted fs-5 fw-bolder my-0">Jl. Cempaka Sari Timur, No 123B, 6745B, 2/7 Banaran, Gunung Pati, Semarang</p>
                   </Card.Text>
-                  <Badge className="fw-normal text-primary badge-outline" bg="success">
+                  <Badge className="fw-normal" bg="outline-primary">
                     ♂ Pria
-                  </Badge>{" "}
+                  </Badge>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={3}>
-              <Card className="shadow-sm mt-3" bg="success">
+            <Col xs={12} md={4} lg={3} className="flex-column">
+              <Card className="shadow-sm mt-3 bg-outline-primary">
                 <Card.Body>
                   <Card.Text>
                     Harga Mulai dari
                     <p className="mb-2">
-                      <strong className="fs-4">Rp 850.000</strong> / Bulan
+                      <strong className="fs-5">Rp 850.000</strong> / Bulan
                     </p>
-                    <Button variant="primary" className="col-12">
+                    <Button variant="primary" className="col-12 mt-1">
                       Pilih Tipe Kos
                     </Button>
                   </Card.Text>
@@ -74,7 +70,7 @@ const DetailKos = () => {
         {/* Spesifikasi Kos */}
         <Container className="my-3">
           <Row>
-            <Col md={8}>
+            <Col xs={12} md={8} lg={8}>
               <Card className="shadow-sm">
                 <Card.Body>
                   <Card.Text className="mb-1">
@@ -100,7 +96,7 @@ const DetailKos = () => {
         {/* Fasilitas Kos */}
         <Container className="my-3">
           <Row>
-            <Col md={8}>
+            <Col xs={12} md={8} lg={8}>
               <Card className="shadow-sm">
                 <Card.Body>
                   <Card.Text className="mb-1">
@@ -158,7 +154,7 @@ const DetailKos = () => {
         {/* Peraturan Kos */}
         <Container className="mt-3 mb-4">
           <Row>
-            <Col md={8}>
+            <Col xs={12} md={8} lg={8}>
               <Card className="shadow-sm">
                 <Card.Body>
                   <Card.Text className="mb-1">
@@ -224,12 +220,12 @@ const DetailKos = () => {
         {/* Tipe A */}
         <div>
           <Container>
-            <h5 className="fw-bolder fs-4">Tipe A</h5>
+            {/* <h5 className="fw-bolder fs-4">Tipe A</h5> */}
             <Row>
-              <Col xs={6} md={4}>
+              <Col xs={6} lg={4} className="d-none d-lg-flex">
                 <img className="img-fluid rounded" src="/image/Kos1.png" alt="" />
               </Col>
-              <Col xs={6} md={5}>
+              <Col xs={12} lg={5} className="border-bottom">
                 <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
                 <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
@@ -250,10 +246,10 @@ const DetailKos = () => {
                   </li>
                 </ul>
               </Col>
-              <Col xs={6} md={3}>
-                <Card className="shadow-sm" bg="success">
+              <Col xs={6} lg={3} className="d-none d-lg-flex">
+                <Card className="shadow-sm bg-outline-primary">
                   <Card.Body>
-                    <Badge className="fw-normal text-primary badge-outline mb-3" bg="light">
+                    <Badge className="fw-normal mb-3" bg="outline-primary">
                       ♂ Pria
                     </Badge>{" "}
                     <Card.Text>
@@ -275,13 +271,13 @@ const DetailKos = () => {
         {/* Tipe B */}
         <div>
           <Container className="my-3">
-            <h5 className="fw-bolder fs-4">Tipe A</h5>
+            {/* <h5 className="fw-bolder fs-4">Tipe A</h5> */}
             <Row>
-              <Col xs={6} md={4}>
+              <Col xs={6} lg={4} className="d-none d-lg-flex">
                 <img className="img-fluid rounded" src="/image/Kos1.png" alt="" />
               </Col>
-              <Col xs={6} md={5}>
-                <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
+              <Col xs={12} lg={5} className="border-bottom">
+                <h6 className="fw-bolder text-muted fs-5 my-0">Tipe B</h6>
                 <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
                   <li className="list-spesifikasi-kos" id="icon-kamar">
@@ -301,10 +297,10 @@ const DetailKos = () => {
                   </li>
                 </ul>
               </Col>
-              <Col xs={6} md={3}>
-                <Card className="shadow-sm" bg="success">
+              <Col xs={6} lg={3} className="d-none d-lg-flex">
+                <Card className="shadow-sm bg-outline-primary">
                   <Card.Body>
-                    <Badge className="fw-normal text-primary badge-outline mb-3" bg="light">
+                    <Badge className="fw-normal mb-3" bg="outline-primary">
                       ♂ Pria
                     </Badge>{" "}
                     <Card.Text>
@@ -326,13 +322,13 @@ const DetailKos = () => {
         {/* Tipe C */}
         <div>
           <Container>
-            <h5 className="fw-bolder fs-4">Tipe A</h5>
+            {/* <h5 className="fw-bolder fs-4">Tipe A</h5> */}
             <Row>
-              <Col xs={6} md={4}>
+              <Col xs={6} lg={4} className="d-none d-lg-flex">
                 <img className="img-fluid rounded" src="/image/Kos1.png" alt="" />
               </Col>
-              <Col xs={6} md={5}>
-                <h6 className="fw-bolder text-muted fs-5 my-0">Tipe A</h6>
+              <Col xs={12} lg={5} className="border-bottom">
+                <h6 className="fw-bolder text-muted fs-5 my-0">Tipe C</h6>
                 <p className="fw-bolder text-muted fs-5 mt-1 mb-3">Luas Ruangan: 12 meter.</p>
                 <ul>
                   <li className="list-spesifikasi-kos" id="icon-kamar">
@@ -352,10 +348,10 @@ const DetailKos = () => {
                   </li>
                 </ul>
               </Col>
-              <Col xs={6} md={3}>
-                <Card className="shadow-sm" bg="success">
+              <Col xs={6} lg={3} className="d-none d-lg-flex">
+                <Card className="shadow-sm bg-outline-primary">
                   <Card.Body>
-                    <Badge className="fw-normal text-primary badge-outline mb-3" bg="light">
+                    <Badge className="fw-normal mb-3" bg="outline-primary">
                       ♂ Pria
                     </Badge>{" "}
                     <Card.Text>
@@ -376,90 +372,78 @@ const DetailKos = () => {
         {/* End Tipe Kamar Kos */}
 
         {/* Kosan Menarik di Sekitar Lokasi */}
-        <Container className="mt-5">
+        <Container className="mt-3">
           {" "}
           <h2 className="fs-4 fw-bolder text-muted">Lihat Kosan Menarik Di Sekitarmu</h2>
         </Container>
         <Container className="mb-5">
           <Row>
-            <Col xs={6} md={4}>
+            <Col xs={6} lg={4}>
               {/* style={{ width: "18rem" }} */}
               <Card className="">
                 <img className="img-fluid" src="/image/Kos2.png" alt="" />
                 <Card.Body>
-                  <Badge bg="secondary" text="light">
-                    Putri
-                  </Badge>{" "}
-                  <Badge bg="secondary" text="light">
-                    Kos Ajimumpung
-                  </Badge>{" "}
                   {/* <Card.Title>Card Title</Card.Title> */}
                   <Card.Text className="">
-                    <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
                     <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
                       Jakarta
                     </p>
-                    <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                      K. Mandi Dalam, Kloset Duduk
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
                     </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
                   </Card.Text>
-                  <Button size="sm" variant="primary" href="/detail-kos">
-                    Lihat Detail
-                  </Button>
                 </Card.Body>
               </Card>
             </Col>
-            <Col xs={6} md={4}>
+            <Col xs={6} lg={4}>
               {/* style={{ width: "18rem" }} */}
               <Card className="">
                 <img className="img-fluid" src="/image/Kos2.png" alt="" />
                 <Card.Body>
-                  <Badge bg="secondary" text="light">
-                    Putri
-                  </Badge>{" "}
-                  <Badge bg="secondary" text="light">
-                    Kos Ajimumpung
-                  </Badge>{" "}
                   {/* <Card.Title>Card Title</Card.Title> */}
                   <Card.Text className="">
-                    <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
                     <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
                       Jakarta
                     </p>
-                    <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                      K. Mandi Dalam, Kloset Duduk
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
                     </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
                   </Card.Text>
-                  <Button size="sm" variant="primary" href="/detail-kos">
-                    Lihat Detail
-                  </Button>
                 </Card.Body>
               </Card>
             </Col>
-            <Col xs={6} md={4}>
+            <Col xs={6} lg={4} className="d-none d-lg-flex">
               {/* style={{ width: "18rem" }} */}
               <Card className="">
                 <img className="img-fluid" src="/image/Kos2.png" alt="" />
                 <Card.Body>
-                  <Badge bg="secondary" text="light">
-                    Putri
-                  </Badge>{" "}
-                  <Badge bg="secondary" text="light">
-                    Kos Ajimumpung
-                  </Badge>{" "}
                   {/* <Card.Title>Card Title</Card.Title> */}
                   <Card.Text className="">
-                    <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
                     <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
                       Jakarta
                     </p>
-                    <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                      K. Mandi Dalam, Kloset Duduk
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
                     </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
                   </Card.Text>
-                  <Button size="sm" variant="primary" href="/detail-kos">
-                    Lihat Detail
-                  </Button>
                 </Card.Body>
               </Card>
             </Col>
