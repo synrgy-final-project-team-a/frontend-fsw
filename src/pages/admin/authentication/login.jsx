@@ -30,6 +30,17 @@ const Login = () => {
 
 		const email = formRef.current.email.value
 		const password = formRef.current.password.value
+		
+		
+		if (password.length < 8) {
+            failed = true
+            setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
+        }
+
+		if (password === "") {
+			failed = true
+			setError({ "password": "Password tidak boleh kosong!" })
+		}
 
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
 			failed = true
@@ -39,11 +50,6 @@ const Login = () => {
 		if (email === "") {
 			failed = true
 			setError({ "email": "Email tidak boleh kosong!" })
-		}
-
-		if (password === "") {
-			failed = true
-			setError({ "password": "Password tidak boleh kosong!" })
 		}
 
 		if (failed) {
@@ -128,7 +134,7 @@ const Login = () => {
 		if (isSuccessUser) {
 			if (roleParams === "superadmin") {
 				dispatch(addUser(dataUser.data))
-				return navigate('/penyewa')
+				return navigate('/admin')
 			}
 			if ((roleParams === "penyewa" || roleParams === "tennant")) {
 				dispatch(addUser(dataUser.data))
