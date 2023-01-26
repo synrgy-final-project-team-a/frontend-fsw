@@ -15,7 +15,6 @@ const usersApi = createApi({
 			}),
 			invalidatesTags: ['Users'],
 		}),
-<<<<<<< HEAD
 		oneUser: build.mutation({
 			query: ({ token, id }) => ({
 				url: `api/user/detail/${id}`,
@@ -26,8 +25,6 @@ const usersApi = createApi({
 			}),
 			invalidatesTags: ['Users'],
 		}),
-=======
->>>>>>> a46bfbf3d2d3cd90299d32957a5577a73a71e10f
 		currentUser: build.mutation({
 			query: (token) => ({
 				url: `api/user/detail`,
