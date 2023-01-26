@@ -9,8 +9,8 @@ function BestKost() {
   return (
     <Container>
       <div>
-      <h2>Kos Terbaik dari Kami</h2>
-      
+        <h2>Kos Terbaik dari Kami</h2>
+
         <Row lg={3}>
           <Col className="d-flex">
             <Card className="mb-2 flex-fill">
@@ -169,10 +169,8 @@ function BestKost() {
             </Card>
           </Col>
         </Row>
-           
-    </div>
+      </div>
     </Container>
-    
   );
 }
 
