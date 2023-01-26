@@ -1,5 +1,6 @@
 import React from "react"
 import Dashboard from "../pages/penyewa/dashboard"
+import ListKos from "../pages/penyewa/kos/list"
 
 const PenyewaRoutes = [
 	{
@@ -7,8 +8,18 @@ const PenyewaRoutes = [
 		children: [
 			{
 				name: "Dashboard",
-				path: "/",
+				path: "",
 				element: <Dashboard />,
+			},
+			{
+				path: "/kos",
+				children: [
+					{
+						name: "Kosanku",
+						path: "",
+						element: <ListKos />
+					}
+				]
 			}
 		]
 	}
