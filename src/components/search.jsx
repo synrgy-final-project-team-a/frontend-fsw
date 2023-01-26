@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-brands-svg-icons";
-import { faMagnifyingGlass, faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 const Search = () => {
@@ -28,7 +25,7 @@ const Search = () => {
 		<>
 			
 
-				<div className="row height d-flex justify-content-center align-items-center">
+				<div className="row d-flex justify-content-center align-items-center mx-0">
 
 					<div className="col-md-6">
 
@@ -38,9 +35,6 @@ const Search = () => {
 							<span className="right-pan"><button className="carikos-btn" onClick={(e) => handleButtonCariKos(e)}>Cari</button></span>
 							
 						</div>
-
-						<h1>{searchInput}</h1>
-
 					</div>
 
 				</div>

@@ -57,10 +57,6 @@ body{
   color: #FFFFFF;
 }
 
-.height {
-  height: 100vh;
-}
-
 .form {
   position: relative;
 }
@@ -129,86 +125,92 @@ body{
 
 // banner
 .banner {
-  padding: 0;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .owl-nav {
   display: flex;
-  gap: 1000px;
+  gap: 1139px;
   width: fit-content;
-  top: -200px;
+  top: -250px;
   right: 80px;
   position: relative;
 }
 
 // Mobile
-@media only screen and (min-width: 300px) {
-  .banner {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
+// @media only screen and (min-width: 300px) {
+//   .banner {
+//     padding-left: 10%;
+//     padding-right: 10%;
+//   }
 
-  .owl-nav {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-}
+//   .owl-nav {
+//     display: flex;
+//     justify-content: center;
+//     gap: 10px;
+//   }
+// }
+
+// // Mobile
+// @media only screen and (max-width: 400px) {
+//   .banner {
+//     padding-left: 10%;
+//     padding-right: 10%;
+//   }
+
+//   .owl-nav {
+//     display: flex;
+//     justify-content: center;
+//     gap: 50px;
+//   }
+// }
 
 // Mobile
-@media only screen and (min-width: 400px) {
-  .banner {
-    padding-left: 10%;
-    padding-right: 10%;
+@media only screen and (max-width: 576px) {
+  .navbar-brand {
+    margin-left: 0px;
   }
-
-  .owl-nav {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-  }
-}
-
-// Tablet
-@media only screen and (min-width: 500px) {
   .owl-nav {
     display: flex;
     justify-content: center;
     gap: 100px;
+    top: 0;
+    left: 137px;
   }
 }
 
-// Tablet
-@media only screen and (min-width: 600px) {
-  .owl-nav {
-    display: flex;
-    justify-content: center;
-    gap: 150px;
-  }
-}
+// // Tablet
+// @media only screen and (max-width: 600px) {
+//   .owl-nav {
+//     display: flex;
+//     justify-content: center;
+//     gap: 150px;
+//   }
+// }
 
-// Wide Tablet
-@media only screen and (min-width: 700px) {
-  .owl-nav {
-    display: flex;
-    justify-content: center;
-    gap: 150px;
-  }
-}
+// // Wide Tablet
+// @media only screen and (max-width: 700px) {
+//   .owl-nav {
+//     display: flex;
+//     justify-content: center;
+//     gap: 150px;
+//   }
+// }
 
-// Desktop
-@media only screen and (min-width: 1200px) {
-  .banner {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
+// // Desktop
+// @media only screen and (min-width: 1200px) {
+//   .banner {
+//     padding-left: 10%;
+//     padding-right: 10%;
+//   }
 
-  .owl-nav {
-    display: flex;
-    justify-content: center;
-    gap: 500px;
-  }
-}
+//   .owl-nav {
+//     display: flex;
+//     justify-content: center;
+//     gap: 500px;
+//   }
+// }
 
 // footer
 .footer-title{
