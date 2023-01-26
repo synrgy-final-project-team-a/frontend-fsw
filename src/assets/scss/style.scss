@@ -2,6 +2,7 @@
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
 @import "kelola-kos";
+@import "detailkos";
 
 body {
   font-family: "Raleway";
@@ -159,4 +160,24 @@ body {
   color: #c2c2c2;
   text-align: center;
   padding: 34px;
+}
+
+.badge {
+  @each $name, $color in $theme-colors {
+    &.bg-outline-#{$name} {
+      outline: 1px solid $color;
+      background-color: $white;
+      color: $color;
+    }
+  }
+}
+
+.card {
+  @each $name, $color in $theme-colors {
+    &.bg-outline-#{$name} {
+      outline: 1px solid $color;
+      background-color: $light;
+      color: $black;
+    }
+  }
 }

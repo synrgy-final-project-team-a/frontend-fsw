@@ -27,14 +27,14 @@ const ForgetPassChange = () => {
 			setError({ "verifPassword": "Verifikasi password salah!" })
 		}
 
-		if (password === "") {
-			failed = true
-			setError({ "password": "Password tidak boleh kosong!" })
-		}
-
 		if (verifPassword === "") {
 			failed = true
 			setError({ "verifPassword": "Verifikasi password tidak boleh kosong!" })
+		}
+
+		if (password === "") {
+			failed = true
+			setError({ "password": "Password tidak boleh kosong!" })
 		}
 
 		if (failed) {
@@ -43,7 +43,7 @@ const ForgetPassChange = () => {
 
 		const payload = {
 			"otp": otpParams,
-			"password": password
+			"newPassword": password
 		}
 
 		try {
