@@ -21,6 +21,7 @@ export default function ProfilePencari() {
     if (token.role[0] !== "ROLE_SK") {
       return navigate("/login");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

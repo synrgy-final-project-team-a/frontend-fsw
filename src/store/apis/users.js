@@ -17,10 +17,30 @@ const usersApi = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+    oneUser: build.mutation({
+      query: ({ token, id }) => ({
+        url: `api/user/detail/${id}`,
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Users"],
+    }),
     currentUser: build.mutation({
       query: (token) => ({
         url: `api/user/detail`,
         method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    delete: build.mutation({
+      query: ({ token, id }) => ({
+        url: `api/user/delete/${id}`,
+        method: "DELETE",
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -43,7 +63,9 @@ const usersApi = createApi({
 
 export const {
   useListUsersMutation,
+  useOneUserMutation,
   useCurrentUserMutation,
+  useDeleteMutation,
   useEditUserMutation,
 } = usersApi;
 
