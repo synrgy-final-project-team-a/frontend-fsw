@@ -3,6 +3,7 @@ import Landing from "../pages/pencari/landing"
 import Profile from "../pages/pencari/profile/profilePencari"
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal"
 import EditProfile from "../pages/pencari/profile/editProfile"
+import KelolaKos from "../pages/pencari/kelola kos/kelolaKos"
 
 const PencariRoutes = [
 	{
@@ -33,7 +34,11 @@ const PencariRoutes = [
 			},{
 				path: "/edit-profile",
 				element: <EditProfile />,
+			},{
+				path: "/kelolakos",
+				element: <KelolaKos />,
 			}
+
 		]
 	}
 ]
