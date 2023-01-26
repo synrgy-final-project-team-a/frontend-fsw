@@ -54,14 +54,14 @@ const NavbarComponent = ({ routes }) => {
 	}, [isLoading])
 
 	return (
-		<Navbar bg="light" expand="lg" className="navbar">
-			<Container>
+		<Container>
+			<Navbar bg="light" expand="lg">
 				<Navbar.Brand as={Link} key={"/"} to="/">
 					<img src="/kosanku.png" className="d-inline-block align-top mx-1 logo" alt="..." />
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="ms-auto align-items-center gap-36">
+					<Nav className="ms-auto align-items-center">
 						{routesDefine(routes)}
 						{
 							Object.keys(userData).length === 0 ?
@@ -76,8 +76,8 @@ const NavbarComponent = ({ routes }) => {
 						}
 					</Nav>
 				</Navbar.Collapse>
-			</Container>
-		</Navbar>
+			</Navbar>
+		</Container>
 	);
 };
 export default NavbarComponent;
