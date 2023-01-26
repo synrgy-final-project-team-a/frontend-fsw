@@ -6,7 +6,7 @@ const KelolaKos = () => {
 	return (
 		<div id="kelola-kos">
 			<h3 className="mt-3">Kelola Kos</h3>
-			<Button variant="primary" as={Link} className="mt-3" to="/kos/tambah">Tambah Kos Baru</Button>
+			<Button variant="primary" as={Link} className="mt-3" to="/penyewa/kos/tambah">Tambah Kos Baru</Button>
 			<ListKos />
 		</div>
 	)
