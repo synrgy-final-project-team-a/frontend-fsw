@@ -1,25 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
-<<<<<<< HEAD
-@import "register";
-// @import "mystylesheet";
+@import "kelola-kos";
 
-body{
-  font-family: "Raleway";
-}
-
-.navbar {
-  height: 80px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.navbar-nav {
-  margin-right: -60px;
-}
-
-body{
+body {
   font-family: "Raleway";
 }
 
@@ -39,15 +23,12 @@ body{
 
 .logo {
   width: 259.29px;
-  height: 60px;  
+  height: 60px;
 }
-=======
-@import "kelola-kos";
->>>>>>> ebc3b279f5e6c0a8a494ae18e45d865050b1b0a6
 
-.logo-footer{
+.logo-footer {
   width: 190px;
-  height: 60px;  
+  height: 60px;
 }
 
 .navbar-link {
@@ -66,8 +47,8 @@ body{
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
-  background: #056C73;
-  color: #FFFFFF;
+  background: #056c73;
+  color: #ffffff;
 }
 
 .height {
@@ -115,7 +96,6 @@ body{
 // banner
 .banner {
   padding: 0 205px;
-  
 }
 
 .owl-nav {
@@ -124,7 +104,7 @@ body{
 }
 
 // footer
-.footer-title{
+.footer-title {
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -148,19 +128,18 @@ body{
 
 .first-footer {
   width: 388px;
-  
 }
 
 .kosanku-desc {
-  font-family: 'Raleway' !important;
+  font-family: "Raleway" !important;
   font-style: normal !important;
   font-weight: 400 !important;
   font-size: 16px !important;
   line-height: 24px !important;
   letter-spacing: 0.5px !important;
-  color: #9E9E9E !important;
+  color: #9e9e9e !important;
   margin-top: 14px !important;
-  padding-right: 15px;  
+  padding-right: 15px;
 }
 
 .fourth-footer {
@@ -168,16 +147,16 @@ body{
 }
 
 .seperator {
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
 }
 
 .copyright {
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
   line-height: 32px;
-  color: #C2C2C2;
+  color: #c2c2c2;
   text-align: center;
   padding: 34px;
 }
