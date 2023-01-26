@@ -1,9 +1,13 @@
 import React from "react";
-import { Row, Col, Button, Card } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarCheck, faClock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarCheck,
+  faClock,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-library.add(faCalendarCheck, faClock);
+library.add(faCalendarCheck, faClock, faChevronDown);
 import { useState } from "react";
 
 export default function cardKelolaKosPencari() {
@@ -72,6 +76,7 @@ export default function cardKelolaKosPencari() {
                 }}
               >
                 Selengkapnya
+                <FontAwesomeIcon icon={faChevronDown} className="mx-2" />
               </Button>
             ) : null}
           </div>
@@ -80,9 +85,7 @@ export default function cardKelolaKosPencari() {
 
       <div style={{ display: isCardVisible ? "block" : "none" }}>
         <Row className="mx-md-5 row align-items-center">
-          <Col xs={12} lg={4}>
-            {/* <img src="/pencari.png" alt="" className="img-fluid" /> */}
-          </Col>
+          <Col xs={12} lg={4}></Col>
           <Col
             xs={12}
             lg={8}

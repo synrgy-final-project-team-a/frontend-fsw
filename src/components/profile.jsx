@@ -69,7 +69,14 @@ export default function Profile() {
         </p>
         <hr className="m-0" />
         <p className="mb-0 mt-3">
-          <small>Histori transaksi</small>
+          <small>
+            <Link
+              to="/profile/histori-transaksi"
+              className="text-dark text-decoration-none"
+            >
+              Histori transaksi
+            </Link>
+          </small>
         </p>
         <hr className="m-0" />
         <p className="mb-0 mt-3">

@@ -4,6 +4,7 @@ import Profile from "../pages/pencari/profile/profilePencari"
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal"
 import EditProfile from "../pages/pencari/profile/editProfile"
 import KelolaKos from "../pages/pencari/kelola kos/kelolaKos"
+import HistoriTransaksi from "../pages/pencari/kelola kos/historiTransaksi"
 
 const PencariRoutes = [
 	{
@@ -37,6 +38,9 @@ const PencariRoutes = [
 			},{
 				path: "/kelolakos",
 				element: <KelolaKos />,
+			},{
+				path: "/histori-transaksi",
+				element: <HistoriTransaksi/>
 			}
 
 		]
