@@ -38,4 +38,4 @@ const PencariRoutes = [
 	}
 ]
 
-export default PencariRoutes
+export default PencariRoutes;

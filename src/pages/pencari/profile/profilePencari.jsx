@@ -1,10 +1,28 @@
 import React from "react";
+import { useEffect } from "react";
 import { Container, Row, Col, Nav } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import NavbarComponent from "../../../components/navbar";
 import ProfilMenuComponent from "../../../components/profile";
 import PencariRoutes from "../../../routes/pencari";
 
-export default function profilePencari() {
+export default function ProfilePencari() {
+  const navigate = useNavigate();
+  const token = useSelector((state) => {
+    return state.auth.token;
+  });
+
+  useEffect(() => {
+    console.log(token);
+    if (!token.access_token) {
+      return navigate("/login");
+    }
+    if (token.role[0] !== "ROLE_SK") {
+      return navigate("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <div className="d-none d-lg-block">
@@ -14,7 +32,9 @@ export default function profilePencari() {
         <Nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="/" className="text-decoration-none">Home</a>
+              <a href="/" className="text-decoration-none">
+                Home
+              </a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
               User Pencari Kos
