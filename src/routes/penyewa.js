@@ -1,6 +1,8 @@
 import React from "react"
-import Dashboard from "../pages/admin/dashboard"
 import Profile from "../pages/penyewa/profile/profilePenyewa"
+import Dashboard from "../pages/penyewa/dashboard"
+import ListKos from "../pages/penyewa/kos/list"
+import TambahKos from "../pages/penyewa/kos/tambah"
 
 const PenyewaRoutes = [
 	{
@@ -8,21 +10,29 @@ const PenyewaRoutes = [
 		children: [
 			{
 				name: "Dashboard",
-				path: "/",
+				path: "",
 				element: <Dashboard />,
 			},
-		]
-	},
-	{
-		path: "/profile",
-		children: [
 			{
-				path: "",
+				path: "/profile",
 				element: <Profile />,
 			},
+			{
+				path: "/kos",
+				children: [
+					{
+						name: "Kosanku",
+						path: "",
+						element: <ListKos />
+					},
+					{
+						path: "/tambah",
+						element: <TambahKos />
+					}
+				]
+			}
 		]
-		
-	}
+	},
 ]
 
 export default PenyewaRoutes

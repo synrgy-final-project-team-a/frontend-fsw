@@ -1,43 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
-@import "register";
-@import "mystylesheet";
-
-body{
-  font-family: "Raleway";
-}
-
-.navbar {
-  height: 80px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.navbar-nav {
-  margin-right: -60px;
-}
-
-.gap-36 {
-  gap: 36px !important;
-}
-
-.logo {
-  width: 259.29px;
-  height: 60px;  
-}
+@import "kelola-kos";
 
 .logo-footer{
   width: 190px;
   height: 60px;  
 }
 
-.navbar-brand {
-  margin-left: -50px;
-}
-
 .navbar-link {
-  
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -69,7 +40,7 @@ body{
   position: absolute;
   top: 20px;
   left: 20px;
-  color: #9ca3af;
+  color: $color-form;
 }
 
 .form span {
@@ -77,7 +48,7 @@ body{
   right: 17px;
   top: 13px;
   padding: 2px;
-  border-left: 1px solid #d1d5db;
+  border-left: 1px solid $color-form;
 }
 
 .left-pan {
@@ -112,7 +83,6 @@ body{
 
 // footer
 .footer-title{
-  font-family: 'Raleway';
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -122,7 +92,6 @@ body{
 }
 
 .footer-subtitle {
-  font-family: 'Raleway';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -169,8 +138,4 @@ body{
   color: #C2C2C2;
   text-align: center;
   padding: 34px;
-}
-
-.ml-99 {
-  margin-left: 99px;
 }
