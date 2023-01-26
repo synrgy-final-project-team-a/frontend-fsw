@@ -1,5 +1,5 @@
 import React from "react"
-import Dashboard from "../pages/admin/dashboard"
+import Dashboard from "../pages/penyewa/dashboard"
 
 const PenyewaRoutes = [
 	{

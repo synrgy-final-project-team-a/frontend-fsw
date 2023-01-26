@@ -128,7 +128,7 @@ const Login = () => {
 		if (isSuccessUser) {
 			if (roleParams === "superadmin") {
 				dispatch(addUser(dataUser.data))
-				return navigate('/penyewa')
+				return navigate('/admin')
 			}
 			if ((roleParams === "penyewa" || roleParams === "tennant")) {
 				dispatch(addUser(dataUser.data))
