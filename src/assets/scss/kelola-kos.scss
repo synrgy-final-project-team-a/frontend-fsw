@@ -1,0 +1,19 @@
+#kelola-kos {
+	.card {
+		> .card-img {
+			max-width: 200px;
+			min-height: 200px;
+			object-fit: cover;
+		}
+
+		.badge {
+			@each $name, $color in $theme-colors {
+				&.bg-outline-#{$name} {
+					outline: 1px solid $color;
+					background-color: $white;
+					color: $color;
+				}
+			}
+		}
+	}
+}

@@ -81,7 +81,7 @@ const ListUsers = () => {
 								<td colSpan={4} className="text-center">Loading...</td>
 							</tr> :
 							isSuccess ?
-								data.data.map((el, i) => {
+								data.data.content.map((el, i) => {
 									tempRole = []
 									return (
 										<tr key={i}>
