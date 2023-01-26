@@ -40,7 +40,7 @@ const DetailKos = () => {
         <Container className="">
           <Row>
             <Col md={8}>
-              <Card className="shadow-sm">
+              <Card className="shadow-sm mt-3">
                 <Card.Body>
                   <Card.Text className="mb-1">
                     <h1 className="fw-bold my-0 fs-3">Kosan Citra Garden Manalagi</h1>
@@ -54,7 +54,7 @@ const DetailKos = () => {
               </Card>
             </Col>
             <Col md={3}>
-              <Card className="shadow-sm" bg="success">
+              <Card className="shadow-sm mt-3" bg="success">
                 <Card.Body>
                   <Card.Text>
                     Harga Mulai dari
