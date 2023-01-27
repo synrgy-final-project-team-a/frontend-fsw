@@ -24,12 +24,12 @@ const ForgetPass = () => {
 
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
 			failed = true
-			setError("Email tidak valid!")
+			setError({"email": "Email tidak valid!"})
 		}
 
 		if (email === "") {
 			failed = true
-			setError("Email tidak boleh kosong!")
+			setError({"email": "Email tidak boleh kosong!"})
 		}
 
 		if (failed) {
