@@ -19,8 +19,8 @@ const ListKos = () => {
 							</div>
 							<br />
 							<div className="d-flex flex-row-reverse">
-								<Button variant="secondary" size="sm" className="m-1">Edit</Button>
-								<Button variant="danger" size="sm" className="m-1">Hapus</Button>
+								<Button variant="outline-secondary" size="sm" className="m-1">Edit</Button>
+								<Button variant="outline-danger" size="sm" className="m-1">Hapus</Button>
 							</div>
 						</Card.Body>
 					</Card>

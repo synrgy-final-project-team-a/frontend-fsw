@@ -1,4 +1,5 @@
 import React from "react"
+import Profile from "../pages/penyewa/profile/profilePenyewa"
 import Dashboard from "../pages/penyewa/dashboard"
 import ListKos from "../pages/penyewa/kos/list"
 import TambahKos from "../pages/penyewa/kos/tambah"
@@ -11,6 +12,10 @@ const PenyewaRoutes = [
 				name: "Dashboard",
 				path: "",
 				element: <Dashboard />,
+			},
+			{
+				path: "/profile",
+				element: <Profile />,
 			},
 			{
 				path: "/kos",
@@ -27,7 +32,7 @@ const PenyewaRoutes = [
 				]
 			}
 		]
-	}
+	},
 ]
 
 export default PenyewaRoutes
