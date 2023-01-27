@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container } from "react-bootstrap";
 import FooterComponent from "../../components/footer";
 import NavbarComponent from "../../components/navbar";
+import NumberProgress from "../../components/numberProgress";
 import PencariRoutes from "../../routes/pencari";
 
 export default function PengajuanSewa2() {
@@ -27,32 +28,7 @@ export default function PengajuanSewa2() {
           <h6 className="ms-2 my-auto">Kembali</h6>
         </div>
         <div>
-          <div className="d-flex line justify-content-center align-items-center m-a ">
-            <div className="rounded-circle mx-3 mx-sm-5 circleNumber">
-              <h1 className="  number">1</h1>
-            </div>
-            <div className="rounded-circle d-flex mx-3 mx-sm-5 borderCircle">
-              <div className="rounded-circle m-auto circleNumber">
-                <h1 className=" h-100  number">2</h1>
-              </div>
-            </div>
-            <div
-              className="rounded-circle  mx-3 mx-sm-5 circleNumber"
-              style={{
-                backgroundColor: "#C4C4C4",
-              }}
-            >
-              <h1 className=" number">3</h1>
-            </div>
-            <div
-              className="rounded-circle  mx-3 mx-sm-5 circleNumber"
-              style={{
-                backgroundColor: "#C4C4C4",
-              }}
-            >
-              <h1 className=" number">4</h1>
-            </div>
-          </div>
+          <NumberProgress current={2} total={4} />
         </div>
         <div className="d-flex flex-column justify-content-center text-center">
           <h2>Konfirmasi Pemiliki Kos </h2>

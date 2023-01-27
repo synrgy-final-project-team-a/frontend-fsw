@@ -1,9 +1,15 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import NavbarComponent from "../../components/navbar";
+import NumberProgress from "../../components/numberProgress";
 import PencariRoutes from "../../routes/pencari";
 
 export default function PengajuanSewa1() {
+  const navigate = useNavigate();
+  function handleSubmitSewa(e) {
+    navigate("/pengajuan-sewa/2");
+  }
   return (
     <>
       <NavbarComponent routes={PencariRoutes} />
@@ -26,37 +32,7 @@ export default function PengajuanSewa1() {
           <h6 className="ms-sm-2 my-auto">Kembali</h6>
         </div>
         <div>
-          <div className="d-flex line justify-content-center align-items-center m-a ">
-            <div className="rounded-circle d-flex mx-3 mx-sm-5 borderCircle">
-              <div className="rounded-circle m-auto circleNumber">
-                <h1 className=" h-100  number">1</h1>
-              </div>
-            </div>
-            <div
-              className="rounded-circle mx-3 mx-sm-5 circleNumber"
-              style={{
-                backgroundColor: "#C4C4C4",
-              }}
-            >
-              <h1 className="  number">2</h1>
-            </div>
-            <div
-              className="rounded-circle  mx-3 mx-sm-5 circleNumber"
-              style={{
-                backgroundColor: "#C4C4C4",
-              }}
-            >
-              <h1 className=" number">3</h1>
-            </div>
-            <div
-              className="rounded-circle  mx-3 mx-sm-5 circleNumber"
-              style={{
-                backgroundColor: "#C4C4C4",
-              }}
-            >
-              <h1 className=" number">4</h1>
-            </div>
-          </div>
+          <NumberProgress current={2} total={4} />
         </div>
         <div>
           <h2 className="text-center my-2">Pegajuan Sewa Kos</h2>
@@ -109,7 +85,11 @@ export default function PengajuanSewa1() {
               </div>
             </div>
             <div className="d-flex justify-content-center">
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={(e) => handleSubmitSewa(e)}
+              >
                 Ajukan Sewa Kos Sekarang
               </Button>
             </div>
