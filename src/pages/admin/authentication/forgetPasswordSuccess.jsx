@@ -69,8 +69,8 @@ const SuccessResetPass = () => {
 									</Alert> :
 									""
 							}
-							<h1>Verifikasi</h1>
-							<h3>Link telah dikirimkan ke <b>{emailOtp}</b>. Silahkan cek email anda.</h3>
+							<h1>Sukses</h1>
+							<h3>Link ganti password telah dikirimkan ke <b>{emailOtp}</b>. Silahkan cek email anda.</h3>
 						</div>
 					</Col>
 					<Col xs={12} lg={6}>

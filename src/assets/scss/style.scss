@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
 @import "kelola-kos";
-@import "mystylesheet";
+@import "detailkos";
 
-.logo-footer{
+.logo-footer {
   width: 190px;
-  height: 60px;  
+  height: 60px;
 }
 
 .navbar-link {
@@ -25,8 +25,8 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
-  background: #056C73;
-  color: #FFFFFF;
+  background: #056c73;
+  color: #ffffff;
 }
 
 .form {
@@ -219,7 +219,7 @@
 }
 
 // footer
-.footer-title{
+.footer-title {
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -243,7 +243,6 @@
 
 .first-footer {
   width: 388px;
-  
 }
 
 .kosanku-desc {  
@@ -262,7 +261,7 @@
 }
 
 .seperator {
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
 }
 
 .copyright {  
@@ -270,7 +269,27 @@
   font-weight: 400;
   font-size: 24px;
   line-height: 32px;
-  color: #C2C2C2;
+  color: #c2c2c2;
   text-align: center;
   padding: 34px;
+}
+
+.badge {
+  @each $name, $color in $theme-colors {
+    &.bg-outline-#{$name} {
+      outline: 1px solid $color;
+      background-color: $white;
+      color: $color;
+    }
+  }
+}
+
+.card {
+  @each $name, $color in $theme-colors {
+    &.bg-outline-#{$name} {
+      outline: 1px solid $color;
+      background-color: $light;
+      color: $black;
+    }
+  }
 }
