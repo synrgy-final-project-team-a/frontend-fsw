@@ -2,29 +2,7 @@
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
 @import "kelola-kos";
-
-body {
-  font-family: "Raleway";
-}
-
-.navbar {
-  height: 80px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.navbar-nav {
-  margin-right: -60px;
-}
-
-.gap-36 {
-  gap: 36px !important;
-}
-
-.logo {
-  width: 259.29px;
-  height: 60px;
-}
+@import "detailkos";
 
 .logo-footer {
   width: 190px;
@@ -159,4 +137,24 @@ body {
   color: #c2c2c2;
   text-align: center;
   padding: 34px;
+}
+
+.badge {
+  @each $name, $color in $theme-colors {
+    &.bg-outline-#{$name} {
+      outline: 1px solid $color;
+      background-color: $white;
+      color: $color;
+    }
+  }
+}
+
+.card {
+  @each $name, $color in $theme-colors {
+    &.bg-outline-#{$name} {
+      outline: 1px solid $color;
+      background-color: $light;
+      color: $black;
+    }
+  }
 }
