@@ -25,7 +25,7 @@ const Search = () => {
 		<>
 			
 
-				<div className="row d-flex justify-content-center align-items-center mx-0">
+				<div className="row d-flex justify-content-center align-items-center mx-0 mb-5">
 
 					<div className="col-md-6">
 

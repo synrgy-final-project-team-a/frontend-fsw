@@ -1,43 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
-@import "register";
+@import "kelola-kos";
 @import "mystylesheet";
-
-body{
-  font-family: "Raleway";
-}
-
-.navbar {
-  height: 80px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.navbar-nav {
-  margin-right: -60px;
-}
-
-.gap-36 {
-  gap: 36px !important;
-}
-
-.logo {
-  width: 259.29px;
-  height: 60px;  
-}
 
 .logo-footer{
   width: 190px;
   height: 60px;  
 }
 
-.navbar-brand {
-  margin-left: -50px;
-}
-
 .navbar-link {
-  
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -65,7 +37,7 @@ body{
   position: absolute;
   top: 20px;
   left: 20px;
-  color: #9ca3af;
+  color: $color-form;
 }
 
 .left-pan {
@@ -97,6 +69,7 @@ body{
   font-size: 14px;
   line-height: 20px;
   color: #FFFFFF;
+  border-left: 1px solid $color-form;
 }
 
 
@@ -138,33 +111,7 @@ body{
   position: relative;
 }
 
-// Mobile
-// @media only screen and (min-width: 300px) {
-//   .banner {
-//     padding-left: 10%;
-//     padding-right: 10%;
-//   }
 
-//   .owl-nav {
-//     display: flex;
-//     justify-content: center;
-//     gap: 10px;
-//   }
-// }
-
-// // Mobile
-// @media only screen and (max-width: 400px) {
-//   .banner {
-//     padding-left: 10%;
-//     padding-right: 10%;
-//   }
-
-//   .owl-nav {
-//     display: flex;
-//     justify-content: center;
-//     gap: 50px;
-//   }
-// }
 
 // Mobile
 @media only screen and (max-width: 576px) {
@@ -212,9 +159,67 @@ body{
 //   }
 // }
 
+// bestkost
+.section-title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  color: #0A0A0A;
+  margin-bottom: 24px;
+  padding-left: 43px;
+}
+
+.w-25r {
+  width: 25rem;
+}
+
+.g-20 {
+  gap: 20px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.kost-desc {
+  padding: 10px 18px;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #ACCED0;
+  border-radius: 0px 0px 16px 16px;
+}
+
+.kost-title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: #0A0A0A;
+  margin-bottom: 2px;
+}
+
+.kost-location {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  color: #616161;
+  margin-bottom: 2px;
+}
+
+.kost-price {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  color: #0A0A0A;
+}
+
 // footer
 .footer-title{
-  font-family: 'Raleway';
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -224,7 +229,6 @@ body{
 }
 
 .footer-subtitle {
-  font-family: 'Raleway';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -242,16 +246,15 @@ body{
   
 }
 
-.kosanku-desc {
-  font-family: 'Raleway' !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  font-size: 16px !important;
-  line-height: 24px !important;
-  letter-spacing: 0.5px !important;
-  color: #9E9E9E !important;
-  margin-top: 14px !important;
-  padding-right: 15px;  
+.kosanku-desc {  
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  color: #9E9E9E;
+  margin-top: 14px;
+  width: 388px;
 }
 
 .fourth-footer {
@@ -262,8 +265,7 @@ body{
   border: 1px solid #E0E0E0;
 }
 
-.copyright {
-  font-family: 'Raleway';
+.copyright {  
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -271,8 +273,4 @@ body{
   color: #C2C2C2;
   text-align: center;
   padding: 34px;
-}
-
-.ml-99 {
-  margin-left: 99px;
 }

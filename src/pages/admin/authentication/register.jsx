@@ -39,24 +39,24 @@ const Register = () => {
         const password = formRef.current.password.value
         const verifPassword = formRef.current.verifPassword.value
 
-        if (firstName === "") {
+        if (password !== verifPassword) {
             failed = true
-            setError({ "firstName": "Nama depan tidak boleh kosong!" })
+            setError({ "verifPassword": "Verifikasi password salah!" })
         }
 
-        if (lastName === "") {
+        if (password.length < 8) {
             failed = true
-            setError({ "lastName": "Nama belakang tidak boleh kosong!" })
+            setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
         }
 
-        if (!/^[0-9]{10,13}$/i.test(nomorHandphone)) {
+        if (password === "") {
             failed = true
-            setError({ "nomorHandphone": "Nomor handphone tidak valid!" })
+            setError({ "password": "Password tidak boleh kosong!" })
         }
 
-        if (nomorHandphone === "") {
+        if (verifPassword === "") {
             failed = true
-            setError({ "nomorHandphone": "Nomor handphone tidak boleh kosong!" })
+            setError({ "verifPassword": "Verifikasi password tidak boleh kosong!" })
         }
 
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
@@ -69,19 +69,24 @@ const Register = () => {
             setError({ "email": "Email tidak boleh kosong!" })
         }
 
-        if (password !== verifPassword) {
+        if (!/^[0-9]{10,13}$/i.test(nomorHandphone)) {
             failed = true
-            setError({ "verifPassword": "Verifikasi password salah!" })
+            setError({ "nomorHandphone": "Nomor handphone tidak valid!" })
         }
 
-        if (password === "") {
+        if (nomorHandphone === "") {
             failed = true
-            setError({ "password": "Password tidak boleh kosong!" })
+            setError({ "nomorHandphone": "Nomor handphone tidak boleh kosong!" })
         }
 
-        if (verifPassword === "") {
+        if (lastName === "") {
             failed = true
-            setError({ "verifPassword": "Verifikasi password tidak boleh kosong!" })
+            setError({ "lastName": "Nama belakang tidak boleh kosong!" })
+        }
+
+        if (firstName === "") {
+            failed = true
+            setError({ "firstName": "Nama depan tidak boleh kosong!" })
         }
 
         if (failed) {
@@ -182,7 +187,7 @@ const Register = () => {
                                             {
                                                 (error.hasOwnProperty("lastName") && error.lastName !== "") ?
                                                     <Form.Text className="text-danger">
-                                                        {error.namaLengkap}
+                                                        {error.lastName}
                                                     </Form.Text> :
                                                     ""
                                             }

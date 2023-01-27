@@ -2,8 +2,8 @@ import React from "react";
 
 const FooterComponent = () => {
   return (
-    <div className="container">
-      <div className="row">
+    <div className="container-fluid">
+      <div className="row d-flex justify-content-center">
         <div className="col-md-3 col-xs-1 first-footer">
             <img src="/logo-footer.png" alt="..." />
             <p className="kosanku-desc">Kosanku merupakan platform pencari kos yang mudah dan terpercaya, 
@@ -11,7 +11,7 @@ const FooterComponent = () => {
               tahun menjadi lebih mudah dan nyaman bagi penguna baik pencari maupun penyewa kos.
               </p>
         </div>
-          <div className="col-md-3 col-xs-1  second-footer">
+          <div className="col-md-3 col-xs-1  second-footer px-5">
             <p className="footer-title ">Kosanku</p>
             <div className="mt-30 footer-subtitle">
               <p>Pusat Bantuan</p>
@@ -35,8 +35,7 @@ const FooterComponent = () => {
               <p>instagram</p>
               <p>twitter</p>              
             </div>
-          </div>
-        
+          </div>        
       </div>
       <div className="seperator"></div>
       <div className="copyright">

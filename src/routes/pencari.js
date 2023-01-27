@@ -8,13 +8,13 @@ const PencariRoutes = [
 		element: <Landing />,
 	},
 	{
-		name: "Cari Kos",
-		path: "/cari-kos",
+		name: "Favorit",
+		path: "/favorit",
 		element: <Landing />,
 	},
 	{
-		name: "Sewa Kos",
-		path: "/sewa-kos",
+		name: "Chat",
+		path: "/chat",
 		element: <Landing />,
 	},
 ]

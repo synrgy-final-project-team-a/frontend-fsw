@@ -1,4 +1,3 @@
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import Row from "react-bootstrap/Row";
@@ -7,170 +6,129 @@ import Container from "react-bootstrap/Container";
 
 function BestKost() {
   return (
-    <Container>
+    <Container fluid className="mb-5">
       <div>
-      <h2>Kos Terbaik dari Kami</h2>
-      
-        <Row lg={3}>
-          <Col className="d-flex">
-            <Card className="mb-2 flex-fill">
-              <Card.Img variant="top" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" />
-              <Card.Body>
-                <Badge bg="secondary" text="light">
-                  Putri
-                </Badge>{" "}
-                <Badge bg="secondary" text="light">
-                  Kos Ajimumpung
-                </Badge>{" "}
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                    K. Mandi Dalam, Kloset Duduk
+        <h2 className="section-title">Cari Kosan Terbaik Kami</h2>
+      </div>  
+        <Row lg={3} xs={1} className="px-2 mx-0 justify-content-center g-20">
+          <Col className="d-flex w-25r px-0 ">
+            <Card className="flex-fill w-25r mb-0 border-0" >
+              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
+              <Card.Body className="kost-desc">
+                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+                <Card.Text className="mb-1">
+                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
+                  <p style={{ margin: 0 }} className="kost-price">
+                    Rp. 1.500.000 / Bulan
                   </p>
                 </Card.Text>
-                <Button size="sm" variant="primary">
-                  Lihat Detail
-                </Button>
+                <Badge bg="outline-primary" text="primary">
+                  <span><img src="/wowan.png" alt="" /></span>
+                  Putri
+                </Badge>{" "}
+                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex">
-            <Card className="ms-2 mb-2 flex-fill">
-              <Card.Img variant="top" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" />
-              <Card.Body>
-                <Badge bg="secondary" text="light">
-                  Putri
-                </Badge>{" "}
-                <Badge bg="secondary" text="light">
-                  Kos Ajimumpung
-                </Badge>{" "}
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                    K. Mandi Dalam, Kloset Duduk
+          <Col className="d-flex w-25r px-0 ">
+            <Card className="flex-fill w-25r mb-0 border-0" >
+              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
+              <Card.Body className="kost-desc">
+                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+                <Card.Text className="mb-1">
+                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
+                  <p style={{ margin: 0 }} className="kost-price">
+                    Rp. 1.500.000 / Bulan
                   </p>
                 </Card.Text>
-                <Button size="sm" variant="primary">
-                  Lihat Detail
-                </Button>
+                <Badge bg="outline-primary" text="primary">
+                  <span><img src="/wowan.png" alt="" /></span>
+                  Putri
+                </Badge>{" "}
+                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex">
-            <Card className="ms-2 mb-2 flex-fill">
-              <Card.Img variant="top" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" />
-              <Card.Body>
-                <Badge bg="secondary" text="light">
-                  Putri
-                </Badge>{" "}
-                <Badge bg="secondary" text="light">
-                  Kos Ajimumpung
-                </Badge>{" "}
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                    K. Mandi Dalam, Kloset Duduk
+          <Col className="d-flex w-25r px-0 ">
+            <Card className="flex-fill w-25r mb-0 border-0" >
+              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
+              <Card.Body className="kost-desc">
+                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+                <Card.Text className="mb-1">
+                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
+                  <p style={{ margin: 0 }} className="kost-price">
+                    Rp. 1.500.000 / Bulan
                   </p>
                 </Card.Text>
-                <Button size="sm" variant="primary">
-                  Lihat Detail
-                </Button>
+                <Badge bg="outline-primary" text="primary">
+                  <span><img src="/wowan.png" alt="" /></span>
+                  Putri
+                </Badge>{" "}
+                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex">
-            <Card className="ms-2 mb-2 flex-fill">
-              <Card.Img variant="top" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" />
-              <Card.Body>
-                <Badge bg="secondary" text="light">
-                  Putri
-                </Badge>{" "}
-                <Badge bg="secondary" text="light">
-                  Kos Ajimumpung
-                </Badge>{" "}
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                    K. Mandi Dalam, Kloset Duduk
+          <Col className="d-flex w-25r px-0 ">
+            <Card className="flex-fill w-25r mb-0 border-0" >
+              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
+              <Card.Body className="kost-desc">
+                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+                <Card.Text className="mb-1">
+                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
+                  <p style={{ margin: 0 }} className="kost-price">
+                    Rp. 1.500.000 / Bulan
                   </p>
                 </Card.Text>
-                <Button size="sm" variant="primary">
-                  Lihat Detail
-                </Button>
+                <Badge bg="outline-primary" text="primary">
+                  <span><img src="/wowan.png" alt="" /></span>
+                  Putri
+                </Badge>{" "}
+                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex">
-            <Card className="ms-2 mb-2 flex-fill">
-              <Card.Img variant="top" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" />
-              <Card.Body>
-                <Badge bg="secondary" text="light">
-                  Putri
-                </Badge>{" "}
-                <Badge bg="secondary" text="light">
-                  Kos Ajimumpung
-                </Badge>{" "}
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                    K. Mandi Dalam, Kloset Duduk
+          <Col className="d-flex w-25r px-0 ">
+            <Card className="flex-fill w-25r mb-0 border-0" >
+              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
+              <Card.Body className="kost-desc">
+                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+                <Card.Text className="mb-1">
+                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
+                  <p style={{ margin: 0 }} className="kost-price">
+                    Rp. 1.500.000 / Bulan
                   </p>
                 </Card.Text>
-                <Button size="sm" variant="primary">
-                  Lihat Detail
-                </Button>
+                <Badge bg="outline-primary" text="primary">
+                  <span><img src="/wowan.png" alt="" /></span>
+                  Putri
+                </Badge>{" "}
+                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex">
-            <Card className="ms-2 mb-2 flex-fill">
-              <Card.Img variant="top" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1" />
-              <Card.Body>
-                <Badge bg="secondary" text="light">
-                  Putri
-                </Badge>{" "}
-                <Badge bg="secondary" text="light">
-                  Kos Ajimumpung
-                </Badge>{" "}
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }}>Indekos Bu Sapri</p>
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0, fontSize: "12px" }} className="text-muted">
-                    K. Mandi Dalam, Kloset Duduk
+          <Col className="d-flex w-25r px-0 ">
+            <Card className="flex-fill w-25r mb-0 border-0" >
+              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
+              <Card.Body className="kost-desc">
+                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+                <Card.Text className="mb-1">
+                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
+                  <p style={{ margin: 0 }} className="kost-price">
+                    Rp. 1.500.000 / Bulan
                   </p>
                 </Card.Text>
-                <Button size="sm" variant="primary">
-                  Lihat Detail
-                </Button>
+                <Badge bg="outline-primary" text="primary">
+                  <span><img src="/wowan.png" alt="" /></span>
+                  Putri
+                </Badge>{" "}
+                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
               </Card.Body>
             </Card>
           </Col>
+          
         </Row>
            
-    </div>
+    
     </Container>
     
   );
