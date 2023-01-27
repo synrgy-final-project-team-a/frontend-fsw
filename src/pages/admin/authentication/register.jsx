@@ -49,14 +49,14 @@ const Register = () => {
             setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
         }
 
-        if (password === "") {
-            failed = true
-            setError({ "password": "Password tidak boleh kosong!" })
-        }
-
         if (verifPassword === "") {
             failed = true
             setError({ "verifPassword": "Verifikasi password tidak boleh kosong!" })
+        }
+
+        if (password === "") {
+            failed = true
+            setError({ "password": "Password tidak boleh kosong!" })
         }
 
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
