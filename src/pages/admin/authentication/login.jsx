@@ -9,6 +9,7 @@ import { useLoginMutation, useResendOtpMutation } from "../../../store/apis/auth
 import { addEmail, addToken } from "../../../store/slices/authSlice";
 import { useCurrentUserMutation } from "../../../store/apis/users";
 import { addUser } from "../../../store/slices/userSlice";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
 	const params = useParams()
@@ -30,12 +31,12 @@ const Login = () => {
 
 		const email = formRef.current.email.value
 		const password = formRef.current.password.value
-		
-		
+
+
 		if (password.length < 8) {
-            failed = true
-            setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
-        }
+			failed = true
+			setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
+		}
 
 		if (password === "") {
 			failed = true
@@ -261,12 +262,15 @@ const Login = () => {
 								</p>
 								<hr></hr>
 								<div className="d-grid gap-2">
-									<Button
-										variant="primary"
-										type="button"
-									>
-										Google
-									</Button>
+									<GoogleLogin
+										className="w-100"
+										onSuccess={credentialResponse => {
+											console.log(credentialResponse);
+										}}
+										onError={() => {
+											console.log('Login Failed');
+										}}
+									/>
 									<Button
 										variant="primary"
 										type="button"
