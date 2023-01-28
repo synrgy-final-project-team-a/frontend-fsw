@@ -4,8 +4,8 @@ import DetailKos from "../pages/pencari/detailKos";
 import Profile from "../pages/pencari/profile/profilePencari";
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal";
 import EditProfile from "../pages/pencari/profile/editProfile";
-import PengajuanSewa1 from "../pages/pencari/pengajuanSewa1";
-import PengajuanSewa2 from "../pages/pencari/pengajuanSewa2";
+import PengajuanSewa1 from "../pages/pencari/pengajuanKos/pengajuanSewa1";
+import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
 
 const PencariRoutes = [
   {
@@ -29,7 +29,6 @@ const PencariRoutes = [
     element: <DetailKos />,
   },
   {
-    name: "Pengajuan Sewa Kos",
     path: "/pengajuan-sewa",
     children: [
       {

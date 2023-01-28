@@ -197,6 +197,12 @@
 // .rightborder {
 //   border-right: 2px solid #c4c4c4;
 // }
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 420px;
+}
 .rightborder {
   position: relative;
 }
@@ -211,8 +217,21 @@
 .image-sewa {
   max-width: 600px;
 }
+.h5 {
+  font-size: 22px;
+  font-weight: 600px;
+  color: #757575;
+  margin-bottom: 0%;
+}
+.bordertop {
+  border-top: 2px solid #c4c4c4;
+}
+
+.fontcolor {
+  color: #616161;
+}
 // responsive
-@media screen and (max-width: 576px) {
+@media only screen and (max-width: 600px) {
   .line:before {
     width: 50%;
   }
@@ -224,3 +243,15 @@
     max-width: 90%;
   }
 }
+/* Small devices (portrait tablets and large phones, 600px and up) */
+// @media only screen and (min-width: 600px) {...}
+// /* Medium devices (landscape tablets, 768px and up) */
+// @media only screen and (min-width: 768px) {...}
+// /* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .line:before {
+    max-width: 60%;
+  }
+}
+// /* Extra large devices (large laptops and desktops, 1200px and up) */
+// @media only screen and (min-width: 1200px) {...}
