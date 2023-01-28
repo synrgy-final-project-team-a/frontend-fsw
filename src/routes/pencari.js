@@ -6,6 +6,7 @@ import InformasiPersonal from "../pages/pencari/profile/informasiPersonal";
 import EditProfile from "../pages/pencari/profile/editProfile";
 import PengajuanSewa1 from "../pages/pencari/pengajuanKos/pengajuanSewa1";
 import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
+import Pencarian from "../pages/pencari/pencarian";
 
 const PencariRoutes = [
   {
@@ -57,6 +58,11 @@ const PencariRoutes = [
         element: <EditProfile />,
       },
     ],
+  },
+  {
+    name: "Pencarian",
+    path: "/pencarian",
+    element: <Pencarian />,
   },
 ];
 
