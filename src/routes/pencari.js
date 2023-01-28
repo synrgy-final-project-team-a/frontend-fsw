@@ -7,6 +7,8 @@ import EditProfile from "../pages/pencari/profile/editProfile";
 import PengajuanSewa1 from "../pages/pencari/pengajuanKos/pengajuanSewa1";
 import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
 import Pencarian from "../pages/pencari/pencarian";
+import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
+import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
 
 const PencariRoutes = [
   {
@@ -39,6 +41,14 @@ const PencariRoutes = [
       {
         path: "/2",
         element: <PengajuanSewa2 />,
+      },
+      {
+        path: "/3",
+        element: <PengajuanSewa3 />,
+      },
+      {
+        path: "/4",
+        element: <PengajuanSewa4 />,
       },
     ],
   },

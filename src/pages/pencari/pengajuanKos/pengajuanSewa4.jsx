@@ -5,7 +5,7 @@ import FooterComponent from "../../../components/footer";
 import NavbarComponent from "../../../components/navbar";
 import PencariRoutes from "../../../routes/pencari";
 import NumberProgress from "../../../components/numberProgress";
-export default function PengajuanSewa2() {
+export default function PengajuanSewa4() {
   const navigate = useNavigate();
   return (
     <>
@@ -31,13 +31,16 @@ export default function PengajuanSewa2() {
           </div>
         </Button>
         <div>
-          <NumberProgress current={2} total={4} />
+          <NumberProgress current={4} total={4} />
         </div>
         <div className="d-flex flex-column justify-content-center text-center">
-          <h2>Konfirmasi Pemiliki Kos </h2>
-          <h4>Silahkan tunggu konfirmasi dari pemilik kos 1x24 jam </h4>
+          <h2>Tempati Kosanmu </h2>
+          <h4 className="text-center m-auto" style={{ maxWidth: "820px" }}>
+            Yeeay, Pembayaranmu diterima, silahkan hubung pemilik kos untuk
+            mengkonfirmasi kedatanganmu{" "}
+          </h4>
           <img
-            src="/image16.png"
+            src="/image10.png"
             alt=""
             className="img-fluid m-auto image-sewa"
           ></img>
@@ -48,7 +51,6 @@ export default function PengajuanSewa2() {
           >
             Hubungi Penyewa Kos
           </Button>
-          
         </div>
       </Container>
       <FooterComponent />
