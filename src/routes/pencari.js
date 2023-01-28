@@ -4,6 +4,7 @@ import DetailKos from "../pages/pencari/detailKos";
 import Profile from "../pages/pencari/profile/profilePencari";
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal";
 import EditProfile from "../pages/pencari/profile/editProfile";
+import Pencarian from "../pages/pencari/pencarian";
 
 const PencariRoutes = [
   {
@@ -42,6 +43,11 @@ const PencariRoutes = [
         element: <EditProfile />,
       },
     ],
+  },
+  {
+    name: "Pencarian",
+    path: "/pencarian",
+    element: <Pencarian />,
   },
 ];
 

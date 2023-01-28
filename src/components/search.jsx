@@ -1,49 +1,58 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Search = () => {
-	const navigate = useNavigate()
+const SearchComponent = () => {
+  const navigate = useNavigate();
 
-	const [searchInput, setSeacrhInput] = useState("");
+  const [searchInput, setSeacrhInput] = useState("");
 
-	const handleButtonCariKos = (e) => {
-		console.log(e.target.value);
-	}
+  const handleButtonCariKos = (e) => {
+    console.log(e.target.value);
+  };
 
-	const handleChange = (e) => {
-		e.preventDefault();
-		setSeacrhInput(e.target.value);
-	}
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSeacrhInput(e.target.value);
+  };
 
-	const routeToSearch = (e) => {
-		e.preventDefault()
-		navigate('/search')
-	}
+  const routeToSearch = (e) => {
+    e.preventDefault();
+    navigate("/pencarian");
+  };
 
-	return (
-		<>
-			
+  return (
+    <>
+      <div className="d-flex align-items-center">
+        <div className="d-flex w-100 col-md-6">
+          {/* <div className="form d-flex" onClick={routeToSearch}> */}
+          <div
+            className="form-search d-flex justify-content-between"
+            onClick={routeToSearch}
+          >
+            {/* <i className="fa fa-search"></i> */}
+            {/* <input type="text" className="form-control form-input" placeholder="Search anything..." onChange={handleChange} value={searchInput} /> */}
+            <img src="/search-normal.svg" className="p-2" />
+            <img src="/line-vertical.svg" />
+            <input
+              type="text"
+              className="w-100 border-0 mx-2"
+              placeholder="Tulis daerah / alamat kosan yang akan kamu tuju  "
+              onChange={handleChange}
+              value={searchInput}
+            />
+            <button
+              className="btn btn-primary m-1 rounded-full"
+              onClick={(e) => handleButtonCariKos(e)}
+            >
+              Cari
+            </button>
+          </div>
 
-				<div className="row height d-flex justify-content-center align-items-center">
+        </div>
+      </div>
+          {/* <h1>{searchInput}</h1> */}
 
-					<div className="col-md-6">
-
-						<div className="form" onClick={routeToSearch}>
-							<i className="fa fa-search"></i>
-							<input type="text" className="form-control form-input" placeholder="Search anything..." onChange={handleChange} value={searchInput} />
-							<span className="left-pan"><i className="fa fa-microphone"></i></span>
-							<button onClick={(e) => handleButtonCariKos(e)}>Cari Kos</button>
-						</div>
-
-						<h1>{searchInput}</h1>
-
-					</div>
-
-				</div>
-
-			
-
-			{/* <Container>
+      {/* <Container>
               <Row className="height d-flex justify-content-center align-items-center">
                 <Col md={6}>
                   <Form>
@@ -53,8 +62,8 @@ const Search = () => {
                 </Col>
               </Row>
             </Container> */}
-		</>
-	)
-}
+    </>
+  );
+};
 
-export default Search;
+export default SearchComponent;
