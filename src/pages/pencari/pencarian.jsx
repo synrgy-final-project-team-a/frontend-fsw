@@ -6,7 +6,7 @@ const Pencarian = () => {
       <div className="mx-auto w-50 mt-5">
         <button className="btn-location d-flex pt-1 justify-content-center gap-3">
           Cari Kosan Terdekat
-          <img src="/location.svg" className="mt-1" />
+          <img src="/location.svg" alt="..." className="mt-1" />
         </button>
 
         <p className="mt-5 text-neutral fw-semibold">Pencarian Populer</p>

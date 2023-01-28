@@ -31,8 +31,8 @@ const SearchComponent = () => {
           >
             {/* <i className="fa fa-search"></i> */}
             {/* <input type="text" className="form-control form-input" placeholder="Search anything..." onChange={handleChange} value={searchInput} /> */}
-            <img src="/search-normal.svg" className="p-2" />
-            <img src="/line-vertical.svg" />
+            <img src="/search-normal.svg" alt="..." className="p-2" />
+            <img src="/line-vertical.svg" alt="..." />
             <input
               type="text"
               className="w-100 border-0 mx-2"

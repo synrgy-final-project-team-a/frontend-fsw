@@ -1,5 +1,4 @@
 import React from "react";
-import FooterComponent from "../components/footer";
 import SearchComponent from "../components/search";
 
 const PencarianLayout = ({ children }) => {
@@ -7,7 +6,7 @@ const PencarianLayout = ({ children }) => {
     <>
       <div className="d-md-flex mt-4">
         <div className="w-25 px-5 pt-2 ">
-          <img src="/kosanku.png" />
+          <img src="/kosanku.png" alt="..." />
         </div>
         <div
           className="w-50 pt-2">
@@ -18,7 +17,6 @@ const PencarianLayout = ({ children }) => {
         </p>
       </div>
       {children}
-      
     </>
   );
 };
