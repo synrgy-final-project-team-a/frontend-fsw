@@ -6,129 +6,128 @@ import Container from "react-bootstrap/Container";
 
 function BestKost() {
   return (
-    <Container fluid className="mb-5">
-      <div>
-        <h2 className="section-title">Cari Kosan Terbaik Kami</h2>
-      </div>  
-        <Row lg={3} xs={1} className="px-2 mx-0 justify-content-center g-20">
-          <Col className="d-flex w-25r px-0 ">
-            <Card className="flex-fill w-25r mb-0 border-0" >
-              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
-              <Card.Body className="kost-desc">
+    <Container fluid>
+      <div className="px-5 ">
+      <h2 className="section-title ps-3">Kos Terbaik dari Kami</h2>
+      
+        <Row lg={3} className="g-2 px-1">
+          <Col className="d-flex px-3">
+            <Card className="mb-2 flex-fill border-0 px-1">
+              <Card.Img variant="top" src="/kos-giya-putri.png" />
+              <Card.Body className="kost-desc pe-0">
                 <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
                 <Card.Text className="mb-1">
-                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
-                  <p style={{ margin: 0 }} className="kost-price">
-                    Rp. 1.500.000 / Bulan
+                  <p className="kost-location m-0">Cempaka Timur, Semarang</p>
+                  <p className="kost-price m-0">
+                    Rp. 1.500.000 / <span style={{color: "#8E9191"}}>Bulan</span>
                   </p>
                 </Card.Text>
-                <Badge bg="outline-primary" text="primary">
-                  <span><img src="/wowan.png" alt="" /></span>
+                <Badge className="kost-category-badge" bg="none" text="primary">
+                  <span><img src="/woman.png" alt="" /></span>
                   Putri
                 </Badge>{" "}
-                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
+                <a href="#" ><img src="/like.png" style={{ marginLeft: '70%' }} alt="" /></a>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex w-25r px-0 ">
-            <Card className="flex-fill w-25r mb-0 border-0" >
-              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
-              <Card.Body className="kost-desc">
-                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+          <Col className="d-flex px-3">
+            <Card className="mb-2 flex-fill border-0 px-1">
+              <Card.Img variant="top" src="/kos-turiman.png" />
+              <Card.Body className="kost-desc pe-0">
+                <Card.Title className="kost-title">Kos H.Turiman Banaran</Card.Title>
                 <Card.Text className="mb-1">
-                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
-                  <p style={{ margin: 0 }} className="kost-price">
-                    Rp. 1.500.000 / Bulan
+                  <p className="kost-location m-0">Jl.Banaran No.117 Banaran Sekaran, Semarang</p>
+                  <p className="kost-price m-0">
+                    Rp. 850.000 / <span style={{color: "#8E9191"}}>Bulan</span>
                   </p>
                 </Card.Text>
-                <Badge bg="outline-primary" text="primary">
-                  <span><img src="/wowan.png" alt="" /></span>
+                <Badge className="kost-category-badge" bg="none" text="primary">
+                  <span><img src="/people.png" alt="" /></span>
                   Putri
                 </Badge>{" "}
-                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
+                <a href="#" ><img src="/like.png" style={{ marginLeft: '70%' }} alt="" /></a>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex w-25r px-0 ">
-            <Card className="flex-fill w-25r mb-0 border-0" >
-              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
-              <Card.Body className="kost-desc">
-                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+          <Col className="d-flex px-3">
+            <Card className="mb-2 flex-fill border-0 px-1">
+              <Card.Img variant="top" src="/kos-mambo.png" />
+              <Card.Body className="kost-desc pe-0">
+                <Card.Title className="kost-title">Kos MAMBO 23 DUREN TIGA</Card.Title>
                 <Card.Text className="mb-1">
-                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
-                  <p style={{ margin: 0 }} className="kost-price">
-                    Rp. 1.500.000 / Bulan
+                  <p className="kost-location m-0">Jl. Prof. Huda No.76 Banyumanik, Banyuwangi</p>
+                  <p className="kost-price m-0">
+                    Rp. 750.000 / <span style={{color: "#8E9191"}}>Bulan</span>
                   </p>
                 </Card.Text>
-                <Badge bg="outline-primary" text="primary">
-                  <span><img src="/wowan.png" alt="" /></span>
+                <Badge className="kost-category-badge" bg="none" text="primary">
+                  <span><img src="/man.png" alt="" /></span>
                   Putri
                 </Badge>{" "}
-                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
+                <a href="#" ><img src="/like.png" style={{ marginLeft: '70%' }} alt="" /></a>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex w-25r px-0 ">
-            <Card className="flex-fill w-25r mb-0 border-0" >
-              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
-              <Card.Body className="kost-desc">
-                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+          <Col className="d-flex px-3">
+            <Card className="mb-2 flex-fill border-0 px-1">
+              <Card.Img variant="top" src="/kos-bunda-rina.png" />
+              <Card.Body className="kost-desc pe-0">
+                <Card.Title className="kost-title">Kos Bunda Rina Kalimasada</Card.Title>
                 <Card.Text className="mb-1">
-                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
-                  <p style={{ margin: 0 }} className="kost-price">
-                    Rp. 1.500.000 / Bulan
+                  <p className="kost-location m-0">Kecoklat Barat D-15, Kota Surabaya</p>
+                  <p className="kost-price m-0">
+                    Rp. 1.099.000 / <span style={{color: "#8E9191"}}>Bulan</span>
                   </p>
                 </Card.Text>
-                <Badge bg="outline-primary" text="primary">
-                  <span><img src="/wowan.png" alt="" /></span>
+                <Badge className="kost-category-badge" bg="none" text="primary">
+                  <span><img src="/people.png" alt="" /></span>
                   Putri
                 </Badge>{" "}
-                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
+                <a href="#" ><img src="/like.png" style={{ marginLeft: '70%' }} alt="" /></a>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex w-25r px-0 ">
-            <Card className="flex-fill w-25r mb-0 border-0" >
-              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
-              <Card.Body className="kost-desc">
-                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+          <Col className="d-flex px-3">
+            <Card className="mb-2 flex-fill border-0 px-1">
+              <Card.Img variant="top" src="/agatha.png" />
+              <Card.Body className="kost-desc pe-0">
+                <Card.Title className="kost-title">Agatha Adam Malik, Bandung</Card.Title>
                 <Card.Text className="mb-1">
-                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
-                  <p style={{ margin: 0 }} className="kost-price">
-                    Rp. 1.500.000 / Bulan
+                  <p className="kost-location m-0">Tanjung Sari, Bandung Barat</p>
+                  <p className="kost-price m-0">
+                    Rp. 1.500.000 / <span style={{color: "#8E9191"}}>Bulan</span>
                   </p>
                 </Card.Text>
-                <Badge bg="outline-primary" text="primary">
-                  <span><img src="/wowan.png" alt="" /></span>
+                <Badge className="kost-category-badge" bg="none" text="primary">
+                  <span><img src="/man.png" alt="" /></span>
                   Putri
                 </Badge>{" "}
-                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
+                <a href="#" style={{position: "relative", left:"15.5rem"}}><img src="/like.png" style={{ marginLeft: '70%' }} alt="" /></a>
               </Card.Body>
             </Card>
           </Col>
-          <Col className="d-flex w-25r px-0 ">
-            <Card className="flex-fill w-25r mb-0 border-0" >
-              <Card.Img variant="top" className="img-fluid" src="/kos-giya-putri.png" style={{ width: '400px' }} />
-              <Card.Body className="kost-desc">
-                <Card.Title className="kost-title">Kos Giya Putri</Card.Title>
+          <Col className="d-flex px-3">
+            <Card className="mb-2 flex-fill border-0 px-1">
+              <Card.Img variant="top" src="/grand-luxury.png" />
+              <Card.Body className="kost-desc pe-0">
+                <Card.Title className="kost-title">Grand Luxury Balemong Barat</Card.Title>
                 <Card.Text className="mb-1">
-                  <p style={{ margin: 0 }} className="kost-location">Cempaka Timur, Semarang</p>
-                  <p style={{ margin: 0 }} className="kost-price">
-                    Rp. 1.500.000 / Bulan
+                  <p className="kost-location m-0">Jl. Pakintelan 34, Jakarta Utara</p>
+                  <p className="kost-price m-0">
+                    Rp. 1.830.000 / <span style={{color: "#8E9191"}}>Bulan</span>
                   </p>
                 </Card.Text>
-                <Badge bg="outline-primary" text="primary">
-                  <span><img src="/wowan.png" alt="" /></span>
+                <Badge className="kost-category-badge" bg="none" text="primary">
+                  <span><img src="/woman.png" alt="" /></span>
                   Putri
                 </Badge>{" "}
-                <span><img src="/like.png" style={{ marginLeft: '292px' }} alt="" /></span>
+                <a href="#" ><img src="/like.png" style={{ marginLeft: '70%' }} alt="" /></a>
               </Card.Body>
             </Card>
           </Col>
-          
         </Row>
            
-    
+    </div>
     </Container>
   );
 }

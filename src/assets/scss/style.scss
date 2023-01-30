@@ -4,6 +4,11 @@
 @import "kelola-kos";
 @import "detailkos";
 
+#navbar {
+  background: #F5F5F5;
+  box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
 .logo-footer {
   width: 190px;
   height: 60px;
@@ -104,60 +109,12 @@
 
 .owl-nav {
   display: flex;
-  gap: 1139px;
+  gap: 1130%;
   width: fit-content;
   top: -250px;
   right: 80px;
   position: relative;
 }
-
-
-
-// Mobile
-@media only screen and (max-width: 576px) {
-  .navbar-brand {
-    margin-left: 0px;
-  }
-  .owl-nav {
-    display: flex;
-    justify-content: center;
-    gap: 100px;
-    top: 0;
-    left: 137px;
-  }
-}
-
-// // Tablet
-// @media only screen and (max-width: 600px) {
-//   .owl-nav {
-//     display: flex;
-//     justify-content: center;
-//     gap: 150px;
-//   }
-// }
-
-// // Wide Tablet
-// @media only screen and (max-width: 700px) {
-//   .owl-nav {
-//     display: flex;
-//     justify-content: center;
-//     gap: 150px;
-//   }
-// }
-
-// // Desktop
-// @media only screen and (min-width: 1200px) {
-//   .banner {
-//     padding-left: 10%;
-//     padding-right: 10%;
-//   }
-
-//   .owl-nav {
-//     display: flex;
-//     justify-content: center;
-//     gap: 500px;
-//   }
-// }
 
 // bestkost
 .section-title {
@@ -218,6 +175,19 @@
   color: #0A0A0A;
 }
 
+.kost-category-badge {
+  border: 1px solid #ACCED0;
+  background-color: #FFFFFF;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+}
+
+.kost-category-badge img {
+  padding: 0 0.4rem 0.1rem 0;
+}
 // footer
 .footer-title {
   font-style: normal;
@@ -242,7 +212,7 @@
 }
 
 .first-footer {
-  width: 388px;
+  width: auto;
 }
 
 .kosanku-desc {  
@@ -257,7 +227,7 @@
 }
 
 .fourth-footer {
-  width: 180px;
+  width: auto;
 }
 
 .seperator {
@@ -291,5 +261,27 @@
       background-color: $light;
       color: $black;
     }
+  }
+}
+
+// Mobile
+@media only screen and (max-width: 576px) {
+  .navbar-brand {
+    margin-left: 0px;
+  }
+  .owl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    top: 0;
+    left: 90px;
+  }
+
+  .first-footer {
+    flex: auto;
+  }
+
+  .fourth-footer {
+    flex: auto;
   }
 }

@@ -4,14 +4,14 @@ const FooterComponent = () => {
   return (
     <div className="container-fluid">
       <div className="row d-flex justify-content-center">
-        <div className="col-md-3 col-xs-1 first-footer">
+        <div className="col-lg-3 col-xs-1 first-footer">
             <img src="/logo-footer.png" alt="..." />
             <p className="kosanku-desc">Kosanku merupakan platform pencari kos yang mudah dan terpercaya, 
               serta platform penyewa kos terbaik. Kosanku berkembang dari tahun ke 
               tahun menjadi lebih mudah dan nyaman bagi penguna baik pencari maupun penyewa kos.
               </p>
         </div>
-          <div className="col-md-3 col-xs-1  second-footer px-5">
+          <div className="col-lg-3 col-xs-1 second-footer px-5">
             <p className="footer-title ">Kosanku</p>
             <div className="mt-30 footer-subtitle">
               <p>Pusat Bantuan</p>
@@ -20,7 +20,7 @@ const FooterComponent = () => {
             </div>
             
           </div>
-          <div className="col-md-3 col-xs-1 third-footer">
+          <div className="col-lg-3 col-xs-1 third-footer">
             <p className="footer-title ">Hubungi Kami</p>
             <div className="mt-30 footer-subtitle">
               <p>kosanku@mail.com</p>
@@ -28,7 +28,7 @@ const FooterComponent = () => {
               <p>infokosan@gmail.com</p>              
             </div>
           </div>
-          <div className="col-md-3 col-xs-1 fourth-footer">
+          <div className="col-lg-3 col-xs-1 fourth-footer">
             <p className="footer-title ">Follow Kami</p>
             <div className="mt-30 footer-subtitle">
               <p>facebook</p>
