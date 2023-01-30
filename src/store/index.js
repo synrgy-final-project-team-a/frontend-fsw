@@ -5,6 +5,7 @@ import authApi from "./apis/authentication";
 import usersApi from "./apis/users";
 
 import { authPersistReducer } from "./slices/authSlice";
+import decorReducer from "./slices/decorSlice";
 import { userPersistReducer } from "./slices/userSlice";
 
 export const store = configureStore({
@@ -12,7 +13,8 @@ export const store = configureStore({
 		[authApi.reducerPath]: authApi.reducer,
 		[usersApi.reducerPath]: usersApi.reducer,
 		auth: authPersistReducer,
-		user: userPersistReducer
+		user: userPersistReducer,
+		decor: decorReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
