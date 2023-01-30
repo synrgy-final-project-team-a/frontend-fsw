@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 
 const DataFasilitasKos = ({ setKeynya }) => {
 
-	const rule = useSelector(state => state.kos.fasilitas)
+	const facility = useSelector(state => state.kos.fasilitas)
 
 	const handleSebelumnya = (e) => {
 		e.preventDefault()
@@ -26,7 +26,7 @@ const DataFasilitasKos = ({ setKeynya }) => {
 					<Col xs={12} lg={6}>
 						<Form.Group className="mb-3 row row-cols-3" controlId="formBasicCheckbox">
 							{
-								rule.map((el, i) => {
+								Object.keys(facility).map((el, i) => {
 									return (
 										<Form.Check className="mb-3" type="checkbox" label={el.text} key={i} />
 									)

@@ -18,6 +18,8 @@ const DataAlamatKos = ({ setKeynya }) => {
 		setKeynya(newKey)
 	}
 
+	console.log(kos)
+
 	return (
 		<>
 			<h1 className="text-center">Data Kos</h1>

@@ -26,7 +26,7 @@ const DataPeraturanKos = ({ setKeynya }) => {
 					<Col xs={12} lg={6}>
 						<Form.Group className="mb-3" controlId="formBasicCheckbox">
 							{
-								rule.map((el, i) => {
+								Object.keys(rule).map((el, i) => {
 									return (
 										<Form.Check className="w-100 mb-3" type="checkbox" label={el.text} key={i} />
 									)

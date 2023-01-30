@@ -46,9 +46,6 @@ const initialState = {
 export const slice = createSlice({
 	name: "alamat",
 	initialState,
-	reducers: {}
 })
-
-export const {} = slice.actions
 
 export const alamatReducer = slice.reducer
