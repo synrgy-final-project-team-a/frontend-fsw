@@ -1,69 +1,55 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
+import { Container } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { searchIsBottom, searchIsTop } from "../store/slices/decorSlice";
 
 const SearchComponent = () => {
-  const navigate = useNavigate();
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
-  const [searchInput, setSeacrhInput] = useState("");
+	const searchRef = useRef()
 
-  const handleButtonCariKos = (e) => {
-    console.log(e.target.value);
-  };
+	const routeToSearch = (e) => {
+		e.preventDefault();
+		navigate("/pencarian");
+	};
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSeacrhInput(e.target.value);
-  };
+	useEffect(() => {
+		const handleScroll = () => {
+			if (searchRef) {
+				const top = searchRef.current.getBoundingClientRect().top
+				if (top < 0) {
+					dispatch(searchIsTop())
+				} else {
+					dispatch(searchIsBottom())
+				}
+			}
+			return
+		}
 
-  const routeToSearch = (e) => {
-    e.preventDefault();
-    navigate("/pencarian");
-  };
+		window.addEventListener("scroll", handleScroll);
 
-  return (
-    <>
-      <div className="d-flex align-items-center">
-        <div className="d-flex w-100 col-md-6">
-          {/* <div className="form d-flex" onClick={routeToSearch}> */}
-          <div
-            className="form-search d-flex justify-content-between"
-            onClick={routeToSearch}
-          >
-            {/* <i className="fa fa-search"></i> */}
-            {/* <input type="text" className="form-control form-input" placeholder="Search anything..." onChange={handleChange} value={searchInput} /> */}
-            <img src="/search-normal.svg" className="p-2" />
-            <img src="/line-vertical.svg" />
-            <input
-              type="text"
-              className="w-100 border-0 mx-2"
-              placeholder="Tulis daerah / alamat kosan yang akan kamu tuju  "
-              onChange={handleChange}
-              value={searchInput}
-            />
-            <button
-              className="btn btn-primary m-1 rounded-full"
-              onClick={(e) => handleButtonCariKos(e)}
-            >
-              Cari
-            </button>
-          </div>
+		return function cleanup() {
+			dispatch(searchIsBottom())
+			window.removeEventListener("scroll", handleScroll);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
-        </div>
-      </div>
-          {/* <h1>{searchInput}</h1> */}
-
-      {/* <Container>
-              <Row className="height d-flex justify-content-center align-items-center">
-                <Col md={6}>
-                  <Form>
-                    
-                  </Form>
-
-                </Col>
-              </Row>
-            </Container> */}
-    </>
-  );
+	return (
+		<Container id="search">
+			<div className="form-search d-flex my-2" onClick={routeToSearch} ref={searchRef}>
+				<img src="/search-normal.svg" alt="..." className="p-2" />
+				<img src="/line-vertical.svg" alt="..." />
+				<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+				<button className="btn btn-primary m-1 rounded-full">
+					Cari
+				</button>
+			</div>
+		</Container>
+	);
 };
 
 export default SearchComponent;

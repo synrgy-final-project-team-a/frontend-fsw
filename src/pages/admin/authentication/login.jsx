@@ -26,30 +26,32 @@ const Login = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault()
+		
+		setError({})
 		let failed = false
 
 		const email = formRef.current.email.value
 		const password = formRef.current.password.value
-		
-		
+
+
 		if (password.length < 8) {
             failed = true
-            setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
+			setError((error) => ({...error, "password": "Password tidak boleh kurang dari 8 karakter!" }))
         }
 
 		if (password === "") {
 			failed = true
-			setError({ "password": "Password tidak boleh kosong!" })
+			setError((error) => ({...error, "password": "Password tidak boleh kosong!" }))
 		}
 
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
 			failed = true
-			setError({ "email": "Email tidak valid!" })
+			setError((error) => ({...error, "email": "Email tidak valid!" }))
 		}
 
 		if (email === "") {
 			failed = true
-			setError({ "email": "Email tidak boleh kosong!" })
+			setError((error) => ({...error, "email": "Email tidak boleh kosong!" }))
 		}
 
 		if (failed) {
@@ -118,7 +120,8 @@ const Login = () => {
 					setError({ "alert": { "variant": "danger", "message": el.data.message } })
 				);
 			} else {
-				if (errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
+				console.log(errorLogin.data)
+				if (errorLogin.data.hasOwnProperty('message') && errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
 					dispatch(addEmail(formRef.current.email.value))
 					resendOtpHit({ "email": formRef.current.email.value })
 					navigate('/register/verification')
@@ -259,22 +262,6 @@ const Login = () => {
 										Lupa Password
 									</Link>{" "}
 								</p>
-								<hr></hr>
-								<div className="d-grid gap-2">
-									<Button
-										variant="primary"
-										type="button"
-									>
-										Google
-									</Button>
-									<Button
-										variant="primary"
-										type="button"
-										className="mt-2"
-									>
-										Facebook
-									</Button>
-								</div>
 							</Card.Body>
 						</Card>
 					</Col>
