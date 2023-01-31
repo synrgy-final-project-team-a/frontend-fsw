@@ -6,14 +6,15 @@ const FooterComponent = () => {
 	return (
 		<Container id="footer">
 			<Row className="justify-content-center">
-				<Col xs={12} lg={3}>
+				<Col xs={12} lg={3} className="text-center text-lg-start">
 					<img src="/logo-footer.png" alt="..." />
-					<p>Kosanku merupakan platform pencari kos yang mudah dan terpercaya,
+					<p>
+						Kosanku merupakan platform pencari kos yang mudah dan terpercaya,
 						serta platform penyewa kos terbaik. Kosanku berkembang dari tahun ke
 						tahun menjadi lebih mudah dan nyaman bagi penguna baik pencari maupun penyewa kos.
 					</p>
 				</Col>
-				<Col xs={12} lg={3}>
+				<Col xs={12} lg={3} className="text-center text-lg-start">
 					<h3 className="fw-bold footer-title">Kosanku</h3>
 					<ul className="link-list">
 						<li as={Link} to="/" className="mb-3">Pusat Bantuan</li>
@@ -21,7 +22,7 @@ const FooterComponent = () => {
 						<li as={Link} to="/" className="mb-3">Syarat dan Ketentuan</li>
 					</ul>
 				</Col>
-				<Col xs={12} lg={3}>
+				<Col xs={12} lg={3} className="text-center text-lg-start">
 					<h3 className="fw-bold footer-title">Hubungi Kami</h3>
 					<ul className="link-list">
 						<li as={Link} to="/" className="mb-3">kosanku@mail.com</li>
@@ -29,7 +30,7 @@ const FooterComponent = () => {
 						<li as={Link} to="/" className="mb-3">infokosan@gmail.com</li>
 					</ul>
 				</Col>
-				<Col xs={12} lg={3}>
+				<Col xs={12} lg={3} className="text-center text-lg-start">
 					<h3 className="fw-bold footer-title">Ikuti Kami</h3>
 					<ul className="link-list">
 						<li as={Link} to="/" className="mb-3">Facebook</li>
