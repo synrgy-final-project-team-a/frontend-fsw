@@ -1,0 +1,22 @@
+#search {
+	position: relative;
+	z-index: 10;
+
+	.form-search {
+		background-color: $white;
+		width: 100%;
+		border-style: solid;
+		border-width: 0.0625rem;
+		border-color: $primary-border;
+		padding: 0.3125rem;
+		border-radius: 0.375rem;
+	}
+
+	@include media-breakpoint-up(lg) {
+		.form-search {
+			transform: translateY(-35px);
+			width: 70%;
+			margin: auto;
+		}
+	}
+}
