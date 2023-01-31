@@ -30,12 +30,12 @@ const Login = () => {
 
 		const email = formRef.current.email.value
 		const password = formRef.current.password.value
-		
-		
+
+
 		if (password.length < 8) {
-            failed = true
-            setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
-        }
+			failed = true
+			setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
+		}
 
 		if (password === "") {
 			failed = true
@@ -259,22 +259,6 @@ const Login = () => {
 										Lupa Password
 									</Link>{" "}
 								</p>
-								<hr></hr>
-								<div className="d-grid gap-2">
-									<Button
-										variant="primary"
-										type="button"
-									>
-										Google
-									</Button>
-									<Button
-										variant="primary"
-										type="button"
-										className="mt-2"
-									>
-										Facebook
-									</Button>
-								</div>
 							</Card.Body>
 						</Card>
 					</Col>
