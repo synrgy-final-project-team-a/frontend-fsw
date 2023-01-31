@@ -57,21 +57,20 @@ export default function PengajuanSewa1() {
               <div className="d-flex justify-content-between mt-1 align-items-center">
                 <h4 className="fw-semibold">Informasi Penyewa</h4>
               </div>
-
               <h5 className="h5">Nama Penyewa </h5>
-              <input placeholder="Dion Kurniawan" className="form-control"/>
+              <input placeholder="Dion Kurniawan" className="form-control" />
             </div>
             <div className="my-2">
               <h5 className="h5">Jenis Kelamin </h5>
-              <input placeholder="Laki-laki" className="form-control"/>
+              <input placeholder="Laki-laki" className="form-control" />
             </div>
             <div className="my-2">
               <h5 className="h5">Pekerjaan </h5>
-              <input placeholder="Mahasiswa" className="form-control"/>
+              <input placeholder="Mahasiswa" className="form-control" />
             </div>
             <div className="my-2">
               <h5 className="h5">Nomor Handphone </h5>
-              <input placeholder="082148372834" className="form-control"/>
+              <input placeholder="082148372834" className="form-control" />
             </div>
             <div className="my-2 bordertop">
               <div className="d-flex justify-content-between mt-1 align-items-center">
