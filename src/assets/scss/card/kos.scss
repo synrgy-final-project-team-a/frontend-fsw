@@ -1,0 +1,30 @@
+.kos-card {
+	border-radius: 16px;
+
+	>.card-img-top {
+		border-radius: 16px 16px 0 0;
+		object-fit: cover;
+		height: 185px;
+	}
+
+	>.card-body {
+		>.card-title {
+			font-weight: bold;
+			font-size: 18px;
+			letter-spacing: 0.15px;
+			color: $black;
+		}
+
+		>.card-text {
+			&.kos-location {
+				font-size: 12px;
+				font-weight: bold;
+				color: $grey;
+			}
+
+			&.kos-price {
+				font-size: 15px;
+			}
+		}
+	}
+}

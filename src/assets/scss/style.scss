@@ -1,160 +1,175 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
+@import "card";
+@import "badge/main";
+@import "navbar";
+@import "footer";
+@import "landing";
 @import "kelola-kos";
 @import "detailkos";
 
-.logo-footer {
-  width: 190px;
-  height: 60px;
+
+// Mobile
+@media only screen and (max-width: 576px) {
+	.navbar-brand {
+		margin-left: 0px;
+	}
+
+	.owl-nav {
+		display: flex;
+		justify-content: center;
+		gap: 100px;
+		top: 0;
+		left: 90px;
+	}
+
+	.first-footer {
+		flex: auto;
+	}
+
+	.fourth-footer {
+		flex: auto;
+	}
 }
 
-.navbar-link {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
-  color: #616161;
+.scrolling-wrapper {
+	flex-wrap: nowrap;
+	overflow-x: auto;
+
+	.testi-card {
+		border-color: $primary-border;
+		border-width: 1px;
+		flex: 0 0 auto;
+	}
 }
 
-.btn-login {
-  width: 110px;
-  height: 48px;
-  padding: 12px 30px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  background: #056c73;
-  color: #ffffff;
+// line middler nomor pengajuan
+
+.line {
+	// width: 200px;
+	// border: red 1px solid;
+	position: relative;
 }
 
-.height {
-  height: 100vh;
+.line:before {
+	content: "";
+	position: absolute;
+	border-bottom: 2px $grey-light solid;
+	height: 100%;
+	width: 33%;
+	transform: translateY(-50%);
+	z-index: -4;
 }
 
-.form {
-  position: relative;
+.borderCircle {
+	background-color: #ffffff;
+	width: 60px;
+	height: 60px;
+	border: 1px solid $primary-border;
 }
 
-.form .fa-search {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  color: $color-form;
+.circleNumber {
+	background-color: #acced0;
+	width: 50px;
+	height: 50px;
 }
 
-.form span {
-  position: absolute;
-  right: 17px;
-  top: 13px;
-  padding: 2px;
-  border-left: 1px solid $color-form;
+.number {
+	color: #056c73;
+	font-size: 28px;
+	text-align: center;
+	line-height: 42px;
 }
 
-.left-pan {
-  padding-left: 7px;
+// .rightborder {
+//   border-right: 2px solid #c4c4c4;
+// }
+.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 420px;
 }
 
-.left-pan i {
-  padding-left: 10px;
+.rightborder {
+	position: relative;
 }
 
-.form-input {
-  height: 55px;
-  text-indent: 33px;
-  border-radius: 10px;
+.rightborder:after {
+	content: "";
+	position: absolute;
+	border-right: 2px #c4c4c4 solid;
+	height: 100%;
+	width: 100%;
+	transform: translateX(-50%);
 }
 
-.form-input:focus {
-  box-shadow: none;
-  border: none;
+.image-sewa {
+	max-width: 600px;
 }
 
-// banner
-.banner {
-  padding: 0 205px;
+.bordertop {
+	border-top: 2px solid #c4c4c4;
 }
 
-.owl-nav {
-  display: flex;
-  gap: 907px;
+.fontcolor {
+	color: #616161;
 }
 
-// footer
-.footer-title {
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 32px;
-  color: #616161;
-  margin-top: 12px;
+// responsive
+@media only screen and (max-width: 576) {
+	.line:before {
+		width: 50%;
+	}
+
+	.rightborder {
+		border-right: 0px;
+		border-bottom: 2px solid #c4c4c4;
+	}
+
+	.image-sewa {
+		max-width: 90%;
+	}
 }
 
-.footer-subtitle {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.15px;
-  color: #757575;
+// /* Medium devices (landscape tablets, 768px and up) */
+// @media only screen and (min-width: 768px) {...}
+// /* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	.line:before {
+		max-width: 60%;
+	}
 }
 
-.mt-30 {
-  margin-top: 30px;
+.fw-semibold {
+	font-weight: 600px;
 }
 
-.first-footer {
-  width: 388px;
+.text-gray {
+	color: #9e9e9e !important;
 }
 
-.kosanku-desc {
-  font-family: "Raleway" !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  font-size: 16px !important;
-  line-height: 24px !important;
-  letter-spacing: 0.5px !important;
-  color: #9e9e9e !important;
-  margin-top: 14px !important;
-  padding-right: 15px;
+.btn-location {
+	color: #757575;
+	border-radius: 6px;
+	width: 208px;
+	height: 36px;
+	border-style: solid;
+	border-width: 0.0625rem;
+	border-color: #dae4e5;
+	font-weight: 600px;
 }
 
-.fourth-footer {
-  width: 180px;
+.text-neutral {
+	color: #616161;
 }
 
-.seperator {
-  border: 1px solid #e0e0e0;
-}
-
-.copyright {
-  font-family: "Raleway";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
-  color: #c2c2c2;
-  text-align: center;
-  padding: 34px;
-}
-
-.badge {
-  @each $name, $color in $theme-colors {
-    &.bg-outline-#{$name} {
-      outline: 1px solid $color;
-      background-color: $white;
-      color: $color;
-    }
-  }
-}
-
-.card {
-  @each $name, $color in $theme-colors {
-    &.bg-outline-#{$name} {
-      outline: 1px solid $color;
-      background-color: $light;
-      color: $black;
-    }
-  }
+.btn-search-popular {
+	width: 118px;
+	height: 36px;
+	border-radius: 6px;
+	border-style: solid;
+	border-width: 0.0625rem;
+	border-color: #616161;
 }
