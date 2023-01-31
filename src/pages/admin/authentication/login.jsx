@@ -9,7 +9,6 @@ import { useLoginMutation, useResendOtpMutation } from "../../../store/apis/auth
 import { addEmail, addToken } from "../../../store/slices/authSlice";
 import { useCurrentUserMutation } from "../../../store/apis/users";
 import { addUser } from "../../../store/slices/userSlice";
-import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
 	const params = useParams()
@@ -260,25 +259,6 @@ const Login = () => {
 										Lupa Password
 									</Link>{" "}
 								</p>
-								<hr></hr>
-								<div className="d-grid gap-2">
-									<GoogleLogin
-										className="w-100"
-										onSuccess={credentialResponse => {
-											console.log(credentialResponse);
-										}}
-										onError={() => {
-											console.log('Login Failed');
-										}}
-									/>
-									<Button
-										variant="primary"
-										type="button"
-										className="mt-2"
-									>
-										Facebook
-									</Button>
-								</div>
 							</Card.Body>
 						</Card>
 					</Col>
