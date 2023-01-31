@@ -1,19 +1,14 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import FooterComponent from "../../../components/footer";
-import NavbarComponent from "../../../components/navbar";
-import NumberProgress from "../../../components/numberProgress";
-import PencariRoutes from "../../../routes/pencari";
 
-export default function PengajuanSewa1() {
+export default function PengajuanSewaKos() {
   const navigate = useNavigate();
   function handleSubmitSewa(e) {
     navigate("/pengajuan-sewa/2");
   }
   return (
     <>
-      <NavbarComponent routes={PencariRoutes} />
       <Container className="">
         <Button variant="link" onClick={() => navigate(-1)}>
           <div className="my-3 d-flex align-items-center h-100">
@@ -34,9 +29,6 @@ export default function PengajuanSewa1() {
             <h6 className="ms-sm-2 my-auto">Kembali</h6>
           </div>
         </Button>
-        <div>
-          <NumberProgress current={1} total={4} />
-        </div>
         <div>
           <h2 className="text-center my-2">Pegajuan Sewa Kos</h2>
         </div>
@@ -114,7 +106,6 @@ export default function PengajuanSewa1() {
           </div>
         </div>
       </Container>
-      <FooterComponent />
     </>
   );
 }

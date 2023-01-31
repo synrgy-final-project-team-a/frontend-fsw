@@ -2,6 +2,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Tab, Tabs } from "react-bootstrap"
 import { useNavigate, useParams } from "react-router";
+import PengajuanSewaKos from "./sewaTab/pengajuanSewaKos"
+import KonfirmasiPemilik from "./sewaTab/konfirmasiPemilik";
+import Pembayaran from "./sewaTab/pembayaran";
+import Diterima from "./sewaTab/diterima";
 
 const PengajuanSewaIndex = () => {
 	const params = useParams()
@@ -25,17 +29,17 @@ const PengajuanSewaIndex = () => {
 				transition={false}
 				justify
 			>
-				<Tab eventKey="1" title="1">
-					tab 1
+				<Tab eventKey="1" title="1" disabled>
+					<PengajuanSewaKos />
 				</Tab>
-				<Tab eventKey="2" title="2">
-					tab 2
+				<Tab eventKey="2" title="2" disabled>
+					<KonfirmasiPemilik />
 				</Tab>
-				<Tab eventKey="3" title="3">
-					tab 3
+				<Tab eventKey="3" title="3" disabled>
+					<Pembayaran />
 				</Tab>
-				<Tab eventKey="4" title="4">
-					tab 4
+				<Tab eventKey="4" title="4" disabled>
+					<Diterima />
 				</Tab>
 			</Tabs>
 		</div>

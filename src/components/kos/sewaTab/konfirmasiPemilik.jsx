@@ -1,15 +1,11 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import FooterComponent from "../../../components/footer";
-import NavbarComponent from "../../../components/navbar";
-import PencariRoutes from "../../../routes/pencari";
-import NumberProgress from "../../../components/numberProgress";
-export default function PengajuanSewa2() {
+
+export default function KonfirmasiPemilik() {
   const navigate = useNavigate();
   return (
     <>
-      <NavbarComponent routes={PencariRoutes} />
       <Container>
         <Button variant="link" onClick={() => navigate(-1)}>
           <div className="my-3 d-flex align-items-center h-100">
@@ -30,9 +26,6 @@ export default function PengajuanSewa2() {
             <h6 className="ms-2 my-auto">Kembali</h6>
           </div>
         </Button>
-        <div>
-          <NumberProgress current={2} total={4} />
-        </div>
         <div className="d-flex flex-column justify-content-center text-center">
           <h2>Konfirmasi Pemiliki Kos </h2>
           <h4>Silahkan tunggu konfirmasi dari pemilik kos 1x24 jam </h4>
@@ -51,7 +44,6 @@ export default function PengajuanSewa2() {
           
         </div>
       </Container>
-      <FooterComponent />
     </>
   );
 }

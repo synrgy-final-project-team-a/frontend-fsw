@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap"
-import PengajuanSewaIndex from "../../components/pengajuanSewa/tambah"
+import PengajuanSewaIndex from "../../components/kos/pengajuanSewa"
 import PencariLayout from "../../layouts/pencari.layout"
 
 const PengajuanSewa = () => {
