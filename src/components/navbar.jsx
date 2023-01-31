@@ -65,18 +65,16 @@ const NavbarComponent = ({ routes }) => {
 		<Navbar bg="light" expand="lg" id="navbar" className="py-0">
 			<Container>
 				<Navbar.Brand as={Link} key={"/"} to="/">
-					<img src={ searchTop ? "/image/logo-square.png" : "/image/logo.png" } className="img-fluid mx-1 logo" alt="..." /> :
+					<img src={searchTop ? "/image/logo-square.png" : "/image/logo.png"} className="img-fluid mx-1 logo" alt="..." />
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					{
 						searchTop ?
-							<div className="w-100">
-								<div className="form-search d-flex" onClick={routeToSearch}>
-									<img src="/search-normal.svg" alt="..." className="p-2" />
-									<img src="/line-vertical.svg" alt="..." />
-									<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
-								</div>
+							<div className="form-search d-flex my-2" onClick={routeToSearch}>
+								<img src="/search-normal.svg" alt="..." className="p-2" />
+								<img src="/line-vertical.svg" alt="..." />
+								<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
 							</div> :
 							""
 					}

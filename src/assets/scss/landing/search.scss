@@ -1,14 +1,8 @@
-#navbar {
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-
-	.logo {
-		max-height: 60px;
-	}
+#search {
+	position: relative;
+	z-index: 10;
 
 	.form-search {
-		max-height: 60px;
 		background-color: $white;
 		width: 100%;
 		border-style: solid;
@@ -18,12 +12,11 @@
 		border-radius: 0.375rem;
 	}
 
-	.nav-link {
-		font-size: 21px;
-		color: #616161;
-
-		&.active {
-			font-weight: bold;
+	@include media-breakpoint-up(lg) {
+		.form-search {
+			transform: translateY(-35px);
+			width: 70%;
+			margin: auto;
 		}
 	}
 }
