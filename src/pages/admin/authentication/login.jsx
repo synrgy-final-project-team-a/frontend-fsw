@@ -26,6 +26,8 @@ const Login = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault()
+		
+		setError({})
 		let failed = false
 
 		const email = formRef.current.email.value
@@ -33,23 +35,23 @@ const Login = () => {
 
 
 		if (password.length < 8) {
-			failed = true
-			setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
-		}
+            failed = true
+			setError((error) => ({...error, "password": "Password tidak boleh kurang dari 8 karakter!" }))
+        }
 
 		if (password === "") {
 			failed = true
-			setError({ "password": "Password tidak boleh kosong!" })
+			setError((error) => ({...error, "password": "Password tidak boleh kosong!" }))
 		}
 
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
 			failed = true
-			setError({ "email": "Email tidak valid!" })
+			setError((error) => ({...error, "email": "Email tidak valid!" }))
 		}
 
 		if (email === "") {
 			failed = true
-			setError({ "email": "Email tidak boleh kosong!" })
+			setError((error) => ({...error, "email": "Email tidak boleh kosong!" }))
 		}
 
 		if (failed) {
