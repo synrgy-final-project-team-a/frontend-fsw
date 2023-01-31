@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRef } from "react";
+import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { searchIsBottom, searchIsTop } from "../store/slices/decorSlice";
@@ -38,18 +39,16 @@ const SearchComponent = () => {
 	}, [])
 
 	return (
-		<>
-			<div className="d-flex justify-content-center" ref={searchRef}>
-				<div className="form-search d-flex w-75" onClick={routeToSearch}>
-					<img src="/search-normal.svg" alt="..." className="p-2" />
-					<img src="/line-vertical.svg" alt="..." />
-					<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
-					<button className="btn btn-primary m-1 rounded-full">
-						Cari
-					</button>
-				</div>
+		<Container id="search">
+			<div className="form-search d-flex my-2" onClick={routeToSearch} ref={searchRef}>
+				<img src="/search-normal.svg" alt="..." className="p-2" />
+				<img src="/line-vertical.svg" alt="..." />
+				<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+				<button className="btn btn-primary m-1 rounded-full">
+					Cari
+				</button>
 			</div>
-		</>
+		</Container>
 	);
 };
 
