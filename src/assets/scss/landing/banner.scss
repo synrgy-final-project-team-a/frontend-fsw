@@ -1,28 +1,29 @@
-.banner {
-	padding-left: 10%;
-	padding-right: 10%;
-}
-
-.owl-nav {
-	display: flex;
-	gap: 1139px;
-	width: fit-content;
-	top: -250px;
-	right: 80px;
+#banner {
 	position: relative;
-}
+	z-index: 1;
 
-// Mobile
-@media only screen and (max-width: 576px) {
-	.navbar-brand {
-		margin-left: 0px;
+	.owl-stage-outer {
+		width: 100%;
+		border-radius: 0 0 16px 16px;
 	}
 
 	.owl-nav {
-		display: flex;
-		justify-content: center;
-		gap: 100px;
-		top: 0;
-		left: 137px;
+		display: none;
+	}
+
+	@include media-breakpoint-up(lg) {
+		.owl-stage-outer {
+			width: 90%;
+			margin: auto;
+		}
+
+		.owl-nav {
+			display: flex;
+			justify-content: space-between;
+			position: absolute;
+			width: 100%;
+			top: 50%;
+			left: 0;
+		}
 	}
 }
