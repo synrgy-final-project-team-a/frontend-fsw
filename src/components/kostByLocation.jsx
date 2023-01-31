@@ -10,7 +10,7 @@ const KostByLocation = () => {
 				<Col xs={12} lg={4}>
 					<Row className="g-2">
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -22,7 +22,55 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/semarang" className="text-decoration-none">
+								<Card.Body className="d-flex align-items-center p-2">
+									<img
+										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
+										className="img-fluid rounded-circle"
+										alt=""
+									/>
+									<span className="fw-bold px-2">Semarang</span>
+								</Card.Body>
+							</Card>
+						</Col>
+						<Col xs={12} lg={6}>
+							<Card as={Link} to="/pencarian/bandung" className="text-decoration-none">
+								<Card.Body className="d-flex align-items-center p-2">
+									<img
+										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
+										className="img-fluid rounded-circle"
+										alt=""
+									/>
+									<span className="fw-bold px-2">Bandung</span>
+								</Card.Body>
+							</Card>
+						</Col>
+						<Col xs={12} lg={6}>
+							<Card as={Link} to="/pencarian/surabaya" className="text-decoration-none">
+								<Card.Body className="d-flex align-items-center p-2">
+									<img
+										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
+										className="img-fluid rounded-circle"
+										alt=""
+									/>
+									<span className="fw-bold px-2">Surabaya</span>
+								</Card.Body>
+							</Card>
+						</Col>
+						<Col xs={12} lg={6}>
+							<Card as={Link} to="/pencarian/depok" className="text-decoration-none">
+								<Card.Body className="d-flex align-items-center p-2">
+									<img
+										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
+										className="img-fluid rounded-circle"
+										alt=""
+									/>
+									<span className="fw-bold px-2">Depok</span>
+								</Card.Body>
+							</Card>
+						</Col>
+						<Col xs={12} lg={6}>
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -34,7 +82,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -46,55 +94,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
-								<Card.Body className="d-flex align-items-center p-2">
-									<img
-										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
-										className="img-fluid rounded-circle"
-										alt=""
-									/>
-									<span className="fw-bold px-2">Jakarta</span>
-								</Card.Body>
-							</Card>
-						</Col>
-						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
-								<Card.Body className="d-flex align-items-center p-2">
-									<img
-										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
-										className="img-fluid rounded-circle"
-										alt=""
-									/>
-									<span className="fw-bold px-2">Jakarta</span>
-								</Card.Body>
-							</Card>
-						</Col>
-						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
-								<Card.Body className="d-flex align-items-center p-2">
-									<img
-										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
-										className="img-fluid rounded-circle"
-										alt=""
-									/>
-									<span className="fw-bold px-2">Jakarta</span>
-								</Card.Body>
-							</Card>
-						</Col>
-						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
-								<Card.Body className="d-flex align-items-center p-2">
-									<img
-										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
-										className="img-fluid rounded-circle"
-										alt=""
-									/>
-									<span className="fw-bold px-2">Jakarta</span>
-								</Card.Body>
-							</Card>
-						</Col>
-						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -126,7 +126,7 @@ const KostByLocation = () => {
 				<Col xs={12} lg={4}>
 					<Row className="g-2">
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -138,7 +138,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -150,7 +150,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -162,7 +162,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -174,7 +174,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -186,7 +186,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -198,7 +198,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
@@ -210,7 +210,7 @@ const KostByLocation = () => {
 							</Card>
 						</Col>
 						<Col xs={12} lg={6}>
-							<Card as={Link} to="/pencarian/jakarta">
+							<Card as={Link} to="/pencarian/jakarta" className="text-decoration-none">
 								<Card.Body className="d-flex align-items-center p-2">
 									<img
 										src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
