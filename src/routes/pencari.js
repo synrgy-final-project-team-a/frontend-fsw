@@ -12,21 +12,22 @@ import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
 
 const PencariRoutes = [
   {
-    name: "Beranda",
+    name: "Home",
     path: "/",
     element: <Landing />,
   },
   {
-    name: "Favorit",
-    path: "/favorit",
+    name: "Cari Kos",
+    path: "/cari-kos",
     element: <Landing />,
   },
   {
-    name: "Chat",
-    path: "/chat",
+    name: "Sewa Kos",
+    path: "/sewa-kos",
     element: <Landing />,
   },
   {
+    name: "Detail Kos",
     path: "/detail-kos",
     element: <DetailKos />,
   },
@@ -69,6 +70,7 @@ const PencariRoutes = [
     ],
   },
   {
+    name: "Pencarian",
     path: "/pencarian",
     element: <Pencarian />,
   },
