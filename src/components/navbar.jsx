@@ -86,7 +86,7 @@ const NavbarComponent = ({ routes }) => {
 									Masuk
 								</Button> :
 								<NavDropdown key={'/profile'} className="mx-3" title={userData.first_name} id="basic-nav-dropdown">
-									<NavDropdown.Item as={Link} key={'/me'} to="/me">Profile</NavDropdown.Item>
+									<NavDropdown.Item as={Link} key={'/profile'} to="/profile">Profile</NavDropdown.Item>
 									<NavDropdown.Divider />
 									<NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
 								</NavDropdown>
