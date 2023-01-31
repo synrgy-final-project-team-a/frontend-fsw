@@ -15,7 +15,7 @@ root.render(
 			<PersistGate loading={null} persistor={persistor}>
 				<GoogleOAuthProvider clientId="527239252128-k661jotgoabm29k9kcliu9kocjs5f4op.apps.googleusercontent.com">
 					<App />
-				</GoogleOAuthProvider>;
+				</GoogleOAuthProvider>
 			</PersistGate>
 		</Provider>
 	</React.StrictMode>
