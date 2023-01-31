@@ -1,0 +1,28 @@
+.banner {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.owl-nav {
+	display: flex;
+	gap: 1139px;
+	width: fit-content;
+	top: -250px;
+	right: 80px;
+	position: relative;
+}
+
+// Mobile
+@media only screen and (max-width: 576px) {
+	.navbar-brand {
+		margin-left: 0px;
+	}
+
+	.owl-nav {
+		display: flex;
+		justify-content: center;
+		gap: 100px;
+		top: 0;
+		left: 137px;
+	}
+}
