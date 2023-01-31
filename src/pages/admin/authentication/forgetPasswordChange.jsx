@@ -17,6 +17,8 @@ const ForgetPassChange = () => {
 
 	const submitHandle = (e) => {
 		e.preventDefault()
+		
+		setError({})
 		let failed = false
 
 		const password = formRef.current.password.value
@@ -24,17 +26,17 @@ const ForgetPassChange = () => {
 
 		if (password !== verifPassword) {
 			failed = true
-			setError({ "verifPassword": "Verifikasi password salah!" })
+			setError((error) => ({...error, "verifPassword": "Verifikasi password salah!" }))
 		}
 
 		if (verifPassword === "") {
 			failed = true
-			setError({ "verifPassword": "Verifikasi password tidak boleh kosong!" })
+			setError((error) => ({...error, "verifPassword": "Verifikasi password tidak boleh kosong!" }))
 		}
 
 		if (password === "") {
 			failed = true
-			setError({ "password": "Password tidak boleh kosong!" })
+			setError((error) => ({...error, "password": "Password tidak boleh kosong!" }))
 		}
 
 		if (failed) {

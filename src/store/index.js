@@ -4,8 +4,10 @@ import { persistStore } from 'redux-persist';
 import authApi from "./apis/authentication";
 import usersApi from "./apis/users";
 
+import { alamatReducer } from "./slices/alamatSlice";
 import { authPersistReducer } from "./slices/authSlice";
 import decorReducer from "./slices/decorSlice";
+import { kosPersistReducer } from "./slices/kosSlice";
 import { userPersistReducer } from "./slices/userSlice";
 
 export const store = configureStore({
@@ -15,6 +17,8 @@ export const store = configureStore({
 		auth: authPersistReducer,
 		user: userPersistReducer,
 		decor: decorReducer,
+		kos: kosPersistReducer,
+		alamat: alamatReducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
