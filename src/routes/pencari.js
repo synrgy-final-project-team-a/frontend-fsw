@@ -13,22 +13,21 @@ import LoginChat from "../pages/pencari/chat/login";
 
 const PencariRoutes = [
   {
-    name: "Home",
+    name: "Beranda",
     path: "/",
     element: <Landing />,
   },
   {
-    name: "Cari Kos",
-    path: "/cari-kos",
+    name: "Favorit",
+    path: "/favorit",
     element: <Landing />,
   },
   {
-    name: "Sewa Kos",
-    path: "/sewa-kos",
+    name: "Chat",
+    path: "/chat",
     element: <Landing />,
   },
   {
-    name: "Detail Kos",
     path: "/detail-kos",
     element: <DetailKos />,
   },

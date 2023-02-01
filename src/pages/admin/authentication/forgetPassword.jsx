@@ -18,18 +18,20 @@ const ForgetPass = () => {
 
 	const submitHandle = (e) => {
 		e.preventDefault()
+		
+		setError({})
 		let failed = false
 
 		const email = formRef.current.email.value
 
 		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
 			failed = true
-			setError({"email": "Email tidak valid!"})
+			setError((error) => ({...error, "email": "Email tidak valid!" }))
 		}
 
 		if (email === "") {
 			failed = true
-			setError({"email": "Email tidak boleh kosong!"})
+			setError((error) => ({...error, "email": "Email tidak boleh kosong!" }))
 		}
 
 		if (failed) {
