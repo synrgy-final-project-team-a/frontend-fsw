@@ -10,7 +10,7 @@ export default function PengajuanSewaKos() {
   return (
     <>
       <Container className="">
-        <Button variant="link" onClick={() => navigate(-1)}>
+        <Button variant="link" onClick={() => navigate('/')}>
           <div className="my-3 d-flex align-items-center h-100">
             <span>
               <svg
