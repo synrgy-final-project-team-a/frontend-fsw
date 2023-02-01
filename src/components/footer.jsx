@@ -17,25 +17,43 @@ const FooterComponent = () => {
 				<Col xs={12} lg={3} className="text-center text-lg-start">
 					<h3 className="fw-bold footer-title">Kosanku</h3>
 					<ul className="link-list">
-						<li as={Link} to="/" className="mb-3">Pusat Bantuan</li>
-						<li as={Link} to="/" className="mb-3">Kebijakan Privasi</li>
-						<li as={Link} to="/" className="mb-3">Syarat dan Ketentuan</li>
+						<li className="mb-3">
+							<Link to="/" className="text-decoration-none">Pusat Bantuan</Link>
+						</li>
+						<li className="mb-3">
+							<Link to="/" className="text-decoration-none">Kebijakan Privasi</Link>
+						</li>
+						<li className="mb-3">
+							<Link to="/" className="text-decoration-none">Syarat dan Ketentuan</Link>
+						</li>
 					</ul>
 				</Col>
 				<Col xs={12} lg={3} className="text-center text-lg-start">
 					<h3 className="fw-bold footer-title">Hubungi Kami</h3>
 					<ul className="link-list">
-						<li as={Link} to="/" className="mb-3">kosanku@mail.com</li>
-						<li as={Link} to="/" className="mb-3">+62 897 6767 1212</li>
-						<li as={Link} to="/" className="mb-3">infokosan@gmail.com</li>
+						<li className="mb-3">
+							<a href="mailto:kosanku@mail.com" className="text-decoration-none">kosanku@mail.com</a>
+						</li>
+						<li className="mb-3">
+							<Link to="/" className="text-decoration-none">+62 897 6767 1212</Link>
+						</li>
+						<li className="mb-3">
+							<a href="mailto:infokosan@gmail.com" className="text-decoration-none">infokosan@gmail.com</a>
+						</li>
 					</ul>
 				</Col>
 				<Col xs={12} lg={3} className="text-center text-lg-start">
 					<h3 className="fw-bold footer-title">Ikuti Kami</h3>
 					<ul className="link-list">
-						<li as={Link} to="/" className="mb-3">Facebook</li>
-						<li as={Link} to="/" className="mb-3">Instagram</li>
-						<li as={Link} to="/" className="mb-3">Twitter</li>
+						<li className="mb-3">
+							<Link to="/" className="text-decoration-none">Facebook</Link>
+						</li>
+						<li className="mb-3">
+							<Link to="/" className="text-decoration-none">Instagram</Link>
+						</li>
+						<li className="mb-3">
+							<Link to="/" className="text-decoration-none">Twitter</Link>
+						</li>
 					</ul>
 				</Col>
 			</Row>
