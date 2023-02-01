@@ -15,7 +15,7 @@ const ListUsers = () => {
 
 	const handleDelete = (e, id, role, name) => {
 		e.preventDefault()
-		if(role.includes('ROLE_SUPERUSER')) {
+		if (role.includes('ROLE_SUPERUSER')) {
 			setAlert({
 				"variant": "danger",
 				"message": "Dilarang menghapus superadmin!",
@@ -78,7 +78,7 @@ const ListUsers = () => {
 					{
 						isLoading ?
 							<tr>
-								<td colSpan={4} className="text-center">Loading...</td>
+								<td colSpan={6} className="text-center">Loading...</td>
 							</tr> :
 							isSuccess ?
 								data.data.content.map((el, i) => {
@@ -135,7 +135,7 @@ const ListUsers = () => {
 									)
 								}) :
 								<tr>
-									<td colSpan={4} className="text-center">Ambil data gagal</td>
+									<td colSpan={6} className="text-center">Ambil data gagal</td>
 								</tr>
 					}
 				</tbody>
