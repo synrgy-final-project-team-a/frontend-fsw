@@ -3,6 +3,7 @@ import Profile from "../pages/penyewa/profile/profilePenyewa"
 import Dashboard from "../pages/penyewa/dashboard"
 import ListKos from "../pages/penyewa/kos/list"
 import TambahKos from "../pages/penyewa/kos/tambah"
+import ChatPagePenyewa from "../pages/penyewa/chat/chatPage"
 
 const PenyewaRoutes = [
 	{
@@ -16,6 +17,12 @@ const PenyewaRoutes = [
 			{
 				path: "/profile",
 				element: <Profile />,
+				children:[
+					{
+						path: "/chat",
+						element: <ChatPagePenyewa />
+					}
+				]
 			},
 			{
 				path: "/kos",

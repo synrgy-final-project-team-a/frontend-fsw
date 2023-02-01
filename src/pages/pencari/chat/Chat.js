@@ -6,7 +6,6 @@ function Chat({ socket, username, room }) {
   const [messageList, setMessageList] = useState([]);
 
   const chatRef = useRef({});
-  console.log(chatRef.current.time);
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
@@ -25,7 +24,6 @@ function Chat({ socket, username, room }) {
       setMessageList((list) => [...list, messageData]);
       chatRef.current = messageData;
       setCurrentMessage("");
-      console.log(chatRef);
     }
   };
 
@@ -69,7 +67,7 @@ function Chat({ socket, username, room }) {
                   <div className="message-content">
                     <p>{messageContent.message}</p>
                   </div>
-                  <div className="message-meta">
+                  <div className="message-meta d-flex">
                     <p id="time">{messageContent.time}</p>
                     <p id="author">{messageContent.author}</p>
                   </div>

@@ -39,7 +39,12 @@ function LoginChat() {
           <button onClick={joinRoom}>Join A Room</button>
         </div>
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <Chat
+          socket={socket}
+          username={username}
+          room={room}
+          
+        />
       )}
     </div>
   );

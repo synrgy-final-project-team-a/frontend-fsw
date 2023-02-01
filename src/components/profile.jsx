@@ -80,6 +80,12 @@ export default function Profile() {
           <small>Pengaturan</small>
         </p>
         <hr className="m-0" />
+        <p className="mb-0 mt-3">
+          <Link to="/profile/chat" className="text-dark text-decoration-none">
+            <small>Chat</small>
+          </Link>
+        </p>
+        <hr className="m-0" />
       </div>
       <div>
         <h5 className="fw-bold mt-3">Referensi</h5>

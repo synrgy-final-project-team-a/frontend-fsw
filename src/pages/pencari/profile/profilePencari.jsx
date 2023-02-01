@@ -14,7 +14,6 @@ export default function ProfilePencari() {
   });
 
   useEffect(() => {
-    console.log(token);
     if (!token.access_token) {
       return navigate("/login");
     }
