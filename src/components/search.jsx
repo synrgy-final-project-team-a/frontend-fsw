@@ -1,60 +1,55 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
+import { Container } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { searchIsBottom, searchIsTop } from "../store/slices/decorSlice";
 
-const Search = () => {
+const SearchComponent = () => {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
-	const [searchInput, setSeacrhInput] = useState("");
-
-	const handleButtonCariKos = (e) => {
-		console.log(e.target.value);
-	}
-
-	const handleChange = (e) => {
-		e.preventDefault();
-		setSeacrhInput(e.target.value);
-	}
+	const searchRef = useRef()
 
 	const routeToSearch = (e) => {
-		e.preventDefault()
-		navigate('/search')
-	}
+		e.preventDefault();
+		navigate("/pencarian");
+	};
+
+	useEffect(() => {
+		const handleScroll = () => {
+			if (searchRef) {
+				const top = searchRef.current.getBoundingClientRect().top
+				if (top < 0) {
+					dispatch(searchIsTop())
+				} else {
+					dispatch(searchIsBottom())
+				}
+			}
+			return
+		}
+
+		window.addEventListener("scroll", handleScroll);
+
+		return function cleanup() {
+			dispatch(searchIsBottom())
+			window.removeEventListener("scroll", handleScroll);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
-		<>
-			
+		<Container id="search">
+			<div className="form-search d-flex my-2" onClick={routeToSearch} ref={searchRef}>
+				<img src="/search-normal.svg" alt="..." className="p-2" />
+				<img src="/line-vertical.svg" alt="..." />
+				<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+				<button className="btn btn-primary m-1 rounded-full">
+					Cari
+				</button>
+			</div>
+		</Container>
+	);
+};
 
-				<div className="row height d-flex justify-content-center align-items-center">
-
-					<div className="col-md-6">
-
-						<div className="form" onClick={routeToSearch}>
-							<i className="fa fa-search"></i>
-							<input type="text" className="form-control form-input" placeholder="Search anything..." onChange={handleChange} value={searchInput} />
-							<span className="left-pan"><i className="fa fa-microphone"></i></span>
-							<button onClick={(e) => handleButtonCariKos(e)}>Cari Kos</button>
-						</div>
-
-						<h1>{searchInput}</h1>
-
-					</div>
-
-				</div>
-
-			
-
-			{/* <Container>
-              <Row className="height d-flex justify-content-center align-items-center">
-                <Col md={6}>
-                  <Form>
-                    
-                  </Form>
-
-                </Col>
-              </Row>
-            </Container> */}
-		</>
-	)
-}
-
-export default Search;
+export default SearchComponent;

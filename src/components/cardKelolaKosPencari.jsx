@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,9 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 library.add(faCalendarCheck, faClock, faChevronDown);
-import { useState } from "react";
 
-export default function cardKelolaKosPencari() {
+const CardKelolaKosPencari = () => {
   const [isButtonVisible, setIsButtonVisible] = useState(true);
   const [isCardVisible, setIsCardVisible] = useState(false);
   return (
@@ -162,3 +162,5 @@ export default function cardKelolaKosPencari() {
     </>
   );
 }
+
+export default CardKelolaKosPencari
