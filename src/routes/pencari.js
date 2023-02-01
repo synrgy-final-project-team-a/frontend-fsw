@@ -9,6 +9,7 @@ import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
 import Pencarian from "../pages/pencari/pencarian";
 import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
 import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
+import Favorite from "../pages/pencari/favorite/favorite"
 
 const PencariRoutes = [
   {
@@ -19,7 +20,7 @@ const PencariRoutes = [
   {
     name: "Favorit",
     path: "/favorit",
-    element: <Landing />,
+    element: <Favorite />,
   },
   {
     name: "Chat",
