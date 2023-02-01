@@ -27,7 +27,7 @@ const PencariRoutes = [
     element: <Landing />,
   },
   {
-    path: "/detail-kos",
+    path: "/kos/detail",
     element: <DetailKos />,
   },
   {
