@@ -3,6 +3,7 @@ import Badge from "react-bootstrap/Badge";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import { Link } from "react-router-dom";
 
 function BestKost() {
 	return (
@@ -13,7 +14,7 @@ function BestKost() {
 					[1, 2, 3, 4, 5, 6].map((el) => {
 						return (
 							<Col xs={12} lg={4} key={el}>
-								<Card className="kos-card bg-outline-primary">
+								<Card className="kos-card bg-outline-primary text-decoration-none" as={Link} to="/kos/detail">
 									<Card.Img variant="top" src="/kos-giya-putri.png" />
 									<Card.Body>
 										<Card.Title>Kos Giya Putri</Card.Title>

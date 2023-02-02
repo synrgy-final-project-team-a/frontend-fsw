@@ -59,7 +59,7 @@ export default function ChatField({ socket, room, user }) {
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
-        id: 2,
+        // id: 2,
         room_id: room,
         message: currentMessage,
         sender: userid,
@@ -73,7 +73,7 @@ export default function ChatField({ socket, room, user }) {
       };
       await socket.emit("send_message", messageData);
       setMessageList((list) => [...list, messageData]);
-      chatRef.history.push(messageData);
+      // chatRef.history.push(messageData);
       chatRef.current = messageData;
       setCurrentMessage("");
     }
@@ -94,7 +94,7 @@ export default function ChatField({ socket, room, user }) {
         }
       }
     });
-  }, [socket, chatRef]);
+  }, [socket]);
   return (
     <>
       <div className="d-flex flex-column p-3 window-chat card">

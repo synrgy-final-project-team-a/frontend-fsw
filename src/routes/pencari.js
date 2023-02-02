@@ -29,7 +29,7 @@ const PencariRoutes = [
     element: <LoginChat />,
   },
   {
-    path: "/detail-kos",
+    path: "/kos/detail",
     element: <DetailKos />,
   },
   {

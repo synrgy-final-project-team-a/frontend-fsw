@@ -7,8 +7,7 @@ import Profile from "../../../components/profile";
 import PencariRoutes from "../../../routes/pencari";
 import io from "socket.io-client";
 import ChatField from "./chatField";
-
-const socket = io.connect("http://localhost:8090");
+import { socket } from "../../pencari/chat/chatPage";
 
 export default function ChatPagePenyewa() {
   const [roomChat, setRoomChat] = useState([

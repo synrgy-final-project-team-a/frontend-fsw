@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useRef, useEffect } from "react";
 import { useEditUserMutation } from "../../../store/apis/users";
 import { useState } from "react";
+import PencariLayout from "../../../layouts/pencari.layout";
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -27,7 +28,6 @@ export default function EditProfile() {
   });
 
   useEffect(() => {
-
     if (userData) {
       setAvatar(userData.avatar);
     }
@@ -78,7 +78,8 @@ export default function EditProfile() {
   return (
     <>
       <div className="d-none d-lg-block">
-        <NavbarComponent routes={PencariRoutes} />
+        {/* <NavbarComponent routes={PencariRoutes} /> */}
+        <PencariLayout />
       </div>
       <Container className="mt-2">
         <Nav aria-label="breadcrumb">
