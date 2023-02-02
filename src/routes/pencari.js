@@ -10,7 +10,6 @@ import Pencarian from "../pages/pencari/pencarian";
 import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
 import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
 import ChatPage from "../pages/pencari/chat/chatPage";
-import LoginChat from "../pages/pencari/chat/login";
 
 const PencariRoutes = [
   {
@@ -26,7 +25,7 @@ const PencariRoutes = [
   {
     name: "Chat",
     path: "/chat",
-    element: <LoginChat />,
+    element: <Landing />,
   },
   {
     path: "/kos/detail",
