@@ -51,6 +51,18 @@ const NavbarComponent = ({ routes }) => {
 		navigate('/pencarian')
 	}
 
+	const roleRoutes = (link) => {
+		let profilePath = link
+		if(location.pathname.includes('/penyewa')) {
+			profilePath = "/penyewa" + link
+		}
+		if(location.pathname.includes('/admin')) {
+			profilePath = "/admin" + link
+		}
+
+		return profilePath
+	}
+
 	useEffect(() => {
 		if (isSuccess) {
 			dispatch(emptyToken())
@@ -85,8 +97,8 @@ const NavbarComponent = ({ routes }) => {
 								<Button as={Link} key={"login"} to="/login" className="mx-3">
 									Masuk
 								</Button> :
-								<NavDropdown key={'/profile'} className="mx-3 profile-link" title={<img src={userData.avatar} alt="..." />} id="basic-nav-dropdown">
-									<NavDropdown.Item as={Link} key={'/profile'} to="/profile">Profile</NavDropdown.Item>
+								<NavDropdown key={roleRoutes("/profile")} className="mx-3 profile-link" title={<img src={userData.avatar} alt="..." />} id="basic-nav-dropdown">
+									<NavDropdown.Item as={Link} key={roleRoutes("/profile")} to={roleRoutes("/profile")}>Profile</NavDropdown.Item>
 									<NavDropdown.Divider />
 									<NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
 								</NavDropdown>
