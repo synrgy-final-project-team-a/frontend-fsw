@@ -1,14 +1,19 @@
-import React from "react";
-import Landing from "../pages/pencari/landing";
-import DetailKos from "../pages/pencari/detailKos";
-import Profile from "../pages/pencari/profile/profilePencari";
-import InformasiPersonal from "../pages/pencari/profile/informasiPersonal";
-import EditProfile from "../pages/pencari/profile/editProfile";
+import React from "react"
+import Landing from "../pages/pencari/landing"
+
+import Profile from "../pages/pencari/profile/profilePencari"
+import InformasiPersonal from "../pages/pencari/profile/informasiPersonal"
+import EditProfile from "../pages/pencari/profile/editProfile"
+import KelolaKos from "../pages/pencari/kelolaKos/kelolaKos"
+import HistoriTransaksi from "../pages/pencari/kelolaKos/historiTransaksi"
+
 import PengajuanSewa1 from "../pages/pencari/pengajuanKos/pengajuanSewa1";
 import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
-import Pencarian from "../pages/pencari/pencarian";
 import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
 import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
+
+import Pencarian from "../pages/pencari/pencarian";
+import DetailKos from "../pages/pencari/detailKos";
 
 const PencariRoutes = [
   {
@@ -52,22 +57,28 @@ const PencariRoutes = [
     ],
   },
   {
-    path: "/profile",
-    children: [
-      {
-        path: "",
-        element: <Profile />,
-      },
-      {
-        path: "/informasi-personal",
-        element: <InformasiPersonal />,
-      },
-      {
-        path: "/edit-profile",
-        element: <EditProfile />,
-      },
-    ],
-  },
+		path: "/profile",
+		children: [
+			{
+				path: "",
+				element: <Profile />,
+			},
+			{
+				path: "/saya",
+				element: <InformasiPersonal />,
+			},{
+				path: "/edit-profile",
+				element: <EditProfile />,
+			},{
+				path: "/kelolakos",
+				element: <KelolaKos />,
+			},{
+				path: "/histori-transaksi",
+				element: <HistoriTransaksi/>
+			}
+
+		]
+	},
   {
     path: "/pencarian",
     element: <Pencarian />,

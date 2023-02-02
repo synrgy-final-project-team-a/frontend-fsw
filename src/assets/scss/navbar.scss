@@ -7,6 +7,21 @@
 		max-height: 60px;
 	}
 
+	.profile-link {
+		.dropdown-toggle {
+			&::after {
+				display: none;
+			}
+		}
+
+		img {
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			object-fit: cover;
+		}
+	}
+
 	.form-search {
 		max-height: 60px;
 		background-color: $white;
