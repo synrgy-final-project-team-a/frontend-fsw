@@ -5,9 +5,9 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileNav from "../../../components/profile";
-import PencariLayout from "../../../layouts/pencari.layout";
 import { useEditUserMutation } from "../../../store/apis/users";
 import { addUser } from "../../../store/slices/userSlice";
+import PenyewaLayout from "../../../layouts/penyewa.layout";
 
 const imgAllow = [
 	"image/png",
@@ -171,7 +171,7 @@ const InformasiPersonal = () => {
 	}, [selectedProfile])
 
 	return (
-		<PencariLayout>
+		<PenyewaLayout>
 			<Container className="mt-3">
 				<Breadcrumb>
 					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/", className: "text-decoration-none" }}>
@@ -370,7 +370,7 @@ const InformasiPersonal = () => {
 					</Col>
 				</Row>
 			</Container>
-		</PencariLayout>
+		</PenyewaLayout>
 	);
 }
 

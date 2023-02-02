@@ -2,15 +2,15 @@ import React from "react";
 import { Container, Row, Col, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ProfilNav from "../../../components/profile";
-import PencariLayout from "../../../layouts/pencari.layout";
+import AdminLayout from "../../../layouts/admin.layout";
 
-const ProfilePencari = () => {
+const ProfilAdmin = () => {
 	return (
-		<PencariLayout>
+		<AdminLayout>
 			<Container className="mt-3">
 				<Breadcrumb>
-					<Breadcrumb.Item linkAs={Link} linkProps={{to: "/", className: "text-decoration-none"}}>
-						Beranda
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/penyewa", className: "text-decoration-none" }}>
+						Dashboard
 					</Breadcrumb.Item>
 					<Breadcrumb.Item active>Profil</Breadcrumb.Item>
 				</Breadcrumb>
@@ -23,8 +23,8 @@ const ProfilePencari = () => {
 					</Col>
 				</Row>
 			</Container>
-		</PencariLayout>
+		</AdminLayout>
 	);
 }
 
-export default ProfilePencari
+export default ProfilAdmin
