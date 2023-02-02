@@ -6,8 +6,13 @@
 @import "navbar";
 @import "footer";
 @import "landing";
+@import "profile";
 @import "kelola-kos";
 @import "detailkos";
+
+.cursor-pointer {
+	cursor: pointer;
+}
 
 // line middler nomor pengajuan
 .line {

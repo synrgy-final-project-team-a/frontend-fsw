@@ -64,7 +64,7 @@ const PencariRoutes = [
 				element: <Profile />,
 			},
 			{
-				path: "/informasi-personal",
+				path: "/saya",
 				element: <InformasiPersonal />,
 			},{
 				path: "/edit-profile",
