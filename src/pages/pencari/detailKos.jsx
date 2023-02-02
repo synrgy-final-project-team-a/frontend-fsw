@@ -4,9 +4,7 @@ import NavbarComponent from "../../components/navbar";
 import PencariRoutes from "../../routes/pencari";
 import FooterComponent from "../../components/footer";
 import { useNavigate } from "react-router-dom";
-import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DetailKos = () => {
   const navigate = useNavigate();
@@ -395,72 +393,89 @@ const DetailKos = () => {
         {/* End Tipe Kamar Kos */}
 
         {/* Kosan Menarik di Sekitar Lokasi */}
-        <Container className="mt-3 mb-5">
-          {" "}
-          <h2 className="fs-4 fw-bolder text-muted">Lihat Kosan Menarik Di Sekitarmu</h2>
-          <OwlCarousel className="owl-theme" autoplay={true} items={3} loop dots={false} margin={20}>
-            <Card className="">
-              <img className="img-fluid" src="/image/Kos2.png" alt="" />
-              <Card.Body>
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Indekos Bu Sapri
-                  </p>
-                  <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0 }}>
-                    <strong>Rp 790.000 </strong> / bulan
-                  </p>
-                  <Badge className="fw-normal mx-0" bg="outline-primary">
-                    ♂ Pria
-                  </Badge>{" "}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-            <Card className="">
-              <img className="img-fluid" src="/image/Kos2.png" alt="" />
-              <Card.Body>
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Indekos Bu Sapri
-                  </p>
-                  <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0 }}>
-                    <strong>Rp 790.000 </strong> / bulan
-                  </p>
-                  <Badge className="fw-normal mx-0" bg="outline-primary">
-                    ♂ Pria
-                  </Badge>{" "}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-            <Card className="">
-              <img className="img-fluid" src="/image/Kos2.png" alt="" />
-              <Card.Body>
-                {/* <Card.Title>Card Title</Card.Title> */}
-                <Card.Text className="">
-                  <p style={{ margin: 0 }} className="fw-bold">
-                    Indekos Bu Sapri
-                  </p>
-                  <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
-                    Jakarta
-                  </p>
-                  <p style={{ margin: 0 }}>
-                    <strong>Rp 790.000 </strong> / bulan
-                  </p>
-                  <Badge className="fw-normal mx-0" bg="outline-primary">
-                    ♂ Pria
-                  </Badge>{" "}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </OwlCarousel>
+        <Container className="mt-3">
+          <Row className="d-flex justify-content-between">
+            <Col xs={8}>
+              <h2 className="fw-bolder text-muted">Lihat Kosan Menarik Di Sekitarmu</h2>
+            </Col>
+            <Col xs={4} className="text-end">
+              <a href="/pencarian" className="stretched-link text-muted">
+                Cari Lokasi lainnya <FontAwesomeIcon icon="fa-duotone fa-chevron-right" />
+              </a>
+            </Col>
+          </Row>
         </Container>
+        <Container className="">
+          <Row className="d-flex justify-content-evenly">
+            <Col lg={4} xs={12} className="d-lg-block">
+              <Card className="shadow-sm">
+                <img className="img-fluid" src="/image/Kos2.png" alt="" />
+                <Card.Body>
+                  {/* <Card.Title>Card Title</Card.Title> */}
+                  <Card.Text className="">
+                    <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
+                      Jakarta
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
+                    </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col lg={4} className="d-none d-lg-block">
+              <Card className="shadow-sm">
+                <img className="img-fluid" src="/image/Kos2.png" alt="" />
+                <Card.Body>
+                  {/* <Card.Title>Card Title</Card.Title> */}
+                  <Card.Text className="">
+                    <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
+                      Jakarta
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
+                    </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col lg={4} className="d-none d-lg-block">
+              <Card className="shadow-sm">
+                <img className="img-fluid" src="/image/Kos2.png" alt="" />
+                <Card.Body>
+                  {/* <Card.Title>Card Title</Card.Title> */}
+                  <Card.Text className="">
+                    <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p style={{ margin: 0 }} className="fw-bold text-muted fs-6">
+                      Jakarta
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
+                    </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+
         {/* End Kosan Menarik di Sekitar Lokasi */}
       </div>
       <FooterComponent />
