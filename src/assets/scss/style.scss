@@ -6,49 +6,16 @@
 @import "navbar";
 @import "footer";
 @import "landing";
+@import "profile";
 @import "kelola-kos";
 @import "detailkos";
 
-
-// Mobile
-@media only screen and (max-width: 576px) {
-	.navbar-brand {
-		margin-left: 0px;
-	}
-
-	.owl-nav {
-		display: flex;
-		justify-content: center;
-		gap: 100px;
-		top: 0;
-		left: 90px;
-	}
-
-	.first-footer {
-		flex: auto;
-	}
-
-	.fourth-footer {
-		flex: auto;
-	}
-}
-
-.scrolling-wrapper {
-	flex-wrap: nowrap;
-	overflow-x: auto;
-
-	.testi-card {
-		border-color: $primary-border;
-		border-width: 1px;
-		flex: 0 0 auto;
-	}
+.cursor-pointer {
+	cursor: pointer;
 }
 
 // line middler nomor pengajuan
-
 .line {
-	// width: 200px;
-	// border: red 1px solid;
 	position: relative;
 }
 
