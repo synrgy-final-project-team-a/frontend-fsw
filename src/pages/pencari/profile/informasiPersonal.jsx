@@ -183,7 +183,7 @@ const InformasiPersonal = () => {
 					<Col xs={12} lg={3}>
 						<ProfileNav />
 					</Col>
-					<Col xs={12} lg={9} className="border rounded px-5" id="profile-information">
+					<Col xs={12} lg={9} className="border rounded px-3 px-lg-5" id="profile-information">
 						{
 							isLoading ?
 								<div className="overlay">
@@ -191,7 +191,7 @@ const InformasiPersonal = () => {
 								</div> :
 								""
 						}
-						<Form className="px-5" onSubmit={editProfilSubmit}>
+						<Form className="px-0 px-lg-5" onSubmit={editProfilSubmit}>
 							{
 								(error.hasOwnProperty("alert") && error.alert.message !== "") ?
 									<Alert variant={error.alert.variant} className="mt-5">
