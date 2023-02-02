@@ -1,10 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 
 const ProfileNav = () => {
 	const userData = useSelector(state => state.user.current)
+	const location = useLocation()
+
+	const roleRoutes = (link) => {
+		let profilePath = link
+		if(location.pathname.includes('/penyewa')) {
+			profilePath = "/penyewa" + link
+		}
+		if(location.pathname.includes('/admin')) {
+			profilePath = "/admin" + link
+		}
+
+		return profilePath
+	}
 
 	return (
 		<div id="profile-nav">
@@ -28,8 +41,8 @@ const ProfileNav = () => {
 			<div className="mb-3">
 				<h5 className="fw-bold">Pengaturan akun</h5>
 				<ListGroup variant="flush">
-					<ListGroup.Item as={Link} to="/profile/saya">Informasi Pengguna</ListGroup.Item>
-					<ListGroup.Item as={Link} to="/profile/histori">Histori Transaksi</ListGroup.Item>
+					<ListGroup.Item as={Link} to={roleRoutes("/profile/saya")}>Informasi Pengguna</ListGroup.Item>
+					<ListGroup.Item as={Link} to={roleRoutes("/profile/histori")}>Histori Transaksi</ListGroup.Item>
 					<ListGroup.Item>Notifikasi</ListGroup.Item>
 					<ListGroup.Item>Pengaturan</ListGroup.Item>
 				</ListGroup>
