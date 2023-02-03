@@ -12,11 +12,19 @@ const kosApi = createApi({
 			}),
 			invalidatesTags: ['Kos'],
 		}),
+		getListByPenyewa: build.mutation({
+			query: ({ idProfile, page, size }) => ({
+				url: `api/tennant/kost/list/${idProfile}?page=${page}&size=${size}`,
+				method: 'GET'
+			}),
+			invalidatesTags: ['Kos'],
+		}),
 	}),
 })
 
 export const {
-	useSearchKeywordMutation
+	useSearchKeywordMutation,
+	useGetListByPenyewaMutation
 } = kosApi
 
 export default kosApi

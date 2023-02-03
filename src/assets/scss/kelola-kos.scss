@@ -1,6 +1,9 @@
 #kelola-kos {
   .card {
-    > .card-img {
+    border-radius: 20px;
+
+    >.card-img {
+      border-radius: 20px 0 0 20px;
       max-width: 200px;
       min-height: 200px;
       object-fit: cover;
@@ -34,10 +37,10 @@
       background-color: $primary-light;
     }
 
-    > .nav-item {
+    >.nav-item {
       z-index: 2;
 
-      > .nav-link {
+      >.nav-link {
         margin: 0 auto;
         background-color: $primary-light;
         color: $primary;
@@ -57,7 +60,7 @@
       }
 
       @include media-breakpoint-up(lg) {
-        > .nav-link {
+        >.nav-link {
           font-size: 28px;
           width: 60px;
           height: 60px;
