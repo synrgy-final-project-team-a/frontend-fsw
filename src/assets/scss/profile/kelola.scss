@@ -1,0 +1,13 @@
+#profile-kelola-kos {
+	.card-kelola {
+		.card {
+			border-radius: 20px;
+
+			.card-img {
+				height: 100%;
+				border-radius: 20px 0 0 20px;
+				object-fit: cover;
+			}
+		}
+	}
+}
