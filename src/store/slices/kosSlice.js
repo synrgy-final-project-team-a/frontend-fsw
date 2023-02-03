@@ -54,6 +54,31 @@ const initialState = {
     "Televisi (TV)": false,
     Listrik: false,
   },
+  namaKamar: "",
+  ukuranKamar: "",
+  totalKamar: "",
+  fotoDalamKos: File,
+  fotoKamarMandi: File,
+  ketersediaanKamar: "",
+  fasilitasKamar: {
+    "Air Conditioner": false,
+    Bantal: false,
+    "Kipas Angin": false,
+    "Lemari Baju": false,
+    Jendela: false,
+    Kasur: false,
+    "Televisi (TV)": false,
+    Meja: false,
+    Kursi: false,
+  },
+  fasilitasKamarMandi: {
+    "Kamar Mandi Luar": false,
+    "Toilet Duduk": false,
+    "Pemanas Air": false,
+    "Kamar Mandi Dalam": false,
+    "Toilet Jongkok": false,
+    Shower: false,
+  },
 };
 
 export const slice = createSlice({
