@@ -3,8 +3,7 @@ import Landing from "../pages/pencari/landing"
 
 import Profile from "../pages/pencari/profile/profilePencari"
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal"
-import KelolaKos from "../pages/pencari/kelolaKos/kelolaKos"
-import HistoriTransaksi from "../pages/pencari/kelolaKos/historiTransaksi"
+import HistoriTransaksi from "../pages/pencari/profile/historiTransaksi"
 
 import PengajuanSewa1 from "../pages/pencari/pengajuanKos/pengajuanSewa1";
 import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
@@ -67,11 +66,7 @@ const PencariRoutes = [
 				element: <InformasiPersonal />,
 			},
 			{
-				path: "/kelolakos",
-				element: <KelolaKos />,
-			},
-			{
-				path: "/histori-transaksi",
+				path: "/histori",
 				element: <HistoriTransaksi />
 			}
 

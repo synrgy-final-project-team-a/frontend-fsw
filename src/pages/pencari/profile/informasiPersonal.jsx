@@ -177,7 +177,8 @@ const InformasiPersonal = () => {
 					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/", className: "text-decoration-none" }}>
 						Beranda
 					</Breadcrumb.Item>
-					<Breadcrumb.Item active>Profil</Breadcrumb.Item>
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile", className: "text-decoration-none" }}>Profil</Breadcrumb.Item>
+					<Breadcrumb.Item active>Informasi Pengguna</Breadcrumb.Item>
 				</Breadcrumb>
 				<Row className="mt-5">
 					<Col xs={12} lg={3}>

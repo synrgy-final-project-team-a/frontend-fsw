@@ -37,11 +37,12 @@ const PencariLayout = ({ children }) => {
 		}
 
 		if (isErrorUser) {
-			if (errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
+			if (errorUser.hasOwnProperty('data') && errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
 				navigate('/login')
+				return
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
