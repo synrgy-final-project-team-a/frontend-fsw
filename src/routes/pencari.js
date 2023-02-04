@@ -1,15 +1,18 @@
 import React from "react";
 import Landing from "../pages/pencari/landing";
-import DetailKos from "../pages/pencari/detailKos";
+
 import Profile from "../pages/pencari/profile/profilePencari";
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal";
-import EditProfile from "../pages/pencari/profile/editProfile";
+import HistoriTransaksi from "../pages/pencari/profile/historiTransaksi";
+
 import PengajuanSewa1 from "../pages/pencari/pengajuanKos/pengajuanSewa1";
 import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
-import Pencarian from "../pages/pencari/pencarian";
 import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
 import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
 import ChatPage from "../pages/pencari/chat/chatPage";
+
+import Pencarian from "../pages/pencari/pencarian";
+import DetailKos from "../pages/pencari/detailKos";
 
 const PencariRoutes = [
   {
@@ -60,12 +63,12 @@ const PencariRoutes = [
         element: <Profile />,
       },
       {
-        path: "/informasi-personal",
+        path: "/saya",
         element: <InformasiPersonal />,
       },
       {
-        path: "/edit-profile",
-        element: <EditProfile />,
+        path: "/histori",
+        element: <HistoriTransaksi />,
       },
       {
         path: "/chat",
@@ -74,7 +77,6 @@ const PencariRoutes = [
     ],
   },
   {
-    name: "Pencarian",
     path: "/pencarian",
     element: <Pencarian />,
   },

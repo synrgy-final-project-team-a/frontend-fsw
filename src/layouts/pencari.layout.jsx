@@ -88,7 +88,6 @@ const PencariLayout = ({ children }) => {
     }
     socket.on("receive_notification", (data) => {
       if (!notifRef.current.createdat) {
- 
         notifRef.current = data;
         showNotif("Pesan Masuk", data.message);
       }
@@ -100,7 +99,7 @@ const PencariLayout = ({ children }) => {
         }
       }
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   return (
