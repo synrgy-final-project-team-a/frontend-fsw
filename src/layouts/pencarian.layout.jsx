@@ -21,18 +21,13 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 	}
 
 	useEffect(() => {
-		if (Object.keys(token).length === 0) {
-			dispatch(emptyToken())
-			dispatch(emptyEmail())
-			dispatch(emptyUser())
-			navigate('/login')
-		} else {
-			if (!token.role.includes('ROLE_TN')) {
-				if (token.role.includes('ROLE_SK')) {
-					navigate('/')
-				}
-				if (token.role.includes('ROLE_SUPERUSER')) {
+		if (Object.keys(token).length !== 0) {
+			if (!token.role.includes('ROLE_SK')) {
+				if(token.role.includes('ROLE_TN')) {
 					navigate('/penyewa')
+				}
+				if(token.role.includes('ROLE_SUPERUSER')) {
+					navigate('/admin')
 				}
 			}
 			currentUserHit(token.access_token)
@@ -46,11 +41,12 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 		}
 
 		if (isErrorUser) {
-			if (errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
+			if (errorUser.hasOwnProperty('data') && errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
 				navigate('/login')
+				return
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
