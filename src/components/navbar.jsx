@@ -87,7 +87,11 @@ const NavbarComponent = ({ routes }) => {
 							<div className="form-search d-flex my-2" onClick={routeToSearch}>
 								<img src="/search-normal.svg" alt="..." className="p-2" />
 								<img src="/line-vertical.svg" alt="..." />
+<<<<<<< HEAD
 								<input type="text" className="w-100 border-0 mx-2" defaultValue={searchText} placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+=======
+								<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+>>>>>>> bf99107c450d7457e8fdb76435251e8373e78533
 							</div> :
 							""
 					}
