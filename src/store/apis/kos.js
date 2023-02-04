@@ -12,11 +12,20 @@ const kosApi = createApi({
 			}),
 			invalidatesTags: ['Kos'],
 		}),
+		getList: build.mutation({
+			query: (params) => ({
+				url: `api/kost/filter/sort/`,
+				method: 'GET',
+				params: params
+			}),
+			invalidatesTags: ['Kos'],
+		}),
 	}),
 })
 
 export const {
-	useSearchKeywordMutation
+	useSearchKeywordMutation,
+	useGetListMutation
 } = kosApi
 
 export default kosApi
