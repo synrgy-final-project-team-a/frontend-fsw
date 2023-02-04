@@ -1,6 +1,9 @@
 import React from "react"
-import Profile from "../pages/penyewa/profile/profilePenyewa"
 import Dashboard from "../pages/penyewa/dashboard"
+
+import Profile from "../pages/penyewa/profile/profilePenyewa"
+import InformasiPersonal from "../pages/penyewa/profile/informasiPersonal"
+
 import ListKos from "../pages/penyewa/kos/list"
 import TambahKos from "../pages/penyewa/kos/tambah"
 
@@ -15,7 +18,16 @@ const PenyewaRoutes = [
 			},
 			{
 				path: "/profile",
-				element: <Profile />,
+				children: [
+					{
+						path: "",
+						element: <Profile />,
+					},
+					{
+						path: "/saya",
+						element: <InformasiPersonal />,
+					},		
+				]
 			},
 			{
 				path: "/kos",

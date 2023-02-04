@@ -5,9 +5,9 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileNav from "../../../components/profile";
-import PencariLayout from "../../../layouts/pencari.layout";
 import { useEditUserMutation } from "../../../store/apis/users";
 import { addUser } from "../../../store/slices/userSlice";
+import AdminLayout from "../../../layouts/admin.layout";
 
 const imgAllow = [
 	"image/png",
@@ -171,14 +171,13 @@ const InformasiPersonal = () => {
 	}, [selectedProfile])
 
 	return (
-		<PencariLayout>
+		<AdminLayout>
 			<Container className="mt-3">
 				<Breadcrumb>
 					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/", className: "text-decoration-none" }}>
 						Beranda
 					</Breadcrumb.Item>
-					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile", className: "text-decoration-none" }}>Profil</Breadcrumb.Item>
-					<Breadcrumb.Item active>Informasi Pengguna</Breadcrumb.Item>
+					<Breadcrumb.Item active>Profil</Breadcrumb.Item>
 				</Breadcrumb>
 				<Row className="mt-5">
 					<Col xs={12} lg={3}>
@@ -371,7 +370,7 @@ const InformasiPersonal = () => {
 					</Col>
 				</Row>
 			</Container>
-		</PencariLayout>
+		</AdminLayout>
 	);
 }
 

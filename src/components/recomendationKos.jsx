@@ -1,10 +1,10 @@
+import { Link } from "react-router-dom";
 import React from "react";
 import { Card, Badge, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 library.add(faChevronRight);
-import { Link } from "react-router-dom";
 
 export default function recomendationKos() {
   return (

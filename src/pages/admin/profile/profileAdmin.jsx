@@ -2,11 +2,11 @@ import React from "react";
 import { Container, Row, Col, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ProfilNav from "../../../components/profile";
-import PenyewaLayout from "../../../layouts/penyewa.layout";
+import AdminLayout from "../../../layouts/admin.layout";
 
-const ProfilePenyewa = () => {
+const ProfilAdmin = () => {
 	return (
-		<PenyewaLayout>
+		<AdminLayout>
 			<Container className="mt-3">
 				<Breadcrumb>
 					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/penyewa", className: "text-decoration-none" }}>
@@ -23,8 +23,8 @@ const ProfilePenyewa = () => {
 					</Col>
 				</Row>
 			</Container>
-		</PenyewaLayout>
+		</AdminLayout>
 	);
 }
 
-export default ProfilePenyewa
+export default ProfilAdmin
