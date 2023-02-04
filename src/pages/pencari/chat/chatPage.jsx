@@ -64,6 +64,7 @@ export default function ChatPage() {
     if (isSuccessListRoom) {
       setRoomChat(dataListRoom.data);
       dispatch(addlistRoomChat(dataListRoom));
+      console.log(dataListRoom.data);
     }
 
     if (isErrorListRoom) {
@@ -74,7 +75,14 @@ export default function ChatPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingListRoom]);
 
-  const joinRoom = ({ roomId, nameKos, avatar }) => {
+  const joinRoom = ({ roomId, nameKos, avatar, urutan }) => {
+    console.log(urutan);
+    if (roomChat[urutan].status_message === null) {
+      // roomChat[urutan].status_message = "READED";
+      const statusIcon = document.getElementById(`status${urutan}`);
+      statusIcon.classList.add("visually-hidden");
+    }
+
     if (roomId) {
       setHeader({ nameKos: nameKos, avatar: avatar });
       setRoom(roomId);
@@ -137,27 +145,42 @@ export default function ChatPage() {
                               className="w-100 p-0 text-decoration-none"
                               onClick={(e) =>
                                 joinRoom({
-                                  roomId: room.id,
+                                  urutan: index,
+                                  roomId: room.room_id,
                                   nameKos: room.kost_name,
                                   avatar: room.kost_photo_1,
                                 })
                               }
                             >
-                              <div className="d-flex border rounded p-2 align-items-center mb-1 ">
+                              <div className="d-flex border rounded p-2 align-items-center mb-1 w-100">
                                 <img
                                   src={room.kost_photo_1}
                                   alt=""
                                   className=""
                                   style={{ width: "48px", height: "48px" }}
                                 ></img>
-                                <div className="ms-2">
-                                  <h6 className="mb-0 ms-1">
+                                <div className="ms-2 d-flex flex-column w-100">
+                                  <h6 className="mb-0 ms-1 text-start">
                                     {room.kost_name.length > 20
                                       ? room.kost_name.substring(1, 19) + "..."
                                       : room.kost_name}
                                   </h6>
-                                  <p className="mb-0 ms-0">Pesan....</p>
+                                  <p className="mb-0 ms-1 text-start fs-6">
+                                    pesan : {room.message}
+                                  </p>
                                 </div>
+                                <span
+                                  className={
+                                    room.status_message === "READED"
+                                      ? "visually-hidden translate-middle p-2 bg-danger border border-light rounded-circle"
+                                      : " translate-middle p-2 bg-danger border border-light rounded-circle"
+                                  }
+                                  id={`status${index}`}
+                                >
+                                  <span className="visually-hidden">
+                                    {"New alerts"}
+                                  </span>
+                                </span>
                               </div>
                             </Button>
                           );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Nav, Row, Spinner } from "react-bootstrap";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 
 import Profile from "../../../components/profile";
 import PencariRoutes from "../../../routes/pencari";
@@ -13,6 +13,8 @@ import { useGetListRoomChatMutation } from "../../../store/apis/chat";
 import { addlistRoomChat } from "../../../store/slices/chatSlice";
 export default function ChatPagePenyewa() {
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  let location = useLocation();
   const newChat = useSelector((state) => state.chat.newChat);
   const listRoomChat = useSelector((state) => state.chat.listRoomChat);
 
@@ -31,10 +33,16 @@ export default function ChatPagePenyewa() {
   const [roomChat, setRoomChat] = useState([]);
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
-  const [searchParams] = useSearchParams();
+
   const [loading, setLoading] = useState(false);
   const [header, setHeader] = useState({});
 
+  useEffect(() => {
+    // Google Analytics
+    if (location.pathname != "/penyewa/profile/chat") {
+      console.log(location);
+    }
+  }, [location]);
   useEffect(() => {
     setLoading(true);
     try {
@@ -122,7 +130,7 @@ export default function ChatPagePenyewa() {
                               className="w-100 p-0 text-decoration-none"
                               onClick={(e) =>
                                 joinRoom({
-                                  roomId: room.id,
+                                  roomId: room.room_id,
                                   nameKos: room.seeker_name,
                                   avatar: room.seeker_avatar,
                                 })
