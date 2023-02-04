@@ -69,10 +69,9 @@ export default function ChatField({ socket, room, header }) {
       setCurrentMessage("");
     }
   };
-  console.log(messageList);
+
   useEffect(() => {
     socket.on("receive-message", (data) => {
-      console.log(data);
       if (!chatRef.current.created_at) {
         chatRef.current = data;
         setMessageList((list) => [...list, data]);

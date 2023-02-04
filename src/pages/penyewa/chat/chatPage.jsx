@@ -63,7 +63,7 @@ export default function ChatPagePenyewa() {
     if (roomId) {
       setHeader({ nameKos: nameKos, avatar: avatar });
       setRoom(roomId);
-      socket.emit("join-room", { roomId });
+      socket.emit("join-room", { token: token.access_token, roomId });
     }
     setShowChat(true);
   };

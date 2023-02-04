@@ -47,7 +47,7 @@ const PencariLayout = ({ children }) => {
     if (isSuccessUser) {
       // console.log(dataUser.data);
       // join room socket notification
-      // socket.emit("subscribe-notification", token.access_token);
+      socket.emit("subscribe-notification", { token: token.access_token });
       dispatch(addUser(dataUser.data));
     }
 
@@ -66,33 +66,13 @@ const PencariLayout = ({ children }) => {
   }, [isLoadingUser]);
 
   useEffect(() => {
-    console.log("harus jalan");
-    function showNotif(title, message) {
-      Notification.requestPermission(function (permission) {
-        // console.log(permission);
-        if (permission === "granted") {
-          try {
-            var icon =
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-EinguwJDjx2V4hVtNf2GtnYGp4OSVbYW9Q&usqp=CAU";
-            var body = message;
-            var notification = new Notification(title, { body, icon });
-            notification.onclick = () => {
-              notification.close();
-              window.parent.focus();
-            };
-          } catch (e) {
-            console.log(e);
-          }
-        }
-      });
-    }
-    socket.on("receive_notification", (data) => {
-      if (!notifRef.current.createdat) {
+    socket.on("subscribe-notification", (data) => {
+      if (!notifRef.current.created_at) {
         notifRef.current = data;
         showNotif("Pesan Masuk", data.message);
       }
-      if (notifRef.current.createdat) {
-        if (notifRef.current.createdat !== data.createdat) {
+      if (notifRef.current.created_at) {
+        if (notifRef.current.created_at !== data.created_at) {
           // console.log("12");
           notifRef.current = data;
           showNotif("Pesan Masuk", data.message);
@@ -101,7 +81,26 @@ const PencariLayout = ({ children }) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
-
+  
+  function showNotif(title, message) {
+    Notification.requestPermission(function (permission) {
+      // console.log(permission);
+      if (permission === "granted") {
+        try {
+          var icon =
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-EinguwJDjx2V4hVtNf2GtnYGp4OSVbYW9Q&usqp=CAU";
+          var body = message;
+          var notification = new Notification(title, { body, icon });
+          notification.onclick = () => {
+            notification.close();
+            window.parent.focus();
+          };
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    });
+  }
   return (
     <>
       <NavbarComponent routes={PencariRoutes} />

@@ -48,7 +48,7 @@ const PenyewaLayout = ({ children }) => {
   useEffect(() => {
     if (isSuccessUser) {
       // join room socket notification
-      socket.emit("join_notification", "notif1234");
+      socket.emit("subscribe-notification", { token: token.access_token });
       dispatch(addUser(dataUser.data));
     }
 
@@ -68,27 +68,23 @@ const PenyewaLayout = ({ children }) => {
 
   // get notification chat
   useEffect(() => {
-    console.log("harus jalan");
-    socket.on("receive_notification", (data) => {
-      if (!notifRef.current.createdat) {
-        console.log("12");
+    socket.on("subscribe-notification", (data) => {
+      if (!notifRef.current.created_at) {
         notifRef.current = data;
         showNotif("Pesan Masuk", data.message);
       }
-      if (notifRef.current.createdat) {
-        if (notifRef.current.createdat !== data.createdat) {
-          console.log("12");
+      if (notifRef.current.created_at) {
+        if (notifRef.current.created_at !== data.created_at) {
           notifRef.current = data;
           showNotif("Pesan Masuk", data.message);
         }
       }
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   function showNotif(title, message) {
     Notification.requestPermission(function (permission) {
-      // console.log(permission);
       if (permission === "granted") {
         try {
           var icon =
