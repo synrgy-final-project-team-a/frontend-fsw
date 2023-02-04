@@ -1,16 +1,19 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import PencarianLayout from "../../layouts/pencarian.layout";
+import PencarianLayout from "../../../layouts/pencarian.layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useSearchKeywordMutation } from "../../store/apis/kos";
+import { useSearchKeywordMutation } from "../../../store/apis/kos";
+import { useSelector } from "react-redux";
 
 const Pencarian = () => {
 	const navigate = useNavigate()
 
 	const [keyword, setKeyword] = useState("")
+
+	const userProvince = useSelector(state => state.user.current.province)
 
 	const [
 		cariKeywordHit,
@@ -18,7 +21,7 @@ const Pencarian = () => {
 	] = useSearchKeywordMutation()
 
 	const handleLocationClick = (province, city) => {
-		navigate(`/pencarian/${province}/${city}`)
+		navigate(`/pencarian/${province.toLowerCase()}/${city.toLowerCase()}`)
 	}
 
 	const handleKostClick = (id) => {
@@ -96,14 +99,17 @@ const Pencarian = () => {
 								</Col>
 							</Row> :
 							<Row>
+								{
+									userProvince !== undefined ?
+										<Col xs={12} className="mb-5">
+											<Button variant="outline-primary" as={Link} to={"/pencarian/" + (userProvince)}>
+												Cari Kosan Terdekat{" "}
+												<FontAwesomeIcon icon={faLocationDot} />
+											</Button>
+										</Col> : ""
+								}
 								<Col xs={12}>
-									<Button variant="outline-primary">
-										Cari Kosan Terdekat{" "}
-										<FontAwesomeIcon icon={faLocationDot} />
-									</Button>
-								</Col>
-								<Col xs={12}>
-									<p className="mt-5 text-neutral fw-semibold">Pencarian Populer</p>
+									<p className="text-neutral fw-semibold">Pencarian Populer</p>
 									<Row className="g-3">
 										<Col xs={6} lg={2} className="d-grid">
 											<Button variant="outline-primary" as={Link} to="/pencarian/jakarta">
