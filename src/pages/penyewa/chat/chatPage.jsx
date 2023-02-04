@@ -1,42 +1,69 @@
-import React, { useState } from "react";
-import { Button, Col, Container, Nav, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Button, Col, Container, Nav, Row, Spinner } from "react-bootstrap";
+import { Link, useSearchParams } from "react-router-dom";
 
 import Profile from "../../../components/profile";
 import PencariRoutes from "../../../routes/pencari";
 
 import ChatField from "./chatField";
 import { socket } from "../../pencari/chat/chatPage";
-
+import { useDispatch, useSelector } from "react-redux";
 import PenyewaLayout from "../../../layouts/penyewa.layout";
+import { useGetListRoomChatMutation } from "../../../store/apis/chat";
+import { addlistRoomChat } from "../../../store/slices/chatSlice";
 export default function ChatPagePenyewa() {
-  const [roomChat, setRoomChat] = useState([
+  const dispatch = useDispatch();
+  const newChat = useSelector((state) => state.chat.newChat);
+  const listRoomChat = useSelector((state) => state.chat.listRoomChat);
+
+  const [
+    getListRoomHit,
     {
-      image: "/none_avatar.png",
-      idSeller: 2,
-      idBuyer: 3,
-      sellerName: "Kos Adifa",
-      room: 1,
-      lastchat: "pesann",
-      status: "unread",
+      isLoading: isLoadingListRoom,
+      isError: isErrorListRoom,
+      error: errorListRoom,
+      isSuccess: isSuccessListRoom,
+      data: dataListRoom,
     },
-    {
-      image: "/none_avatar.png",
-      idSeller: 2,
-      idBuyer: 3,
-      sellerName: "Kos Adifa2",
-      room: 2,
-      lastchat: "pesann",
-      status: "unread",
-    },
-  ]);
+  ] = useGetListRoomChatMutation();
+
+  const token = useSelector((state) => state.auth.token);
+  const [roomChat, setRoomChat] = useState([]);
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [loading, setLoading] = useState(false);
+  const [header, setHeader] = useState({});
 
-  const joinRoom = ({ roomChosen }) => {
-    if (roomChosen) {
-      setRoom(roomChosen);
-      socket.emit("join_room", roomChosen);
+  useEffect(() => {
+    setLoading(true);
+    try {
+      getListRoomHit({ token: token.access_token });
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (isSuccessListRoom) {
+      setRoomChat(dataListRoom.data);
+      dispatch(addlistRoomChat(dataListRoom));
+    }
+
+    if (isErrorListRoom) {
+      console.log("error");
+      console.log(errorListRoom);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingListRoom]);
+
+  const joinRoom = ({ roomId, nameKos, avatar }) => {
+    if (roomId) {
+      setHeader({ nameKos: nameKos, avatar: avatar });
+      setRoom(roomId);
+      socket.emit("join-room", { roomId });
     }
     setShowChat(true);
   };
@@ -82,38 +109,52 @@ export default function ChatPagePenyewa() {
                         height: "450px",
                       }}
                     >
-                      {roomChat ? (
+                      {loading ? (
+                        <Spinner animation="border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                      ) : roomChat ? (
                         roomChat.map((room, index) => {
                           return (
                             <Button
                               key={index}
-                              roompick={room.room}
-                              value={room.room}
                               variant="link"
                               className="w-100 p-0 text-decoration-none"
                               onClick={(e) =>
-                                joinRoom({ roomChosen: room.room })
+                                joinRoom({
+                                  roomId: room.id,
+                                  nameKos: room.seeker_name,
+                                  avatar: room.seeker_avatar,
+                                })
                               }
                             >
                               <div className="d-flex border rounded p-2 align-items-center mb-1 ">
                                 <img
-                                  src="/none_avatar.png"
+                                  src={room.seeker_avatar}
                                   alt=""
                                   className=""
                                   style={{ width: "48px", height: "48px" }}
                                 ></img>
                                 <div className="ms-2">
                                   <h6 className="mb-0 ms-1">
-                                    {room.sellerName}
+                                    {room.seeker_name.length > 20
+                                      ? room.seeker_name.substring(1, 19) +
+                                        "..."
+                                      : room.seeker_name}
                                   </h6>
-                                  <p className="mb-0">Pesan....</p>
+                                  <p className="mb-0 ms-0">
+                                    {" "}
+                                    {room.kost_name.length > 20
+                                      ? room.kost_name.substring(1, 19) + "..."
+                                      : room.kost_name}
+                                  </p>
                                 </div>
                               </div>
                             </Button>
                           );
                         })
                       ) : (
-                        <></>
+                        <>Tidak ada riwayat Chat</>
                       )}
                     </div>
                     <div className="col-8">
@@ -129,7 +170,7 @@ export default function ChatPagePenyewa() {
                         <ChatField
                           socket={socket}
                           room={room}
-                          user={roomChat[room - 1]}
+                          header={header}
                         />
                       )}
                     </div>

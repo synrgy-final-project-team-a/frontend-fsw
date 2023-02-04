@@ -26,7 +26,7 @@ const PencariLayout = ({ children }) => {
   ] = useCurrentUserMutation();
 
   const token = useSelector((state) => state.auth.token);
-
+  // console.log(token);
   useEffect(() => {
     if (Object.keys(token).length !== 0) {
       if (!token.role.includes("ROLE_SK")) {
@@ -45,9 +45,9 @@ const PencariLayout = ({ children }) => {
 
   useEffect(() => {
     if (isSuccessUser) {
-      console.log(dataUser.data);
+      // console.log(dataUser.data);
       // join room socket notification
-      socket.emit("join_notification", "notif123");
+      // socket.emit("subscribe-notification", token.access_token);
       dispatch(addUser(dataUser.data));
     }
 

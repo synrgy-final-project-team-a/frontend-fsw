@@ -1,92 +1,85 @@
 import React, { useEffect, useRef, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetHistoryChatMutation } from "../../../store/apis/chat";
+import { addHistoryChat } from "../../../store/slices/chatSlice";
 
-export default function ChatField({ socket, room, user }) {
+export default function ChatField({ socket, room, header }) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const userData = useSelector((state) => state.user.current);
+  const [
+    getHistoryChatHit,
+    {
+      isLoading: isLoadingHistoryChat,
+      isError: isErrorHistoryChat,
+      error: errorHistoryChat,
+      isSuccess: isSuccessHistoryChat,
+      data: dataHistoryChat,
+    },
+  ] = useGetHistoryChatMutation();
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const chatRef = useRef({});
+  const [loading, setLoading] = useState(false);
 
-  // const data1 = [
-  //   {
-  //     id: 1,
-  //     room_id: 1,
-  //     message: "cekk1234",
-  //     sender: 2,
-  //     status: "isread",
-  //     createdat: "12:23",
-  //   },
-  //   {
-  //     id: 2,
-  //     room_id: 1,
-  //     message: "dicek",
-  //     sender: 1,
-  //     status: "isread",
-  //     createdat: "12:24",
-  //   },
-  // ];
-  // const data2 = [
-  //   {
-  //     id: 1,
-  //     room_id: 1,
-  //     message: "apa",
-  //     sender: 1,
-  //     status: "isread",
-  //     createdat: "12:23",
-  //   },
-  //   {
-  //     id: 2,
-  //     room_id: 1,
-  //     message: "ei",
-  //     sender: 2,
-  //     status: "isread",
-  //     createdat: "12:24",
-  //   },
-  // ];
-  // useEffect(() => {
-  //   if (room === 1) {
-  //     chatRef.history = data1;
-  //     console.log(chatRef);
-  //   }
-  //   if (room === 2) {
-  //     chatRef.history = data2;
-  //     console.log(chatRef);
-  //   }
-  // }, [room]);
+  useEffect(() => {
+    setLoading(true);
+    try {
+      getHistoryChatHit({ token: token.access_token, body: { roomId: room } });
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  }, [room]);
 
-  const userid = 1;
+  useEffect(() => {
+    if (isSuccessHistoryChat) {
+      setMessageList(dataHistoryChat.data);
+      dispatch(addHistoryChat(dataHistoryChat));
+    }
+
+    if (isErrorHistoryChat) {
+      console.log("error");
+      console.log(errorHistoryChat);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingHistoryChat]);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
-      const messageData = {
-        id: 2,
-        room_id: room,
+      const messageDataSend = {
+        roomId: room,
         message: currentMessage,
-        sender: userid,
-        status: null,
-        createdat:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes() +
-          ":" +
-          new Date(Date.now()).getSeconds(),
+        sender: token.access_token,
       };
-      await socket.emit("send_message", messageData);
+      const messageData = {
+        roomId: room,
+        message: currentMessage,
+        sender_id: userData.id,
+      };
+
+      await socket.emit("send-message", messageDataSend);
+
       setMessageList((list) => [...list, messageData]);
-      chatRef.history.push(messageData);
+      // chatRef.history.push(messageData);
       chatRef.current = messageData;
       setCurrentMessage("");
     }
   };
+  console.log(messageList);
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      if (!chatRef.current.createdat) {
+    socket.on("receive-message", (data) => {
+      console.log(data);
+      if (!chatRef.current.created_at) {
         chatRef.current = data;
         setMessageList((list) => [...list, data]);
         // chatRef.history.push(data);
       }
-      if (chatRef.current.createdat) {
-        if (chatRef.current.createdat !== data.createdat) {
+      if (chatRef.current.created_at) {
+        if (chatRef.current.created_at !== data.created_at) {
           chatRef.current = data;
           setMessageList((list) => [...list, data]);
           // chatRef.history.push(data);
@@ -99,13 +92,13 @@ export default function ChatField({ socket, room, user }) {
       <div className="d-flex flex-column p-3 window-chat card">
         <div className="d-flex align-items-center mb-3  p-2 rounded chat-header">
           <img
-            src="/none_avatar.png"
+            src={header.avatar}
             alt=""
             className=""
             style={{ width: "48px", height: "48px" }}
           ></img>
           <div className="ms-2">
-            <h6 className="mb-0">Kos adifa</h6>
+            <h6 className="mb-0">{header.nameKos}</h6>
           </div>
         </div>
         <div className="chat-body">
@@ -115,7 +108,7 @@ export default function ChatField({ socket, room, user }) {
                 <div
                   key={index}
                   className="message"
-                  id={userid === messageContent.sender ? "other" : "you"}
+                  id={messageContent.sender_id != userData.id ? "you" : "other"}
                 >
                   <div>
                     <div className="message-content">

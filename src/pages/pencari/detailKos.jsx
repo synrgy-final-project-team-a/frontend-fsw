@@ -1,12 +1,58 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Badge, Container, Row, Col, Button } from "react-bootstrap";
 import NavbarComponent from "../../components/navbar";
 import PencariRoutes from "../../routes/pencari";
 import FooterComponent from "../../components/footer";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useAddRoomChatMutation } from "../../store/apis/chat";
+import { createChat } from "../../store/slices/chatSlice";
 
 const DetailKos = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const [
+    addNewChat,
+    {
+      isLoading: isLoadingNewChat,
+      isError: isErrorNewChat,
+      error: errorNewChat,
+      isSuccess: isSuccessNewChat,
+      data: dataNewChat,
+    },
+  ] = useAddRoomChatMutation();
+  const onClickNewChatHandler = (e) => {
+    e.preventDefault();
+    console.log("ini ke klik");
+    console.log(token);
+    if (!token) {
+      alert("silahkan Login Kembali");
+      return;
+    }
+    let kostId = 6;
+    try {
+      addNewChat({ token: token.access_token, body: { kostId: kostId } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccessNewChat) {
+      dispatch(createChat(dataNewChat));
+      console.log(dataNewChat);
+      navigate(
+        `/profile/chat?newChat=true&nameKost=kostpondokjon&avatar=https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg`
+      );
+    }
+
+    if (isErrorNewChat) {
+      console.log("error");
+      console.log(errorNewChat);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingNewChat]);
   return (
     <>
       <div className="d-none d-lg-block">
@@ -78,6 +124,9 @@ const DetailKos = () => {
                   </Card.Text>
                 </Card.Body>
               </Card>
+              <Button variant="primary" onClick={onClickNewChatHandler}>
+                Chat
+              </Button>
             </Col>
           </Row>
         </Container>
