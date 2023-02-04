@@ -1,0 +1,18 @@
+.list-spesifikasi-kos {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin-left: -32px;
+}
+
+// Ubah ke vh, vw, rem, dll
+.listImage {
+  margin: 2px;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.btn-tipe-outline {
+  border: 1.5px solid #056c73;
+}

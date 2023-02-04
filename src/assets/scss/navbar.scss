@@ -1,0 +1,50 @@
+#navbar {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+
+	.logo {
+		max-height: 60px;
+	}
+
+	.profile-link {
+		.dropdown-toggle {
+			&::after {
+				display: none;
+			}
+		}
+
+		img {
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			object-fit: cover;
+		}
+	}
+
+	.form-search {
+		max-height: 60px;
+		background-color: $white;
+		width: 100%;
+		border-style: solid;
+		border-width: 0.0625rem;
+		border-color: $primary-border;
+		padding: 0.3125rem;
+		border-radius: 0.375rem;
+
+		input {
+			&:focus-visible {
+				outline: none;
+			}
+		}
+	}
+
+	.nav-link {
+		font-size: 21px;
+		color: #616161;
+
+		&.active {
+			font-weight: bold;
+		}
+	}
+}

@@ -30,6 +30,8 @@ const Register = () => {
 
     const handleRegister = (e) => {
         e.preventDefault()
+        
+		setError({})
         let failed = false
 
         const firstName = formRef.current.firstName.value
@@ -39,54 +41,54 @@ const Register = () => {
         const password = formRef.current.password.value
         const verifPassword = formRef.current.verifPassword.value
 
-        if (firstName === "") {
-            failed = true
-            setError({ "firstName": "Nama depan tidak boleh kosong!" })
-        }
-
-        if (lastName === "") {
-            failed = true
-            setError({ "lastName": "Nama belakang tidak boleh kosong!" })
-        }
-
-        if (!/^[0-9]{10,13}$/i.test(nomorHandphone)) {
-            failed = true
-            setError({ "nomorHandphone": "Nomor handphone tidak valid!" })
-        }
-
-        if (nomorHandphone === "") {
-            failed = true
-            setError({ "nomorHandphone": "Nomor handphone tidak boleh kosong!" })
-        }
-
-        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-            failed = true
-            setError({ "email": "Email tidak valid!" })
-        }
-
-        if (email === "") {
-            failed = true
-            setError({ "email": "Email tidak boleh kosong!" })
-        }
-
         if (password !== verifPassword) {
             failed = true
-            setError({ "verifPassword": "Verifikasi password salah!" })
+			setError((error) => ({...error, "verifPassword": "Verifikasi password salah!" }))
         }
 
         if (password.length < 8) {
             failed = true
-            setError({ "password": "Password tidak boleh kurang dari 8 karakter!" })
-        }
-
-        if (password === "") {
-            failed = true
-            setError({ "password": "Password tidak boleh kosong!" })
+			setError((error) => ({...error, "password": "Password tidak boleh kurang dari 8 karakter!" }))
         }
 
         if (verifPassword === "") {
             failed = true
-            setError({ "verifPassword": "Verifikasi password tidak boleh kosong!" })
+			setError((error) => ({...error, "verifPassword": "Verifikasi password tidak boleh kosong!" }))
+        }
+
+        if (password === "") {
+            failed = true
+			setError((error) => ({...error, "password": "Password tidak boleh kosong!" }))
+        }
+
+        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+            failed = true
+			setError((error) => ({...error, "email": "Email tidak valid!" }))
+        }
+
+        if (email === "") {
+            failed = true
+			setError((error) => ({...error, "email": "Email tidak boleh kosong!" }))
+        }
+
+        if (!/^[0-9]{10,13}$/i.test(nomorHandphone)) {
+            failed = true
+			setError((error) => ({...error, "nomorHandphone": "Nomor handphone tidak valid!" }))
+        }
+
+        if (nomorHandphone === "") {
+            failed = true
+			setError((error) => ({...error, "nomorHandphone": "Nomor handphone tidak boleh kosong!" }))
+        }
+
+        if (lastName === "") {
+            failed = true
+			setError((error) => ({...error, "lastName": "Nama belakang tidak boleh kosong!" }))
+        }
+
+        if (firstName === "") {
+            failed = true
+			setError((error) => ({...error, "firstName": "Nama depan tidak boleh kosong!" }))
         }
 
         if (failed) {

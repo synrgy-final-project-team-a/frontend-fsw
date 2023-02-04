@@ -1,0 +1,29 @@
+#banner {
+	position: relative;
+	z-index: 1;
+
+	.owl-stage-outer {
+		width: 100%;
+		border-radius: 0 0 16px 16px;
+	}
+
+	.owl-nav {
+		display: none;
+	}
+
+	@include media-breakpoint-up(lg) {
+		.owl-stage-outer {
+			width: 90%;
+			margin: auto;
+		}
+
+		.owl-nav {
+			display: flex;
+			justify-content: space-between;
+			position: absolute;
+			width: 100%;
+			top: 50%;
+			left: 0;
+		}
+	}
+}
