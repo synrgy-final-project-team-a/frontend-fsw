@@ -13,10 +13,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 	const [currentUserHit, { isLoading: isLoadingUser, isError: isErrorUser, error: errorUser, isSuccess: isSuccessUser, data: dataUser }] = useCurrentUserMutation()
 
 	const token = useSelector(state => state.auth.token)
-<<<<<<< HEAD
 	const searchText = useSelector(state => state.decor.searchText)
-=======
->>>>>>> bf99107c450d7457e8fdb76435251e8373e78533
 
 	const submitKeyword = (e) => {
 		e.preventDefault()
