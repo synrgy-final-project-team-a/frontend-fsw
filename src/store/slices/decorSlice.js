@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-	searchOnTop: false
+	searchOnTop: false,
+	searchText: ""
 }
 
 const slice = createSlice({
-	name: "todo",
+	name: "decor",
 	initialState,
 	reducers: {
 		searchIsTop: (state) => {
@@ -13,13 +14,21 @@ const slice = createSlice({
 		},
 		searchIsBottom: (state) => {
 			state.searchOnTop = false
-		}
+		},
+		setSearchText: (state, { payload }) => {
+			state.searchText = payload
+		},
+		resetSearchText: (state) => {
+			state.searchText = ""
+		},
 	}
 })
 
 export const {
 	searchIsTop,
-	searchIsBottom
+	searchIsBottom,
+	setSearchText,
+	resetSearchText
 } = slice.actions
 
 export default slice.reducer
