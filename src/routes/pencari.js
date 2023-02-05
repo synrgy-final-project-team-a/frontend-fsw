@@ -11,12 +11,8 @@ import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
 import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
 import Favorite from "../pages/pencari/favorite/favorite"
 
-<<<<<<< HEAD
 import Pencarian from "../pages/pencari/pencarian/pencarian";
 import HasilPencarian from "../pages/pencari/pencarian/hasil"
-=======
-import Pencarian from "../pages/pencari/pencarian";
->>>>>>> bf99107c450d7457e8fdb76435251e8373e78533
 import DetailKos from "../pages/pencari/detailKos";
 
 const PencariRoutes = [

@@ -8,7 +8,6 @@ const persistConfig = {
 }
 
 const initialState = {
-	filterAndSort: [],
 	id: "",
 	nama: "",
 	deskripsi: "",
