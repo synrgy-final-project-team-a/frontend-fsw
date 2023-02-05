@@ -41,7 +41,7 @@ const PencariLayout = ({ children }) => {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
-				navigate('/login')
+				navigate('/')
 				return
 			}
 		}

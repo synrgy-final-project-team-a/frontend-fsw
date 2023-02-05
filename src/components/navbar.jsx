@@ -14,6 +14,7 @@ const NavbarComponent = ({ routes }) => {
 	const [logoutHit, { isLoading, isSuccess }] = useLogoutMutation()
 
 	const searchTop = useSelector(state => state.decor.searchOnTop)
+	const searchText = useSelector(state => state.decor.searchText)
 
 	const token = useSelector((state) => {
 		return state.auth.token
@@ -86,7 +87,7 @@ const NavbarComponent = ({ routes }) => {
 							<div className="form-search d-flex my-2" onClick={routeToSearch}>
 								<img src="/search-normal.svg" alt="..." className="p-2" />
 								<img src="/line-vertical.svg" alt="..." />
-								<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+								<input type="text" className="w-100 border-0 mx-2" defaultValue={searchText} placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
 							</div> :
 							""
 					}
