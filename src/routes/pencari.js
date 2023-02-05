@@ -11,7 +11,8 @@ import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
 import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
 import Favorite from "../pages/pencari/favorite/favorite"
 
-import Pencarian from "../pages/pencari/pencarian";
+import Pencarian from "../pages/pencari/pencarian/pencarian";
+import HasilPencarian from "../pages/pencari/pencarian/hasil"
 import DetailKos from "../pages/pencari/detailKos";
 
 const PencariRoutes = [
@@ -75,7 +76,25 @@ const PencariRoutes = [
 	},
 	{
 		path: "/pencarian",
-		element: <Pencarian />,
+		children: [
+			{
+				path: "",
+				element: <Pencarian />,
+			},
+			{
+				path: "/:province",
+				children: [
+					{
+						path: "",
+						element: <HasilPencarian />,
+					},
+					{
+						path: "/:city",
+						element: <HasilPencarian />,
+					}
+				]
+			}
+		]
 	},
 ];
 

@@ -13,6 +13,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 	const [currentUserHit, { isLoading: isLoadingUser, isError: isErrorUser, error: errorUser, isSuccess: isSuccessUser, data: dataUser }] = useCurrentUserMutation()
 
 	const token = useSelector(state => state.auth.token)
+	const searchText = useSelector(state => state.decor.searchText)
 
 	const submitKeyword = (e) => {
 		e.preventDefault()
@@ -45,7 +46,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
-				navigate('/login')
+				navigate('/')
 				return
 			}
 		}
@@ -64,7 +65,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 						<Form className="form-search d-flex my-2" onSubmit={submitKeyword}>
 							<img src="/search-normal.svg" alt="..." className="p-2" />
 							<img src="/line-vertical.svg" alt="..." />
-							<input type="text" className="w-100 border-0 mx-2" name="keyword" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+							<input type="text" className="w-100 border-0 mx-2" name="keyword" defaultValue={searchText} placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
 							<button className="btn btn-primary btn-sm m-1 rounded-full" type="submit">
 								Cari
 							</button>
