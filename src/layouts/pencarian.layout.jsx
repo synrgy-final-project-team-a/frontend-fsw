@@ -46,7 +46,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
-				navigate('/login')
+				navigate('/')
 				return
 			}
 		}
