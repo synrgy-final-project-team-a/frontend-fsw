@@ -44,6 +44,10 @@ const InformasiPersonal = () => {
 		const phoneNumber = formRef.current.phoneNumber.value
 		const email = formRef.current.email.value
 		const gender = formRef.current.gender.value
+		const status = formRef.current.status.value
+		const bankAccount = formRef.current.bankAccount.value
+		const bankName = formRef.current.bankName.value
+		const bankUsername = formRef.current.bankUsername.value
 		const province = formRef.current.province.value
 		const city = formRef.current.city.value
 		const address = formRef.current.address.value
@@ -58,9 +62,19 @@ const InformasiPersonal = () => {
 			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
 		}
 
+		if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
+			failed = true
+			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
+		}
+
 		if (phoneNumber === "") {
 			failed = true
 			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak boleh kosong!" }))
+		}
+
+		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+			failed = true
+			setError((error) => ({ ...error, "email": "Email tidak valid!" }))
 		}
 
 		if (email === "") {
@@ -68,9 +82,19 @@ const InformasiPersonal = () => {
 			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
 		}
 
-		if (gender === "") {
+		if (!/^[0-9]{10,13}$/i.test(bankAccount)) {
 			failed = true
-			setError((error) => ({ ...error, "gender": "Jenis kelamin tidak boleh kosong!" }))
+			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak valid!" }))
+		}
+
+		if (bankAccount === "") {
+			failed = true
+			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak boleh kosong!" }))
+		}
+
+		if (bankUsername === "") {
+			failed = true
+			setError((error) => ({ ...error, "bankUsername": "Nama pemilik rekening tidak boleh kosong!" }))
 		}
 
 		if (province === "") {
@@ -98,6 +122,10 @@ const InformasiPersonal = () => {
 		payload.append('last_name', lastName)
 		payload.append('phone_number', phoneNumber)
 		payload.append('gender', gender)
+		payload.append('status', status)
+		payload.append('bank_account', bankAccount)
+		payload.append('bank_name', bankName)
+		payload.append('bank_username', bankUsername)
 		payload.append('province', province)
 		payload.append('city', city)
 		payload.append('address', address)
@@ -306,6 +334,69 @@ const InformasiPersonal = () => {
 										(error.hasOwnProperty("gender") && error.gender !== "") ?
 											<Form.Text className="text-danger">
 												{error.gender}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicEmail">
+									<Form.Label>Pekerjaan</Form.Label>
+									<Form.Select defaultValue={userData.status}
+										ref={(ref) => formRef.current.status = ref}
+									>
+										<option value="Mahasiswa">Mahasiswa</option>
+										<option value="Pekerja">Pekerja</option>
+									</Form.Select>
+									{
+										(error.hasOwnProperty("status") && error.status !== "") ?
+											<Form.Text className="text-danger">
+												{error.status}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
+									<Form.Label>Nomor Rekening</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nama bank rekening"
+										defaultValue={userData.bank_account}
+										ref={(ref) => formRef.current.bankAccount = ref}
+									/>
+									{
+										(error.hasOwnProperty("bankAccount") && error.bankAccount !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankAccount}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNamaBank">
+									<Form.Label>Nama Bank</Form.Label>
+									<Form.Select defaultValue={userData.bank_name}
+										ref={(ref) => formRef.current.bankName = ref}
+									>
+										<option value="BCA">BCA</option>
+										<option value="BNI">BNI</option>
+										<option value="BRI">BRI</option>
+										<option value="Mandiri">Mandiri</option>
+										<option value="Citibank">Citibank</option>
+									</Form.Select>
+									{
+										(error.hasOwnProperty("bankName") && error.bankName !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankName}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
+									<Form.Label>Nama Pemilik Rekening</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nama pemilik rekening"
+										defaultValue={userData.bank_username}
+										ref={(ref) => formRef.current.bankUsername = ref}
+									/>
+									{
+										(error.hasOwnProperty("bankUsername") && error.bankUsername !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankUsername}
 											</Form.Text> :
 											""
 									}

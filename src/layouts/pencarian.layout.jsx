@@ -13,6 +13,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 	const [currentUserHit, { isLoading: isLoadingUser, isError: isErrorUser, error: errorUser, isSuccess: isSuccessUser, data: dataUser }] = useCurrentUserMutation()
 
 	const token = useSelector(state => state.auth.token)
+	const searchText = useSelector(state => state.decor.searchText)
 
 	const submitKeyword = (e) => {
 		e.preventDefault()
@@ -21,18 +22,13 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 	}
 
 	useEffect(() => {
-		if (Object.keys(token).length === 0) {
-			dispatch(emptyToken())
-			dispatch(emptyEmail())
-			dispatch(emptyUser())
-			navigate('/login')
-		} else {
-			if (!token.role.includes('ROLE_TN')) {
-				if (token.role.includes('ROLE_SK')) {
-					navigate('/')
-				}
-				if (token.role.includes('ROLE_SUPERUSER')) {
+		if (Object.keys(token).length !== 0) {
+			if (!token.role.includes('ROLE_SK')) {
+				if(token.role.includes('ROLE_TN')) {
 					navigate('/penyewa')
+				}
+				if(token.role.includes('ROLE_SUPERUSER')) {
+					navigate('/admin')
 				}
 			}
 			currentUserHit(token.access_token)
@@ -46,11 +42,12 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 		}
 
 		if (isErrorUser) {
-			if (errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
+			if (errorUser.hasOwnProperty('data') && errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
-				navigate('/login')
+				navigate('/')
+				return
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,7 +65,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 						<Form className="form-search d-flex my-2" onSubmit={submitKeyword}>
 							<img src="/search-normal.svg" alt="..." className="p-2" />
 							<img src="/line-vertical.svg" alt="..." />
-							<input type="text" className="w-100 border-0 mx-2" name="keyword" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+							<input type="text" className="w-100 border-0 mx-2" name="keyword" defaultValue={searchText} placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
 							<button className="btn btn-primary btn-sm m-1 rounded-full" type="submit">
 								Cari
 							</button>
