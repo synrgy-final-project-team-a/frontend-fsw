@@ -92,11 +92,6 @@ const InformasiPersonal = () => {
 			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak boleh kosong!" }))
 		}
 
-		if (bankName === "") {
-			failed = true
-			setError((error) => ({ ...error, "bankName": "Nama bank tidak boleh kosong!" }))
-		}
-
 		if (bankUsername === "") {
 			failed = true
 			setError((error) => ({ ...error, "bankUsername": "Nama pemilik rekening tidak boleh kosong!" }))
@@ -361,7 +356,7 @@ const InformasiPersonal = () => {
 								</Form.Group>
 								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
 									<Form.Label>Nomor Rekening</Form.Label>
-									<Form.Control type="text" placeholder="Masukan nomor rekening"
+									<Form.Control type="text" placeholder="Masukan nama bank rekening"
 										defaultValue={userData.bank_account}
 										ref={(ref) => formRef.current.bankAccount = ref}
 									/>
@@ -375,10 +370,15 @@ const InformasiPersonal = () => {
 								</Form.Group>
 								<Form.Group className="mb-4" controlId="formBasicNamaBank">
 									<Form.Label>Nama Bank</Form.Label>
-									<Form.Control type="text" placeholder="Masukan nama bank rekening"
-										defaultValue={userData.bank_name}
+									<Form.Select defaultValue={userData.bank_name}
 										ref={(ref) => formRef.current.bankName = ref}
-									/>
+									>
+										<option value="BCA">BCA</option>
+										<option value="BNI">BNI</option>
+										<option value="BRI">BRI</option>
+										<option value="Mandiri">Mandiri</option>
+										<option value="Citibank">Citibank</option>
+									</Form.Select>
 									{
 										(error.hasOwnProperty("bankName") && error.bankName !== "") ?
 											<Form.Text className="text-danger">
