@@ -44,6 +44,7 @@ const InformasiPersonal = () => {
 		const phoneNumber = formRef.current.phoneNumber.value
 		const email = formRef.current.email.value
 		const gender = formRef.current.gender.value
+		const status = formRef.current.status.value
 		const province = formRef.current.province.value
 		const city = formRef.current.city.value
 		const address = formRef.current.address.value
@@ -58,19 +59,24 @@ const InformasiPersonal = () => {
 			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
 		}
 
+		if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
+			failed = true
+			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
+		}
+
 		if (phoneNumber === "") {
 			failed = true
 			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak boleh kosong!" }))
 		}
 
+		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+			failed = true
+			setError((error) => ({ ...error, "email": "Email tidak valid!" }))
+		}
+
 		if (email === "") {
 			failed = true
 			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
-		}
-
-		if (gender === "") {
-			failed = true
-			setError((error) => ({ ...error, "gender": "Jenis kelamin tidak boleh kosong!" }))
 		}
 
 		if (province === "") {
@@ -98,6 +104,7 @@ const InformasiPersonal = () => {
 		payload.append('last_name', lastName)
 		payload.append('phone_number', phoneNumber)
 		payload.append('gender', gender)
+		payload.append('status', status)
 		payload.append('province', province)
 		payload.append('city', city)
 		payload.append('address', address)
@@ -307,6 +314,22 @@ const InformasiPersonal = () => {
 										(error.hasOwnProperty("gender") && error.gender !== "") ?
 											<Form.Text className="text-danger">
 												{error.gender}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicEmail">
+									<Form.Label>Pekerjaan</Form.Label>
+									<Form.Select defaultValue={userData.status}
+										ref={(ref) => formRef.current.status = ref}
+									>
+										<option value="Mahasiswa">Mahasiswa</option>
+										<option value="Pekerja">Pekerja</option>
+									</Form.Select>
+									{
+										(error.hasOwnProperty("status") && error.status !== "") ?
+											<Form.Text className="text-danger">
+												{error.status}
 											</Form.Text> :
 											""
 									}
