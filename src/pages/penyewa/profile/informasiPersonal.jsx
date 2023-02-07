@@ -356,7 +356,7 @@ const InformasiPersonal = () => {
 								</Form.Group>
 								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
 									<Form.Label>Nomor Rekening</Form.Label>
-									<Form.Control type="text" placeholder="Masukan nama bank rekening"
+									<Form.Control type="text" placeholder="Masukan nomor rekening"
 										defaultValue={userData.bank_account}
 										ref={(ref) => formRef.current.bankAccount = ref}
 									/>
