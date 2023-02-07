@@ -20,12 +20,20 @@ const kosApi = createApi({
 			}),
 			invalidatesTags: ['Kos'],
 		}),
+		pencariGetOne: build.mutation({
+			query: (id) => ({
+				url: `api/kost/get/${id}`,
+				method: 'GET',
+			}),
+			invalidatesTags: ['Kos'],
+		}),
 	}),
 })
 
 export const {
 	useSearchKeywordMutation,
-	useGetListMutation
+	useGetListMutation,
+	usePencariGetOneMutation
 } = kosApi
 
 export default kosApi
