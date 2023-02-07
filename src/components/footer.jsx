@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const FooterComponent = () => {
 	return (
-		<Container id="footer">
+		<Container id="footer" className="mt-5">
 			<Row className="justify-content-center">
 				<Col xs={12} lg={3} className="text-center text-lg-start">
 					<img src="/logo-footer.png" alt="..." />

@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistStore } from 'redux-persist';
 
 import authApi from "./apis/authentication";
+import kosApi from "./apis/kos";
 import usersApi from "./apis/users";
 
 import { alamatReducer } from "./slices/alamatSlice";
@@ -14,6 +15,7 @@ export const store = configureStore({
 	reducer: {
 		[authApi.reducerPath]: authApi.reducer,
 		[usersApi.reducerPath]: usersApi.reducer,
+		[kosApi.reducerPath]: kosApi.reducer,
 		auth: authPersistReducer,
 		user: userPersistReducer,
 		decor: decorReducer,
@@ -26,6 +28,7 @@ export const store = configureStore({
 		}).concat([
 			authApi.middleware,
 			usersApi.middleware,
+			kosApi.middleware,
 		]),
 })
 
