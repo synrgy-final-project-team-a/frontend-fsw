@@ -58,6 +58,17 @@ const usersApi = createApi({
 			}),
 			invalidatesTags: ["Users"],
 		}),
+		createUser: build.mutation({
+			query: ({ token, body }) => ({
+				url: `/api/user/create`,
+				method: "POST",
+				body: body,
+				headers: {
+					authorization: `Bearer ${token}`,
+				},
+			}),
+			invalidatesTags: ["Users"],
+		}),
 	}),
 });
 
@@ -67,6 +78,7 @@ export const {
 	useCurrentUserMutation,
 	useDeleteMutation,
 	useEditUserMutation,
+	useCreateUserMutation
 } = usersApi;
 
 export default usersApi;
