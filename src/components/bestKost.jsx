@@ -17,7 +17,12 @@ function BestKost() {
 	] = useGetListMutation()
 
 	useEffect(() => {
-		getListHit({ page: 0, size: 6 })
+		let payload = {}
+
+		payload["sort-by"] = "price"
+		payload["order-type"] = "asc"
+
+		getListHit({ ...payload, "page": 0, "size": 6 })
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
