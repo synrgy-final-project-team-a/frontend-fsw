@@ -54,17 +54,20 @@ const HasilPencarian = () => {
 		dispatch(searchIsTop())
 
 		let payload = {}
+
 		if (params.province !== undefined) {
-			setPayloadParams(payloadParams => ({ ...payloadParams, "province": params.province }))
 			payload.province = params.province
 		}
 
 		if (params.city !== undefined) {
-			setPayloadParams(payloadParams => ({ ...payloadParams, "city": params.city }))
 			payload.city = params.city
 		}
 
+		payload["sort-by"] = "price"
+		payload["order-type"] = "asc"
+
 		dispatch(setSearchText(params.province))
+		setPayloadParams(payloadParams => ({ ...payloadParams, ...payload }))
 		getListHit({ ...payload, "page": page, "size": 12 })
 
 		return () => {
@@ -128,9 +131,23 @@ const HasilPencarian = () => {
 				</Row>
 				{
 					displayFilter ?
-						<FilterComponent loadKost={getListHit} paramsQuery={payloadParams} pageSetter={setPage} listSetter={setList} /> :
+						<FilterComponent
+							loadKost={getListHit}
+							payloadQuery={payloadParams}
+							paramsQuery={setPayloadParams}
+							pageSetter={setPage}
+							listSetter={setList}
+							displayFilter={setDisplayFilter}
+						/> :
 						displaySort ?
-							<SortComponent loadKost={getListHit} paramsQuery={payloadParams} pageSetter={setPage} listSetter={setList} /> :
+							<SortComponent
+								loadKost={getListHit}
+								payloadQuery={payloadParams}
+								paramsQuery={setPayloadParams}
+								pageSetter={setPage}
+								listSetter={setList}
+								displaySort={setDisplaySort}
+							/> :
 							<Row className="g-4 mt-0" ref={containerRef}>
 								{
 									list.length !== 0 ?
@@ -138,7 +155,7 @@ const HasilPencarian = () => {
 											return (
 												<Col xs={12} lg={4} key={i}>
 													<Card className="kos-card bg-outline-primary text-decoration-none" as={Link} to={"/kos/" + el.kost_id}>
-														<Card.Img variant="top" src="/kos-giya-putri.png" />
+														<Card.Img variant="top" src={el.front_building_foto} alt={el.kost_name} />
 														<Card.Body>
 															<Card.Title>{el.kost_name}</Card.Title>
 															<Card.Text className="kos-location mb-1">{el.address}</Card.Text>

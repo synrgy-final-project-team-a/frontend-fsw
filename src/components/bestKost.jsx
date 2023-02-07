@@ -23,16 +23,16 @@ function BestKost() {
 	}, [])
 
 	return (
-		<Container className="mb-5">
-			<h2 className="mb-3">Cari Kosan Terbaik dari Kami</h2>
-			<Row className="g-4">
-				{
-					isSuccess ?
+		isSuccess ?
+			<Container className="mb-5">
+				<h2 className="mb-3">Cari Kosan Terbaik dari Kami</h2>
+				<Row className="g-4">
+					{
 						data.data.map((el, i) => {
 							return (
 								<Col xs={12} lg={4} key={i}>
 									<Card className="kos-card bg-outline-primary text-decoration-none" as={Link} to={"/kos/" + el.kost_id}>
-										<Card.Img variant="top" src="/kos-giya-putri.png" />
+										<Card.Img variant="top" src={el.front_building_foto} alt={el.kost_name} />
 										<Card.Body>
 											<Card.Title>{el.kost_name}</Card.Title>
 											<Card.Text className="kos-location mb-1">{el.address}</Card.Text>
@@ -89,16 +89,15 @@ function BestKost() {
 									</Card>
 								</Col>
 							)
-						}) :
-						isError ?
-							<Col xs={12} className="text-center">
-								<h6 className="fw-bold">Data gagal diambil</h6>
-							</Col> :
-							""
-
-				}
-			</Row>
-		</Container>
+						})
+					}
+				</Row>
+			</Container> :
+			isError ?
+				<Col xs={12} className="text-center">
+					< h6 className="fw-bold" > Data gagal diambil</h6 >
+				</Col > :
+				""
 	);
 }
 
