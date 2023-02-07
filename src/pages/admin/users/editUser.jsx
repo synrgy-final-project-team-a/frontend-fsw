@@ -6,14 +6,12 @@ import { Alert, Container } from "react-bootstrap";
 import { useRef } from "react";
 import { useCreateUserMutation } from "../../../store/apis/users";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 
-const TambahUser = () => {
+const EditUser = () => {
 
     const tambahUserRef = useRef({});
     const token = useSelector((state) => state.auth.token.access_token)
-    const [createUserHit, { isLoading, isError, error: errorTambahUser, isSuccess }] = useCreateUserMutation();
-    const [error, setError] = useState({});
+    const [createUserHit, { isLoading, isError, error, isSuccess }] = useCreateUserMutation();
     
 
     const handleTambahUser = (e) => {
@@ -29,35 +27,41 @@ const TambahUser = () => {
         const emailUser = tambahUserRef.current.email.value;
         const passwordUser = tambahUserRef.current.password.value;
         const roleUser = tambahUserRef.current.role.value;
-        const fotoProfileUser = tambahUserRef.current.fotoProfile.files[0];
+        const fotoProfileUser = tambahUserRef.current.fotoProfile.value;
         const nomorRekeningUser = tambahUserRef.current.nomorRekening.value;
         const namaBankUser = tambahUserRef.current.namaBank.value;
         const namaPenggunaBankUser = tambahUserRef.current.namaPenggunaBank.value;
         const statusUser = tambahUserRef.current.status.value;
 
-        const payload = new FormData();
+        // alert(`Nama: ${namaDepanUser}, Email: ${emailUser}, Role: ${roleUser}`);
 
-        payload.append("email", emailUser);
-        payload.append("password", passwordUser);
-        payload.append("role_id", roleUser);
-        payload.append("address", alamatUser);
-        payload.append("city", kotaUser);
-        payload.append("first_name", namaDepanUser);
-        payload.append("gmaps", "");
-        payload.append("last_name", namaBelakangUser);
-        payload.append("phone_number", nomorHandphoneUser);
-        payload.append("province", provinsiUser);
-        payload.append("gender", jenisKelaminUser);
-        payload.append("avatar", fotoProfileUser);
-        payload.append("bank_account", nomorRekeningUser);
-        payload.append("bank_name", namaBankUser);
-        payload.append("bank_username", namaPenggunaBankUser);
-        payload.append("status", statusUser);
-        
+        const payload = {
+            "email": emailUser,
+            "password": passwordUser,
+            "role_id": roleUser,
+            "address": alamatUser,
+            "city": kotaUser,
+            "first_name": namaDepanUser,
+            "gmaps": "blablabla",
+            "last_name": namaBelakangUser,
+            "phone_number": nomorHandphoneUser,
+            "province": provinsiUser,
+            "gender": jenisKelaminUser,
+            "avatar": fotoProfileUser,
+            "bank_account": nomorRekeningUser,
+            "bank_name": namaBankUser,
+            "bank_username": namaPenggunaBankUser,
+            "status": statusUser 
+        }
+
+        console.log(payload);
+
         try {
             createUserHit({token: token, body: payload })
+            console.log(createUserHit);
         } catch (error) {
-            setError({ "alert": { "variant": "danger", "message": "Gagal tambah user!" } })
+            alert("Gagal Tambah User");
+            console.log(error);
         }
     }
 
@@ -68,30 +72,15 @@ const TambahUser = () => {
         }
 
         if (isError) {
-            console.log(errorTambahUser);
-            if (Array.isArray(errorTambahUser.data)) {
-                errorTambahUser.data.forEach((ele) => {
-                    setError({"alert": {"variant": "danger", "message": ele.data.message}})
-                })
-            } else {
-                setError({"alert": {"variant": "danger", "message": errorTambahUser.data.message}});
-            }
+            <Alert variant="danger">Error ngab</Alert>
+            console.log("error ya?");
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[isLoading])
+    })
     return(
         <>
             <AdminLayout>
                 <Container className="mb-5">
-                    <h3 className="my-4">Tambah User</h3>
-                    { isLoading ?
-                        <Alert variant="light">Tunggu sebentar...</Alert> :
-                        isSuccess ?
-                            <Alert variant="success">Berhasil menambah user!</Alert> :
-                            (error.hasOwnProperty("alert") && error.alert !== "") ?
-                            <Alert variant={error.alert.variant}>{error.alert.message}</Alert>:
-                            ""                 
-                            }
+                    <h3 className="my-4">Edit User</h3>
                     <Form onSubmit={handleTambahUser} style={{width: "50%"}}>
                         <Form.Group className="mb-3" controlId="formBasicFisrtName">
                             <Form.Label>Nama Depan</Form.Label>
@@ -107,8 +96,8 @@ const TambahUser = () => {
                             <Form.Label>Jenis Kelamin</Form.Label>
                             <Form.Select ref={(ref) => tambahUserRef.current.jenisKelamin = ref}>
                                 <option>Pilih Jenis Kelamin</option>
-                                <option value="MALE">Laki-Laki</option>
-                                <option value="FEMALE">Perempuan</option>
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
                             </Form.Select>
                         </Form.Group>  
 
@@ -149,9 +138,9 @@ const TambahUser = () => {
                             <Form.Label>Role</Form.Label>
                             <Form.Select ref={(ref) => tambahUserRef.current.role = ref}>
                                 <option>Pilih Role</option>
-                                <option value={1}>Superadmin</option>
-                                <option value={2}>Pencari</option>
-                                <option value={3}>Penyewa</option>
+                                <option value={0}>Superadmin</option>
+                                <option value={1}>Pencari</option>
+                                <option value={2}>Penyewa</option>
                             </Form.Select>
                         </Form.Group>                                                
 
@@ -177,11 +166,7 @@ const TambahUser = () => {
 
                         <Form.Group className="mb-3" controlId="formBasicStatus">
                             <Form.Label>Status</Form.Label>
-                            <Form.Select ref={(ref) => tambahUserRef.current.status = ref}>
-                                <option>Status</option>
-                                <option value="STUDENT">Mahasiswa</option>
-                                <option value="WORKER">Pekerja</option>
-                            </Form.Select>
+                            <Form.Control ref={(ref) => tambahUserRef.current.status = ref} type="text" placeholder="Status"/>
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit
@@ -193,4 +178,4 @@ const TambahUser = () => {
     )
 }
 
-export default TambahUser;
+export default EditUser;

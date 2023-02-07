@@ -120,7 +120,8 @@ const Login = () => {
 					setError({ "alert": { "variant": "danger", "message": el.data.message } })
 				);
 			} else {
-				if (errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
+				console.log(errorLogin.data)
+				if (errorLogin.data.hasOwnProperty('message') && errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
 					dispatch(addEmail(formRef.current.email.value))
 					resendOtpHit({ "email": formRef.current.email.value })
 					navigate('/register/verification')

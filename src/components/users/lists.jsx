@@ -123,7 +123,7 @@ const ListUsers = () => {
 													<Button as={Link} to={`/admin/users/${el.id}`} size="sm" variant="primary">
 														detil
 													</Button>
-													<Button size="sm" variant="warning">
+													<Button as={Link} to={`/admin/users/edit`} size="sm" variant="warning">
 														ubah
 													</Button>
 													<Button size="sm" variant="danger" onClick={e => handleDelete(e, el.id, el.role_name, el.first_name + " " + el.last_name)}>
