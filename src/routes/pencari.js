@@ -74,6 +74,7 @@ const PencariRoutes = [
         path: "/chat",
         element: <ChatPage />,
       },
+
     ],
   },
   {
