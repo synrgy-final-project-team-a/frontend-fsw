@@ -20,12 +20,21 @@ const kosApi = createApi({
 			}),
 			invalidatesTags: ['Kos'],
 		}),
+		editKost: build.mutation({
+			query: ({ id, body }) => ({
+				url: `/api/tennant/kost/${id}`,
+				method: "PUT",
+				body: body,
+			}),
+			invalidatesTags: ['Kos'],
+		}),
 	}),
 })
 
 export const {
 	useSearchKeywordMutation,
-	useGetListMutation
+	useGetListMutation,
+	useEditKostMutation
 } = kosApi
 
 export default kosApi

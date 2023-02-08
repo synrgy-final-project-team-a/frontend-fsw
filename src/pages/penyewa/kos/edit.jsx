@@ -1,13 +1,142 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Breadcrumb, Button, Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { useEditKostMutation } from "../../../store/apis/kos";
 import PenyewaLayout from "../../../layouts/penyewa.layout";
 import EditFoto from "../../../components/kos/editFoto";
 
+const imgAllow = [
+	"image/png",
+	"image/jpg",
+	"image/jpeg",
+]
+
 export default function Edit() {
+  
   const facility = useSelector((state) => state.kos.fasilitas);
+  const rule = useSelector(state => state.kos.peraturan)
+
+  const formRef = useRef({})
+	const [error, setError] = useState({})
+
+  const [selectedKost, setSelectedKost] = useState()
+	const [previewKost, setPreviewKost] = useState()
+
+  const [
+		editKostHit,
+		{ isLoading, isSuccess, isError, data: dataEdit, error: errorEdit }
+	] = useEditKostMutation()
+
+  const editProfilSubmit = (e) => {
+		e.preventDefault()
+
+		setError({})
+		let failed = false
+
+		const kostName = formRef.current.kostName.value
+    const description = formRef.current.description.value
+    const kostTypeMan = formRef.current.kostTypeMan.value
+    const kostTypeWoman = formRef.current.kostTypeWoman.value
+    const kostTypeMixed = formRef.current.kostTypeMixed.value
+    const frontBuildingPhoto = formRef.current.frontBuildingPhoto.value
+    const frontFarbuildingPhoto = formRef.current.frontFarbuildingPhoto.value
+    const yearSince = formRef.current.yearSince.value
+    const province = formRef.current.province.value
+    const city = formRef.current.city.value
+    const address = formRef.current.address.value
+    const gmaps = formRef.current.gmaps.value
+    const restrictedNight = formRef.current.restrictedNight.value
+    const identityCard = formRef.current.identityCard.value
+    const restrictedGender = formRef.current.restrictedGender.value
+    const restrictedGuest = formRef.current.restrictedGuest.value
+    const maximumOne = formRef.current.maximumOne.value
+    const maximumTwo = formRef.current.maximumTwo.value
+    const restrictedCheckout = formRef.current.restrictedCheckout.value
+    const restrictedCheckin = formRef.current.restrictedCheckin.value
+    const includeElectricity = formRef.current.includeElectricity.value
+    const noSmoking = formRef.current.noSmoking.value
+    const enabled = formRef.current.enabled.value
+    const kostTv = formRef.current.kostTv.value
+    const electric = formRef.current.electric.value
+    const laundry = formRef.current.laundry.value
+    const refrigerator = formRef.current.refrigerator.value
+    const water = formRef.current.water.value
+    const wifi = formRef.current.wifi.value
+    const dispenser = formRef.current.dispenser.value
+    const drying_ground = formRef.current.drying_ground.value
+    const kitchen = formRef.current.kitchen.value
+    const livingRoom = formRef.current.livingRoom.value
+    const parkingMotorcycle = formRef.current.arkingMotorcycle.value
+    const parkingCar = formRef.current.parkingCar.value
+
+		if (firstName === "") {
+			failed = true
+			setError((error) => ({ ...error, "firstName": "Nama depan tidak boleh kosong!" }))
+		}
+
+		if (lastName === "") {
+			failed = true
+			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
+		}
+
+		if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
+			failed = true
+			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
+		}
+
+		if (phoneNumber === "") {
+			failed = true
+			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak boleh kosong!" }))
+		}
+
+		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+			failed = true
+			setError((error) => ({ ...error, "email": "Email tidak valid!" }))
+		}
+
+		if (email === "") {
+			failed = true
+			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
+		}
+
+		if (province === "") {
+			failed = true
+			setError((error) => ({ ...error, "province": "Provinsi tidak boleh kosong!" }))
+		}
+
+		if (city === "") {
+			failed = true
+			setError((error) => ({ ...error, "city": "Kabupaten/Kota tidak boleh kosong!" }))
+		}
+
+		if (address === "") {
+			failed = true
+			setError((error) => ({ ...error, "address": "Alamat tidak boleh kosong!" }))
+		}
+
+		if (failed) {
+			return
+		}
+
+		const payload = new FormData()
+
+		payload.append('first_name', firstName)
+		payload.append('last_name', lastName)
+		payload.append('phone_number', phoneNumber)
+		payload.append('gender', gender)
+		payload.append('status', status)
+		payload.append('province', province)
+		payload.append('city', city)
+		payload.append('address', address)
+
+		if (!!selectedProfile) {
+			payload.append('avatar', selectedProfile)
+		}
+
+		editUserHit({ token: token, body: payload })
+	}
 
   const handleSebelumnya = (e) => {
     e.preventDefault();
@@ -57,19 +186,12 @@ export default function Edit() {
             </div>
             <div className="mx-3">
               <p className="fw-bold">Informasi Pemilik Kos</p>
-              {/* <p className="fw-bold p-0 m-0">Nama Pemilik Kos :</p> */}
               <p className="p-0 m-0">
                 <small>Agus mendoan</small>
               </p>
-              {/* <p className="fw-bold p-0 m-0">
-                <small>Email :</small>
-              </p> */}
               <p className="p-0 m-0">
                 <small>tennant@mail.com</small>
               </p>
-              {/* <p className="fw-bold p-0 m-0">
-                <small>Nomor Telphone :</small>
-              </p> */}
               <p className="p-0 m-0">
                 <small>0812121212</small>
               </p>
@@ -78,63 +200,53 @@ export default function Edit() {
           <div className="mt-4">
             <Form.Group className="mb-4">
               <Form.Label>Nama Kos</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
+              <Form.Control type="text" />
             </Form.Group>
             <Form.Group className="mb-4">
               <Form.Label>Deskripsi</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
-                placeholder="Masukan nama depan"
+               
               />
             </Form.Group>
             <Form.Group className="mb-4">
-              <Form.Label>PIC</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
+              <Form.Label>Tipe Kos</Form.Label>
+              <Form.Control type="text" />
             </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label>Nomor Telephon PIC</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
-            </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label>Nama Kos</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
-            </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label>Catatan</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
-            </Form.Group>
-
             <EditFoto />
-
+            <Form.Group className="mb-4">
+              <Form.Label>Tahun Kos dibangun</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
             <Form.Group className="mb-4">
               <Form.Label>Provinsi</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
+              <Form.Control type="text" />
             </Form.Group>
             <Form.Group className="mb-4">
               <Form.Label>Kota</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
+              <Form.Control type="text" />
             </Form.Group>
             <Form.Group className="mb-4">
               <Form.Label>Alamat</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
+              <Form.Control type="text" />
             </Form.Group>
             <Form.Group className="mb-4">
               <Form.Label>Google Maps</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
+              <Form.Control type="text" />
             </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label>Catatan detail alamat</Form.Label>
-              <Form.Control type="text" placeholder="Masukan nama depan" />
-            </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label>Aturan</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={10}
-                placeholder="Masukan nama depan"
-              />
-            </Form.Group>
+            
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Label>Peraturan Kos</Form.Label>
+							{
+								Object.keys(rule).map((el, i) => {
+									return (
+										<Form.Check className="w-100 mb-3" type="checkbox" label={el.text} key={i} />
+									)
+								})
+							}
+						</Form.Group>
+
             <Form.Group
               className="mb-3"
               controlId="formBasicCheckbox"
