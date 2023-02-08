@@ -19,6 +19,8 @@ function BestKost() {
 	useEffect(() => {
 		let payload = {}
 
+		payload.duration_type = "MONTHLY"
+		
 		payload["sort-by"] = "price"
 		payload["order-type"] = "asc"
 

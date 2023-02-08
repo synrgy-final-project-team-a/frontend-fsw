@@ -30,8 +30,17 @@ const HasilPencarian = () => {
 		{ isError, isSuccess, isLoading, data }
 	] = useGetListMutation()
 
-	const handleFilterSortClick = (e, type) => {
-		e.preventDefault()
+	const handleScroll = () => {
+		if (containerRef) {
+			const bottom = containerRef.current.getBoundingClientRect().bottom
+			if (bottom < window.innerHeight - 70) {
+				getListHit({ ...payloadParams, "page": page + 1, "size": 6 })
+			}
+		}
+		return
+	}
+
+	const handleFilterSortClick = (type) => {
 		if (type === "sort") {
 			if (displaySort) {
 				setDisplaySort(false)
@@ -63,12 +72,17 @@ const HasilPencarian = () => {
 			payload.city = params.city
 		}
 
+		payload.price_minimum = 0
+		payload.price_maximum = 100000000
+
+		payload.duration_type = "MONTHLY"
+
 		payload["sort-by"] = "price"
 		payload["order-type"] = "asc"
 
 		dispatch(setSearchText(params.province))
 		setPayloadParams(payloadParams => ({ ...payloadParams, ...payload }))
-		getListHit({ ...payload, "page": page, "size": 12 })
+		getListHit({ ...payload, "page": page, "size": 6 })
 
 		return () => {
 			dispatch(searchIsBottom())
@@ -77,16 +91,6 @@ const HasilPencarian = () => {
 	}, [])
 
 	useEffect(() => {
-		const handleScroll = () => {
-			if (containerRef) {
-				const bottom = containerRef.current.getBoundingClientRect().bottom
-				if (bottom < window.innerHeight - 70) {
-					getListHit({ ...payloadParams, "page": page + 1, "size": 12 })
-				}
-			}
-			return
-		}
-
 		if (isLoading) {
 			window.removeEventListener("scroll", handleScroll);
 		}
@@ -119,11 +123,11 @@ const HasilPencarian = () => {
 						<h4>Hasil Pencarian</h4>
 					</Col>
 					<Col xs="auto">
-						<Button variant="warning" size="sm" className="mx-2" onClick={e => handleFilterSortClick(e, "sort")}>
+						<Button variant="warning" size="sm" className="mx-2" onClick={e => handleFilterSortClick("sort")}>
 							<FontAwesomeIcon icon={faSortAmountAsc} />{" "}
 							Urutkan
 						</Button>
-						<Button variant="warning" size="sm" className="mx-2" onClick={e => handleFilterSortClick(e, "filter")}>
+						<Button variant="warning" size="sm" className="mx-2" onClick={e => handleFilterSortClick("filter")}>
 							<FontAwesomeIcon icon={faFilter} />{" "}
 							Filter
 						</Button>
@@ -137,7 +141,7 @@ const HasilPencarian = () => {
 							paramsQuery={setPayloadParams}
 							pageSetter={setPage}
 							listSetter={setList}
-							displayFilter={setDisplayFilter}
+							displayFilter={handleFilterSortClick}
 						/> :
 						displaySort ?
 							<SortComponent
@@ -146,7 +150,7 @@ const HasilPencarian = () => {
 								paramsQuery={setPayloadParams}
 								pageSetter={setPage}
 								listSetter={setList}
-								displaySort={setDisplaySort}
+								displaySort={handleFilterSortClick}
 							/> :
 							<Row className="g-4 mt-0" ref={containerRef}>
 								{

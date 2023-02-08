@@ -10,7 +10,7 @@ function KelolaUser() {
 			<AdminLayout>
 				<Container className="mt-4">
 					<h1 className="mt-3">List Users</h1>
-					<Button as={Link} className="mt-5" href="/admin/users/tambah">Tambah User</Button>
+					<Button as={Link} className="mt-5" to="/admin/users/tambah">Tambah User</Button>
 					<ListUsers />
 				</Container>
 			</AdminLayout>
