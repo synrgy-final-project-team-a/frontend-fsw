@@ -7,6 +7,24 @@
 		max-height: 60px;
 	}
 
+<<<<<<< HEAD
+=======
+	.profile-link {
+		.dropdown-toggle {
+			&::after {
+				display: none;
+			}
+		}
+
+		img {
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			object-fit: cover;
+		}
+	}
+
+>>>>>>> 07acb04e97f2c54e37878b5fcf9b34ef9b31171a
 	.form-search {
 		max-height: 60px;
 		background-color: $white;
@@ -16,6 +34,15 @@
 		border-color: $primary-border;
 		padding: 0.3125rem;
 		border-radius: 0.375rem;
+<<<<<<< HEAD
+=======
+
+		input {
+			&:focus-visible {
+				outline: none;
+			}
+		}
+>>>>>>> 07acb04e97f2c54e37878b5fcf9b34ef9b31171a
 	}
 
 	.nav-link {

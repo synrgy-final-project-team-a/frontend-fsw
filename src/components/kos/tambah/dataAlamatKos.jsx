@@ -49,15 +49,16 @@ const DataAlamatKos = ({ setKeynya }) => {
 
 						<Form.Group className="mb-3" controlId="formBasicKecamatan">
 							<Form.Label className="w-100">Provinsi</Form.Label>
-							<Form.Select>
+							<Form.Control type="text" list="provinsi-list" placeholder="Masukkan Provinsi kos" />
+							<datalist id="provinsi-list">
 								{
 									provinsi.map((el, i) => {
 										return (
-											<option key={i} value={el}>{el}</option>
+											<option key={i} value={el} />
 										)
 									})
 								}
-							</Form.Select>
+							</datalist>
 						</Form.Group>
 					</Col>
 					<div className="w-100"></div>

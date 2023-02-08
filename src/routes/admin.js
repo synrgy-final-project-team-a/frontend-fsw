@@ -1,6 +1,9 @@
 import React from "react"
 import Dashboard from "../pages/admin/dashboard"
 
+import Profile from "../pages/admin/profile/profileAdmin"
+import InformasiPersonal from "../pages/admin/profile/informasiPersonal"
+
 import DetilUser from "../pages/admin/users/detiluser"
 import KelolaUser from "../pages/admin/users/listuser"
 import TambahUser from "../pages/admin/users/tambahUser"
@@ -27,6 +30,19 @@ const AdminRoutes = [
 				name: "Dashboard",
 				path: "",
 				element: <Dashboard />,
+			},
+			{
+				path: "/profile",
+				children: [
+					{
+						path: "",
+						element: <Profile />,
+					},
+					{
+						path: "/saya",
+						element: <InformasiPersonal />,
+					},		
+				]
 			},
 			{
 				path: "/users",

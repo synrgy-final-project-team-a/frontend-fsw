@@ -57,6 +57,21 @@ const kosApi = createApi({
       }),
       invalidatesTags: ["Kos"],
     }),
+    searchKeyword: build.mutation({
+			query: (keyword) => ({
+				url: `api/kost/search-keyword/?keyword=${keyword}`,
+				method: 'GET',
+			}),
+			invalidatesTags: ['Kos'],
+		}),
+    getList: build.mutation({
+			query: (params) => ({
+				url: `api/kost/filter/sort/`,
+				method: 'GET',
+				params: params
+			}),
+			invalidatesTags: ['Kos'],
+		}),
   }),
 });
 
@@ -65,7 +80,11 @@ export const {
     useRejectKosMutation,
     useApproveKosMutation,
     useDeleteKosMutation,
-    useDetilKosMutation
+    useDetilKosMutation,
+    useSearchKeywordMutation,
+	  useGetListMutation
 } = kosApi;
 
 export default kosApi;
+
+
