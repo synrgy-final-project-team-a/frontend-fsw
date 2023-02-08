@@ -8,9 +8,12 @@ const usersApi = createApi({
 	tagTypes: ["Users"],
 	endpoints: (build) => ({
 		listUsers: build.mutation({
-			query: (token) => ({
+			query: ({token, page}) => ({
 				url: `api/users`,
 				method: "GET",
+				params: {
+					"page": page
+				},
 				headers: {
 					authorization: `Bearer ${token}`,
 				},
