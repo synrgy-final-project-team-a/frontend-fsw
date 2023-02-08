@@ -106,7 +106,7 @@ const VerifikasiKos = () => {
 					{
 						isLoading ?
 							<tr>
-								<td colSpan={4} className="text-center">Loading...</td>
+								<td colSpan={5} className="text-center">Loading...</td>
 							</tr> :
 							isSuccess ?
 								data.data.content.map((el, i) => {																
@@ -117,7 +117,8 @@ const VerifikasiKos = () => {
 											<td>{`${el.profile.firstName} ${el.profile.lastName}`}</td>											
 											
 											<td>{el.address}</td>
-											<td>{el.enabled.toString()}</td>
+											<td>{el.enabled ?
+												"" : <span>Menunggu Persetujuan</span> }</td>
 											
 											<td>
 												<ButtonGroup>

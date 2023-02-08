@@ -87,7 +87,8 @@ const KosDisetujui = () => {
                                                 <td>{`${el.profile.firstName} ${el.profile.lastName}`}</td>											
                                                 
                                                 <td>{el.address}</td>
-                                                <td>{el.enabled.toString()}</td>
+                                                <td>{el.enabled ?
+												<span>Disetujui</span> : "" }</td>
                                                 
                                                 <td>
                                                     <ButtonGroup>

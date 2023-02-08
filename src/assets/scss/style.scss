@@ -6,105 +6,11 @@
 @import "navbar";
 @import "footer";
 @import "landing";
-<<<<<<< HEAD
-=======
 @import "profile";
 @import "search";
->>>>>>> 07acb04e97f2c54e37878b5fcf9b34ef9b31171a
 @import "kelola-kos";
 @import "detailkos";
-// Mobile
-@media only screen and (max-width: 576px) {
-	.navbar-brand {
-		margin-left: 0px;
-	}
 
-<<<<<<< HEAD
-	.owl-nav {
-		display: flex;
-		justify-content: center;
-		gap: 100px;
-		top: 0;
-		left: 90px;
-	}
-
-	.first-footer {
-		flex: auto;
-	}
-
-	.fourth-footer {
-		flex: auto;
-	}
-}
-
-.scrolling-wrapper {
-	flex-wrap: nowrap;
-	overflow-x: auto;
-
-	.testi-card {
-		border-color: $primary-border;
-		border-width: 1px;
-		flex: 0 0 auto;
-	}
-}
-
-// Mobile
-@media only screen and (max-width: 576px) {
-  .navbar-brand {
-    margin-left: 0px;
-  }
-  .owl-nav {
-    display: flex;
-    justify-content: center;
-    gap: 100px;
-    top: 0;
-    left: 90px;
-  }
-
-  .first-footer {
-    flex: auto;
-  }
-
-  .fourth-footer {
-    flex: auto;
-  }
-}
-.scrolling-wrapper {
-  flex-wrap: nowrap;
-  overflow-x: auto;
-
-  .testi-card {
-    border-color: $primary-border;
-    border-width: 1px;
-    flex: 0 0 auto;
-  }
-}
-// line middler nomor pengajuan
-
-.line {
-	// width: 200px;
-	// border: red 1px solid;
-	position: relative;
-}
-
-.line:before {
-	content: "";
-	position: absolute;
-	border-bottom: 2px $grey-light solid;
-	height: 100%;
-	width: 33%;
-	transform: translateY(-50%);
-	z-index: -4;
-}
-
-.borderCircle {
-	background-color: #ffffff;
-	width: 60px;
-	height: 60px;
-	border: 1px solid $primary-border;
-}
-
-=======
 .cursor-pointer {
 	cursor: pointer;
 }
@@ -131,7 +37,6 @@
 	border: 1px solid $primary-border;
 }
 
->>>>>>> 07acb04e97f2c54e37878b5fcf9b34ef9b31171a
 .circleNumber {
 	background-color: #acced0;
 	width: 50px;
@@ -203,41 +108,6 @@
 	.line:before {
 		max-width: 60%;
 	}
-<<<<<<< HEAD
-}
-
-.fw-semibold {
-	font-weight: 600px;
-}
-
-.text-gray {
-	color: #9e9e9e !important;
-}
-
-.btn-location {
-	color: #757575;
-	border-radius: 6px;
-	width: 208px;
-	height: 36px;
-	border-style: solid;
-	border-width: 0.0625rem;
-	border-color: #dae4e5;
-	font-weight: 600px;
-}
-
-.text-neutral {
-	color: #616161;
-}
-
-.btn-search-popular {
-	width: 118px;
-	height: 36px;
-	border-radius: 6px;
-	border-style: solid;
-	border-width: 0.0625rem;
-	border-color: #616161;
-}
-=======
 }
 
 .fw-semibold {
@@ -297,4 +167,3 @@
 .text-neutral{
   color: #616161;
 }
->>>>>>> 07acb04e97f2c54e37878b5fcf9b34ef9b31171a

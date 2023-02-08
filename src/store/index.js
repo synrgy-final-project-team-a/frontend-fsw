@@ -4,7 +4,7 @@ import { persistStore } from 'redux-persist';
 import authApi from "./apis/authentication";
 import kosApi from "./apis/kos";
 import usersApi from "./apis/users";
-import kosApi from "./apis/kos";
+
 
 import { alamatReducer } from "./slices/alamatSlice";
 import { authPersistReducer } from "./slices/authSlice";
@@ -29,11 +29,7 @@ export const store = configureStore({
 		}).concat([
 			authApi.middleware,
 			usersApi.middleware,
-<<<<<<< HEAD
-			kosApi.middleware
-=======
 			kosApi.middleware,
->>>>>>> 07acb04e97f2c54e37878b5fcf9b34ef9b31171a
 		]),
 })
 
