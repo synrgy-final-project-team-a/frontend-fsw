@@ -56,7 +56,6 @@ const ForgetPass = () => {
 		}
 
 		if (isError) {
-			console.log(errorForgot)
 			if (Array.isArray(errorForgot.data)) {
 				errorForgot.data.forEach((el) =>
 					setError({ "alert": { "variant": "danger", "message": el.data.message } })
