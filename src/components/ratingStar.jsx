@@ -6,8 +6,10 @@ import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 library.add(fasStar, farStar);
 
-export default function ratingStar() {
+const RatingStar =  () => {
+
   const [rating, setRating] = useState(0);
+
   const handleClick = (value) => {
     setRating(value);
   };
@@ -26,3 +28,5 @@ export default function ratingStar() {
     </div>
   );
 }
+
+export default RatingStar

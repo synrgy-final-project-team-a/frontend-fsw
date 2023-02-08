@@ -1,0 +1,11 @@
+.card {
+
+	@each $name,
+	$color in $theme-colors {
+		&.bg-outline-#{$name} {
+			border: 1px solid $color;
+			background-color: $light;
+			color: $black;
+		}
+	}
+}
