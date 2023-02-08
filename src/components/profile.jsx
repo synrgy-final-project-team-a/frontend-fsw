@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ListGroup } from "react-bootstrap";
+import { Badge, ListGroup } from "react-bootstrap";
 
 const ProfileNav = () => {
 	const userData = useSelector(state => state.user.current)
@@ -9,10 +9,10 @@ const ProfileNav = () => {
 
 	const roleRoutes = (link) => {
 		let profilePath = link
-		if(location.pathname.includes('/penyewa')) {
+		if (location.pathname.includes('/penyewa')) {
 			profilePath = "/penyewa" + link
 		}
-		if(location.pathname.includes('/admin')) {
+		if (location.pathname.includes('/admin')) {
 			profilePath = "/admin" + link
 		}
 
@@ -43,7 +43,12 @@ const ProfileNav = () => {
 				<ListGroup variant="flush">
 					<ListGroup.Item as={Link} to={roleRoutes("/profile/saya")}>Informasi Pengguna</ListGroup.Item>
 					<ListGroup.Item as={Link} to={roleRoutes("/profile/histori")}>Histori Transaksi</ListGroup.Item>
-					<ListGroup.Item>Notifikasi</ListGroup.Item>
+					<ListGroup.Item className="d-flex justify-content-between align-items-center">
+						<span>Notifikasi</span>
+						<Badge bg="danger" pill>
+							14
+						</Badge>
+					</ListGroup.Item>
 					<ListGroup.Item>Pengaturan</ListGroup.Item>
 				</ListGroup>
 			</div>

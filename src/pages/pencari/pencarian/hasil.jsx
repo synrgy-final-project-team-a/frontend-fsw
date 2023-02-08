@@ -30,8 +30,17 @@ const HasilPencarian = () => {
 		{ isError, isSuccess, isLoading, data }
 	] = useGetListMutation()
 
-	const handleFilterSortClick = (e, type) => {
-		e.preventDefault()
+	const handleScroll = () => {
+		if (containerRef) {
+			const bottom = containerRef.current.getBoundingClientRect().bottom
+			if (bottom < window.innerHeight - 70) {
+				getListHit({ ...payloadParams, "page": page + 1, "size": 6 })
+			}
+		}
+		return
+	}
+
+	const handleFilterSortClick = (type) => {
 		if (type === "sort") {
 			if (displaySort) {
 				setDisplaySort(false)
@@ -54,18 +63,26 @@ const HasilPencarian = () => {
 		dispatch(searchIsTop())
 
 		let payload = {}
+
 		if (params.province !== undefined) {
-			setPayloadParams(payloadParams => ({ ...payloadParams, "province": params.province }))
 			payload.province = params.province
 		}
 
 		if (params.city !== undefined) {
-			setPayloadParams(payloadParams => ({ ...payloadParams, "city": params.city }))
 			payload.city = params.city
 		}
 
+		payload.price_minimum = 0
+		payload.price_maximum = 100000000
+
+		payload.duration_type = "MONTHLY"
+
+		payload["sort-by"] = "price"
+		payload["order-type"] = "asc"
+
 		dispatch(setSearchText(params.province))
-		getListHit({ ...payload, "page": page, "size": 12 })
+		setPayloadParams(payloadParams => ({ ...payloadParams, ...payload }))
+		getListHit({ ...payload, "page": page, "size": 6 })
 
 		return () => {
 			dispatch(searchIsBottom())
@@ -74,16 +91,6 @@ const HasilPencarian = () => {
 	}, [])
 
 	useEffect(() => {
-		const handleScroll = () => {
-			if (containerRef) {
-				const bottom = containerRef.current.getBoundingClientRect().bottom
-				if (bottom < window.innerHeight - 70) {
-					getListHit({ ...payloadParams, "page": page + 1, "size": 12 })
-				}
-			}
-			return
-		}
-
 		if (isLoading) {
 			window.removeEventListener("scroll", handleScroll);
 		}
@@ -116,11 +123,11 @@ const HasilPencarian = () => {
 						<h4>Hasil Pencarian</h4>
 					</Col>
 					<Col xs="auto">
-						<Button variant="warning" size="sm" className="mx-2" onClick={e => handleFilterSortClick(e, "sort")}>
+						<Button variant="warning" size="sm" className="mx-2" onClick={e => handleFilterSortClick("sort")}>
 							<FontAwesomeIcon icon={faSortAmountAsc} />{" "}
 							Urutkan
 						</Button>
-						<Button variant="warning" size="sm" className="mx-2" onClick={e => handleFilterSortClick(e, "filter")}>
+						<Button variant="warning" size="sm" className="mx-2" onClick={e => handleFilterSortClick("filter")}>
 							<FontAwesomeIcon icon={faFilter} />{" "}
 							Filter
 						</Button>
@@ -128,9 +135,23 @@ const HasilPencarian = () => {
 				</Row>
 				{
 					displayFilter ?
-						<FilterComponent loadKost={getListHit} paramsQuery={payloadParams} pageSetter={setPage} listSetter={setList} /> :
+						<FilterComponent
+							loadKost={getListHit}
+							payloadQuery={payloadParams}
+							paramsQuery={setPayloadParams}
+							pageSetter={setPage}
+							listSetter={setList}
+							displayFilter={handleFilterSortClick}
+						/> :
 						displaySort ?
-							<SortComponent loadKost={getListHit} paramsQuery={payloadParams} pageSetter={setPage} listSetter={setList} /> :
+							<SortComponent
+								loadKost={getListHit}
+								payloadQuery={payloadParams}
+								paramsQuery={setPayloadParams}
+								pageSetter={setPage}
+								listSetter={setList}
+								displaySort={handleFilterSortClick}
+							/> :
 							<Row className="g-4 mt-0" ref={containerRef}>
 								{
 									list.length !== 0 ?
@@ -138,7 +159,7 @@ const HasilPencarian = () => {
 											return (
 												<Col xs={12} lg={4} key={i}>
 													<Card className="kos-card bg-outline-primary text-decoration-none" as={Link} to={"/kos/" + el.kost_id}>
-														<Card.Img variant="top" src="/kos-giya-putri.png" />
+														<Card.Img variant="top" src={el.front_building_foto} alt={el.kost_name} />
 														<Card.Body>
 															<Card.Title>{el.kost_name}</Card.Title>
 															<Card.Text className="kos-location mb-1">{el.address}</Card.Text>
