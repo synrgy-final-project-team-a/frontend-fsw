@@ -14,8 +14,8 @@ const SortComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, listSe
 
 		pageSetter(0)
 		listSetter([])
-		loadKost({ ...payload, "page": 0, "size": 12 })
-		displaySort(false)
+		loadKost({ ...payload, "page": 0, "size": 6 })
+		displaySort('sort')
 	}
 
 	return (
