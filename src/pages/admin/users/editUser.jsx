@@ -11,7 +11,7 @@ const EditUser = () => {
 
     const tambahUserRef = useRef({});
     const token = useSelector((state) => state.auth.token.access_token)
-    const [createUserHit, { isLoading, isError, error, isSuccess }] = useCreateUserMutation();
+    const [createUserHit, { isError, isSuccess }] = useCreateUserMutation();
     
 
     const handleTambahUser = (e) => {

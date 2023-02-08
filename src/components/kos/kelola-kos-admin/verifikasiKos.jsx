@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
 import { Table, Button, ButtonGroup, Alert } from "react-bootstrap"
 import { useSelector } from "react-redux"
-import { Link } from "react-router-dom";
 import { useApproveKosMutation, useListKosMutation, useRejectKosMutation } from "../../../store/apis/kos";
 
 const VerifikasiKos = () => {
-    const [listKosHit, {isLoading, isSuccess, data}] = useListKosMutation();
-	const [rejectKosHit, {isLoading: loadingReject, isSuccess: rejectSuccess, isError: rejectError}] = useRejectKosMutation();
-	const [approveKosHit, {isLoading: loadingApprove, isSuccess: approveSuccess, isError: approveError}] = useApproveKosMutation();
-	
+	const [listKosHit, { isLoading, isSuccess, data }] = useListKosMutation();
+	const [rejectKosHit, { isLoading: loadingReject, isSuccess: rejectSuccess, isError: rejectError }] = useRejectKosMutation();
+	const [approveKosHit, { isLoading: loadingApprove, isSuccess: approveSuccess, isError: approveError }] = useApproveKosMutation();
+
 	const token = useSelector((state) => state.auth.token.access_token);
 	const param = {
 		page: 0,
@@ -23,7 +22,7 @@ const VerifikasiKos = () => {
 		let confirm = window.confirm("Tolak kos ini?");
 
 		if (confirm) {
-			rejectKosHit({token: token, id});
+			rejectKosHit({ token: token, id });
 		}
 	}
 
@@ -32,12 +31,12 @@ const VerifikasiKos = () => {
 		let confirm = window.confirm("Setujui kos ini?");
 
 		if (confirm) {
-			approveKosHit({token: token, id});
+			approveKosHit({ token: token, id });
 		}
 	}
-	
+
 	useEffect(() => {
-		listKosHit({token: token, page: param.page, size: param.size, enabled: param.enabled})		
+		listKosHit({ token: token, page: param.page, size: param.size, enabled: param.enabled })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -48,7 +47,7 @@ const VerifikasiKos = () => {
 				"message": "Kos berhasil ditolak!",
 				"show": true
 			})
-			listKosHit({token: token, page: param.page, size: param.size, enabled: param.enabled})			
+			listKosHit({ token: token, page: param.page, size: param.size, enabled: param.enabled })
 		}
 
 		if (rejectError) {
@@ -68,7 +67,7 @@ const VerifikasiKos = () => {
 				"message": "Kos telah disetujui!",
 				"show": true
 			})
-			listKosHit({token: token, page: param.page, size: param.size, enabled: param.enabled})
+			listKosHit({ token: token, page: param.page, size: param.size, enabled: param.enabled })
 		}
 
 		if (approveError) {
@@ -81,17 +80,17 @@ const VerifikasiKos = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loadingApprove])
 
-    return (
-        <>
-            <h3 className="mt-3">Verifikasi Kos</h3>
-            {
+	return (
+		<>
+			<h3 className="mt-3">Verifikasi Kos</h3>
+			{
 				alert.show ?
 					<Alert className="mt-3" variant={alert.variant} onClose={() => setAlert({ "show": false })} dismissible>
 						{alert.message}
 					</Alert> :
 					<></>
-				}
-				<Table striped hover size="sm" className="mt-3">
+			}
+			<Table striped hover size="sm" className="mt-3">
 				<thead>
 					<tr>
 						<th>No</th>
@@ -109,17 +108,17 @@ const VerifikasiKos = () => {
 								<td colSpan={5} className="text-center">Loading...</td>
 							</tr> :
 							isSuccess ?
-								data.data.content.map((el, i) => {																
+								data.data.content.map((el, i) => {
 									return (
 										<tr key={i}>
 											<td>{i + 1}</td>
 											<td>{el.kostName}</td>
-											<td>{`${el.profile.firstName} ${el.profile.lastName}`}</td>											
-											
+											<td>{`${el.profile.firstName} ${el.profile.lastName}`}</td>
+
 											<td>{el.address}</td>
 											<td>{el.enabled ?
-												"" : <span>Menunggu Persetujuan</span> }</td>
-											
+												"" : <span>Menunggu Persetujuan</span>}</td>
+
 											<td>
 												<ButtonGroup>
 													<Button size="sm" variant="info">
@@ -134,17 +133,17 @@ const VerifikasiKos = () => {
 												</ButtonGroup>
 											</td>
 										</tr>
-									) 
+									)
 								}) :
 								<tr>
 									<td colSpan={5} className="text-center">Ambil data gagal</td>
 								</tr>
-								
+
 					}
 				</tbody>
 			</Table>
-        </>
-    )
+		</>
+	)
 
 }
 
