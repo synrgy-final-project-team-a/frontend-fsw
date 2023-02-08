@@ -5,6 +5,7 @@ import authApi from "./apis/authentication";
 import kosApi from "./apis/kos";
 import usersApi from "./apis/users";
 
+
 import { alamatReducer } from "./slices/alamatSlice";
 import { authPersistReducer } from "./slices/authSlice";
 import decorReducer from "./slices/decorSlice";
