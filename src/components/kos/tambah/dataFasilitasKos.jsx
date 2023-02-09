@@ -1,15 +1,14 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { submitForm } from "../../../store/slices/kosSlice";
+import { setProgress, submitForm } from "../../../store/slices/kosSlice";
 
 const DataFasilitasKos = ({ setKeynya }) => {
   const dispatch = useDispatch();
 
-  const facility = useSelector((state) => state.kos.fasilitas);
+  const kos = useSelector((state) => state.kos);
 
   const formRef = useRef({});
-  const [error, setError] = useState({});
 
   const handleSebelumnya = (e) => {
     e.preventDefault();
@@ -19,9 +18,6 @@ const DataFasilitasKos = ({ setKeynya }) => {
 
   const handleSetelahnya = (e) => {
     e.preventDefault();
-
-    setError({});
-    let failed = false;
 
     const air = formRef.current[0].checked;
     const parkirMobil = formRef.current[1].checked;
@@ -37,7 +33,6 @@ const DataFasilitasKos = ({ setKeynya }) => {
     const listrik = formRef.current[11].checked;
 
     const payload = {
-      status: 4,
       fasilitas: {
         Air: air,
         "Parkir Mobil": parkirMobil,
@@ -51,10 +46,15 @@ const DataFasilitasKos = ({ setKeynya }) => {
         Kulkas: kulkas,
         "Televisi (TV)": televisi,
         Listrik: listrik,
-      },
+      }
     };
+
     dispatch(submitForm(payload));
+
     let newKey = 5;
+    if (kos.progress < 5) {
+      dispatch(setProgress(5));
+    }
     setKeynya(newKey);
   };
 
@@ -71,14 +71,14 @@ const DataFasilitasKos = ({ setKeynya }) => {
               className="mb-3 row row-cols-3"
               controlId="formBasicCheckbox"
             >
-              {Object.keys(facility).map((el, i) => {
+              {Object.keys(kos.fasilitas).map((el, i) => {
                 return (
                   <Form.Check
                     className="mb-3"
                     type="checkbox"
                     label={el}
                     key={i}
-                    defaultChecked={Object.values(facility)[i]}
+                    defaultChecked={kos.fasilitas[el]}
                     ref={(ref) => (formRef.current[i] = ref)}
                   />
                 );

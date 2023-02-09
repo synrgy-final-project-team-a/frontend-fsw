@@ -1,15 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { submitForm } from "../../../store/slices/kosSlice";
+import { setProgress, submitForm } from "../../../store/slices/kosSlice";
 
 const DataPeraturanKos = ({ setKeynya }) => {
   const dispatch = useDispatch();
 
   const rule = useSelector((state) => state.kos.peraturan);
+  const kos = useSelector((state) => state.kos);
 
   const formRef = useRef({});
-  const [error, setError] = useState({});
 
   const handleSebelumnya = (e) => {
     e.preventDefault();
@@ -19,9 +19,6 @@ const DataPeraturanKos = ({ setKeynya }) => {
 
   const handleSetelahnya = (e) => {
     e.preventDefault();
-
-    setError({});
-    let failed = false;
 
     const peraturan1 = formRef.current[0].checked;
     const peraturan2 = formRef.current[1].checked;
@@ -35,7 +32,6 @@ const DataPeraturanKos = ({ setKeynya }) => {
     const peraturan10 = formRef.current[9].checked;
 
     const payload = {
-      status:3,
       peraturan: {
         "Ada jam malam": peraturan1,
         "Wajib sertakan KTP saat pengajuan sewa": peraturan2,
@@ -47,11 +43,14 @@ const DataPeraturanKos = ({ setKeynya }) => {
         "Check in pukul 14:00-21:00 (sewa harian)": peraturan8,
         "Termasuk listrik": peraturan9,
         "Dilarang merokok di kamar": peraturan10,
-      },
+      }
     };
 
     dispatch(submitForm(payload));
     let newKey = 4;
+    if(kos.progress < 4) {
+      dispatch(setProgress(4));
+    }
     setKeynya(newKey);
   };
 

@@ -1,20 +1,18 @@
 import { useRef, useState, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { submitForm } from "../../../store/slices/kosSlice";
+import { setProgress, submitForm } from "../../../store/slices/kosSlice";
 
 const imgAllow = ["image/png", "image/jpg", "image/jpeg"];
 
 const DataKamarKos = ({ setKeynya }) => {
   const dispatch = useDispatch();
   const fasilitasKamar = useSelector((state) => state.kos.fasilitasKamar);
-  const fasilitasKamarMandi = useSelector(
-    (state) => state.kos.fasilitasKamarMandi
-  );
+  const fasilitasKamarMandi = useSelector((state) => state.kos.fasilitasKamarMandi);
   const kos = useSelector((state) => state.kos);
 
-  console.log(Object.values(fasilitasKamar)[1]);
   const formRef = useRef({});
+  const fasilitasKamarRef = useRef({});
   const fasilitasKamarMandiRef = useRef({});
   const [error, setError] = useState({});
 
@@ -40,19 +38,19 @@ const DataKamarKos = ({ setKeynya }) => {
     const ukuranKamar = formRef.current.ukuranKamar.value;
     const totalKamar = formRef.current.totalKamar.value;
     const ketersediaanKamar = formRef.current.ketersediaanKamar.value;
-    const fotoDalamKamar = formRef.current.fotoDalamKamar.files[0];
-    const fotoKamarMandi = formRef.current.fotoKamarMandi.files[0];
+    const fotoDalamKamar = selectedFotoDalam;
+    const fotoKamarMandi = selectedFotoKamarMandi;
 
     // Fasilitas kamar
-    const airConditioner = formRef.current[0].checked;
-    const bantal = formRef.current[1].checked;
-    const kipasAngin = formRef.current[2].checked;
-    const lemariBaju = formRef.current[3].checked;
-    const jendela = formRef.current[4].checked;
-    const kasur = formRef.current[5].checked;
-    const televisi = formRef.current[6].checked;
-    const meja = formRef.current[7].checked;
-    const kursi = formRef.current[8].checked;
+    const airConditioner = fasilitasKamarRef.current[0].checked;
+    const bantal = fasilitasKamarRef.current[1].checked;
+    const kipasAngin = fasilitasKamarRef.current[2].checked;
+    const lemariBaju = fasilitasKamarRef.current[3].checked;
+    const jendela = fasilitasKamarRef.current[4].checked;
+    const kasur = fasilitasKamarRef.current[5].checked;
+    const televisi = fasilitasKamarRef.current[6].checked;
+    const meja = fasilitasKamarRef.current[7].checked;
+    const kursi = fasilitasKamarRef.current[8].checked;
 
     // Fasilitas kamar Mandi
     const kamarMandiLuar = fasilitasKamarMandiRef.current[0].checked;
@@ -78,39 +76,6 @@ const DataKamarKos = ({ setKeynya }) => {
       }
     }
 
-    if (
-      airConditioner === false &&
-      bantal === false &&
-      kipasAngin === false &&
-      lemariBaju === false &&
-      jendela === false &&
-      kasur === false &&
-      televisi === false &&
-      meja === false &&
-      kursi === false
-    ) {
-      failed = true;
-      setError((error) => ({
-        ...error,
-        fasilitasKamar: "Fasilitas kamar tidak boleh kosong!",
-      }));
-    }
-
-    if (
-      kamarMandiLuar === false &&
-      toiletDuduk === false &&
-      pemanasAir === false &&
-      kamarMandiDalam === false &&
-      toiletJongkok === false &&
-      shower === false
-    ) {
-      failed = true;
-      setError((error) => ({
-        ...error,
-        fasilitasKamarMandi: "Fasilitas kamar mandi tidak boleh kosong!",
-      }));
-    }
-
     if (namaKamar === "") {
       failed = true;
       setError((error) => ({
@@ -118,6 +83,7 @@ const DataKamarKos = ({ setKeynya }) => {
         namaKamar: "Nama kamar tidak boleh kosong!",
       }));
     }
+
     if (ukuranKamar === "") {
       failed = true;
       setError((error) => ({
@@ -125,30 +91,89 @@ const DataKamarKos = ({ setKeynya }) => {
         ukuranKamar: "Ukuran kamar tidak boleh kosong!",
       }));
     }
+
     if (totalKamar === "") {
       failed = true;
       setError((error) => ({
         ...error,
         totalKamar: "Total kamar tidak boleh kosong!",
       }));
+    } else {
+      if (!/[0-9]/i.test(totalKamar)) {
+        failed = true;
+        setError((error) => ({
+          ...error,
+          totalKamar: "Total kamar harus angka!",
+        }));
+      }
     }
+
     if (ketersediaanKamar === "") {
       failed = true;
       setError((error) => ({
         ...error,
         ketersediaanKamar: "ketersediaan kamar tidak boleh kosong!",
       }));
+    } else {
+      if (!/[0-9]/i.test(ketersediaanKamar)) {
+        failed = true;
+        setError((error) => ({
+          ...error,
+          ketersediaanKamar: "Ketersediaan kamar harus angka!",
+        }));
+      } else {
+        if (parseInt(totalKamar) < parseInt(ketersediaanKamar)) {
+          failed = true;
+          setError((error) => ({
+            ...error,
+            ketersediaanKamar: "ketersediaan kamar tidak boleh lebih dari total kamar!",
+          }));
+        }
+      }
     }
+
+    if (fotoDalamKamar === undefined) {
+      failed = true;
+      setError((error) => ({
+        ...error,
+        fotoDalamKamar: "Foto dalam kamar tidak boleh kosong!",
+      }));
+    } else {
+      if (!imgAllow.includes(fotoDalamKamar.type)) {
+        failed = true;
+        setError((error) => ({
+          ...error,
+          fotoDalamKamar: "Foto dalam kamar bukan gambar yang didukung!",
+        }));
+      }
+    }
+
+    if (fotoKamarMandi === undefined) {
+      failed = true;
+      setError((error) => ({
+        ...error,
+        fotoKamarMandi: "Foto kamar mandi tidak boleh kosong!",
+      }));
+    } else {
+      if (!imgAllow.includes(fotoKamarMandi.type)) {
+        failed = true;
+        setError((error) => ({
+          ...error,
+          fotoKamarMandi: "Foto kamar mandi bukan gambar yang didukung!",
+        }));
+      }
+    }
+
     if (failed) {
       return;
     }
 
     let payload = {
-      status: 5,
       namaKamar: namaKamar,
       ukuranKamar: ukuranKamar,
       totalKamar: totalKamar,
       fotoDalamKos: fotoDalamKamar,
+      fotoKamarMandi: fotoKamarMandi,
       ketersediaanKamar: ketersediaanKamar,
       fasilitasKamar: {
         "Air Conditioner": airConditioner,
@@ -171,12 +196,11 @@ const DataKamarKos = ({ setKeynya }) => {
       },
     };
 
-    if (fotoKamarMandi) {
-      payload = { ...payload, fotoKamarMandi: fotoKamarMandi };
-    }
-
     dispatch(submitForm(payload));
     let newKey = 6;
+    if (kos.progress < 6) {
+      dispatch(setProgress(6));
+    }
     setKeynya(newKey);
   };
 
@@ -259,7 +283,7 @@ const DataKamarKos = ({ setKeynya }) => {
       <Form onSubmit={handleSetelahnya}>
         <Row className="g-2 justify-content-center">
           <Col xs={12} lg={6}>
-            <Form.Group className="mb-3" controlId="formBasicKelurahan">
+            <Form.Group className="mb-3" controlId="formBasicNamaKamar">
               <Form.Label className="w-100">Nama Kamar</Form.Label>
               <Form.Control
                 type="text"
@@ -274,12 +298,8 @@ const DataKamarKos = ({ setKeynya }) => {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-4" controlId="formBasicDeskripsi">
-              <Form.Label className="w-100 mb-0">Foto Kos </Form.Label>
-              <Form.Text>
-                Upload foto yang menggambarkan suasana kamar kosan anda
-              </Form.Text>
-
+            <Form.Group className="mb-4" controlId="formBasicFotoKamar">
+              <Form.Label className="w-100 mb-0">Foto Kamar Kos</Form.Label>
               {selectedFotoDalam ? (
                 <img
                   src={previewFotoDalam}
@@ -303,7 +323,7 @@ const DataKamarKos = ({ setKeynya }) => {
 
               <br />
               {error.hasOwnProperty("fotoDalamKamar") &&
-              error.fotoDalamKamar !== "" ? (
+                error.fotoDalamKamar !== "" ? (
                 <Form.Text className="text-danger">
                   {error.fotoDalamKamar}
                 </Form.Text>
@@ -331,7 +351,7 @@ const DataKamarKos = ({ setKeynya }) => {
               </Form.Text>
               <br />
               {error.hasOwnProperty("fotoKamarMandi") &&
-              error.fotoKamarMandi !== "" ? (
+                error.fotoKamarMandi !== "" ? (
                 <Form.Text className="text-danger">
                   {error.fotoKamarMandi}
                 </Form.Text>
@@ -340,7 +360,7 @@ const DataKamarKos = ({ setKeynya }) => {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicKecamatan">
+            <Form.Group className="mb-3" controlId="formBasicUkuranKamar">
               <Form.Label className="w-100">Ukuran kamar</Form.Label>
               <Form.Control
                 type="text"
@@ -349,7 +369,7 @@ const DataKamarKos = ({ setKeynya }) => {
                 defaultValue={kos.ukuranKamar}
               />
               {error.hasOwnProperty("ukuranKamar") &&
-              error.ukuranKamar !== "" ? (
+                error.ukuranKamar !== "" ? (
                 <Form.Text className="text-danger">
                   {error.ukuranKamar}
                 </Form.Text>
@@ -358,7 +378,7 @@ const DataKamarKos = ({ setKeynya }) => {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicKota">
+            <Form.Group className="mb-3" controlId="formBasicTotalKamar">
               <Form.Label className="w-100">Total kamar</Form.Label>
               <Form.Control
                 type="text"
@@ -375,20 +395,18 @@ const DataKamarKos = ({ setKeynya }) => {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicKecamatan">
+            <Form.Group className="mb-3" controlId="formBasicKetersediaanKamar">
               <Form.Label className="w-100">
                 Ketersediaan jumlah kamar
               </Form.Label>
               <Form.Control
                 type="text"
-                list="provinsi-list"
                 placeholder="Masukkan ketersediaan jumlah kamar"
                 ref={(ref) => (formRef.current.ketersediaanKamar = ref)}
                 defaultValue={kos.ketersediaanKamar}
               />
-
               {error.hasOwnProperty("ketersediaanKamar") &&
-              error.ketersediaanKamar !== "" ? (
+                error.ketersediaanKamar !== "" ? (
                 <Form.Text className="text-danger">
                   {error.ketersediaanKamar}
                 </Form.Text>
@@ -410,13 +428,13 @@ const DataKamarKos = ({ setKeynya }) => {
                     label={el}
                     key={i}
                     defaultChecked={Object.values(fasilitasKamar)[i]}
-                    ref={(ref) => (formRef.current[i] = ref)}
+                    ref={(ref) => (fasilitasKamarRef.current[i] = ref)}
                   />
                 );
               })}
 
               {error.hasOwnProperty("fasilitasKamar") &&
-              error.fasilitasKamar !== "" ? (
+                error.fasilitasKamar !== "" ? (
                 <Form.Text className="text-danger">
                   {error.fasilitasKamar}
                 </Form.Text>
@@ -445,7 +463,7 @@ const DataKamarKos = ({ setKeynya }) => {
               })}
 
               {error.hasOwnProperty("fasilitasKamarMandi") &&
-              error.fasilitasKamarMandi !== "" ? (
+                error.fasilitasKamarMandi !== "" ? (
                 <Form.Text className="text-danger">
                   {error.fasilitasKamarMandi}
                 </Form.Text>

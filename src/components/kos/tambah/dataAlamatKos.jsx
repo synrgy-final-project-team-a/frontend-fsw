@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { submitForm } from "../../../store/slices/kosSlice";
+import { setProgress, submitForm } from "../../../store/slices/kosSlice";
 
 const DataAlamatKos = ({ setKeynya }) => {
   const dispatch = useDispatch();
+
   const provinsi = useSelector((state) => state.alamat.provinsi);
   const kos = useSelector((state) => state.kos);
 
@@ -24,8 +25,6 @@ const DataAlamatKos = ({ setKeynya }) => {
     let failed = false;
 
     const alamat = formRef.current.alamat.value;
-    const kelurahan = formRef.current.kelurahan.value;
-    const kecamatan = formRef.current.kecamatan.value;
     const kota = formRef.current.kota.value;
     const provinsi = formRef.current.provinsi.value;
 
@@ -34,20 +33,6 @@ const DataAlamatKos = ({ setKeynya }) => {
       setError((error) => ({
         ...error,
         alamat: "Alamat kos tidak boleh kosong!",
-      }));
-    }
-    if (kelurahan === "") {
-      failed = true;
-      setError((error) => ({
-        ...error,
-        kelurahan: "Kelurahan kos tidak boleh kosong!",
-      }));
-    }
-    if (kecamatan === "") {
-      failed = true;
-      setError((error) => ({
-        ...error,
-        kecamatan: "Kecamatan kos tidak boleh kosong!",
       }));
     }
     if (kota === "") {
@@ -69,16 +54,16 @@ const DataAlamatKos = ({ setKeynya }) => {
     }
 
     const payload = {
-      status:2,
       alamat: alamat,
-      kelurahan: kelurahan,
-      kecamatan: kelurahan,
       kota: kota,
       provinsi: provinsi,
     };
 
     dispatch(submitForm(payload));
     let newKey = 3;
+    if(kos.progress < 3) {
+      dispatch(setProgress(3));
+    }
     setKeynya(newKey);
   };
 
@@ -90,47 +75,22 @@ const DataAlamatKos = ({ setKeynya }) => {
       <Form onSubmit={handleSetelahnya}>
         <Row className="g-2 justify-content-center">
           <Col xs={12} lg={6}>
-            <Form.Group className="mb-3" controlId="formBasicNama">
-              <Form.Label className="w-100">Alamat</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Masukkan alamat kos"
-                ref={(ref) => (formRef.current.alamat = ref)}
-                defaultValue={kos.alamat}
-              />
-              {error.hasOwnProperty("alamat") && error.alamat !== "" ? (
-                <Form.Text className="text-danger">{error.alamat}</Form.Text>
-              ) : (
-                ""
-              )}
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicKelurahan">
-              <Form.Label className="w-100">Kelurahan</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicProvinsi">
+              <Form.Label className="w-100">Provinsi</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Masukkan kelurahan kos"
-                ref={(ref) => (formRef.current.kelurahan = ref)}
-                defaultValue={kos.kelurahan}
+                list="provinsi-list"
+                placeholder="Masukkan Provinsi kos"
+                ref={(ref) => (formRef.current.provinsi = ref)}
+                defaultValue={kos.provinsi}
               />
-              {error.hasOwnProperty("kelurahan") && error.kelurahan !== "" ? (
-                <Form.Text className="text-danger">{error.kelurahan}</Form.Text>
-              ) : (
-                ""
-              )}
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicKecamatan">
-              <Form.Label className="w-100">Kecamatan</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Masukkan kecamatan kos"
-                ref={(ref) => (formRef.current.kecamatan = ref)}
-                defaultValue={kos.kecamatan}
-              />
-              {error.hasOwnProperty("kecamatan") && error.kecamatan !== "" ? (
-                <Form.Text className="text-danger">{error.kecamatan}</Form.Text>
+              <datalist id="provinsi-list">
+                {provinsi.map((el, i) => {
+                  return <option key={i} value={el} />;
+                })}
+              </datalist>
+              {error.hasOwnProperty("provinsi") && error.provinsi !== "" ? (
+                <Form.Text className="text-danger">{error.provinsi}</Form.Text>
               ) : (
                 ""
               )}
@@ -151,26 +111,22 @@ const DataAlamatKos = ({ setKeynya }) => {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicKecamatan">
-              <Form.Label className="w-100">Provinsi</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicAlamat">
+              <Form.Label className="w-100">Alamat</Form.Label>
               <Form.Control
-                type="text"
-                list="provinsi-list"
-                placeholder="Masukkan Provinsi kos"
-                ref={(ref) => (formRef.current.provinsi = ref)}
-                defaultValue={kos.provinsi}
+                as="textarea"
+                rows={3}
+                placeholder="Masukkan alamat kos"
+                ref={(ref) => (formRef.current.alamat = ref)}
+                defaultValue={kos.alamat}
               />
-              <datalist id="provinsi-list">
-                {provinsi.map((el, i) => {
-                  return <option key={i} value={el} />;
-                })}
-              </datalist>
-              {error.hasOwnProperty("provinsi") && error.provinsi !== "" ? (
-                <Form.Text className="text-danger">{error.provinsi}</Form.Text>
+              {error.hasOwnProperty("alamat") && error.alamat !== "" ? (
+                <Form.Text className="text-danger">{error.alamat}</Form.Text>
               ) : (
                 ""
               )}
             </Form.Group>
+
           </Col>
           <div className="w-100"></div>
           <Col xs={12} lg={6} className="d-flex">

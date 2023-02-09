@@ -1,7 +1,9 @@
+import { faFemale, faMale, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState, useEffect } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { submitForm } from "../../../store/slices/kosSlice";
+import { setProgress, submitForm } from "../../../store/slices/kosSlice";
 
 const imgAllow = ["image/png", "image/jpg", "image/jpeg"];
 
@@ -13,14 +15,14 @@ const DataKos = ({ setKeynya }) => {
   const formRef = useRef({});
   const [error, setError] = useState({});
 
+  const [jenisKelamin, setJenisKelamin] = useState(kos.jenis)
+
   const [selectedFrontPhoto, setSelectedFrontPhoto] = useState();
   const [previewFrontPhoto, setPreviewFrontPhoto] = useState();
 
-  const [selectedFrontRoadPhoto, setSelectedFrontRoadPhoto] = useState();
-  const [previewFrontRoadPhoto, setPreviewFrontRoadPhoto] = useState();
-
   const [selectedFrontFarPhoto, setSelectedFrontFarPhoto] = useState();
   const [previewFrontFarPhoto, setPreviewFarRoadPhoto] = useState();
+
   const handleSetelahnya = (e) => {
     e.preventDefault();
 
@@ -30,12 +32,9 @@ const DataKos = ({ setKeynya }) => {
     const nama = formRef.current.nama.value;
     const deskripsi = formRef.current.deskripsi.value;
     const tahun = formRef.current.tahun.value;
-    const putra = formRef.current.putra.checked;
-    const putri = formRef.current.putri.checked;
-    const campur = formRef.current.campur.checked;
-    const fotoDepan = formRef.current.fotoDepan.files[0];
-    const fotoDepanJalan = formRef.current.fotoDepanJalan.files[0];
-    const fotoDepanJauh = formRef.current.fotoDepanJauh.files[0];
+    const { Putra, Putri, Campur } = jenisKelamin;
+    const fotoDepan = selectedFrontPhoto;
+    const fotoDepanJauh = selectedFrontFarPhoto;
 
     if (fotoDepan === undefined) {
       failed = true;
@@ -49,22 +48,6 @@ const DataKos = ({ setKeynya }) => {
         setError((error) => ({
           ...error,
           fotoDepan: "Foto depan bukan gambar yang didukung!",
-        }));
-      }
-    }
-
-    if (fotoDepanJalan === undefined) {
-      failed = true;
-      setError((error) => ({
-        ...error,
-        fotoDepanJalan: "Foto depan tidak boleh kosong!",
-      }));
-    } else {
-      if (!imgAllow.includes(fotoDepanJalan.type)) {
-        failed = true;
-        setError((error) => ({
-          ...error,
-          fotoDepanJalan: "Foto depan jalan bukan gambar yang didukung!",
         }));
       }
     }
@@ -85,7 +68,7 @@ const DataKos = ({ setKeynya }) => {
       }
     }
 
-    if (putra === false && putri === false && campur === false) {
+    if (Putra === undefined && Putri === undefined && Campur === undefined) {
       failed = true;
       setError((error) => ({
         ...error,
@@ -99,6 +82,14 @@ const DataKos = ({ setKeynya }) => {
         ...error,
         tahun: "Tahun kos tidak boleh kosong!",
       }));
+    } else {
+      if (!/[0-9]/i.test(tahun)) {
+        failed = true;
+        setError((error) => ({
+          ...error,
+          tahun: "Tahun kos harus angka!",
+        }));
+      }
     }
 
     if (deskripsi === "") {
@@ -119,32 +110,43 @@ const DataKos = ({ setKeynya }) => {
     }
 
     const payload = {
-      status:1,
       nama: nama,
       deskripsi: deskripsi,
       jenis: {
-        Putra: putra,
-        Putri: putri,
-        Campur: campur,
+        Putra: Putra,
+        Putri: Putri,
+        Campur: Campur,
       },
-      foto: {
-        fotoDepan: fotoDepan,
-        fotoDepanJalan: fotoDepanJalan,
-        fotoDepanJauh: fotoDepanJauh,
-      },
+      fotoDepan: fotoDepan,
+      fotoDepanJauh: fotoDepanJauh,
       tahun: tahun,
     };
 
     dispatch(submitForm(payload));
 
     let newKey = 2;
+    if(kos.progress < 2) {
+      dispatch(setProgress(2));
+    }
     setKeynya(newKey);
   };
+
+  const handleJenisChange = (tipe) => {
+    let temp = {
+      Putra: false,
+      Putri: false,
+      Campur: false
+    }
+
+    temp[tipe] = true
+
+    setJenisKelamin(temp)
+  }
 
   const changeFrontPhotoHandler = (e) => {
     e.preventDefault();
     let failed = false;
-    setError((error) => ({ ...error, fotoProfil: "" }));
+    setError((error) => ({ ...error, fotoDepan: "" }));
 
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFrontPhoto(undefined);
@@ -154,7 +156,7 @@ const DataKos = ({ setKeynya }) => {
       failed = true;
       setError((error) => ({
         ...error,
-        fotoProfil: "Foto profil bukan gambar yang didukung!",
+        fotoDepan: "Foto de bukan gambar yang didukung!",
       }));
     }
     if (failed) {
@@ -165,7 +167,6 @@ const DataKos = ({ setKeynya }) => {
   };
 
   useEffect(() => {
-   
     if (!selectedFrontPhoto) {
       setPreviewFrontPhoto(undefined);
       return;
@@ -178,48 +179,10 @@ const DataKos = ({ setKeynya }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFrontPhoto]);
 
-  const changeFrontRoadPhotoHandler = (e) => {
-    e.preventDefault();
-  
-    let failed = false;
-    setError((error) => ({ ...error, fotoProfil: "" }));
-
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFrontRoadPhoto(undefined);
-      return;
-    }
-    if (!imgAllow.includes(e.target.files[0].type)) {
-      failed = true;
-      setError((error) => ({
-        ...error,
-        fotoKos: "Foto bukan gambar yang didukung!",
-      }));
-    }
-    if (failed) {
-      return;
-    }
-
-    setSelectedFrontRoadPhoto(e.target.files[0]);
-  };
-
-  useEffect(() => {
-   
-    if (!selectedFrontRoadPhoto) {
-      setPreviewFrontRoadPhoto(undefined);
-      return;
-    }
-
-    let objectUrl = URL.createObjectURL(selectedFrontRoadPhoto);
-    setPreviewFrontRoadPhoto(objectUrl);
-
-    return () => URL.revokeObjectURL(objectUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFrontRoadPhoto]);
-
   const changeFrontFarPhotoHandler = (e) => {
     e.preventDefault();
     let failed = false;
-    setError((error) => ({ ...error, fotoProfil: "" }));
+    setError((error) => ({ ...error, fotoDepanJauh: "" }));
 
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFrontFarPhoto(undefined);
@@ -229,7 +192,7 @@ const DataKos = ({ setKeynya }) => {
       failed = true;
       setError((error) => ({
         ...error,
-        fotoKos: "Foto bukan gambar yang didukung!",
+        fotoDepanJauh: "Foto bukan gambar yang didukung!",
       }));
     }
     if (failed) {
@@ -251,6 +214,7 @@ const DataKos = ({ setKeynya }) => {
     return () => URL.revokeObjectURL(objectUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFrontFarPhoto]);
+
   return (
     <>
       <h1 className="text-center">Data Kos</h1>
@@ -289,29 +253,44 @@ const DataKos = ({ setKeynya }) => {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-4" controlId="formBasicCheckbox">
-              <Form.Label className="w-100">Jenis kos</Form.Label>
-              <div className="d-flex">
-                <Form.Check
-                  className="w-100"
-                  type="checkbox"
-                  label="Putra"
-                  defaultChecked={kos.jenis.Putra}
-                  ref={(ref) => (formRef.current.putra = ref)}
+            <Form.Group className="mb-4" controlId="formBasicJenisKelamin">
+              <Form.Label className="w-100">Jenis Kelamin</Form.Label>
+              <div className="w-100">
+                <label className="me-2 cursor-pointer" htmlFor="jenisPutra">
+                  <Card bg={(jenisKelamin && jenisKelamin.Putra === true) ? "outline-primary" : "none"} className="jenis-kelamin-card">
+                    <h3>
+                      <FontAwesomeIcon icon={faMale} />
+                    </h3>
+                    <p>Putra</p>
+                  </Card>
+                </label>
+                <label className="me-2 cursor-pointer" htmlFor="jenisPutri">
+                  <Card bg={(jenisKelamin && jenisKelamin.Putri === true) ? "outline-primary" : "none"} className="jenis-kelamin-card">
+                    <h3>
+                      <FontAwesomeIcon icon={faFemale} />
+                    </h3>
+                    <p>Putri</p>
+                  </Card>
+                </label>
+                <label className="me-2 cursor-pointer" htmlFor="jenisCampur">
+                  <Card bg={(jenisKelamin && jenisKelamin.Campur === true) ? "outline-primary" : "none"} className="jenis-kelamin-card">
+                    <h3>
+                      <FontAwesomeIcon icon={faUsers} />
+                    </h3>
+                    <p>Campur</p>
+                  </Card>
+                </label>
+                <input type="radio" name="jenisKelamin" id="jenisPutra" hidden
+                  checked={jenisKelamin.Putra === true}
+                  onChange={e => handleJenisChange("Putra")}
                 />
-                <Form.Check
-                  className="w-100"
-                  type="checkbox"
-                  label="Putri"
-                  defaultChecked={kos.jenis.Putri}
-                  ref={(ref) => (formRef.current.putri = ref)}
+                <input type="radio" name="jenisKelamin" id="jenisPutri" hidden
+                  checked={jenisKelamin.Putri === true}
+                  onChange={e => handleJenisChange("Putri")}
                 />
-                <Form.Check
-                  className="w-100"
-                  type="checkbox"
-                  label="Campur"
-                  defaultChecked={kos.jenis.Campur}
-                  ref={(ref) => (formRef.current.campur = ref)}
+                <input type="radio" name="jenisKelamin" id="jenisCampur" hidden
+                  checked={jenisKelamin.Campur === true}
+                  onChange={e => handleJenisChange("Campur")}
                 />
               </div>
               {error.hasOwnProperty("jenis") && error.jenis !== "" ? (
@@ -348,28 +327,9 @@ const DataKos = ({ setKeynya }) => {
               ) : (
                 ""
               )}
-              {selectedFrontRoadPhoto ? (
-                <img
-                  src={previewFrontRoadPhoto}
-                  className="rounded preview-photo"
-                  alt="..."
-                />
-              ) : (
-                <></>
-              )}
-              <Form.Control
-                type="file"
-                className="mt-3"
-                onChange={changeFrontRoadPhotoHandler}
-                ref={(ref) => (formRef.current.fotoDepanJalan = ref)}
-              />
-              <Form.Text>
-                Upload foto dari depan jalan kos dengan extensi ".png", ".jpg",
-                atau ".jpeg"
-              </Form.Text>
               <br />
               {error.hasOwnProperty("fotoDepanJalan") &&
-              error.fotoDepanJalan !== "" ? (
+                error.fotoDepanJalan !== "" ? (
                 <Form.Text className="text-danger">
                   {error.fotoDepanJalan}
                 </Form.Text>
@@ -397,7 +357,7 @@ const DataKos = ({ setKeynya }) => {
               </Form.Text>
               <br />
               {error.hasOwnProperty("fotoDepanJauh") &&
-              error.fotoDepanJauh !== "" ? (
+                error.fotoDepanJauh !== "" ? (
                 <Form.Text className="text-danger">
                   {error.fotoDepanJauh}
                 </Form.Text>

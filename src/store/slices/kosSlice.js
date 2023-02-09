@@ -8,8 +8,8 @@ const persistConfig = {
 };
 
 const initialState = {
-  status: 0,
-  id: "",
+  submited: false,
+  id_kost: "",
   nama: "",
   deskripsi: "",
   jenis: {
@@ -17,15 +17,10 @@ const initialState = {
     Putri: false,
     Campur: false,
   },
-  foto: {
-    fotoDepan: File,
-    fotoDepanJalan: File,
-    fotoDepanJauh: File,
-  },
+  fotoDepan: undefined,
+  fotoDepanJauh: undefined,
   tahun: "",
   alamat: "",
-  kelurahan: "",
-  kecamatan: "",
   kota: "",
   provinsi: "",
   peraturan: {
@@ -54,11 +49,12 @@ const initialState = {
     "Televisi (TV)": false,
     Listrik: false,
   },
+  progress: 1,
   namaKamar: "",
   ukuranKamar: "",
   totalKamar: "",
-  fotoDalamKos: File,
-  fotoKamarMandi: File,
+  fotoDalamKos: undefined,
+  fotoKamarMandi: undefined,
   ketersediaanKamar: "",
   fasilitasKamar: {
     "Air Conditioner": false,
@@ -79,6 +75,14 @@ const initialState = {
     "Toilet Jongkok": false,
     Shower: false,
   },
+  harga: {
+    harian: 0,
+    mingguan: 0,
+    bulanan: 0,
+    "3 bulanan": 0,
+    "6 bulanan": 0,
+    tahunan: 0
+  }
 };
 
 export const slice = createSlice({
@@ -89,9 +93,20 @@ export const slice = createSlice({
       return { ...state, ...payload };
     },
     emptyKos: () => initialState,
+    setProgress: (state, { payload }) => {
+      state.progress = payload
+    },
+    resetProgress: (state) => {
+      state.progress = 0
+    }
   },
 });
 
-export const { submitForm, jenisChange, emptyKos } = slice.actions;
+export const {
+  submitForm,
+  emptyKos,
+  setProgress,
+  resetProgress
+} = slice.actions;
 
 export const kosPersistReducer = persistReducer(persistConfig, slice.reducer);

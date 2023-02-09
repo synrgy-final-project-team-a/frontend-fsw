@@ -57,6 +57,10 @@
           outline: 3px solid $primary-light;
           border: 5px solid $white;
         }
+
+        &.disabled-tab {
+          background-color: $grey-light;
+        }
       }
 
       @include media-breakpoint-up(lg) {
