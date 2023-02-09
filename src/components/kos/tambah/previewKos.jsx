@@ -199,9 +199,7 @@ const PreviewKos = ({ setKeynya }) => {
             <Col xs={6} lg={3}>
               <h4 className="text-muted">Deskripsi</h4>
             </Col>
-            <Col xs={6} lg={8}>
-              <h5>{kos.deskripsi}</h5>
-            </Col>
+            <Col xs={6} lg={8} dangerouslySetInnerHTML={{ __html: kos.deskripsi }} />
             <Col xs={6} lg={3}>
               <h4 className="text-muted">Tipe Kos</h4>
             </Col>
@@ -395,6 +393,7 @@ const PreviewKos = ({ setKeynya }) => {
           <Button
             variant="outline-warning"
             className="w-100 me-1"
+            disabled={loadingKos || loadingRoom}
             onClick={handleSebelumnya}
           >
             Sebelumnya
@@ -403,6 +402,7 @@ const PreviewKos = ({ setKeynya }) => {
             variant="outline-primary"
             className="w-100 ms-1"
             onClick={handleSetelahnya}
+            disabled={loadingKos || loadingRoom}
           >
             Selanjutnya
           </Button>

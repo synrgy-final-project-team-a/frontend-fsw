@@ -4,6 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setProgress, submitForm } from "../../../store/slices/kosSlice";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const imgAllow = ["image/png", "image/jpg", "image/jpeg"];
 
@@ -14,6 +16,7 @@ const DataKos = ({ setKeynya }) => {
 
   const formRef = useRef({});
   const [error, setError] = useState({});
+  const [valueDescription, setValueDescription] = useState('');
 
   const [jenisKelamin, setJenisKelamin] = useState(kos.jenis)
 
@@ -30,11 +33,13 @@ const DataKos = ({ setKeynya }) => {
     let failed = false;
 
     const nama = formRef.current.nama.value;
-    const deskripsi = formRef.current.deskripsi.value;
+    const deskripsi = valueDescription;
     const tahun = formRef.current.tahun.value;
     const { Putra, Putri, Campur } = jenisKelamin;
     const fotoDepan = selectedFrontPhoto;
     const fotoDepanJauh = selectedFrontFarPhoto;
+
+    console.log(deskripsi)
 
     if (fotoDepan === undefined) {
       failed = true;
@@ -92,7 +97,7 @@ const DataKos = ({ setKeynya }) => {
       }
     }
 
-    if (deskripsi === "") {
+    if (deskripsi === "" || deskripsi === "<p><br></p>") {
       failed = true;
       setError((error) => ({
         ...error,
@@ -237,14 +242,13 @@ const DataKos = ({ setKeynya }) => {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-4" controlId="formBasicDeskripsi">
+            <Form.Group className="mb-5" controlId="formBasicDeskripsi">
               <Form.Label className="w-100">Deskripsi</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Masukkan deskripsi kos"
-                defaultValue={kos.deskripsi}
-                ref={(ref) => (formRef.current.deskripsi = ref)}
+              <ReactQuill
+                className="mb-5 pb-3"
+                theme="snow" 
+                value={valueDescription}
+                onChange={setValueDescription}
               />
               {error.hasOwnProperty("deskripsi") && error.deskripsi !== "" ? (
                 <Form.Text className="text-danger">{error.deskripsi}</Form.Text>

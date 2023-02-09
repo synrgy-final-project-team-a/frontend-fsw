@@ -87,6 +87,13 @@ const kosApi = createApi({
 			}),
 			invalidatesTags: ['Kos'],
 		}),
+		deleteKosByPenyewa: build.mutation({
+			query: (id) => ({
+				url: `api/tennant/kost/${id}`,
+				method: "DELETE"
+			}),
+			invalidatesTags: ["Kos"],
+		}),
 		getList: build.mutation({
 			query: (params) => ({
 				url: `api/kost/filter/sort/`,
@@ -108,6 +115,7 @@ export const {
 	useGetListByPenyewaMutation,
 	useInsertKostByPenyewaMutation,
 	useInsertRoomByPenyewaMutation,
+	useDeleteKosByPenyewaMutation,
 	useGetListMutation
 } = kosApi;
 

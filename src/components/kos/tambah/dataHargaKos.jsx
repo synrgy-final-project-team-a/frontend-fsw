@@ -206,7 +206,7 @@ const DataHargaKos = ({ setKeynya }) => {
 						<Form.Group className="mb-3" controlId="formBasicCheckbox">
 							{Object.keys(price).map((el, i) => {
 								return (
-									<div className="d-flex mb-3 w-100" key={i}>
+									<div className="d-flex mb-3 w-100 align-items-center" key={i}>
 										<Form.Check
 											className="w-25"
 											type="checkbox"
