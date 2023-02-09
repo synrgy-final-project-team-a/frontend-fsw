@@ -14,16 +14,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PencariLayout from "../../layouts/pencari.layout";
 import { usePencariGetOneMutation } from "../../store/apis/kos";
 import { rupiahFormat } from "../../store/utils/format";
+import { useDispatch, useSelector } from "react-redux";
+import { useAddRoomChatMutation } from "../../store/apis/chat";
+import { createChat } from "../../store/slices/chatSlice";
 
 const DetailKos = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
 
   const [kostOne, setKostOne] = useState({});
   const [roomAll, setRoomAll] = useState([]);
   const [priceMinimum, setPriceMinimum] = useState();
   const [getOneHit, { isLoading, isSuccess, data }] =
     usePencariGetOneMutation();
+
+  const [
+    addNewChat,
+    {
+      isLoading: isLoadingNewChat,
+      isError: isErrorNewChat,
+      error: errorNewChat,
+      isSuccess: isSuccessNewChat,
+      data: dataNewChat,
+    },
+  ] = useAddRoomChatMutation();
 
   useEffect(() => {
     const idKos = params.id;
@@ -46,6 +62,34 @@ const DetailKos = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
+  const onClickNewChatHandler = (e) => {
+    e.preventDefault();
+    if (!token) {
+      alert("silahkan Login Kembali");
+      return;
+    }
+    const idKos = params.id;
+    console.log(idKos);
+    try {
+      addNewChat({ token: token.access_token, body: { kostId: idKos } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (isSuccessNewChat) {
+      dispatch(createChat(dataNewChat));
+      navigate(
+        `/profile/chat?newChat=true&nameKost=${kostOne.kost_name}&avatar=${kostOne.front_building_photo}`
+      );
+    }
+
+    if (isErrorNewChat) {
+      console.log("error");
+      console.log(errorNewChat);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingNewChat]);
   return (
     <PencariLayout>
       {isLoading ? (
@@ -176,10 +220,17 @@ const DetailKos = () => {
                       </Row>
                       <Button
                         variant="primary"
-                        className="col-12 mt-2"
+                        className="col-12 mt-2 mb-2"
                         onClick={() => navigate("/pengajuan-sewa/1")}
                       >
                         Pilih Tipe Kos
+                      </Button>
+                      <Button
+                        variant="primary "
+                        className="col-12"
+                        onClick={onClickNewChatHandler}
+                      >
+                        Chat Penyewa Kos
                       </Button>
                     </Card.Text>
                   </Card.Body>

@@ -92,3 +92,5 @@ export const {
   useGetListMutation,
   usePencariGetOneMutation,
 } = kosApi;
+
+export default kosApi;
