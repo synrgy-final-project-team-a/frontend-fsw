@@ -1,6 +1,9 @@
 import React from "react"
 import Dashboard from "../pages/admin/dashboard"
 
+import Profile from "../pages/admin/profile/profileAdmin"
+import InformasiPersonal from "../pages/admin/profile/informasiPersonal"
+
 import DetilUser from "../pages/admin/users/detiluser"
 import KelolaUser from "../pages/admin/users/listuser"
 import TambahUser from "../pages/admin/users/tambahUser"
@@ -16,6 +19,8 @@ import RegisterVerifikasiSukses from "../pages/admin/authentication/registerVeri
 import ForgetPass from "../pages/admin/authentication/forgetPassword"
 import ForgetPassSuccess from "../pages/admin/authentication/forgetPasswordSuccess"
 import ForgetPassChange from "../pages/admin/authentication/forgetPasswordChange"
+import KelolaKos from "../pages/admin/kelola-kos"
+import EditUser from "../pages/admin/users/editUser"
 
 const AdminRoutes = [
 	{
@@ -25,6 +30,19 @@ const AdminRoutes = [
 				name: "Dashboard",
 				path: "",
 				element: <Dashboard />,
+			},
+			{
+				path: "/profile",
+				children: [
+					{
+						path: "",
+						element: <Profile />,
+					},
+					{
+						path: "/saya",
+						element: <InformasiPersonal />,
+					},		
+				]
 			},
 			{
 				path: "/users",
@@ -41,8 +59,18 @@ const AdminRoutes = [
 					{
 						path: "/:id",
 						element: <DetilUser />,
+					},
+					{
+						path: "/edit",
+						element: <EditUser />
 					}
 				]
+			},
+
+			{
+				name: "Kos",
+				path: "/kos",
+				element: <KelolaKos />
 			}
 		]
 	},

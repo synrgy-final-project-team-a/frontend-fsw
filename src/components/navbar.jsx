@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navbar, Container, Nav, Button, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, Button, NavDropdown, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../store/apis/authentication";
@@ -14,6 +14,7 @@ const NavbarComponent = ({ routes }) => {
 	const [logoutHit, { isLoading, isSuccess }] = useLogoutMutation()
 
 	const searchTop = useSelector(state => state.decor.searchOnTop)
+	const searchText = useSelector(state => state.decor.searchText)
 
 	const token = useSelector((state) => {
 		return state.auth.token
@@ -51,6 +52,18 @@ const NavbarComponent = ({ routes }) => {
 		navigate('/pencarian')
 	}
 
+	const roleRoutes = (link) => {
+		let profilePath = link
+		if (location.pathname.includes('/penyewa')) {
+			profilePath = "/penyewa" + link
+		}
+		if (location.pathname.includes('/admin')) {
+			profilePath = "/admin" + link
+		}
+
+		return profilePath
+	}
+
 	useEffect(() => {
 		if (isSuccess) {
 			dispatch(emptyToken())
@@ -64,7 +77,7 @@ const NavbarComponent = ({ routes }) => {
 	return (
 		<Navbar bg="light" expand="lg" id="navbar" className="py-0">
 			<Container>
-				<Navbar.Brand as={Link} key={"/"} to="/">
+				<Navbar.Brand as={Link} key={roleRoutes("/")} to={roleRoutes("/")}>
 					<img src={searchTop ? "/image/logo-square.png" : "/image/logo.png"} className="img-fluid mx-1 logo" alt="..." />
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -74,7 +87,7 @@ const NavbarComponent = ({ routes }) => {
 							<div className="form-search d-flex my-2" onClick={routeToSearch}>
 								<img src="/search-normal.svg" alt="..." className="p-2" />
 								<img src="/line-vertical.svg" alt="..." />
-								<input type="text" className="w-100 border-0 mx-2" placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
+								<input type="text" className="w-100 border-0 mx-2" defaultValue={searchText} placeholder="Tulis daerah / alamat kosan yang akan kamu tuju" />
 							</div> :
 							""
 					}
@@ -85,8 +98,46 @@ const NavbarComponent = ({ routes }) => {
 								<Button as={Link} key={"login"} to="/login" className="mx-3">
 									Masuk
 								</Button> :
-								<NavDropdown key={'/profile'} className="mx-3" title={userData.first_name} id="basic-nav-dropdown">
-									<NavDropdown.Item as={Link} key={'/profile'} to="/profile">Profile</NavDropdown.Item>
+								<NavDropdown key={roleRoutes("/profile")} className="mx-3 profile-link" title={<img src={userData.avatar} className="active" alt="..." />} id="basic-nav-dropdown">
+									<NavDropdown.Item as={Link} key={roleRoutes("/profile")} to={roleRoutes("/profile")}
+										className="d-flex justify-content-between align-items-center"
+									>
+										<span>Profil</span>
+										<Badge bg="danger" pill>
+											14
+										</Badge>
+									</NavDropdown.Item>
+									<NavDropdown.Divider />
+									{
+										userData.role.includes('ROLE_SUPERUSER') ?
+											<NavDropdown.Item as={Link} key="/admin" to="/admin"
+												className="d-flex justify-content-between align-items-center"
+											>
+												Admin
+											</NavDropdown.Item> :
+											""
+
+									}
+									{
+										userData.role.includes('ROLE_TN') ?
+											<NavDropdown.Item as={Link} key="/penyewa" to="/penyewa"
+												className="d-flex justify-content-between align-items-center"
+											>
+												Penyewa
+											</NavDropdown.Item> :
+											""
+
+									}
+									{
+										userData.role.includes('ROLE_SK') ?
+											<NavDropdown.Item as={Link} key="/" to="/"
+												className="d-flex justify-content-between align-items-center"
+											>
+												Pencari
+											</NavDropdown.Item> :
+											""
+
+									}
 									<NavDropdown.Divider />
 									<NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
 								</NavDropdown>

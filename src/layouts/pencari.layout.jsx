@@ -6,6 +6,7 @@ import NavbarComponent from "../components/navbar"
 import PencariRoutes from "../routes/pencari";
 import { useCurrentUserMutation } from "../store/apis/users";
 import { emptyEmail, emptyToken } from "../store/slices/authSlice";
+import { emptyKos } from "../store/slices/kosSlice";
 import { addUser, emptyUser } from "../store/slices/userSlice";
 
 const PencariLayout = ({ children }) => {
@@ -37,11 +38,13 @@ const PencariLayout = ({ children }) => {
 		}
 
 		if (isErrorUser) {
-			if (errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
+			if (errorUser.hasOwnProperty('data') && errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
-				navigate('/login')
+				dispatch(emptyKos())
+				navigate('/')
+				return
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
