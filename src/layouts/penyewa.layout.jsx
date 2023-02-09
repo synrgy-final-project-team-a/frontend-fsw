@@ -6,6 +6,7 @@ import NavbarComponent from "../components/navbar"
 import PenyewaRoutes from "../routes/penyewa"
 import { useCurrentUserMutation } from "../store/apis/users"
 import { emptyEmail, emptyToken } from "../store/slices/authSlice"
+import { emptyKos } from "../store/slices/kosSlice"
 import { addUser, emptyUser } from "../store/slices/userSlice"
 
 const PenyewaLayout = ({ children }) => {
@@ -21,6 +22,7 @@ const PenyewaLayout = ({ children }) => {
 			dispatch(emptyToken())
 			dispatch(emptyEmail())
 			dispatch(emptyUser())
+			dispatch(emptyKos())
 			navigate('/login')
 		} else {
 			if (!token.role.includes('ROLE_TN')) {
@@ -46,6 +48,7 @@ const PenyewaLayout = ({ children }) => {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
+				dispatch(emptyKos())
 				navigate('/login')
 			}
 		}

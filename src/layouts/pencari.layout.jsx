@@ -6,6 +6,7 @@ import NavbarComponent from "../components/navbar"
 import PencariRoutes from "../routes/pencari";
 import { useCurrentUserMutation } from "../store/apis/users";
 import { emptyEmail, emptyToken } from "../store/slices/authSlice";
+import { emptyKos } from "../store/slices/kosSlice";
 import { addUser, emptyUser } from "../store/slices/userSlice";
 
 const PencariLayout = ({ children }) => {
@@ -41,6 +42,7 @@ const PencariLayout = ({ children }) => {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
+				dispatch(emptyKos())
 				navigate('/')
 				return
 			}
