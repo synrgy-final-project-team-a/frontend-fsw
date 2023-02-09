@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { emptyKos } from "../../store/slices/kosSlice"
 import ListKos from "./lists"
+import VerifikasiPembayaran from "./verifikasi-pembayaran"
 
 const KelolaKos = () => {
 	const dispatch = useDispatch()
@@ -18,6 +19,7 @@ const KelolaKos = () => {
 			<h3 className="mt-3">Kelola Kos</h3>
 			<Button variant="primary" className="mt-3" onClick={tambahHandler}>Tambah Kos Baru</Button>
 			<ListKos />
+			<VerifikasiPembayaran />
 		</div>
 	)
 

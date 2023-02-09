@@ -13,7 +13,7 @@ const ListUsers = () => {
 
 	let tempRole = []
 
-	const [pageState, setPage] = useState(0)
+	const [pageState, setPage] = useState(1)
 	const [isEnded, setIsEnded] = useState(false)
 	const [list, setList] = useState([])
 
@@ -71,7 +71,7 @@ const ListUsers = () => {
 	}, [isLoading])
 
 	useEffect(() => {
-		listUserHit({ token: token, page: 0 })
+		listUserHit({ token: token, page: 1 })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
