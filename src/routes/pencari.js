@@ -10,8 +10,10 @@ import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
 import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
 import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
 import ChatPage from "../pages/pencari/chat/chatPage";
+import Favorite from "../pages/pencari/favorite/favorite";
 
-import Pencarian from "../pages/pencari/pencarian";
+import Pencarian from "../pages/pencari/pencarian/pencarian";
+import HasilPencarian from "../pages/pencari/pencarian/hasil";
 import DetailKos from "../pages/pencari/detailKos";
 
 const PencariRoutes = [
@@ -23,7 +25,7 @@ const PencariRoutes = [
   {
     name: "Favorit",
     path: "/favorit",
-    element: <Landing />,
+    element: <Favorite />,
   },
   {
     name: "Chat",
@@ -31,7 +33,7 @@ const PencariRoutes = [
     element: <Landing />,
   },
   {
-    path: "/kos/detail",
+    path: "/kos/:id",
     element: <DetailKos />,
   },
   {
@@ -74,12 +76,29 @@ const PencariRoutes = [
         path: "/chat",
         element: <ChatPage />,
       },
-
     ],
   },
   {
     path: "/pencarian",
-    element: <Pencarian />,
+    children: [
+      {
+        path: "",
+        element: <Pencarian />,
+      },
+      {
+        path: "/:province",
+        children: [
+          {
+            path: "",
+            element: <HasilPencarian />,
+          },
+          {
+            path: "/:city",
+            element: <HasilPencarian />,
+          },
+        ],
+      },
+    ],
   },
 ];
 

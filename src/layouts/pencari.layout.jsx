@@ -51,19 +51,17 @@ const PencariLayout = ({ children }) => {
       dispatch(addUser(dataUser.data));
     }
 
-    if (isErrorUser) {
-      if (
-        errorUser.data.hasOwnProperty("status") &&
-        errorUser.data.status === "Token expired"
-      ) {
-        dispatch(emptyToken());
-        dispatch(emptyEmail());
-        dispatch(emptyUser());
-        navigate("/login");
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoadingUser]);
+		if (isErrorUser) {
+			if (errorUser.hasOwnProperty('data') && errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
+				dispatch(emptyToken())
+				dispatch(emptyEmail())
+				dispatch(emptyUser())
+				navigate('/')
+				return
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoadingUser])
 
   useEffect(() => {
     socket.on("subscribe-notification", (data) => {
