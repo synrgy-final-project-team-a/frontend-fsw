@@ -59,9 +59,8 @@ const DetailKos = () => {
     const checkDurationType = (el) => {
       return el.durationType === tipe;
     }
-
     const result = price.filter(checkDurationType)
-    setSelectedPrice(result)
+    setSelectedPrice(result[0])
   }
 
   useEffect(() => {

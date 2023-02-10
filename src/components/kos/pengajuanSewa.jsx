@@ -34,9 +34,9 @@ const PengajuanSewaIndex = () => {
 				}
 			} else if (transaksi.status === "REVIEWED") {
 				navigate('/pengajuan-sewa/4')
-			} else {
-				navigate('/')
-			}
+			} else if (transaksi.status === "APPROVED") {
+				navigate('/pengajuan-sewa/5')
+			} 
 		} else {
 			if (params.id === "1") {
 				if (transaksi.status === "") {
@@ -66,6 +66,12 @@ const PengajuanSewaIndex = () => {
 				} else {
 					navigate('/pengajuan-sewa')
 				}
+			} else if (params.id === "5") {
+				if (transaksi.status === "APPROVED") {
+					setKey(params.id)
+				} else {
+					navigate('/pengajuan-sewa')
+				}
 			}
 		}
 
@@ -91,6 +97,9 @@ const PengajuanSewaIndex = () => {
 					<Pembayaran />
 				</Tab>
 				<Tab eventKey="4" title="4" disabled>
+					<KonfirmasiPemilik />
+				</Tab>
+				<Tab eventKey="5" title="5" disabled>
 					<Diterima />
 				</Tab>
 			</Tabs>

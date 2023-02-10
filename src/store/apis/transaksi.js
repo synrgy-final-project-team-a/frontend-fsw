@@ -15,6 +15,14 @@ const transaksiApi = createApi({
 			}),
 			invalidatesTags: ['Transaksi'],
 		}),
+		addBuktiByPencari: build.mutation({
+			query: ({ body, transactionId }) => ({
+				url: `api/seeker/transactions/transaction/${transactionId}`,
+				method: 'PUT',
+				body: body,
+			}),
+			invalidatesTags: ['Transaksi'],
+		}),
 		getListbyPencari: build.mutation({
 			query: ({ profileId }) => ({
 				url: `api/seeker/transactions/list/${profileId}`,
@@ -27,6 +35,7 @@ const transaksiApi = createApi({
 
 export const {
 	useAddBookingByPencariMutation,
+	useAddBuktiByPencariMutation,
 	useGetListbyPencariMutation
 } = transaksiApi
 
