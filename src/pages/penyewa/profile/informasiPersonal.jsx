@@ -343,8 +343,8 @@ const InformasiPersonal = () => {
 									<Form.Select defaultValue={userData.status}
 										ref={(ref) => formRef.current.status = ref}
 									>
-										<option value="Mahasiswa">Mahasiswa</option>
-										<option value="Pekerja">Pekerja</option>
+										<option value="STUDENT">Mahasiswa</option>
+										<option value="WORKER">Pekerja</option>
 									</Form.Select>
 									{
 										(error.hasOwnProperty("status") && error.status !== "") ?

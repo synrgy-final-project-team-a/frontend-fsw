@@ -10,21 +10,23 @@ import Diterima from "./sewaTab/diterima";
 const PengajuanSewaIndex = () => {
 	const params = useParams()
 	const navigate = useNavigate()
+
 	const [key, setKey] = useState('1');
 
 	useEffect(() => {
-		if(params.id === undefined) {
+		if (params.id === undefined) {
 			setKey('1')
 		} else {
 			setKey(params.id)
 		}
-	}, [params.id])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<div id="tambah-kos">
 			<Tabs
 				activeKey={key}
-				onSelect={(k) => navigate('/pengajuan-sewa/'+k)}
+				onSelect={(k) => navigate('/pengajuan-sewa/' + k)}
 				className="mb-3"
 				transition={false}
 				justify

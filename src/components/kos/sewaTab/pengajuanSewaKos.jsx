@@ -1,111 +1,108 @@
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Button, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function PengajuanSewaKos() {
+const PengajuanSewaKos = () => {
   const navigate = useNavigate();
+
+  const token = useSelector(state => state.auth.token)
+  const user = useSelector(state => state.user.current)
+
   function handleSubmitSewa(e) {
-    navigate("/pengajuan-sewa/2");
+    e.preventDefault()
+
+    const profileId = token.profile_id
+    const priceId = "14"
+    const roomId = "3"
+    const timeNow = new Date().toISOString()
+
+    
   }
+
   return (
     <>
-      <Container className="">
-        <Button variant="link" onClick={() => navigate('/')}>
+      <Container>
+        <Button variant="none" as={Link} to='/'>
           <div className="my-3 d-flex align-items-center h-100">
-            <span>
-              <svg
-                width="9"
-                height="18"
-                viewBox="0 0 9 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7.9993 17.67C7.8093 17.67 7.6193 17.6 7.4693 17.45L0.949297 10.93C-0.110703 9.87002 -0.110703 8.13002 0.949297 7.07002L7.4693 0.55002C7.7593 0.26002 8.2393 0.26002 8.5293 0.55002C8.8193 0.84002 8.8193 1.32002 8.5293 1.61002L2.0093 8.13002C1.5293 8.61002 1.5293 9.39002 2.0093 9.87002L8.5293 16.39C8.8193 16.68 8.8193 17.16 8.5293 17.45C8.3793 17.59 8.1893 17.67 7.9993 17.67Z"
-                  fill="#757575"
-                />
-              </svg>
-            </span>
+            <FontAwesomeIcon icon={faAngleLeft} />
             <h6 className="ms-sm-2 my-auto">Kembali</h6>
           </div>
         </Button>
-        <div>
-          <h2 className="text-center my-2">Pegajuan Sewa Kos</h2>
-        </div>
-        <div className="row my-5 justify-content-center">
-          <div className="col-xs-10 col-sm-4 offset-md-1 ">
-            <img
-              className="mb-3 img-fluid center"
-              src="/image5.png"
-              alt=""
-            ></img>
-            <h2>Kos H.Turiman Banaran</h2>
-            <h5>Tipe A</h5>
-            <p>Jl. Banaran No.117, Banaran Sekarang Gunung Pati Semarang </p>
-          </div>
-          <div className="col-12 col-sm-2 rightborder"></div>
-          <div className="col-xs-10 col-sm-5 ">
-            <div className="my-2">
-              <div className="d-flex justify-content-between mt-1 align-items-center">
-                <h4 className="fw-semibold">Informasi Penyewa</h4>
-              </div>
-              <h5 className="h5">Nama Penyewa </h5>
-              <input placeholder="Dion Kurniawan" className="form-control" />
+        <Row className="gx-5 gy-3">
+          <Col xs={12}>
+            <h2 className="text-center my-2">Pengajuan Sewa Kos</h2>
+          </Col>
+          <Col xs={12} lg={6}>
+            <div className="w-75 mx-auto text-center">
+              <img className="mb-3 img-fluid" src="/image5.png" alt="..." />
             </div>
-            <div className="my-2">
-              <h5 className="h5">Jenis Kelamin </h5>
-              <input placeholder="Laki-laki" className="form-control" />
+            <div className="w-75 mx-auto">
+              <h2>Kos H.Turiman Banaran</h2>
+              <h5>Tipe A</h5>
+              <p>Jl. Banaran No.117, Banaran Sekarang Gunung Pati Semarang </p>
             </div>
-            <div className="my-2">
-              <h5 className="h5">Pekerjaan </h5>
-              <input placeholder="Mahasiswa" className="form-control" />
-            </div>
-            <div className="my-2">
-              <h5 className="h5">Nomor Handphone </h5>
-              <input placeholder="082148372834" className="form-control" />
-            </div>
-            <div className="my-2 bordertop">
-              <div className="d-flex justify-content-between mt-1 align-items-center">
-                <h5 className="fw-semibold fontcolor mb-0 p-auto">
-                  Pembayaran{" "}
-                </h5>
-                <Button variant="link" className="mb-0 fw-bold">
-                  Edit
+          </Col>
+          <Col xs={12} lg={6}>
+            <h4 className="fw-semibold">Informasi Penyewa</h4>
+            <Form onSubmit={handleSubmitSewa}>
+              <Form.Group className="mb-3" controlId="formBasicNama">
+                <Form.Label>Nama Penyewa</Form.Label>
+                <Form.Control type="text" placeholder="Dion Kurniawan"
+                  defaultValue={`${user.first_name} ${user.last_name}`}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicNama">
+                <Form.Label>Jenis Kelamin</Form.Label>
+                <Form.Select
+                  defaultValue={user.gender}
+                >
+                  <option value="MALE">Laki-Laki</option>
+                  <option value="FEMALE">Perempuan</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicNama">
+                <Form.Label>Pekerjaan</Form.Label>
+                <Form.Select
+                  defaultValue={user.status}
+                >
+                  <option value="STUDENT">Mahasiswa</option>
+                  <option value="WORKER">Pekerja</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicNama">
+                <Form.Label>Nomor Handphone</Form.Label>
+                <Form.Control type="text" placeholder="0812xxxxxxxx"
+                  defaultValue={user.phone_number}
+                />
+              </Form.Group>
+              <hr className="mb-3" />
+              <h4 className="fw-semibold">Pembayaran</h4>
+              <Form.Group className="mb-3">
+                <Form.Label className="w-100 mb-0">Tanggal mulai kos</Form.Label>
+                <Form.Text className="fw-bold">23 Februari 2023</Form.Text>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label className="w-100 mb-0">Durasi sewa kos</Form.Label>
+                <Form.Text className="fw-bold">Per Bulan</Form.Text>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label className="w-100 fw-bold mb-0">Total Harga Sewa Kos</Form.Label>
+                <Form.Label className="fw-bold">Rp.1.350.000</Form.Label>
+              </Form.Group>
+              <div className="text-center">
+                <Button variant="primary" type="submit">
+                  Ajukan Sewa Kos Sekarang
                 </Button>
               </div>
-            </div>
-            <div className="mb-2">
-              <p className="mb-0">Tanggal mulai kos </p>
-              <p className="fw-semibold fontcolor"> 23 Februari 2023</p>
-            </div>
-            <div className="mb-2">
-              <p className="mb-0">Durasi sewa kos </p>
-              <p className="fw-semibold fontcolor">1 Bulan </p>
-            </div>
-            <div className="mb-2">
-              <p className="mb-0">Harga per bulan </p>
-              <p className="fw-semibold fontcolor">Rp. 1.350.000 </p>
-            </div>
-            <div className="mb-2">
-              <div className="d-flex justify-content-between">
-                <p className="mb-0 fs-5 fw-bold fontcolor">
-                  Total Harga Sewa Kos
-                </p>
-                <p className="fw-bold fs-5">Rp.1.350.000</p>
-              </div>
-            </div>
-            <div className="d-flex justify-content-center">
-              <Button
-                variant="primary"
-                type="submit"
-                onClick={(e) => handleSubmitSewa(e)}
-              >
-                Ajukan Sewa Kos Sekarang
-              </Button>
-            </div>
-          </div>
-        </div>
+            </Form>
+          </Col>
+        </Row>
       </Container>
     </>
   );
 }
+
+export default PengajuanSewaKos
