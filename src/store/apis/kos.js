@@ -64,6 +64,36 @@ const kosApi = createApi({
       }),
       invalidatesTags: ["Kos"],
     }),
+    getListByPenyewa: build.mutation({
+      query: ({ idProfile, page, size }) => ({
+        url: `api/tennant/kost/list/${idProfile}?page=${page}&size=${size}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["Kos"],
+    }),
+    insertKostByPenyewa: build.mutation({
+      query: ({ idProfile, body }) => ({
+        url: `api/tennant/kost/user/${idProfile}`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["Kos"],
+    }),
+    insertRoomByPenyewa: build.mutation({
+      query: ({ idKost, body }) => ({
+        url: `api/tennant/room/${idKost}`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["Kos"],
+    }),
+    deleteKosByPenyewa: build.mutation({
+      query: (id) => ({
+        url: `api/tennant/kost/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Kos"],
+    }),
     getList: build.mutation({
       query: (params) => ({
         url: `api/kost/filter/sort/`,
@@ -89,6 +119,10 @@ export const {
   useDeleteKosMutation,
   useDetilKosMutation,
   useSearchKeywordMutation,
+  useGetListByPenyewaMutation,
+  useInsertKostByPenyewaMutation,
+  useInsertRoomByPenyewaMutation,
+  useDeleteKosByPenyewaMutation,
   useGetListMutation,
   usePencariGetOneMutation,
 } = kosApi;

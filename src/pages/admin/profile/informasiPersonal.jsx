@@ -82,7 +82,7 @@ const InformasiPersonal = () => {
 			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
 		}
 
-		if (!/^[0-9]{10,13}$/i.test(bankAccount)) {
+		if (!/[0-9]/i.test(bankAccount)) {
 			failed = true
 			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak valid!" }))
 		}
@@ -343,8 +343,8 @@ const InformasiPersonal = () => {
 									<Form.Select defaultValue={userData.status}
 										ref={(ref) => formRef.current.status = ref}
 									>
-										<option value="Mahasiswa">Mahasiswa</option>
-										<option value="Pekerja">Pekerja</option>
+										<option value="STUDENT">Mahasiswa</option>
+										<option value="WORKER">Pekerja</option>
 									</Form.Select>
 									{
 										(error.hasOwnProperty("status") && error.status !== "") ?

@@ -5,13 +5,9 @@ import Profile from "../pages/pencari/profile/profilePencari";
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal";
 import HistoriTransaksi from "../pages/pencari/profile/historiTransaksi";
 
-import PengajuanSewa1 from "../pages/pencari/pengajuanKos/pengajuanSewa1";
-import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
-import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
-import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
-import ChatPage from "../pages/pencari/chat/chatPage";
+import PengajuanSewa from "../pages/pencari/pengajuanSewa";
 import Favorite from "../pages/pencari/favorite/favorite";
-
+import ChatPage from "../pages/pencari/chat/chatPage";
 import Pencarian from "../pages/pencari/pencarian/pencarian";
 import HasilPencarian from "../pages/pencari/pencarian/hasil";
 import DetailKos from "../pages/pencari/detailKos";
@@ -40,20 +36,12 @@ const PencariRoutes = [
     path: "/pengajuan-sewa",
     children: [
       {
-        path: "/1",
-        element: <PengajuanSewa1 />,
+        path: "",
+        element: <PengajuanSewa />,
       },
       {
-        path: "/2",
-        element: <PengajuanSewa2 />,
-      },
-      {
-        path: "/3",
-        element: <PengajuanSewa3 />,
-      },
-      {
-        path: "/4",
-        element: <PengajuanSewa4 />,
+        path: "/:id",
+        element: <PengajuanSewa />,
       },
     ],
   },
