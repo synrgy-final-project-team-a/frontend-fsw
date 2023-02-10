@@ -9,20 +9,19 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
 
 	const [error, setError] = useState({})
 	const [jenisKelamin, setJenisKelamin] = useState({})
+	const [durasi, setDurasi] = useState(payloadQuery.duration_type)
 	const [rating, setRating] = useState({})
 
 	const handleSubmitFilter = (e) => {
 		e.preventDefault()
 
-		let payload = {...payloadQuery}
+		let payload = { ...payloadQuery }
 		let failed = false
 
 		const hargaMinimal = formRef.current.hargaMinimal.value
 		const hargaMaksimal = formRef.current.hargaMaksimal.value
 
-		const putra = formRef.current.jenisPutra.checked
-		const putri = formRef.current.jenisPutri.checked
-		const campur = formRef.current.jenisCampur.checked
+		const { putra, putri, campur } = jenisKelamin
 
 		if (hargaMinimal !== "") {
 			if (!/^[0-9]/i.test(hargaMinimal)) {
@@ -46,6 +45,8 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
 		payload.kost_type_woman = putri
 		payload.kost_type_mixed = campur
 
+		payload.duration_type = durasi
+
 		if (failed) {
 			return
 		}
@@ -54,40 +55,32 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
 
 		pageSetter(0)
 		listSetter([])
-		loadKost({ ...payload, "page": 0, "size": 12 })
-		displayFilter(false)
+		loadKost({ ...payload, "page": 0, "size": 6 })
+		displayFilter('filter')
 	}
 
-	const handleJenisChange = () => {
-		const putra = formRef.current.jenisPutra.checked
-		const putri = formRef.current.jenisPutri.checked
-		const campur = formRef.current.jenisCampur.checked
-
+	const handleJenisChange = (tipe) => {
 		let temp = {
-			putra: putra,
-			putri: putri,
-			campur: campur
+			putra: false,
+			putri: false,
+			campur: false
 		}
+
+		temp[tipe] = true
 
 		setJenisKelamin(temp)
 	}
 
-	const handleRatingChange = () => {
-		const ratingSatu = formRef.current.ratingSatu.checked
-		const ratingDua = formRef.current.ratingDua.checked
-		const ratingTiga = formRef.current.ratingTiga.checked
-		const ratingEmpat = formRef.current.ratingEmpat.checked
-		const ratingLima = formRef.current.ratingLima.checked
+	const handleRatingChange = (tipe) => {
+		let temp = { ...rating }
 
-		let temp = {
-			satu: ratingSatu,
-			dua: ratingDua,
-			tiga: ratingTiga,
-			empat: ratingEmpat,
-			lima: ratingLima,
-		}
+		temp[tipe] = !temp[tipe]
 
 		setRating(temp)
+	}
+
+	const handleDurationChange = (tipe) => {
+		setDurasi(tipe)
 	}
 
 	return (
@@ -102,6 +95,7 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
 								<Form.Group controlId="formBasicMinimal">
 									<Form.Label>Minimal</Form.Label>
 									<Form.Control type="number" placeholder="Rp. 750.000"
+										defaultValue={payloadQuery.price_minimum}
 										ref={ref => formRef.current.hargaMinimal = ref}
 									/>
 									{
@@ -120,6 +114,7 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
 								<Form.Group controlId="formBasicMaksimal">
 									<Form.Label>Maksimal</Form.Label>
 									<Form.Control type="number" placeholder="Rp. 1.500.000"
+										defaultValue={payloadQuery.price_maximum}
 										ref={ref => formRef.current.hargaMaksimal = ref}
 									/>
 									{
@@ -163,16 +158,16 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
 								</Card>
 							</label>
 							<input type="radio" name="jenisKelamin" id="jenisPutra" hidden
-								ref={ref => formRef.current.jenisPutra = ref}
-								onChange={handleJenisChange}
+								checked={jenisKelamin.putra === true}
+								onChange={e => handleJenisChange("putra")}
 							/>
 							<input type="radio" name="jenisKelamin" id="jenisPutri" hidden
-								ref={ref => formRef.current.jenisPutri = ref}
-								onChange={handleJenisChange}
+								checked={jenisKelamin.putri === true}
+								onChange={e => handleJenisChange("putri")}
 							/>
 							<input type="radio" name="jenisKelamin" id="jenisCampur" hidden
-								ref={ref => formRef.current.jenisCampur = ref}
-								onChange={handleJenisChange}
+								checked={jenisKelamin.campur === true}
+								onChange={e => handleJenisChange("campur")}
 							/>
 						</Form.Group>
 					</Accordion.Body>
@@ -181,41 +176,29 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
 					<Accordion.Header>Durasi Kos</Accordion.Header>
 					<Accordion.Body>
 						<Form.Group controlId="formBasicDurasi">
-							<Form.Check
-								className="my-2"
-								type="radio"
-								name="durasi"
-								label="Harian"
+							<Form.Check className="my-2" type="radio" name="durasi" label="Harian"
+								checked={durasi === "DAILY"}
+								onChange={e => handleDurationChange("DAILY")}
 							/>
-							<Form.Check
-								className="my-2"
-								type="radio"
-								name="durasi"
-								label="Mingguan"
+							<Form.Check className="my-2" type="radio" name="durasi" label="Mingguan"
+								checked={durasi === "WEEKLY"}
+								onChange={e => handleDurationChange("WEEKLY")}
 							/>
-							<Form.Check
-								className="my-2"
-								type="radio"
-								name="durasi"
-								label="Bulanan"
+							<Form.Check className="my-2" type="radio" name="durasi" label="Bulanan"
+								checked={durasi === "MONTHLY"}
+								onChange={e => handleDurationChange("MONTHLY")}
 							/>
-							<Form.Check
-								className="my-2"
-								type="radio"
-								name="durasi"
-								label="3 Bulanan"
+							<Form.Check className="my-2" type="radio" name="durasi" label="3 Bulanan"
+								checked={durasi === "QUARTER"}
+								onChange={e => handleDurationChange("QUARTER")}
 							/>
-							<Form.Check
-								className="my-2"
-								type="radio"
-								name="durasi"
-								label="6 Bulanan"
+							<Form.Check className="my-2" type="radio" name="durasi" label="6 Bulanan"
+								checked={durasi === "SEMESTER"}
+								onChange={e => handleDurationChange("SEMESTER")}
 							/>
-							<Form.Check
-								className="my-2"
-								type="radio"
-								name="durasi"
-								label="Tahunan"
+							<Form.Check className="my-2" type="radio" name="durasi" label="Tahunan"
+								checked={durasi === "YEARLY"}
+								onChange={e => handleDurationChange("YEARLY")}
 							/>
 						</Form.Group>
 					</Accordion.Body>
@@ -250,24 +233,24 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
 								</Card>
 							</label>
 							<input type="checkbox" name="rating" id="ratingSatu" hidden
-								ref={ref => formRef.current.ratingSatu = ref}
-								onChange={handleRatingChange}
+								checked={rating.satu === true}
+								onChange={e => handleRatingChange("satu")}
 							/>
 							<input type="checkbox" name="rating" id="ratingDua" hidden
-								ref={ref => formRef.current.ratingDua = ref}
-								onChange={handleRatingChange}
+								checked={rating.dua === true}
+								onChange={e => handleRatingChange("dua")}
 							/>
 							<input type="checkbox" name="rating" id="ratingTiga" hidden
-								ref={ref => formRef.current.ratingTiga = ref}
-								onChange={handleRatingChange}
+								checked={rating.tiga === true}
+								onChange={e => handleRatingChange("tiga")}
 							/>
 							<input type="checkbox" name="rating" id="ratingEmpat" hidden
-								ref={ref => formRef.current.ratingEmpat = ref}
-								onChange={handleRatingChange}
+								checked={rating.empat === true}
+								onChange={e => handleRatingChange("empat")}
 							/>
 							<input type="checkbox" name="rating" id="ratingLima" hidden
-								ref={ref => formRef.current.ratingLima = ref}
-								onChange={handleRatingChange}
+								checked={rating.lima === true}
+								onChange={e => handleRatingChange("lima")}
 							/>
 						</Form.Group>
 					</Accordion.Body>
