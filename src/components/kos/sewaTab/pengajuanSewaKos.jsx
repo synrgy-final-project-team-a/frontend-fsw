@@ -1,26 +1,50 @@
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { useAddBookingByPencariMutation } from "../../../store/apis/transaksi";
+import { rupiahFormat } from "../../../store/utils/format";
 
 const PengajuanSewaKos = () => {
   const navigate = useNavigate();
 
   const token = useSelector(state => state.auth.token)
   const user = useSelector(state => state.user.current)
+  const transaksi = useSelector(state => state.transaksi)
+
+  const [
+    sewaHit,
+    { isLoading, isSuccess, isError, error }
+  ] = useAddBookingByPencariMutation()
 
   function handleSubmitSewa(e) {
     e.preventDefault()
 
     const profileId = token.profile_id
-    const priceId = "14"
-    const roomId = "3"
+    const roomId = transaksi.room_id
+    const priceId = transaksi.price_id
     const timeNow = new Date().toISOString()
 
-    
+    const formdata = new FormData(e.target)
+
+    formdata.append('check_in', timeNow)
+    formdata.append('price_id', priceId)
+
+    sewaHit({ body: formdata, profileId: profileId, roomId: roomId })
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('pengajuan-sewa/2')
+    }
+
+    if (isError) {
+      console.log(error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading])
 
   return (
     <>
@@ -40,9 +64,9 @@ const PengajuanSewaKos = () => {
               <img className="mb-3 img-fluid" src="/image5.png" alt="..." />
             </div>
             <div className="w-75 mx-auto">
-              <h2>Kos H.Turiman Banaran</h2>
-              <h5>Tipe A</h5>
-              <p>Jl. Banaran No.117, Banaran Sekarang Gunung Pati Semarang </p>
+              <h2>{transaksi.kost_name}</h2>
+              <h5>{transaksi.room_name}</h5>
+              <p>{transaksi.kost_address}</p>
             </div>
           </Col>
           <Col xs={12} lg={6}>
@@ -50,13 +74,13 @@ const PengajuanSewaKos = () => {
             <Form onSubmit={handleSubmitSewa}>
               <Form.Group className="mb-3" controlId="formBasicNama">
                 <Form.Label>Nama Penyewa</Form.Label>
-                <Form.Control type="text" placeholder="Dion Kurniawan"
+                <Form.Control type="text" name="name" placeholder="Dion Kurniawan"
                   defaultValue={`${user.first_name} ${user.last_name}`}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicNama">
                 <Form.Label>Jenis Kelamin</Form.Label>
-                <Form.Select
+                <Form.Select name="gender"
                   defaultValue={user.gender}
                 >
                   <option value="MALE">Laki-Laki</option>
@@ -65,7 +89,7 @@ const PengajuanSewaKos = () => {
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicNama">
                 <Form.Label>Pekerjaan</Form.Label>
-                <Form.Select
+                <Form.Select name="job"
                   defaultValue={user.status}
                 >
                   <option value="STUDENT">Mahasiswa</option>
@@ -74,7 +98,7 @@ const PengajuanSewaKos = () => {
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicNama">
                 <Form.Label>Nomor Handphone</Form.Label>
-                <Form.Control type="text" placeholder="0812xxxxxxxx"
+                <Form.Control type="text" name="phone_number" placeholder="0812xxxxxxxx"
                   defaultValue={user.phone_number}
                 />
               </Form.Group>
@@ -82,15 +106,15 @@ const PengajuanSewaKos = () => {
               <h4 className="fw-semibold">Pembayaran</h4>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 mb-0">Tanggal mulai kos</Form.Label>
-                <Form.Text className="fw-bold">23 Februari 2023</Form.Text>
+                <Form.Text className="fw-bold">{transaksi.check_in}</Form.Text>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 mb-0">Durasi sewa kos</Form.Label>
-                <Form.Text className="fw-bold">Per Bulan</Form.Text>
+                <Form.Text className="fw-bold">Per {transaksi.duration_type}</Form.Text>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 fw-bold mb-0">Total Harga Sewa Kos</Form.Label>
-                <Form.Label className="fw-bold">Rp.1.350.000</Form.Label>
+                <Form.Label className="fw-bold">{rupiahFormat(transaksi.harga)}</Form.Label>
               </Form.Group>
               <div className="text-center">
                 <Button variant="primary" type="submit">

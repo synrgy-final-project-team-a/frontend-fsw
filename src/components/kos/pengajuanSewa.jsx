@@ -6,6 +6,7 @@ import PengajuanSewaKos from "./sewaTab/pengajuanSewaKos"
 import KonfirmasiPemilik from "./sewaTab/konfirmasiPemilik";
 import Pembayaran from "./sewaTab/pembayaran";
 import Diterima from "./sewaTab/diterima";
+import { useSelector } from "react-redux";
 
 const PengajuanSewaIndex = () => {
 	const params = useParams()
@@ -13,14 +14,69 @@ const PengajuanSewaIndex = () => {
 
 	const [key, setKey] = useState('1');
 
+	const transaksi = useSelector(state => state.transaksi)
+
 	useEffect(() => {
 		if (params.id === undefined) {
-			setKey('1')
+			if (transaksi.status === "") {
+				if (transaksi.check_in === "" || transaksi.check_in === "") {
+					navigate('/')
+				} else {
+					navigate('/pengajuan-sewa/1')
+				}
+			} else if (transaksi.status === "POSTED") {
+				navigate('/pengajuan-sewa/2')
+			} else if (transaksi.status === "CONFIRMED") {
+				navigate('/pengajuan-sewa/3')
+			} else if (transaksi.status === "REVIEWED") {
+				navigate('/pengajuan-sewa/4')
+			}
 		} else {
-			setKey(params.id)
+			if (params.id === "1") {
+				if (transaksi.status === "") {
+					if (transaksi.check_in === "" || transaksi.check_in === "") {
+						navigate('/')
+					} else {
+						setKey(params.id)
+					}
+				} else {
+					navigate('/pengajuan-sewa')
+				}
+			} else if (params.id === "2") {
+				if (transaksi.status === "POSTED") {
+					if (transaksi.check_in === "" || transaksi.check_in === "") {
+						navigate('/')
+					} else {
+						setKey(params.id)
+					}
+				} else {
+					navigate('/pengajuan-sewa')
+				}
+			} else if (params.id === "3") {
+				if (transaksi.status === "CONFIRMED") {
+					if (transaksi.check_in === "" || transaksi.check_in === "") {
+						navigate('/')
+					} else {
+						setKey(params.id)
+					}
+				} else {
+					navigate('/pengajuan-sewa')
+				}
+			} else if (params.id === "4") {
+				if (transaksi.status === "REVIEWED") {
+					if (transaksi.check_in === "" || transaksi.check_in === "") {
+						navigate('/')
+					} else {
+						setKey(params.id)
+					}
+				} else {
+					navigate('/pengajuan-sewa')
+				}
+			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [params.id])
 
 	return (
 		<div id="tambah-kos">

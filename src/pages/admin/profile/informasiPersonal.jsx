@@ -189,154 +189,271 @@ const InformasiPersonal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProfile]);
 
-  return (
-    <AdminLayout>
-      <Container className="mt-3">
-        <Breadcrumb>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/", className: "text-decoration-none" }}>
-            Beranda
-          </Breadcrumb.Item>
-          <Breadcrumb.Item active>Profil</Breadcrumb.Item>
-        </Breadcrumb>
-        <Row className="mt-5">
-          <Col xs={12} lg={3}>
-            <ProfileNav />
-          </Col>
-          <Col xs={12} lg={9} className="border rounded px-3 px-lg-5" id="profile-information">
-            {isLoading ? (
-              <div className="overlay">
-                <FontAwesomeIcon icon={faSpinner} spin />
-              </div>
-            ) : (
-              ""
-            )}
-            <Form className="px-0 px-lg-5" onSubmit={editProfilSubmit}>
-              {error.hasOwnProperty("alert") && error.alert.message !== "" ? (
-                <Alert variant={error.alert.variant} className="mt-5">
-                  {error.alert.message}
-                </Alert>
-              ) : (
-                ""
-              )}
-              <div className="d-flex justify-content-between align-items-center mt-5">
-                <h6 className="fw-bold">Edit Profil</h6>
-                <Button variant="outline-primary" type="submit">
-                  Simpan
-                </Button>
-              </div>
-              <div className="text-center mt-5">
-                {selectedProfile ? (
-                  <img src={previewProfile} className="rounded-circle border profile-picture" alt="..." />
-                ) : userData.avatar !== null ? (
-                  <img src={userData.avatar} className="rounded-circle border profile-picture" alt="..." />
-                ) : (
-                  <img src="/logo512.png" className="rounded-circle border profile-picture" alt="..." />
-                )}
-                <br />
-                <div className="mt-2">
-                  <label htmlFor="profile-picture-upload" className="text-decoration-none text-primary fw-bold cursor-pointer">
-                    Edit foto
-                  </label>
-                  <input id="profile-picture-upload" type="file" onChange={changeProfileHandler} style={{ display: "none" }} />
-                  {selectedProfile ? (
-                    <label className="text-decoration-none text-warning fw-bold ms-2 cursor-pointer" onClick={resetProfilehandler}>
-                      Ulang
-                    </label>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                {error.hasOwnProperty("fotoProfil") && error.fotoProfil !== "" ? <label className="text-danger">{error.fotoProfil}</label> : ""}
-              </div>
-              <div className="mt-4">
-                <Form.Group className="mb-4" controlId="formBasicNamaDepan">
-                  <Form.Label>Nama Depan</Form.Label>
-                  <Form.Control type="text" placeholder="Masukan nama depan" defaultValue={userData.first_name} ref={(ref) => (formRef.current.firstName = ref)} />
-                  {error.hasOwnProperty("firstName") && error.firstName !== "" ? <Form.Text className="text-danger">{error.firstName}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-4" controlId="formBasicNamaBelakang">
-                  <Form.Label>Nama Belakang</Form.Label>
-                  <Form.Control type="text" placeholder="Masukan nama belakang" defaultValue={userData.last_name} ref={(ref) => (formRef.current.lastName = ref)} />
-                  {error.hasOwnProperty("lastName") && error.lastName !== "" ? <Form.Text className="text-danger">{error.lastName}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-4" controlId="formBasicNomorHandphone">
-                  <Form.Label>Nomor Handphone</Form.Label>
-                  <Form.Control type="text" placeholder="Masukan nomor handphonemu" defaultValue={userData.phone_number} ref={(ref) => (formRef.current.phoneNumber = ref)} />
-                  {error.hasOwnProperty("phoneNumber") && error.phoneNumber !== "" ? <Form.Text className="text-danger">{error.phoneNumber}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control type="text" placeholder="Masukan email aktifmu" defaultValue={userData.email} disabled ref={(ref) => (formRef.current.email = ref)} />
-                  {error.hasOwnProperty("email") && error.email !== "" ? <Form.Text className="text-danger">{error.email}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Jenis Kelamin</Form.Label>
-                  <Form.Select defaultValue={userData.gender} ref={(ref) => (formRef.current.gender = ref)}>
-                    <option value="MALE">Laki-Laki</option>
-                    <option value="FEMALE">Perempuan</option>
-                  </Form.Select>
-                  {error.hasOwnProperty("gender") && error.gender !== "" ? <Form.Text className="text-danger">{error.gender}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Pekerjaan</Form.Label>
-                  <Form.Select defaultValue={userData.status} ref={(ref) => (formRef.current.status = ref)}>
-                    <option value="STUDENT">Mahasiswa</option>
-                    <option value="WORKER">Pekerja</option>
-                  </Form.Select>
-                  {error.hasOwnProperty("status") && error.status !== "" ? <Form.Text className="text-danger">{error.status}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-4" controlId="formBasicNomorRekening">
-                  <Form.Label>Nomor Rekening</Form.Label>
-                  <Form.Control type="text" placeholder="Masukan nomor rekening" defaultValue={userData.bank_account} ref={(ref) => (formRef.current.bankAccount = ref)} />
-                  {error.hasOwnProperty("bankAccount") && error.bankAccount !== "" ? <Form.Text className="text-danger">{error.bankAccount}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-4" controlId="formBasicNamaBank">
-                  <Form.Label>Nama Bank</Form.Label>
-                  <Form.Select defaultValue={userData.bank_name} ref={(ref) => (formRef.current.bankName = ref)}>
-                    <option value="BCA">BCA</option>
-                    <option value="BNI">BNI</option>
-                    <option value="BRI">BRI</option>
-                    <option value="Mandiri">Mandiri</option>
-                    <option value="Citibank">Citibank</option>
-                  </Form.Select>
-                  {error.hasOwnProperty("bankName") && error.bankName !== "" ? <Form.Text className="text-danger">{error.bankName}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-4" controlId="formBasicNomorRekening">
-                  <Form.Label>Nama Pemilik Rekening</Form.Label>
-                  <Form.Control type="text" placeholder="Masukan nama pemilik rekening" defaultValue={userData.bank_username} ref={(ref) => (formRef.current.bankUsername = ref)} />
-                  {error.hasOwnProperty("bankUsername") && error.bankUsername !== "" ? <Form.Text className="text-danger">{error.bankUsername}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Provinsi</Form.Label>
-                  <Form.Control list="provinsi-list" type="text" placeholder="Masukan Provinsimu" defaultValue={userData.province} ref={(ref) => (formRef.current.province = ref)} />
-                  {error.hasOwnProperty("province") && error.province !== "" ? <Form.Text className="text-danger">{error.province}</Form.Text> : ""}
-                  <datalist id="provinsi-list">
-                    {provinsi.map((el, i) => {
-                      return <option key={i} value={el} />;
-                    })}
-                  </datalist>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicKota">
-                  <Form.Label>Kabupaten/Kota</Form.Label>
-                  <Form.Control type="text" placeholder="Masukan kabupaten/kota-mu" defaultValue={userData.city} ref={(ref) => (formRef.current.city = ref)} />
-                  {error.hasOwnProperty("city") && error.city !== "" ? <Form.Text className="text-danger">{error.city}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicAlamat">
-                  <Form.Label>Alamat</Form.Label>
-                  <Form.Control as="textarea" rows={3} defaultValue={userData.address} ref={(ref) => (formRef.current.address = ref)} />
-                  {error.hasOwnProperty("address") && error.address !== "" ? <Form.Text className="text-danger">{error.address}</Form.Text> : ""}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Google Maps</Form.Label>
-                  <Form.Control type="text" disabled />
-                </Form.Group>
-              </div>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </AdminLayout>
-  );
-};
+	return (
+		<AdminLayout>
+			<Container className="mt-3">
+				<Breadcrumb>
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/", className: "text-decoration-none" }}>
+						Beranda
+					</Breadcrumb.Item>
+					<Breadcrumb.Item active>Profil</Breadcrumb.Item>
+				</Breadcrumb>
+				<Row className="mt-5">
+					<Col xs={12} lg={3}>
+						<ProfileNav />
+					</Col>
+					<Col xs={12} lg={9} className="border rounded px-3 px-lg-5" id="profile-information">
+						{
+							isLoading ?
+								<div className="overlay">
+									<FontAwesomeIcon icon={faSpinner} spin />
+								</div> :
+								""
+						}
+						<Form className="px-0 px-lg-5" onSubmit={editProfilSubmit}>
+							{
+								(error.hasOwnProperty("alert") && error.alert.message !== "") ?
+									<Alert variant={error.alert.variant} className="mt-5">
+										{error.alert.message}
+									</Alert> :
+									""
+							}
+							<div className="d-flex justify-content-between align-items-center mt-5">
+								<h6 className="fw-bold">Edit Profil</h6>
+								<Button variant="outline-primary" type="submit">Simpan</Button>
+							</div>
+							<div className="text-center mt-5">
+								{
+									selectedProfile ?
+										<img src={previewProfile} className="rounded-circle border profile-picture" alt="..." />
+										:
+										userData.avatar !== null ? (
+											<img src={userData.avatar} className="rounded-circle border profile-picture" alt="..." />
+										) : (
+											<img src="/logo512.png" className="rounded-circle border profile-picture" alt="..." />
+										)
+								}
+								<br />
+								<div className="mt-2">
+									<label htmlFor="profile-picture-upload" className="text-decoration-none text-primary fw-bold cursor-pointer">
+										Edit foto
+									</label>
+									<input id="profile-picture-upload" type="file" onChange={changeProfileHandler} style={{ display: "none" }} />
+									{
+										selectedProfile ?
+											<label className="text-decoration-none text-warning fw-bold ms-2 cursor-pointer" onClick={resetProfilehandler}>
+												Ulang
+											</label> :
+											""
+									}
+								</div>
+								{
+									(error.hasOwnProperty("fotoProfil") && error.fotoProfil !== "") ?
+										<label className="text-danger">
+											{error.fotoProfil}
+										</label> :
+										""
+								}
+							</div>
+							<div className="mt-4">
+								<Form.Group className="mb-4" controlId="formBasicNamaDepan">
+									<Form.Label>Nama Depan</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nama depan"
+										defaultValue={userData.first_name}
+										ref={(ref) => formRef.current.firstName = ref}
+									/>
+									{
+										(error.hasOwnProperty("firstName") && error.firstName !== "") ?
+											<Form.Text className="text-danger">
+												{error.firstName}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNamaBelakang">
+									<Form.Label>Nama Belakang</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nama belakang"
+										defaultValue={userData.last_name}
+										ref={(ref) => formRef.current.lastName = ref}
+									/>
+									{
+										(error.hasOwnProperty("lastName") && error.lastName !== "") ?
+											<Form.Text className="text-danger">
+												{error.lastName}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNomorHandphone">
+									<Form.Label>Nomor Handphone</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nomor handphonemu"
+										defaultValue={userData.phone_number}
+										ref={(ref) => formRef.current.phoneNumber = ref}
+									/>
+									{
+										(error.hasOwnProperty("phoneNumber") && error.phoneNumber !== "") ?
+											<Form.Text className="text-danger">
+												{error.phoneNumber}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicEmail">
+									<Form.Label>Email</Form.Label>
+									<Form.Control type="text" placeholder="Masukan email aktifmu"
+										defaultValue={userData.email}
+										disabled
+										ref={(ref) => formRef.current.email = ref}
+									/>
+									{
+										(error.hasOwnProperty("email") && error.email !== "") ?
+											<Form.Text className="text-danger">
+												{error.email}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicEmail">
+									<Form.Label>Jenis Kelamin</Form.Label>
+									<Form.Select defaultValue={userData.gender}
+										ref={(ref) => formRef.current.gender = ref}
+									>
+										<option value="MALE">Laki-Laki</option>
+										<option value="FEMALE">Perempuan</option>
+									</Form.Select>
+									{
+										(error.hasOwnProperty("gender") && error.gender !== "") ?
+											<Form.Text className="text-danger">
+												{error.gender}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicEmail">
+									<Form.Label>Pekerjaan</Form.Label>
+									<Form.Select defaultValue={userData.status}
+										ref={(ref) => formRef.current.status = ref}
+									>
+										<option value="STUDENT">Mahasiswa</option>
+										<option value="WORKER">Pekerja</option>
+									</Form.Select>
+									{
+										(error.hasOwnProperty("status") && error.status !== "") ?
+											<Form.Text className="text-danger">
+												{error.status}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
+									<Form.Label>Nomor Rekening</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nomor rekening"
+										defaultValue={userData.bank_account}
+										ref={(ref) => formRef.current.bankAccount = ref}
+									/>
+									{
+										(error.hasOwnProperty("bankAccount") && error.bankAccount !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankAccount}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNamaBank">
+									<Form.Label>Nama Bank</Form.Label>
+									<Form.Select defaultValue={userData.bank_name}
+										ref={(ref) => formRef.current.bankName = ref}
+									>
+										<option value="BCA">BCA</option>
+										<option value="BNI">BNI</option>
+										<option value="BRI">BRI</option>
+										<option value="Mandiri">Mandiri</option>
+										<option value="Citibank">Citibank</option>
+									</Form.Select>
+									{
+										(error.hasOwnProperty("bankName") && error.bankName !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankName}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
+									<Form.Label>Nama Pemilik Rekening</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nama pemilik rekening"
+										defaultValue={userData.bank_username}
+										ref={(ref) => formRef.current.bankUsername = ref}
+									/>
+									{
+										(error.hasOwnProperty("bankUsername") && error.bankUsername !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankUsername}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicEmail">
+									<Form.Label>Provinsi</Form.Label>
+									<Form.Control list="provinsi-list" type="text" placeholder="Masukan Provinsimu"
+										defaultValue={userData.province}
+										ref={(ref) => formRef.current.province = ref}
+									/>
+									{
+										(error.hasOwnProperty("province") && error.province !== "") ?
+											<Form.Text className="text-danger">
+												{error.province}
+											</Form.Text> :
+											""
+									}
+									<datalist id="provinsi-list">
+										{
+											provinsi.map((el, i) => {
+												return (
+													<option key={i} value={el} />
+												)
+											})
+										}
+									</datalist>
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicKota">
+									<Form.Label>Kabupaten/Kota</Form.Label>
+									<Form.Control type="text" placeholder="Masukan kabupaten/kota-mu"
+										defaultValue={userData.city}
+										ref={(ref) => formRef.current.city = ref}
+									/>
+									{
+										(error.hasOwnProperty("city") && error.city !== "") ?
+											<Form.Text className="text-danger">
+												{error.city}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicAlamat">
+									<Form.Label>Alamat</Form.Label>
+									<Form.Control as="textarea" rows={3}
+										defaultValue={userData.address}
+										ref={(ref) => formRef.current.address = ref}
+									/>
+									{
+										(error.hasOwnProperty("address") && error.address !== "") ?
+											<Form.Text className="text-danger">
+												{error.address}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicEmail">
+									<Form.Label>Google Maps</Form.Label>
+									<Form.Control type="text" disabled />
+								</Form.Group>
+							</div>
+						</Form>
+					</Col>
+				</Row>
+			</Container>
+		</AdminLayout>
+	);
+}
 
 export default InformasiPersonal;
