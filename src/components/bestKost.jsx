@@ -34,7 +34,7 @@ function BestKost() {
           return (
             <Col xs={12} lg={4} key={i}>
               <Card className="kos-card bg-outline-primary text-decoration-none" as={Link} to={"/kos/" + el.kost_id}>
-                <Card.Img variant="top" src={el.front_building_foto} alt={el.kost_name} />
+                <Card.Img variant="top" src={el.front_building_photo} alt={el.kost_name} />
                 <Card.Body>
                   <Card.Title>{el.kost_name}</Card.Title>
                   <Card.Text className="kos-location mb-1">{el.address}</Card.Text>
@@ -46,16 +46,16 @@ function BestKost() {
                     {el.duration_type === "DAILY"
                       ? "Hari"
                       : el.duration_type === "WEEKLY"
-                      ? "Minggu"
-                      : el.duration_type === "MONTHLY"
-                      ? "Bulan"
-                      : el.duration_type === "QUARTER"
-                      ? "3 Bulan"
-                      : el.duration_type === "SEMESTER"
-                      ? "6 Bulan"
-                      : el.duration_type === "YEARLY"
-                      ? "Tahun"
-                      : ""}
+                        ? "Minggu"
+                        : el.duration_type === "MONTHLY"
+                          ? "Bulan"
+                          : el.duration_type === "QUARTER"
+                            ? "3 Bulan"
+                            : el.duration_type === "SEMESTER"
+                              ? "6 Bulan"
+                              : el.duration_type === "YEARLY"
+                                ? "Tahun"
+                                : ""}
                   </Card.Text>
                   <div className="d-flex justify-content-between">
                     <div className="tag">

@@ -25,7 +25,7 @@ const PengajuanSewaKos = () => {
     const profileId = token.profile_id
     const roomId = transaksi.room_id
     const priceId = transaksi.price_id
-    const timeNow = new Date().toISOString()
+    const timeNow = new Date(transaksi.check_in).toISOString()
 
     const formdata = new FormData(e.target)
 
@@ -37,7 +37,7 @@ const PengajuanSewaKos = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('pengajuan-sewa/2')
+      navigate('/pengajuan-sewa/2')
     }
 
     if (isError) {
@@ -106,7 +106,7 @@ const PengajuanSewaKos = () => {
               <h4 className="fw-semibold">Pembayaran</h4>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 mb-0">Tanggal mulai kos</Form.Label>
-                <Form.Text className="fw-bold">{transaksi.check_in}</Form.Text>
+                <Form.Text className="fw-bold">{new Date(transaksi.check_in).toDateString()}</Form.Text>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 mb-0">Durasi sewa kos</Form.Label>
@@ -114,7 +114,7 @@ const PengajuanSewaKos = () => {
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 fw-bold mb-0">Total Harga Sewa Kos</Form.Label>
-                <Form.Label className="fw-bold">{rupiahFormat(transaksi.harga)}</Form.Label>
+                <Form.Label className="fw-bold">{rupiahFormat(parseInt(transaksi.price))}</Form.Label>
               </Form.Group>
               <div className="text-center">
                 <Button variant="primary" type="submit">

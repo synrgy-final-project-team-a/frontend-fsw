@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Breadcrumb, Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProfilNav from "../../../components/profile";
 import PencariLayout from "../../../layouts/pencari.layout";
 import {
@@ -8,15 +8,21 @@ import {
   faAngleDown,
   faCalendarDays,
   faClock,
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useGetListbyPencariMutation } from "../../../store/apis/transaksi";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { faPaypal } from "@fortawesome/free-brands-svg-icons";
+import { addBooking } from "../../../store/slices/transaksiSlice";
 
 const ProfilePencari = () => {
-  const [display, setDisplay] = useState({});
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const [display] = useState({});
   const idProfile = useSelector((state) => state.auth.token.profile_id);
   const [getListHit, { isLoading, isSuccess, isError, data }] =
     useGetListbyPencariMutation();
@@ -26,12 +32,24 @@ const ProfilePencari = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleDisplay = (e, i) => {
+  const goToTransaksi = (e, transaction_id, status) => {
     e.preventDefault();
-    let newDisplay = { ...display };
-    newDisplay[i] = true;
-    setDisplay(newDisplay);
-  };
+
+    const initialState = {
+      status: status,
+      transaction_id: transaction_id,
+    }
+
+    dispatch(addBooking(initialState))
+    navigate('/pengajuan-sewa')
+  }
+
+  // const handleDisplay = (e, i) => {
+  //   e.preventDefault();
+  //   let newDisplay = { ...display };
+  //   newDisplay[i] = true;
+  //   setDisplay(newDisplay);
+  // };
 
   return (
     <PencariLayout>
@@ -69,13 +87,44 @@ const ProfilePencari = () => {
                             <Col xs={10} lg={9}>
                               <Card.Body className="d-flex flex-column">
                                 <div className="d-flex justify-content-between align-items-center mb-2">
-                                  <Card.Title className="fw-bold">
+                                  <Card.Title className="fw-bold w-75">
                                     {el.kost_name}
                                   </Card.Title>
-                                  <Card.Text className="text-danger">
-                                    <FontAwesomeIcon icon={faCircleXmark} />{" "}
-                                    Ditolak Pemilik Kosan
-                                  </Card.Text>
+                                  {
+                                    el.status === "POSTED" ?
+                                      <Card.Text className="text-warning">
+                                        <FontAwesomeIcon icon={faClock} />{" "}
+                                        Menunggu Konfirmasi Booking Pemilik Kos
+                                      </Card.Text> :
+                                      el.status === "CONFIRMED" ?
+                                        <Card.Text className="text-danger">
+                                          <FontAwesomeIcon icon={faPaypal} />{" "}
+                                          Mohon Melakukan Pembayaran
+                                        </Card.Text> :
+                                        el.status === "REVIEWED" ?
+                                          <Card.Text className="text-warning">
+                                            <FontAwesomeIcon icon={faClock} />{" "}
+                                            Menunggu Konfirmasi Pembayaran Pemilik Kos
+                                          </Card.Text> :
+                                          el.status === "APPROVED" ?
+                                            <Card.Text className="text-success">
+                                              <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                                              Berhasil
+                                            </Card.Text> :
+                                            el.status === "REJECTED" ?
+                                              <Card.Text className="text-danger">
+                                                <FontAwesomeIcon icon={faCircleXmark} />{" "}
+                                                Ditolak Pemilik Kos
+                                              </Card.Text> :
+                                              el.status === "CANCELLED" ?
+                                                <Card.Text className="text-success">
+                                                  <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                                                  Dibatalkan
+                                                </Card.Text> :
+                                                <Card.Text>
+                                                  &nbsp;
+                                                </Card.Text>
+                                  }
                                 </div>
                                 <Card.Text className="mb-1">
                                   {el.address}
@@ -122,7 +171,7 @@ const ProfilePencari = () => {
                                     <Button
                                       variant="outline-primary"
                                       className="m-1"
-                                      onClick={(e) => handleDisplay(e, i)}
+                                      onClick={(e) => goToTransaksi(e, el.transaction_id, el.status)}
                                     >
                                       Selengkapnya{" "}
                                       <FontAwesomeIcon icon={faAngleDown} />
