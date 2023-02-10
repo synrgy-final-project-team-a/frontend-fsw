@@ -2,13 +2,15 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAddBookingByPencariMutation } from "../../../store/apis/transaksi";
+import { addBooking } from "../../../store/slices/transaksiSlice";
 import { rupiahFormat } from "../../../store/utils/format";
 
 const PengajuanSewaKos = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const token = useSelector(state => state.auth.token)
   const user = useSelector(state => state.user.current)
@@ -22,10 +24,16 @@ const PengajuanSewaKos = () => {
   function handleSubmitSewa(e) {
     e.preventDefault()
 
+    const confirm = window.confirm("Apakah anda yakin?")
+
+    if (!confirm) {
+      return
+    }
+
     const profileId = token.profile_id
     const roomId = transaksi.room_id
     const priceId = transaksi.price_id
-    const timeNow = new Date().toISOString()
+    const timeNow = new Date(transaksi.check_in).toISOString()
 
     const formdata = new FormData(e.target)
 
@@ -37,10 +45,16 @@ const PengajuanSewaKos = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('pengajuan-sewa/2')
+      const initialState = {
+        status: "POSTED"
+      }
+
+      dispatch(addBooking(initialState))
+      navigate('/pengajuan-sewa/2')
     }
 
     if (isError) {
+      alert("gagal")
       console.log(error)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,7 +120,7 @@ const PengajuanSewaKos = () => {
               <h4 className="fw-semibold">Pembayaran</h4>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 mb-0">Tanggal mulai kos</Form.Label>
-                <Form.Text className="fw-bold">{transaksi.check_in}</Form.Text>
+                <Form.Text className="fw-bold">{new Date(transaksi.check_in).toDateString()}</Form.Text>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 mb-0">Durasi sewa kos</Form.Label>
@@ -114,7 +128,7 @@ const PengajuanSewaKos = () => {
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 fw-bold mb-0">Total Harga Sewa Kos</Form.Label>
-                <Form.Label className="fw-bold">{rupiahFormat(transaksi.harga)}</Form.Label>
+                <Form.Label className="fw-bold">{rupiahFormat(parseInt(transaksi.price))}</Form.Label>
               </Form.Group>
               <div className="text-center">
                 <Button variant="primary" type="submit">
