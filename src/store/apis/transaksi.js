@@ -9,7 +9,7 @@ const transaksiApi = createApi({
 	endpoints: (build) => ({
 		addBookingByPencari: build.mutation({
 			query: ({ body, profileId, roomId }) => ({
-				url: `api/seeker/transaction/user/${profileId}/room/${roomId}`,
+				url: `api/seeker/transactions/user/${profileId}/room/${roomId}`,
 				method: 'POST',
 				body: body,
 			}),

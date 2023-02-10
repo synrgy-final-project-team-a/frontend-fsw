@@ -15,6 +15,12 @@ const initialState = {
 	phone_number: "",
 	check_in: "",
 	price_id: "",
+	room_id: "",
+	kost_name: "",
+	room_name: "",
+	kost_address: "",
+	duration_type: "",
+	price: ""
 }
 
 export const slice = createSlice({
