@@ -1,17 +1,11 @@
 import React from "react";
+import { Button, Container, Accordion } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
-import NavbarComponent from "../../../components/navbar";
-import PencariRoutes from "../../../routes/pencari";
-import NumberProgress from "../../../components/numberProgress";
-import Accordion from "react-bootstrap/Accordion";
-import FooterComponent from "../../../components/footer";
 
-export default function PengajuanSewa3() {
+export default function Pembayaran() {
   const navigate = useNavigate();
   return (
     <>
-      <NavbarComponent routes={PencariRoutes} />
       <Container>
         <Button variant="link" onClick={() => navigate(-1)}>
           <div className="my-3 d-flex align-items-center h-100">
@@ -32,9 +26,6 @@ export default function PengajuanSewa3() {
             <h6 className="ms-sm-2 my-auto">Kembali</h6>
           </div>
         </Button>
-        <div>
-          <NumberProgress current={3} total={4} />
-        </div>
         {/* Item 1 */}
         <div>
           <h2 className="text-center my-2">Pembayaran</h2>
@@ -285,7 +276,6 @@ export default function PengajuanSewa3() {
           </Button>
         </div>
       </Container>
-      <FooterComponent />
     </>
   );
 }

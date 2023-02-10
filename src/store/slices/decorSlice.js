@@ -31,4 +31,4 @@ export const {
 	resetSearchText
 } = slice.actions
 
-export default slice.reducer
+export const decorReducer = slice.reducer

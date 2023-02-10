@@ -1,15 +1,11 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import FooterComponent from "../../../components/footer";
-import NavbarComponent from "../../../components/navbar";
-import PencariRoutes from "../../../routes/pencari";
-import NumberProgress from "../../../components/numberProgress";
-export default function PengajuanSewa4() {
+
+export default function KonfirmasiPemilik() {
   const navigate = useNavigate();
   return (
     <>
-      <NavbarComponent routes={PencariRoutes} />
       <Container>
         <Button variant="link" onClick={() => navigate(-1)}>
           <div className="my-3 d-flex align-items-center h-100">
@@ -30,17 +26,11 @@ export default function PengajuanSewa4() {
             <h6 className="ms-2 my-auto">Kembali</h6>
           </div>
         </Button>
-        <div>
-          <NumberProgress current={4} total={4} />
-        </div>
         <div className="d-flex flex-column justify-content-center text-center">
-          <h2>Tempati Kosanmu </h2>
-          <h4 className="text-center m-auto" style={{ maxWidth: "820px" }}>
-            Yeeay, Pembayaranmu diterima, silahkan hubung pemilik kos untuk
-            mengkonfirmasi kedatanganmu{" "}
-          </h4>
+          <h2>Konfirmasi Pemiliki Kos </h2>
+          <h4>Silahkan tunggu konfirmasi dari pemilik kos 1x24 jam </h4>
           <img
-            src="/image10.png"
+            src="/image16.png"
             alt=""
             className="img-fluid m-auto image-sewa"
           ></img>
@@ -51,9 +41,9 @@ export default function PengajuanSewa4() {
           >
             Hubungi Penyewa Kos
           </Button>
+          
         </div>
       </Container>
-      <FooterComponent />
     </>
   );
 }

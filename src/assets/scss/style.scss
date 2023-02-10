@@ -19,34 +19,6 @@
 	height: 200px;
 }
 
-.center {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 420px;
-}
-
-.rightborder {
-	position: relative;
-}
-
-.rightborder:after {
-	content: "";
-	position: absolute;
-	border-right: 2px #c4c4c4 solid;
-	height: 100%;
-	width: 100%;
-	transform: translateX(-50%);
-}
-
-.image-sewa {
-	max-width: 600px;
-}
-
-.bordertop {
-	border-top: 2px solid #c4c4c4;
-}
-
 .fontcolor {
 	color: #616161;
 }
