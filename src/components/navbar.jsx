@@ -109,7 +109,7 @@ const NavbarComponent = ({ routes }) => {
 									</NavDropdown.Item>
 									<NavDropdown.Divider />
 									{
-										userData.role.includes('ROLE_SUPERUSER') ?
+										token.role.includes('ROLE_SUPERUSER') ?
 											<NavDropdown.Item as={Link} key="/admin" to="/admin"
 												className="d-flex justify-content-between align-items-center"
 											>
@@ -119,7 +119,7 @@ const NavbarComponent = ({ routes }) => {
 
 									}
 									{
-										userData.role.includes('ROLE_TN') ?
+										token.role.includes('ROLE_TN') ?
 											<NavDropdown.Item as={Link} key="/penyewa" to="/penyewa"
 												className="d-flex justify-content-between align-items-center"
 											>
@@ -129,7 +129,7 @@ const NavbarComponent = ({ routes }) => {
 
 									}
 									{
-										userData.role.includes('ROLE_SK') ?
+										token.role.includes('ROLE_SK') ?
 											<NavDropdown.Item as={Link} key="/" to="/"
 												className="d-flex justify-content-between align-items-center"
 											>

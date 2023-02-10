@@ -1,63 +1,75 @@
 #kelola-kos {
-	.card {
-		>.card-img {
-			max-width: 200px;
-			min-height: 200px;
-			object-fit: cover;
-		}
-	}
+  .card {
+    border-radius: 20px;
+
+    >.card-img {
+      border-radius: 20px 0 0 20px;
+      max-width: 200px;
+      min-height: 200px;
+      object-fit: cover;
+    }
+  }
+}
+
+.preview-photo {
+  width: 100px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 #tambah-kos {
-	.tab-content {
-		margin-top: 40px;
-	}
+  .tab-content {
+    margin-top: 40px;
+  }
 
-	.nav.nav-tabs {
-		border: 0;
-		position: relative;
+  .nav.nav-tabs {
+    border: 0;
+    position: relative;
 
-		&:before {
-			content: "";
-			z-index: 1;
-			width: 100%;
-			height: 2px;
-			position: absolute;
-			top: 50%;
-			left: 0;
-			background-color: $primary-light;
-		}
+    &:before {
+      content: "";
+      z-index: 1;
+      width: 100%;
+      height: 2px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      background-color: $primary-light;
+    }
 
-		>.nav-item {
-			z-index: 2;
+    >.nav-item {
+      z-index: 2;
 
+      >.nav-link {
+        margin: 0 auto;
+        background-color: $primary-light;
+        color: $primary;
+        font-size: 20px;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 0 solid $white;
+        font-weight: bold;
+        line-height: 0;
 
-			>.nav-link {
-				margin: 0 auto;
-				background-color: $primary-light;
-				color: $primary;
-				font-size: 20px;
-				padding: 0;
-				width: 40px;
-				height: 40px;
-				border-radius: 50%;
-				border: 0 solid $white;
-				font-weight: bold;
-				line-height: 0;
+        &.active {
+          outline: 3px solid $primary-light;
+          border: 5px solid $white;
+        }
 
-				&.active {
-					outline: 3px solid $primary-light;
-					border: 5px solid $white;
-				}
-			}
+        &.disabled-tab {
+          background-color: $grey-light;
+        }
+      }
 
-			@include media-breakpoint-up(lg) {
-				>.nav-link {
-					font-size: 28px;
-					width: 60px;
-					height: 60px;
-				}
-			}
-		}
-	}
+      @include media-breakpoint-up(lg) {
+        >.nav-link {
+          font-size: 28px;
+          width: 60px;
+          height: 60px;
+        }
+      }
+    }
+  }
 }
