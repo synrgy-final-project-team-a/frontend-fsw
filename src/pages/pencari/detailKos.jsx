@@ -56,7 +56,7 @@ const DetailKos = () => {
       for (let i = 0; i < data.data.room.length; i++) {
         price.push(data.data.room[i].price);
       }
-      console.log(data.data.kost[0]);
+
       setPriceMinimum(Math.min(price));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
