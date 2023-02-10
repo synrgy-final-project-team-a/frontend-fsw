@@ -62,7 +62,7 @@ export default function ChatField({ socket, room, header }) {
       };
       await socket.emit("send-message", messageDataSend);
       setMessageList((list) => [...list, messageData]);
-      // chatRef.history.push(messageData);
+
       chatRef.current = messageData;
       setCurrentMessage("");
     }
@@ -71,13 +71,11 @@ export default function ChatField({ socket, room, header }) {
     socket.on("receive-message", (data) => {
       if (!chatRef.current.created_at) {
         chatRef.current = data;
-        // chatRef.history.push(data);
         setMessageList((list) => [...list, data]);
       }
       if (chatRef.current.created_at) {
         if (chatRef.current.created_at !== data.created_at) {
           chatRef.current = data;
-          // chatRef.history.push(data);
           setMessageList((list) => [...list, data]);
         }
       }

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Col, Container, Nav, Row, Spinner } from "react-bootstrap";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Profile from "../../../components/profile";
 import PencariRoutes from "../../../routes/pencari";
 import io from "socket.io-client";
@@ -15,9 +15,7 @@ export const socket = io.connect("http://localhost:8090");
 // module.esport = socket;
 export default function ChatPage() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const newChat = useSelector((state) => state.chat.newChat);
-  const listRoomChat = useSelector((state) => state.chat.listRoomChat);
   const token = useSelector((state) => state.auth.token);
 
   const [
@@ -37,7 +35,7 @@ export default function ChatPage() {
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [header, setHeader] = useState({});
-  const listRoamRef = useRef({});
+  
   useEffect(() => {
     setLoading(true);
     try {
@@ -67,8 +65,6 @@ export default function ChatPage() {
     if (isSuccessListRoom) {
       setRoomChat(dataListRoom.data);
       dispatch(addlistRoomChat(dataListRoom));
-      console.log(dataListRoom.data);
-      listRoamRef.curent = dataListRoom.data;
     }
 
     if (isErrorListRoom) {
@@ -81,17 +77,18 @@ export default function ChatPage() {
 
   // ntar ini list room chat ketika chaat masuk
   useEffect(() => {
-    // setLoading(true);
     socket.on("load-room-chat", (data) => {
-      console.log(roomChat);
-      console.log(data.data);
-      setRoomChat(data.data);
+      try {
+        getListRoomHit({ token: token.access_token });
+      } catch (error) {
+        console.log(error);
+      }
     });
   }, [socket]);
 
   const joinRoom = ({ roomId, nameKos, avatar, urutan }) => {
+    socket.emit("leave-room", room);
     if (roomChat[urutan].status_message === null) {
-      // roomChat[urutan].status_message = "READED";
       const statusIcon = document.getElementById(`status${urutan}`);
       statusIcon.classList.add("visually-hidden");
     }
@@ -103,7 +100,7 @@ export default function ChatPage() {
     }
     setShowChat(true);
   };
-  // console.log(roomChat);
+
   return (
     <>
       <PencariLayout>
@@ -177,7 +174,7 @@ export default function ChatPage() {
                                     {!room ? (
                                       <></>
                                     ) : room.kost_name.length > 20 ? (
-                                      room.kost_name.substring(1, 19) + "..."
+                                      room.kost_name.substring(0, 19) + "..."
                                     ) : (
                                       room.kost_name
                                     )}

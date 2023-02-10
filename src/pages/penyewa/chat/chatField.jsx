@@ -18,7 +18,6 @@ export default function ChatField({ socket, room, header }) {
       data: dataHistoryChat,
     },
   ] = useGetHistoryChatMutation();
-
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const chatRef = useRef({});
@@ -97,6 +96,7 @@ export default function ChatField({ socket, room, header }) {
             style={{ width: "48px", height: "48px" }}
           ></img>
           <div className="ms-2">
+            <h6 className="mb-0">{header.nameUser}</h6>
             <h6 className="mb-0">{header.nameKos}</h6>
           </div>
         </div>
