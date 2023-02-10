@@ -5,10 +5,7 @@ import Profile from "../pages/pencari/profile/profilePencari"
 import InformasiPersonal from "../pages/pencari/profile/informasiPersonal"
 import HistoriTransaksi from "../pages/pencari/profile/historiTransaksi"
 
-import PengajuanSewa1 from "../pages/pencari/pengajuanKos/pengajuanSewa1";
-import PengajuanSewa2 from "../pages/pencari/pengajuanKos/pengajuanSewa2";
-import PengajuanSewa3 from "../pages/pencari/pengajuanKos/pengajuanSewa3";
-import PengajuanSewa4 from "../pages/pencari/pengajuanKos/pengajuanSewa4";
+import PengajuanSewa from "../pages/pencari/pengajuanSewa";
 import Favorite from "../pages/pencari/favorite/favorite"
 
 import Pencarian from "../pages/pencari/pencarian/pencarian";
@@ -39,22 +36,14 @@ const PencariRoutes = [
 		path: "/pengajuan-sewa",
 		children: [
 			{
-				path: "/1",
-				element: <PengajuanSewa1 />,
+				path: "",
+				element: <PengajuanSewa />,
 			},
 			{
-				path: "/2",
-				element: <PengajuanSewa2 />,
+				path: "/:id",
+				element: <PengajuanSewa />,
 			},
-			{
-				path: "/3",
-				element: <PengajuanSewa3 />,
-			},
-			{
-				path: "/4",
-				element: <PengajuanSewa4 />,
-			},
-		],
+		]
 	},
 	{
 		path: "/profile",
