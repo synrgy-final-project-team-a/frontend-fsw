@@ -23,6 +23,7 @@ const ProfilePencari = () => {
 
   useEffect(() => {
     getListHit({ profileId: idProfile });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDisplay = (e, i) => {
