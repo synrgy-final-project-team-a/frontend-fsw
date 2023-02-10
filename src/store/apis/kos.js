@@ -102,9 +102,16 @@ const kosApi = createApi({
       }),
       invalidatesTags: ["Kos"],
     }),
-    pencariGetOne: build.mutation({
+    getOneByPencari: build.mutation({
       query: (id) => ({
         url: `api/kost/get/${id}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["Kos"],
+    }),
+    getPriceByPencari: build.mutation({
+      query: (id) => ({
+        url: `api/kost/get/room/price/${id}`,
         method: "GET",
       }),
       invalidatesTags: ["Kos"],
@@ -124,7 +131,8 @@ export const {
   useInsertRoomByPenyewaMutation,
   useDeleteKosByPenyewaMutation,
   useGetListMutation,
-  usePencariGetOneMutation,
+  useGetOneByPencariMutation,
+  useGetPriceByPencariMutation
 } = kosApi;
 
 export default kosApi;

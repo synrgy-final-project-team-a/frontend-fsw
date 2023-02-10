@@ -35,7 +35,6 @@ function BestKost() {
       <h2 className="mb-3">Cari Kosan Terbaik dari Kami</h2>
       <Row className="g-4">
         {data.data.map((el, i) => {
-          console.log(el);
           return (
             <Col xs={12} lg={4} key={i}>
               <Card
@@ -45,7 +44,7 @@ function BestKost() {
               >
                 <Card.Img
                   variant="top"
-                  src={el.front_building_foto}
+                  src={el.front_building_photo}
                   alt={el.kost_name}
                 />
                 <Card.Body>

@@ -7,6 +7,7 @@ import InformasiPersonal from "../pages/penyewa/profile/informasiPersonal";
 import ListKos from "../pages/penyewa/kos/list";
 import TambahKos from "../pages/penyewa/kos/tambah";
 import ChatPagePenyewa from "../pages/penyewa/chat/chatPage";
+import DetailPengajuan from "../pages/penyewa/kos/detail-pengajuan-sewa-kos";
 
 const PenyewaRoutes = [
   {
@@ -19,12 +20,7 @@ const PenyewaRoutes = [
       },
       {
         path: "/profile",
-        element: <Profile />,
         children: [
-          {
-            path: "/chat",
-            element: <ChatPagePenyewa />,
-          },
           {
             path: "",
             element: <Profile />,
@@ -32,6 +28,10 @@ const PenyewaRoutes = [
           {
             path: "/saya",
             element: <InformasiPersonal />,
+          },
+          {
+            path: "/chat",
+            element: <ChatPagePenyewa />,
           },
         ],
       },
@@ -46,6 +46,10 @@ const PenyewaRoutes = [
           {
             path: "/tambah",
             element: <TambahKos />,
+          },
+          {
+            path: "/detail-pengajuan",
+            element: <DetailPengajuan />,
           },
         ],
       },

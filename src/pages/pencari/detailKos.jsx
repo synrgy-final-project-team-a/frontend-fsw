@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Badge,
@@ -12,23 +12,40 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PencariLayout from "../../layouts/pencari.layout";
-import { usePencariGetOneMutation } from "../../store/apis/kos";
+import {
+  useGetOneByPencariMutation,
+  useGetPriceByPencariMutation,
+} from "../../store/apis/kos";
 import { rupiahFormat } from "../../store/utils/format";
+import {
+  faAngleDoubleRight,
+  faMars,
+  faVenus,
+  faVenusMars,
+} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { addBooking } from "../../store/slices/transaksiSlice";
 import { useAddRoomChatMutation } from "../../store/apis/chat";
 import { createChat } from "../../store/slices/chatSlice";
 
 const DetailKos = () => {
   const navigate = useNavigate();
-  const params = useParams();
   const dispatch = useDispatch();
+  const params = useParams();
   const token = useSelector((state) => state.auth.token);
 
+  const dateRef = useRef();
   const [kostOne, setKostOne] = useState({});
+  const [price, setPrice] = useState([]);
+  const [selectedPrice, setSelectedPrice] = useState({});
+  const [roomCheapest, setRoomCheapest] = useState({});
   const [roomAll, setRoomAll] = useState([]);
-  const [priceMinimum, setPriceMinimum] = useState();
   const [getOneHit, { isLoading, isSuccess, data }] =
-    usePencariGetOneMutation();
+    useGetOneByPencariMutation();
+  const [
+    getPriceHit,
+    { isLoading: loadingPrice, isSuccess: successPrice, data: dataPrice },
+  ] = useGetPriceByPencariMutation();
 
   const [
     addNewChat,
@@ -41,6 +58,46 @@ const DetailKos = () => {
     },
   ] = useAddRoomChatMutation();
 
+  const handleSewaKos = (e) => {
+    e.preventDefault();
+
+    let failed = false;
+
+    const date = dateRef.current.value;
+
+    if (date === "") {
+      failed = true;
+      alert("Tanggal booking tidak boleh kosong");
+    }
+
+    if (failed) {
+      return;
+    }
+
+    const initialState = {
+      status: "",
+      check_in: new Date(date).toISOString(),
+      price_id: selectedPrice.id,
+      room_id: roomCheapest.room_id,
+      kost_name: kostOne.kost_name,
+      room_name: roomCheapest.room_name,
+      kost_address: kostOne.kost_name,
+      duration_type: selectedPrice.durationType,
+      price: selectedPrice.price,
+    };
+
+    dispatch(addBooking(initialState));
+    navigate("/pengajuan-sewa");
+  };
+
+  const changeSelectedPrice = (e, tipe) => {
+    const checkDurationType = (el) => {
+      return el.durationType === tipe;
+    };
+    const result = price.filter(checkDurationType);
+    setSelectedPrice(result[0]);
+  };
+
   useEffect(() => {
     const idKos = params.id;
 
@@ -52,15 +109,30 @@ const DetailKos = () => {
     if (isSuccess) {
       setKostOne(data.data.kost[0]);
       setRoomAll(data.data.room);
-      let price = [];
-      for (let i = 0; i < data.data.room.length; i++) {
-        price.push(data.data.room[i].price);
+      let lowest = Number.POSITIVE_INFINITY;
+      let tmp;
+      let tmp_lowest;
+      for (let i = data.data.room.length - 1; i >= 0; i--) {
+        tmp = parseInt(data.data.room[i].price);
+        if (tmp < lowest) {
+          tmp_lowest = data.data.room[i];
+          lowest = tmp;
+        }
       }
+      setRoomCheapest(tmp_lowest);
 
-      setPriceMinimum(Math.min(price));
+      getPriceHit(tmp_lowest.room_id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
+
+  useEffect(() => {
+    if (successPrice) {
+      setPrice(dataPrice.data);
+      setSelectedPrice(dataPrice.data[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingPrice]);
 
   const onClickNewChatHandler = (e) => {
     e.preventDefault();
@@ -90,6 +162,7 @@ const DetailKos = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingNewChat]);
+
   return (
     <PencariLayout>
       {isLoading ? (
@@ -145,6 +218,24 @@ const DetailKos = () => {
                 ) : (
                   <></>
                 )}
+                {roomCheapest.other_room_photo ? (
+                  <img
+                    className="img-fluid rounded foto-kecil"
+                    src={roomCheapest.other_room_photo}
+                    alt={kostOne.kost_name}
+                  />
+                ) : (
+                  <></>
+                )}
+                {roomCheapest.inside_room_photo ? (
+                  <img
+                    className="img-fluid rounded foto-kecil"
+                    src={roomCheapest.inside_room_photo}
+                    alt={kostOne.kost_name}
+                  />
+                ) : (
+                  <></>
+                )}
               </Col>
             </Row>
           </Container>
@@ -156,29 +247,28 @@ const DetailKos = () => {
               <Col xs={12} md={8} lg={8}>
                 <Card className="shadow-sm mt-3">
                   <Card.Body>
-                    <Card.Text className="mb-1">
-                      <h1 className="fw-bold my-0 fs-3">{kostOne.kost_name}</h1>
-                      <p className="my-0 fs-5">
-                        {kostOne.city}, {kostOne.province}
-                      </p>
-                      <p className="text-muted fs-5 fw-bolder my-0">
-                        {kostOne.address}
-                      </p>
-                    </Card.Text>
+                    <h1 className="fw-bold my-0 fs-3">{kostOne.kost_name}</h1>
+                    <p className="my-0 fs-5">
+                      {kostOne.city}, {kostOne.province}
+                    </p>
+                    <p className="text-muted fs-5 fw-bolder my-0">
+                      {kostOne.address}
+                    </p>
+
                     {kostOne.kost_type_man === true ? (
                       <>
                         <Badge className="fw-normal" bg="outline-primary">
-                          ♂ Pria
+                          <FontAwesomeIcon icon={faMars} /> Putra
                         </Badge>
                       </>
                     ) : kostOne.kost_type_woman === true ? (
                       <Badge className="fw-normal" bg="outline-primary">
-                        ♂ Perempuan
+                        <FontAwesomeIcon icon={faVenus} /> Putri
                       </Badge>
                     ) : (
                       <>
                         <Badge className="fw-normal" bg="outline-primary">
-                          ♂ Campur
+                          <FontAwesomeIcon icon={faVenusMars} /> Campuran
                         </Badge>
                       </>
                     )}
@@ -188,51 +278,55 @@ const DetailKos = () => {
               <Col xs={12} md={4} lg={4} className="flex-column">
                 <Card className="shadow-sm mt-3 bg-outline-primary">
                   <Card.Body>
-                    <Card.Text>
-                      Harga Mulai dari
-                      <p className="mb-2">
-                        <strong className="fs-5">
-                          {rupiahFormat(priceMinimum)}
-                        </strong>{" "}
-                        / Bulan
-                      </p>
-                      <Row>
-                        <Col lg={6}>
-                          <Form.Group controlId="dob">
-                            <Form.Control
-                              type="date"
-                              name="dob"
-                              placeholderText="Pilih tanggal"
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col lg={6}>
-                          <Form.Select aria-label="Default select example">
-                            <option>Satuan</option>
-                            <option value="1">Harian</option>
-                            <option value="2">Mingguan</option>
-                            <option value="3">Bulanan</option>
-                            <option value="3">3 Bulan</option>
-                            <option value="3">6 Bulan</option>
-                            <option value="3">1 Tahun</option>
-                          </Form.Select>
-                        </Col>
-                      </Row>
-                      <Button
-                        variant="primary"
-                        className="col-12 mt-2 mb-2"
-                        onClick={() => navigate("/pengajuan-sewa/1")}
-                      >
-                        Pilih Tipe Kos
-                      </Button>
-                      <Button
-                        variant="primary "
-                        className="col-12"
-                        onClick={onClickNewChatHandler}
-                      >
-                        Chat Penyewa Kos
-                      </Button>
-                    </Card.Text>
+                    Harga Mulai dari
+                    <p className="mb-2">
+                      <strong className="fs-5">
+                        {rupiahFormat(parseInt(selectedPrice.price))}
+                      </strong>{" "}
+                      / Bulan
+                    </p>
+                    <Row>
+                      <Col lg={6}>
+                        <Form.Group controlId="dob">
+                          <Form.Control
+                            type="date"
+                            name="dob"
+                            placeholder="Pilih tanggal"
+                            ref={dateRef}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col lg={6}>
+                        <Form.Select
+                          value={selectedPrice.durationType}
+                          onChange={(e) =>
+                            changeSelectedPrice(e, e.target.value)
+                          }
+                        >
+                          {price.map((el, i) => {
+                            return (
+                              <option key={i} value={el.durationType}>
+                                {el.durationType}
+                              </option>
+                            );
+                          })}
+                        </Form.Select>
+                      </Col>
+                    </Row>
+                    <Button
+                      variant="primary"
+                      className="col-12 mt-2 mb-2"
+                      onClick={handleSewaKos}
+                    >
+                      Pilih Tipe Kos
+                    </Button>
+                    <Button
+                      variant="primary "
+                      className="col-12"
+                      onClick={onClickNewChatHandler}
+                    >
+                      Chat Penyewa Kos
+                    </Button>
                   </Card.Body>
                 </Card>
               </Col>
@@ -245,29 +339,27 @@ const DetailKos = () => {
               <Col xs={12} md={8} lg={8}>
                 <Card className="shadow-sm">
                   <Card.Body>
-                    <Card.Text className="mb-1">
-                      <h2 className="fs-4 fw-bolder">Spesifikasi Kos</h2>
-                      <Container>
-                        <ul id="">
-                          <li className="list-spesifikasi-kos" id="icon-kamar">
-                            <img
-                              src="/icons/icon-kamar.png"
-                              alt=""
-                              className="listImage"
-                            />
-                            3 x 4 meter
-                          </li>
-                          <li className="list-spesifikasi-kos" id="icon-persen">
-                            <img
-                              src="/icons/icon-persen.png"
-                              alt=""
-                              className="listImage"
-                            />
-                            Gratis biaya listrik
-                          </li>
-                        </ul>
-                      </Container>
-                    </Card.Text>
+                    <h2 className="fs-4 fw-bolder">Spesifikasi Kos</h2>
+                    <Container>
+                      <ul id="">
+                        <li className="list-spesifikasi-kos" id="icon-kamar">
+                          <img
+                            src="/icons/icon-kamar.png"
+                            alt=""
+                            className="listImage"
+                          />
+                          {kostOne.size_room}
+                        </li>
+                        <li className="list-spesifikasi-kos" id="icon-persen">
+                          <img
+                            src="/icons/icon-persen.png"
+                            alt=""
+                            className="listImage"
+                          />
+                          Gratis biaya listrik
+                        </li>
+                      </ul>
+                    </Container>
                   </Card.Body>
                 </Card>
               </Col>
@@ -280,135 +372,133 @@ const DetailKos = () => {
               <Col xs={12} md={8} lg={8}>
                 <Card className="shadow-sm">
                   <Card.Body>
-                    <Card.Text className="mb-1">
-                      <h2 className="fs-4 fw-bolder">Fasilitas Kos</h2>
-                      <Container>
-                        <ul className="p-0">
-                          <Row className="row-cols-2">
-                            {kostOne.wifi === true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Air
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.parking_car !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Parkir Mobil
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.parking_motorcycle === true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Parkir Motor
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.dispenser !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Dispenser
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.laundry !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Laundry
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.kitchen !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Dapur
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.drying_ground !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Ruang Jemur
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.living_room !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Ruang Tamu
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.wifi === true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Wifi
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.refrigerator === true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Kulkas
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.kost_tv !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Televisi (TV)
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.electric === true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Listrik
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                          </Row>
-                        </ul>
-                      </Container>
-                    </Card.Text>
+                    <h2 className="fs-4 fw-bolder">Fasilitas Kos</h2>
+                    <Container>
+                      <ul className="p-0">
+                        <Row className="row-cols-2">
+                          {kostOne.wifi === true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Air
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.parking_car !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Parkir Mobil
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.parking_motorcycle === true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Parkir Motor
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.dispenser !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Dispenser
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.laundry !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Laundry
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.kitchen !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Dapur
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.drying_ground !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Ruang Jemur
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.living_room !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Ruang Tamu
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.wifi === true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Wifi
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.refrigerator === true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Kulkas
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.kost_tv !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Televisi (TV)
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.electric === true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Listrik
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                        </Row>
+                      </ul>
+                    </Container>
                   </Card.Body>
                 </Card>
               </Col>
@@ -534,130 +624,128 @@ const DetailKos = () => {
               <Col xs={12} md={8} lg={8}>
                 <Card className="shadow-sm">
                   <Card.Body>
-                    <Card.Text className="mb-1">
-                      <h2 className="fs-4 fw-bolder">Peraturan Kos</h2>
-                      <Container>
-                        <ul className="p-0">
-                          <Row className="row-cols-2">
-                            {kostOne.no_smoking !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                <img
-                                  src="/icons/icon-dilarang.png"
-                                  alt=""
-                                  className="listImage"
-                                />
-                                Dilarang merokok
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.restricted_night !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                <img
-                                  src="/icons/icon-jam-malam.png"
-                                  alt=""
-                                  className="listImage"
-                                />
-                                Jam malam: 23:00
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.maximum_one !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Maks. 1 orang / kamar
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.restricted_gender !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                <img
-                                  src="/icons/icon-putra.png"
-                                  alt=""
-                                  className="listImage"
-                                />
-                                Lawan jenis dilarang masuk
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.maximum_two !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Maks. 2 orang / kamar
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.identity_card !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Wajib sertakan KTP saat pengajuan sewa
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.restricted_guest !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Tamu dilarang menginap
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.restricted_checkin !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Check in pukul 14:00-21:00 (sewa harian)
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.restricted_checkin !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Check out maks. pukul 12:00 (sewa harian)
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                            {kostOne.restricted_checkin !== true ? (
-                              <li
-                                className="list-spesifikasi-kos2"
-                                id="icon-kamar"
-                              >
-                                Termasuk listrik
-                              </li>
-                            ) : (
-                              <></>
-                            )}
-                          </Row>
-                        </ul>
-                      </Container>
-                    </Card.Text>
+                    <h2 className="fs-4 fw-bolder">Peraturan Kos</h2>
+                    <Container>
+                      <ul className="p-0">
+                        <Row className="row-cols-2">
+                          {kostOne.no_smoking !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              <img
+                                src="/icons/icon-dilarang.png"
+                                alt=""
+                                className="listImage"
+                              />
+                              Dilarang merokok
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.restricted_night !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              <img
+                                src="/icons/icon-jam-malam.png"
+                                alt=""
+                                className="listImage"
+                              />
+                              Jam malam: 23:00
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.maximum_one !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Maks. 1 orang / kamar
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.restricted_gender !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              <img
+                                src="/icons/icon-putra.png"
+                                alt=""
+                                className="listImage"
+                              />
+                              Lawan jenis dilarang masuk
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.maximum_two !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Maks. 2 orang / kamar
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.identity_card !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Wajib sertakan KTP saat pengajuan sewa
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.restricted_guest !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Tamu dilarang menginap
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.restricted_checkin !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Check in pukul 14:00-21:00 (sewa harian)
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.restricted_checkin !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Check out maks. pukul 12:00 (sewa harian)
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                          {kostOne.restricted_checkin !== true ? (
+                            <li
+                              className="list-spesifikasi-kos2"
+                              id="icon-kamar"
+                            >
+                              Termasuk listrik
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+                        </Row>
+                      </ul>
+                    </Container>
                   </Card.Body>
                 </Card>
               </Col>
@@ -796,7 +884,7 @@ const DetailKos = () => {
                       alt={element.room_name}
                     />
                   </Col>
-                  <Col xs={12} lg={5} className="border-bottom">
+                  <Col xs={12} lg={4} className="border-bottom">
                     <h6 className="fw-bolder text-muted fs-5 my-0">
                       {element.room_name}
                     </h6>
@@ -911,52 +999,39 @@ const DetailKos = () => {
                       )}
                     </ul>
                   </Col>
-                  <Col xs={6} lg={3} className="d-none d-lg-flex">
+                  <Col xs={6} lg={4} className="d-none d-lg-flex">
                     <Card className="shadow-sm bg-outline-primary">
                       <Card.Body>
                         {kostOne.kost_type_man === true ? (
                           <>
-                            <Badge
-                              className="fw-normal mb-3"
-                              bg="outline-primary"
-                            >
-                              ♂ Pria
-                            </Badge>{" "}
+                            <Badge className="fw-normal" bg="outline-primary">
+                              <FontAwesomeIcon icon={faMars} /> Putra
+                            </Badge>
                           </>
                         ) : kostOne.kost_type_woman === true ? (
-                          <>
-                            <Badge
-                              className="fw-normal mb-3"
-                              bg="outline-primary"
-                            >
-                              ♂ Perempuan
-                            </Badge>{" "}
-                          </>
+                          <Badge className="fw-normal" bg="outline-primary">
+                            <FontAwesomeIcon icon={faVenus} /> Putri
+                          </Badge>
                         ) : (
                           <>
-                            <Badge
-                              className="fw-normal mb-3"
-                              bg="outline-primary"
-                            >
-                              ♂ Campur
-                            </Badge>{" "}
+                            <Badge className="fw-normal" bg="outline-primary">
+                              <FontAwesomeIcon icon={faVenusMars} /> Campuran
+                            </Badge>
                           </>
                         )}
-                        <Card.Text>
-                          Harga Mulai dari
-                          <p className="mb-2 text-muted">
-                            <strong className="fs-4 text-dark">
-                              {rupiahFormat(element.price)}
-                            </strong>{" "}
-                            / Bulan
-                          </p>
-                          <Button
-                            variant="light"
-                            className="fw-bolder col-12 btn-outline-primary btn-tipe-outline"
-                          >
-                            Pilih Tipe Kos
-                          </Button>
-                        </Card.Text>
+                        Harga Mulai dari
+                        <p className="mb-2 text-muted">
+                          <strong className="fs-5 text-dark">
+                            {rupiahFormat(element.price)}
+                          </strong>{" "}
+                          / Bulan
+                        </p>
+                        <Button
+                          variant="light"
+                          className="fw-bolder col-12 btn-outline-primary btn-tipe-outline"
+                        >
+                          Pilih Tipe Kos
+                        </Button>
                       </Card.Body>
                     </Card>
                   </Col>
@@ -975,7 +1050,7 @@ const DetailKos = () => {
                   alt=""
                 />
               </Col>
-              <Col xs={12} lg={5} className="border-bottom">
+              <Col xs={12} lg={4} className="border-bottom">
                 <h6 className="fw-bolder text-muted fs-5 my-0">Template</h6>
                 <p className="fw-bolder text-muted fs-5 mt-1 mb-3">
                   Luas Ruangan: 12 meter.
@@ -1015,25 +1090,23 @@ const DetailKos = () => {
                   </li>
                 </ul>
               </Col>
-              <Col xs={6} lg={3} className="d-none d-lg-flex">
+              <Col xs={6} lg={4} className="d-none d-lg-flex">
                 <Card className="shadow-sm bg-outline-primary">
                   <Card.Body>
                     <Badge className="fw-normal mb-3" bg="outline-primary">
                       ♂ Pria
                     </Badge>{" "}
-                    <Card.Text>
-                      Harga Mulai dari
-                      <p className="mb-2 text-muted">
-                        <strong className="fs-4 text-dark">Rp 850.000</strong> /
-                        Bulan
-                      </p>
-                      <Button
-                        variant="light"
-                        className="fw-bolder col-12 btn-outline-primary btn-tipe-outline"
-                      >
-                        Pilih Tipe Kos
-                      </Button>
-                    </Card.Text>
+                    Harga Mulai dari
+                    <p className="mb-2 text-muted">
+                      <strong className="fs-4 text-dark">Rp 850.000</strong> /
+                      Bulan
+                    </p>
+                    <Button
+                      variant="light"
+                      className="fw-bolder col-12 btn-outline-primary btn-tipe-outline"
+                    >
+                      Pilih Tipe Kos
+                    </Button>
                   </Card.Body>
                 </Card>
               </Col>
@@ -1053,7 +1126,7 @@ const DetailKos = () => {
               <Col xs={4} className="text-end">
                 <a href="/pencarian" className="text-muted">
                   Cari Lokasi lainnya{" "}
-                  <FontAwesomeIcon icon="fa-duotone fa-chevron-right" />
+                  <FontAwesomeIcon icon={faAngleDoubleRight} />
                 </a>
               </Col>
             </Row>
@@ -1065,23 +1138,21 @@ const DetailKos = () => {
                   <img className="img-fluid" src="/image/Kos2.png" alt="" />
                   <Card.Body>
                     {/* <Card.Title>Card Title</Card.Title> */}
-                    <Card.Text className="">
-                      <p style={{ margin: 0 }} className="fw-bold">
-                        Indekos Bu Sapri
-                      </p>
-                      <p
-                        style={{ margin: 0 }}
-                        className="fw-bold text-muted fs-6"
-                      >
-                        Jakarta
-                      </p>
-                      <p style={{ margin: 0 }}>
-                        <strong>Rp 790.000 </strong> / bulan
-                      </p>
-                      <Badge className="fw-normal mx-0" bg="outline-primary">
-                        ♂ Pria
-                      </Badge>{" "}
-                    </Card.Text>
+                    <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p
+                      style={{ margin: 0 }}
+                      className="fw-bold text-muted fs-6"
+                    >
+                      Jakarta
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
+                    </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
                   </Card.Body>
                 </Card>
               </Col>
@@ -1090,23 +1161,21 @@ const DetailKos = () => {
                   <img className="img-fluid" src="/image/Kos2.png" alt="" />
                   <Card.Body>
                     {/* <Card.Title>Card Title</Card.Title> */}
-                    <Card.Text className="">
-                      <p style={{ margin: 0 }} className="fw-bold">
-                        Indekos Bu Sapri
-                      </p>
-                      <p
-                        style={{ margin: 0 }}
-                        className="fw-bold text-muted fs-6"
-                      >
-                        Jakarta
-                      </p>
-                      <p style={{ margin: 0 }}>
-                        <strong>Rp 790.000 </strong> / bulan
-                      </p>
-                      <Badge className="fw-normal mx-0" bg="outline-primary">
-                        ♂ Pria
-                      </Badge>{" "}
-                    </Card.Text>
+                    <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p
+                      style={{ margin: 0 }}
+                      className="fw-bold text-muted fs-6"
+                    >
+                      Jakarta
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
+                    </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
                   </Card.Body>
                 </Card>
               </Col>
@@ -1114,24 +1183,21 @@ const DetailKos = () => {
                 <Card className="shadow-sm">
                   <img className="img-fluid" src="/image/Kos2.png" alt="" />
                   <Card.Body>
-                    {/* <Card.Title>Card Title</Card.Title> */}
-                    <Card.Text className="">
-                      <p style={{ margin: 0 }} className="fw-bold">
-                        Indekos Bu Sapri
-                      </p>
-                      <p
-                        style={{ margin: 0 }}
-                        className="fw-bold text-muted fs-6"
-                      >
-                        Jakarta
-                      </p>
-                      <p style={{ margin: 0 }}>
-                        <strong>Rp 790.000 </strong> / bulan
-                      </p>
-                      <Badge className="fw-normal mx-0" bg="outline-primary">
-                        ♂ Pria
-                      </Badge>{" "}
-                    </Card.Text>
+                    <p style={{ margin: 0 }} className="fw-bold">
+                      Indekos Bu Sapri
+                    </p>
+                    <p
+                      style={{ margin: 0 }}
+                      className="fw-bold text-muted fs-6"
+                    >
+                      Jakarta
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      <strong>Rp 790.000 </strong> / bulan
+                    </p>
+                    <Badge className="fw-normal mx-0" bg="outline-primary">
+                      ♂ Pria
+                    </Badge>{" "}
                   </Card.Body>
                 </Card>
               </Col>
