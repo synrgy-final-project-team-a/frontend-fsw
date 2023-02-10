@@ -1,7 +1,7 @@
 import React from "react"
 import AdminLayout from "../../../layouts/admin.layout"
-import { Container, Table } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Button, Container, Table } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useOneUserMutation } from "../../../store/apis/users";
 import { useSelector } from "react-redux";
@@ -22,7 +22,18 @@ function DetilUser() {
 	return (
 		<>
 			<AdminLayout>
-				<Container className="mt-4 d-flex">
+				<Container className="d-flex mt-4 align-items-center">
+					<Button as={Link} className="mx-2" to="/admin/users">Kembali</Button>
+					<h3 className="my-0 mx-2">Detail User</h3>
+				</Container>
+				<Container className="mt-4">
+					{
+						isLoading ?
+							"" :
+							isSuccess ?
+								<img src={data.data.avatar} style={{width: "200px"}} className="img-fluid" alt="..." /> :
+								""
+					}
 					<Table>
 						<tbody>
 							{
