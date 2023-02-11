@@ -35,7 +35,7 @@ export default function ChatPage() {
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [header, setHeader] = useState({});
-  
+
   useEffect(() => {
     setLoading(true);
     try {
@@ -185,6 +185,7 @@ export default function ChatPage() {
                                 </div>
                                 <span
                                   className={
+                                    room.sender_id === token.profile_id ||
                                     room.status_message === "READED"
                                       ? "visually-hidden translate-middle p-2 bg-danger border border-light rounded-circle"
                                       : " translate-middle p-2 bg-danger border border-light rounded-circle"
