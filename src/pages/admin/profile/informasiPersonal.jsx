@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Breadcrumb, Button, Alert } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,166 +9,185 @@ import { useEditUserMutation } from "../../../store/apis/users";
 import { addUser } from "../../../store/slices/userSlice";
 import AdminLayout from "../../../layouts/admin.layout";
 
-const imgAllow = [
-	"image/png",
-	"image/jpg",
-	"image/jpeg",
-]
+const imgAllow = ["image/png", "image/jpg", "image/jpeg"];
 
 const InformasiPersonal = () => {
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-	const token = useSelector(state => state.auth.token.access_token);
-	const userData = useSelector(state => state.user.current);
-	const provinsi = useSelector(state => state.alamat.provinsi)
+  const token = useSelector((state) => state.auth.token.access_token);
+  const userData = useSelector((state) => state.user.current);
+  const provinsi = useSelector((state) => state.alamat.provinsi);
 
-	const formRef = useRef({})
-	const [error, setError] = useState({})
+  const formRef = useRef({});
+  const [error, setError] = useState({});
 
-	const [selectedProfile, setSelectedProfile] = useState()
-	const [previewProfile, setPreviewProfile] = useState()
+  const [selectedProfile, setSelectedProfile] = useState();
+  const [previewProfile, setPreviewProfile] = useState();
 
-	const [
-		editUserHit,
-		{ isLoading, isSuccess, isError, data: dataEdit, error: errorEdit }
-	] = useEditUserMutation()
+  const [editUserHit, { isLoading, isSuccess, isError, data: dataEdit, error: errorEdit }] = useEditUserMutation();
 
-	const editProfilSubmit = (e) => {
-		e.preventDefault()
+  const editProfilSubmit = (e) => {
+    e.preventDefault();
 
-		setError({})
-		let failed = false
+    setError({});
+    let failed = false;
 
-		const firstName = formRef.current.firstName.value
-		const lastName = formRef.current.lastName.value
-		const phoneNumber = formRef.current.phoneNumber.value
-		const email = formRef.current.email.value
-		const gender = formRef.current.gender.value
-		const province = formRef.current.province.value
-		const city = formRef.current.city.value
-		const address = formRef.current.address.value
+    const firstName = formRef.current.firstName.value;
+    const lastName = formRef.current.lastName.value;
+    const phoneNumber = formRef.current.phoneNumber.value;
+    const email = formRef.current.email.value;
+    const gender = formRef.current.gender.value;
+    const status = formRef.current.status.value;
+    const bankAccount = formRef.current.bankAccount.value;
+    const bankName = formRef.current.bankName.value;
+    const bankUsername = formRef.current.bankUsername.value;
+    const province = formRef.current.province.value;
+    const city = formRef.current.city.value;
+    const address = formRef.current.address.value;
 
-		if (firstName === "") {
-			failed = true
-			setError((error) => ({ ...error, "firstName": "Nama depan tidak boleh kosong!" }))
-		}
+    if (firstName === "") {
+      failed = true;
+      setError((error) => ({ ...error, firstName: "Nama depan tidak boleh kosong!" }));
+    }
 
-		if (lastName === "") {
-			failed = true
-			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
-		}
+    if (lastName === "") {
+      failed = true;
+      setError((error) => ({ ...error, lastName: "Nama belakang tidak boleh kosong!" }));
+    }
 
-		if (phoneNumber === "") {
-			failed = true
-			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak boleh kosong!" }))
-		}
+    if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
+      failed = true;
+      setError((error) => ({ ...error, phoneNumber: "Nomor handphone tidak valid!" }));
+    }
 
-		if (email === "") {
-			failed = true
-			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
-		}
+    if (phoneNumber === "") {
+      failed = true;
+      setError((error) => ({ ...error, phoneNumber: "Nomor handphone tidak boleh kosong!" }));
+    }
 
-		if (gender === "") {
-			failed = true
-			setError((error) => ({ ...error, "gender": "Jenis kelamin tidak boleh kosong!" }))
-		}
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      failed = true;
+      setError((error) => ({ ...error, email: "Email tidak valid!" }));
+    }
 
-		if (province === "") {
-			failed = true
-			setError((error) => ({ ...error, "province": "Provinsi tidak boleh kosong!" }))
-		}
+    if (email === "") {
+      failed = true;
+      setError((error) => ({ ...error, email: "Email tidak boleh kosong!" }));
+    }
 
-		if (city === "") {
-			failed = true
-			setError((error) => ({ ...error, "city": "Kabupaten/Kota tidak boleh kosong!" }))
-		}
+    if (!/[0-9]/i.test(bankAccount)) {
+      failed = true;
+      setError((error) => ({ ...error, bankAccount: "Nomor rekening tidak valid!" }));
+    }
 
-		if (address === "") {
-			failed = true
-			setError((error) => ({ ...error, "address": "Alamat tidak boleh kosong!" }))
-		}
+    if (bankAccount === "") {
+      failed = true;
+      setError((error) => ({ ...error, bankAccount: "Nomor rekening tidak boleh kosong!" }));
+    }
 
-		if (failed) {
-			return
-		}
+    if (bankUsername === "") {
+      failed = true;
+      setError((error) => ({ ...error, bankUsername: "Nama pemilik rekening tidak boleh kosong!" }));
+    }
 
-		const payload = new FormData()
+    if (province === "") {
+      failed = true;
+      setError((error) => ({ ...error, province: "Provinsi tidak boleh kosong!" }));
+    }
 
-		payload.append('first_name', firstName)
-		payload.append('last_name', lastName)
-		payload.append('phone_number', phoneNumber)
-		payload.append('gender', gender)
-		payload.append('province', province)
-		payload.append('city', city)
-		payload.append('address', address)
+    if (city === "") {
+      failed = true;
+      setError((error) => ({ ...error, city: "Kabupaten/Kota tidak boleh kosong!" }));
+    }
 
-		if (!!selectedProfile) {
-			payload.append('avatar', selectedProfile)
-		}
+    if (address === "") {
+      failed = true;
+      setError((error) => ({ ...error, address: "Alamat tidak boleh kosong!" }));
+    }
 
-		editUserHit({ token: token, body: payload })
-	}
+    if (failed) {
+      return;
+    }
 
-	const changeProfileHandler = (e) => {
-		e.preventDefault()
-		let failed = false
-		setError((error) => ({ ...error, "fotoProfil": "" }))
+    const payload = new FormData();
 
-		if (!e.target.files || e.target.files.length === 0) {
-			setSelectedProfile(undefined)
-			return
-		}
+    payload.append("first_name", firstName);
+    payload.append("last_name", lastName);
+    payload.append("phone_number", phoneNumber);
+    payload.append("gender", gender);
+    payload.append("status", status);
+    payload.append("bank_account", bankAccount);
+    payload.append("bank_name", bankName);
+    payload.append("bank_username", bankUsername);
+    payload.append("province", province);
+    payload.append("city", city);
+    payload.append("address", address);
 
-		if (!imgAllow.includes(e.target.files[0].type)) {
-			failed = true
-			setError((error) => ({ ...error, "fotoProfil": "Foto profil bukan gambar yang didukung!" }))
-		}
+    if (!!selectedProfile) {
+      payload.append("avatar", selectedProfile);
+    }
 
-		if (failed) {
-			return
-		}
+    editUserHit({ token: token, body: payload });
+  };
 
-		setSelectedProfile(e.target.files[0])
-	}
+  const changeProfileHandler = (e) => {
+    e.preventDefault();
+    let failed = false;
+    setError((error) => ({ ...error, fotoProfil: "" }));
 
-	const resetProfilehandler = (e) => {
-		e.preventDefault()
-		setSelectedProfile(undefined)
-		setPreviewProfile(undefined)
-	}
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedProfile(undefined);
+      return;
+    }
 
-	useEffect(() => {
-		if (isSuccess) {
-			dispatch(addUser(dataEdit.data))
-			setSelectedProfile(undefined)
-			setPreviewProfile(undefined)
-			setError((error) => ({ ...error, "alert": { "variant": "success", "message": "Berhasil melakukan edit profil!" } }))
-		}
+    if (!imgAllow.includes(e.target.files[0].type)) {
+      failed = true;
+      setError((error) => ({ ...error, fotoProfil: "Foto profil bukan gambar yang didukung!" }));
+    }
 
-		if (isError) {
-			if (Array.isArray(errorEdit.data)) {
-				errorEdit.data.forEach((el) =>
-					setError((error) => ({ ...error, "alert": { "variant": "danger", "message": el.data.message } }))
-				);
-			} else {
-				setError((error) => ({ ...error, "alert": { "variant": "danger", "message": errorEdit.data.message } }))
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoading])
+    if (failed) {
+      return;
+    }
 
-	useEffect(() => {
-		if (!selectedProfile) {
-			setPreviewProfile(undefined)
-			return
-		}
+    setSelectedProfile(e.target.files[0]);
+  };
 
-		let objectUrl = URL.createObjectURL(selectedProfile)
-		setPreviewProfile(objectUrl)
+  const resetProfilehandler = (e) => {
+    e.preventDefault();
+    setSelectedProfile(undefined);
+    setPreviewProfile(undefined);
+  };
 
-		return () => URL.revokeObjectURL(objectUrl)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedProfile])
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(addUser(dataEdit.data));
+      setSelectedProfile(undefined);
+      setPreviewProfile(undefined);
+      setError((error) => ({ ...error, alert: { variant: "success", message: "Berhasil melakukan edit profil!" } }));
+    }
+
+    if (isError) {
+      if (Array.isArray(errorEdit.data)) {
+        errorEdit.data.forEach((el) => setError((error) => ({ ...error, alert: { variant: "danger", message: el.data.message } })));
+      } else {
+        setError((error) => ({ ...error, alert: { variant: "danger", message: errorEdit.data.message } }));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (!selectedProfile) {
+      setPreviewProfile(undefined);
+      return;
+    }
+
+    let objectUrl = URL.createObjectURL(selectedProfile);
+    setPreviewProfile(objectUrl);
+
+    return () => URL.revokeObjectURL(objectUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProfile]);
 
 	return (
 		<AdminLayout>
@@ -311,6 +330,69 @@ const InformasiPersonal = () => {
 									}
 								</Form.Group>
 								<Form.Group className="mb-3" controlId="formBasicEmail">
+									<Form.Label>Pekerjaan</Form.Label>
+									<Form.Select defaultValue={userData.status}
+										ref={(ref) => formRef.current.status = ref}
+									>
+										<option value="STUDENT">Mahasiswa</option>
+										<option value="WORKER">Pekerja</option>
+									</Form.Select>
+									{
+										(error.hasOwnProperty("status") && error.status !== "") ?
+											<Form.Text className="text-danger">
+												{error.status}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
+									<Form.Label>Nomor Rekening</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nomor rekening"
+										defaultValue={userData.bank_account}
+										ref={(ref) => formRef.current.bankAccount = ref}
+									/>
+									{
+										(error.hasOwnProperty("bankAccount") && error.bankAccount !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankAccount}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNamaBank">
+									<Form.Label>Nama Bank</Form.Label>
+									<Form.Select defaultValue={userData.bank_name}
+										ref={(ref) => formRef.current.bankName = ref}
+									>
+										<option value="BCA">BCA</option>
+										<option value="BNI">BNI</option>
+										<option value="BRI">BRI</option>
+										<option value="Mandiri">Mandiri</option>
+										<option value="Citibank">Citibank</option>
+									</Form.Select>
+									{
+										(error.hasOwnProperty("bankName") && error.bankName !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankName}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
+									<Form.Label>Nama Pemilik Rekening</Form.Label>
+									<Form.Control type="text" placeholder="Masukan nama pemilik rekening"
+										defaultValue={userData.bank_username}
+										ref={(ref) => formRef.current.bankUsername = ref}
+									/>
+									{
+										(error.hasOwnProperty("bankUsername") && error.bankUsername !== "") ?
+											<Form.Text className="text-danger">
+												{error.bankUsername}
+											</Form.Text> :
+											""
+									}
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicEmail">
 									<Form.Label>Provinsi</Form.Label>
 									<Form.Control list="provinsi-list" type="text" placeholder="Masukan Provinsimu"
 										defaultValue={userData.province}
@@ -374,4 +456,4 @@ const InformasiPersonal = () => {
 	);
 }
 
-export default InformasiPersonal
+export default InformasiPersonal;

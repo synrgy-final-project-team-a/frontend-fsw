@@ -1,55 +1,67 @@
 #kelola-kos {
-	.card {
-		>.card-img {
-			max-width: 200px;
-			min-height: 200px;
-			object-fit: cover;
-		}
-	}
+  .card {
+    border-radius: 20px;
+
+    >.card-img {
+      border-radius: 20px 0 0 20px;
+      max-width: 200px;
+      min-height: 200px;
+      object-fit: cover;
+    }
+  }
+}
+
+.preview-photo {
+  width: 100px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 #tambah-kos {
-	.tab-content {
-		margin-top: 40px;
-	}
+  .tab-content {
+    margin-top: 40px;
+  }
 
-	.nav.nav-tabs {
-		border: 0;
-		position: relative;
+  .nav.nav-tabs {
+    border: 0;
+    position: relative;
 
-		&:before {
-			content: "";
-			z-index: 1;
-			width: 100%;
-			height: 2px;
-			position: absolute;
-			top: 50%;
-			left: 0;
-			background-color: $primary-light;
-		}
+    &:before {
+      content: "";
+      z-index: 1;
+      width: 100%;
+      height: 2px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      background-color: $primary-light;
+    }
 
-		>.nav-item {
-			z-index: 2;
+    >.nav-item {
+      z-index: 2;
 
+      >.nav-link {
+        margin: 0 auto;
+        background-color: $primary-light;
+        color: $primary;
+        font-size: 20px;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 0 solid $white;
+        font-weight: bold;
+        line-height: 0;
 
-			>.nav-link {
-				margin: 0 auto;
-				background-color: $primary-light;
-				color: $primary;
-				font-size: 20px;
-				padding: 0;
-				width: 40px;
-				height: 40px;
-				border-radius: 50%;
-				border: 0 solid $white;
-				font-weight: bold;
-				line-height: 0;
+        &.active {
+          outline: 3px solid $primary-light;
+          border: 5px solid $white;
+        }
 
-				&.active {
-					outline: 3px solid $primary-light;
-					border: 5px solid $white;
-				}
-			}
+        &.disabled-tab {
+          background-color: $grey-light;
+        }
+      }
 
 			@include media-breakpoint-up(lg) {
 				>.nav-link {
@@ -60,4 +72,91 @@
 			}
 		}
 	}
+}
+
+#informasi-aktivitas {
+	.card {
+		max-width: 400px;
+		>.card-img {
+			max-width: 121px;
+			min-height: 124px;
+			object-fit: cover;
+		}
+
+		background: #FAFDFC;
+    	border-radius: 6px;
+	}
+
+	.nama-kos{
+		font-style: normal;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0.1px;
+	}
+	.alamat-kos {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 16px;
+		letter-spacing: 0.5px;
+	}
+
+	.status-confirmed {
+		background: #AAEDC6;
+		border-radius: 4.5px;
+		font-weight: 600;
+		font-size: 10.5px;
+		line-height: 15px;
+		text-align: right;
+		letter-spacing: 0.075px;
+
+		color: #00A745;
+	}
+
+	.status-posted {
+		background: #FDE7BD;
+		border-radius: 4.5px;
+		font-weight: 600;
+		font-size: 10.5px;
+		line-height: 15px;
+		text-align: right;
+		letter-spacing: 0.075px;
+		color: #CF982F;
+	}
+
+	.status-cancelled {
+		background: #E8B3B3;
+		border-radius: 4.5px;
+		font-weight: 600;
+		font-size: 10.5px;
+		line-height: 15px;
+		text-align: right;
+		letter-spacing: 0.075px;
+		color: #BA1A1A;
+	}
+
+	.btn-tolak {
+        background: #E8B3B3;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.1px;
+        color: #BA1A1A;
+        // width: 85px;
+        // min-height: 32px;
+    }
+    
+    .btn-terima {
+        background: #00A745;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.1px;
+        // width: 190px;
+        // min-height: 32px;
+    }
 }

@@ -1,100 +1,124 @@
-import { faFilter, faMars, faSortAmountAsc, faVenus, faVenusMars } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useEffect, useRef, useState } from "react"
-import { Badge, Button, Card, Col, Container, Row } from "react-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
-import { Link, useParams } from "react-router-dom"
-import PencariLayout from "../../../layouts/pencari.layout"
-import { useGetListMutation } from "../../../store/apis/kos"
-import { searchIsBottom, searchIsTop, setSearchText } from "../../../store/slices/decorSlice"
+import { faFilter, faMars, faSortAmountAsc, faVenus, faVenusMars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useRef, useState } from "react";
+import { Badge, Button, Card, Col, Container, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import FilterComponent from "../../../components/search-filter";
+import SortComponent from "../../../components/search-sort";
+import PencariLayout from "../../../layouts/pencari.layout";
+import { useGetListMutation } from "../../../store/apis/kos";
+import { searchIsBottom, searchIsTop, setSearchText } from "../../../store/slices/decorSlice";
+import { rupiahFormat } from "../../../store/utils/format";
 
 const HasilPencarian = () => {
-	const params = useParams()
-	const dispatch = useDispatch()
+	const params = useParams();
+	const dispatch = useDispatch();
 
-	const [payloadParams, setPayloadParams] = useState({})
-	const [page, setPage] = useState(0)
-	const [isEnded, setIsEnded] = useState(false)
-	const [list, setList] = useState([])
+	const [payloadParams, setPayloadParams] = useState({});
+	const [page, setPage] = useState(0);
+	const [isEnded, setIsEnded] = useState(false);
+	const [list, setList] = useState([]);
+	const [loadingFirst, setLoadingFirst] = useState(true);
 
-	const containerRef = useRef()
+	const [displayFilter, setDisplayFilter] = useState(false);
+	const [displaySort, setDisplaySort] = useState(false);
 
-	const sortFilter = useSelector(state => state.kos.filterAndSort)
+	const containerRef = useRef();
 
-	const [
-		getListHit,
-		{ isError, isSuccess, isLoading, data }
-	] = useGetListMutation()
+	const [getListHit, { isError, isSuccess, isLoading, data }] = useGetListMutation();
 
-	const rupiahFormat = (money) => {
-		return new Intl.NumberFormat("id-ID", {
-			style: "currency",
-			currency: "IDR"
-		}).format(money);
-	}
+	const handleScroll = () => {
+		if (containerRef) {
+			const bottom = containerRef.current.getBoundingClientRect().bottom;
+			if (bottom < window.innerHeight - 70) {
+				getListHit({ ...payloadParams, page: page + 1, size: 6 });
+			}
+		}
+		return;
+	};
+
+	const handleFilterSortClick = (type) => {
+		if (type === "sort") {
+			if (displaySort) {
+				setDisplaySort(false);
+			} else {
+				setDisplayFilter(false);
+				setDisplaySort(true);
+			}
+		}
+		if (type === "filter") {
+			if (displayFilter) {
+				setDisplayFilter(false);
+			} else {
+				setDisplaySort(false);
+				setDisplayFilter(true);
+			}
+		}
+	};
 
 	useEffect(() => {
-		dispatch(searchIsTop())
+		dispatch(searchIsTop());
 
-		let payload = {}
+		let payload = {};
+
 		if (params.province !== undefined) {
-			setPayloadParams(payloadParams => ({ ...payloadParams, "province": params.province }))
-			payload.province = params.province
+			payload.province = params.province;
 		}
 
 		if (params.city !== undefined) {
-			setPayloadParams(payloadParams => ({ ...payloadParams, "city": params.city }))
-			payload.city = params.city
+			payload.city = params.city;
 		}
 
-		setPayloadParams(payloadParams => ({ ...payloadParams, ...sortFilter }))
-		payload = { ...payload, ...sortFilter }
+		payload.price_minimum = 0;
+		payload.price_maximum = 100000000;
 
-		dispatch(setSearchText(params.province))
-		getListHit({ ...payload, "page": page, "size": 12 })
+		payload.duration_type = "MONTHLY";
+
+		payload["sort-by"] = "price";
+		payload["order-type"] = "asc";
+
+		dispatch(setSearchText(params.province));
+		setPayloadParams((payloadParams) => ({ ...payloadParams, ...payload }));
+		getListHit({ ...payload, page: page, size: 6 });
 
 		return () => {
-			dispatch(searchIsBottom())
-		}
+			dispatch(searchIsBottom());
+		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, []);
 
 	useEffect(() => {
-		const handleScroll = () => {
-			if (containerRef) {
-				const bottom = containerRef.current.getBoundingClientRect().bottom
-				if (bottom < window.innerHeight - 70) {
-					getListHit({ ...payloadParams, "page": page + 1, "size": 12 })
-				}
-			}
-			return
+		if (isSuccess) {
+			setLoadingFirst(false)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoading]);
 
+	useEffect(() => {
 		if (isLoading) {
 			window.removeEventListener("scroll", handleScroll);
 		}
 
 		if (isSuccess) {
-			const datanya = data.data
-			setList(list => ([...list, ...datanya]))
-			setPage(page => page + 1)
+			const datanya = data.data;
+			setList((list) => [...list, ...datanya]);
+			setPage((page) => page + 1);
 
 			if (datanya.length !== 0) {
 				window.addEventListener("scroll", handleScroll);
 			} else {
-				console.log(list.length)
-				console.log(datanya.length)
 				if (list.length !== 0 && datanya.length === 0) {
-					setIsEnded(true)
+					setIsEnded(true);
 				}
 			}
 		}
 
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
-		}
+		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoading])
+	}, [isLoading]);
 
 	return (
 		<PencariLayout>
@@ -104,72 +128,71 @@ const HasilPencarian = () => {
 						<h4>Hasil Pencarian</h4>
 					</Col>
 					<Col xs="auto">
-						<span className="mx-2">Urutkan :</span>
-						<Button variant="warning" size="sm" className="mx-2">
-							<FontAwesomeIcon icon={faSortAmountAsc} />{" "}
-							Sort
+						<Button variant="warning" size="sm" className="mx-2" onClick={(e) => handleFilterSortClick("sort")}>
+							<FontAwesomeIcon icon={faSortAmountAsc} /> Urutkan
 						</Button>
-						<Button variant="warning" size="sm" className="mx-2">
-							<FontAwesomeIcon icon={faFilter} />{" "}
-							Filter
+						<Button variant="warning" size="sm" className="mx-2" onClick={(e) => handleFilterSortClick("filter")}>
+							<FontAwesomeIcon icon={faFilter} /> Filter
 						</Button>
 					</Col>
 				</Row>
-				<Row className="g-4 mt-0" ref={containerRef}>
-					{
-						list.length !== 0 ?
-							list.map((el, i) => {
+				{displayFilter ? (
+					<FilterComponent loadKost={getListHit} payloadQuery={payloadParams} paramsQuery={setPayloadParams} pageSetter={setPage} listSetter={setList} displayFilter={handleFilterSortClick} />
+				) : displaySort ? (
+					<SortComponent loadKost={getListHit} payloadQuery={payloadParams} paramsQuery={setPayloadParams} pageSetter={setPage} listSetter={setList} displaySort={handleFilterSortClick} />
+				) : (
+					<Row className="g-4 mt-0" ref={containerRef}>
+						{list.length !== 0
+							? list.map((el, i) => {
 								return (
 									<Col xs={12} lg={4} key={i}>
 										<Card className="kos-card bg-outline-primary text-decoration-none" as={Link} to={"/kos/" + el.kost_id}>
-											<Card.Img variant="top" src="/kos-giya-putri.png" />
-											<Card.Body>
+											<Card.Img variant="top" src={el.front_building_photo} alt={el.kost_name} />
+											<Card.Body className="d-flex flex-column justify-content-between">
 												<Card.Title>{el.kost_name}</Card.Title>
 												<Card.Text className="kos-location mb-1">{el.address}</Card.Text>
-												<Card.Text className="kos-location mb-1">{el.city}, {el.province}</Card.Text>
+												<Card.Text className="kos-location mb-1">
+													{el.city}, {el.province}
+												</Card.Text>
 												<Card.Text className="kos-price mb-1">
-													<span className="fw-bold">
-														{rupiahFormat(el.price)}
-													</span> /
-													{
-														el.duration_type === "DAILY" ?
-															"Hari" :
-															el.duration_type === "WEEKLY" ?
-																"Minggu" :
-																el.duration_type === "MONTHLY" ?
-																	"Bulan" :
-																	el.duration_type === "QUARTER" ?
-																		"3 Bulan" :
-																		el.duration_type === "SEMESTER" ?
-																			"6 Bulan" :
-																			el.duration_type === "YEARLY" ?
-																				"Tahun" :
-																				""
-													}
+													<span className="fw-bold">{rupiahFormat(el.price)}</span> /
+													{el.duration_type === "DAILY"
+														? "Hari"
+														: el.duration_type === "WEEKLY"
+															? "Minggu"
+															: el.duration_type === "MONTHLY"
+																? "Bulan"
+																: el.duration_type === "QUARTER"
+																	? "3 Bulan"
+																	: el.duration_type === "SEMESTER"
+																		? "6 Bulan"
+																		: el.duration_type === "YEARLY"
+																			? "Tahun"
+																			: ""}
 												</Card.Text>
 												<div className="d-flex justify-content-between">
 													<div className="tag">
-														{
-															el.kost_type_man === true ?
-																<Badge bg="outline-primary">
-																	<FontAwesomeIcon icon={faMars} />{" "}
-																	Putra
-																</Badge> : ""
-														}
-														{
-															el.kost_type_woman === true ?
-																<Badge bg="outline-primary">
-																	<FontAwesomeIcon icon={faVenus} />{" "}
-																	Putri
-																</Badge> : ""
-														}
-														{
-															el.kost_type_mixed === true ?
-																<Badge bg="outline-primary">
-																	<FontAwesomeIcon icon={faVenusMars} />{" "}
-																	Campuran
-																</Badge> : ""
-														}
+														{el.kost_type_man === true ? (
+															<Badge bg="outline-primary">
+																<FontAwesomeIcon icon={faMars} /> Putra
+															</Badge>
+														) : (
+															""
+														)}
+														{el.kost_type_woman === true ? (
+															<Badge bg="outline-primary">
+																<FontAwesomeIcon icon={faVenus} /> Putri
+															</Badge>
+														) : (
+															""
+														)}
+														{el.kost_type_mixed === true ? (
+															<Badge bg="outline-primary">
+																<FontAwesomeIcon icon={faVenusMars} /> Campuran
+															</Badge>
+														) : (
+															""
+														)}
 													</div>
 													<div className="favorite">
 														<img src="/like.png" alt="..." />
@@ -178,30 +201,32 @@ const HasilPencarian = () => {
 											</Card.Body>
 										</Card>
 									</Col>
-								)
-							}) :
-							""
-					}
-					<Col xs={12} className="text-center">
-						<h6 className="fw-bold">
-							&nbsp;
-							{
-								isLoading ?
-									"Loading..." :
-									isError ?
-										"Data gagal diambil" :
-										list.length === 0 ?
-											"Kos tidak ditemukan" :
-											isEnded ?
-												"Akhir dari list" :
-												""
-							}
-						</h6>
-					</Col>
-				</Row>
+								);
+							})
+							: ""}
+						{
+							loadingFirst ?
+								[...Array(6).keys()].map((el, i) => {
+									return (
+										<Col xs={12} lg={4} key={i}>
+											<Card bg="none" className="skeleton" style={{ height: "300px" }}>
+												&nbsp;
+											</Card>
+										</Col>
+									)
+								}) : ""
+						}
+						<Col xs={12} className="text-center">
+							<h6 className="fw-bold">
+								&nbsp;
+								{isLoading && !loadingFirst ? "Loading..." : isError && !loadingFirst ? "Data gagal diambil" : list.length === 0 && !loadingFirst ? "Kos tidak ditemukan" : isEnded && !loadingFirst ? "Akhir dari list" : ""}
+							</h6>
+						</Col>
+					</Row>
+				)}
 			</Container>
 		</PencariLayout>
-	)
-}
+	);
+};
 
-export default HasilPencarian
+export default HasilPencarian;

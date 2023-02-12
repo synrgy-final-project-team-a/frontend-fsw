@@ -19,6 +19,8 @@ import RegisterVerifikasiSukses from "../pages/admin/authentication/registerVeri
 import ForgetPass from "../pages/admin/authentication/forgetPassword"
 import ForgetPassSuccess from "../pages/admin/authentication/forgetPasswordSuccess"
 import ForgetPassChange from "../pages/admin/authentication/forgetPasswordChange"
+import KelolaKos from "../pages/admin/kelola-kos"
+import EditUser from "../pages/admin/users/editUser"
 
 const AdminRoutes = [
 	{
@@ -57,8 +59,18 @@ const AdminRoutes = [
 					{
 						path: "/:id",
 						element: <DetilUser />,
+					},
+					{
+						path: "/edit",
+						element: <EditUser />
 					}
 				]
+			},
+
+			{
+				name: "Kos",
+				path: "/kos",
+				element: <KelolaKos />
 			}
 		]
 	},
