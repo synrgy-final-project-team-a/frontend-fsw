@@ -75,29 +75,16 @@ const InformasiPersonal = () => {
       setError((error) => ({ ...error, email: "Email tidak boleh kosong!" }));
     }
 
-<<<<<<< HEAD
-		if (!/[0-9]/i.test(bankAccount)) {
-			failed = true
-			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak valid!" }))
-		}
-=======
     if (!/[0-9]/i.test(bankAccount)) {
       failed = true;
       setError((error) => ({ ...error, bankAccount: "Nomor rekening tidak valid!" }));
     }
->>>>>>> b9ce9ff0a678f9821b7e1ccb2fb53d262615eca1
 
     if (bankAccount === "") {
       failed = true;
       setError((error) => ({ ...error, bankAccount: "Nomor rekening tidak boleh kosong!" }));
     }
 
-<<<<<<< HEAD
-		if (bankUsername === "") {
-			failed = true
-			setError((error) => ({ ...error, "bankUsername": "Nama pemilik rekening tidak boleh kosong!" }))
-		}
-=======
     if (bankUsername === "") {
       failed = true;
       setError((error) => ({ ...error, bankUsername: "Nama pemilik rekening tidak boleh kosong!" }));
@@ -107,7 +94,6 @@ const InformasiPersonal = () => {
       failed = true;
       setError((error) => ({ ...error, province: "Provinsi tidak boleh kosong!" }));
     }
->>>>>>> b9ce9ff0a678f9821b7e1ccb2fb53d262615eca1
 
     if (city === "") {
       failed = true;
