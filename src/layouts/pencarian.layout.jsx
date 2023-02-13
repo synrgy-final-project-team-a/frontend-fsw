@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useCurrentUserMutation } from "../store/apis/users";
 import { emptyEmail, emptyToken } from "../store/slices/authSlice";
+import { emptyKos } from "../store/slices/kosSlice";
 import { addUser, emptyUser } from "../store/slices/userSlice";
+import { ToastContainer } from "react-toastify";
 
 const PencarianLayout = ({ children, setKeywordnya }) => {
 	const dispatch = useDispatch()
@@ -15,7 +17,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 	const token = useSelector(state => state.auth.token)
 	const searchText = useSelector(state => state.decor.searchText)
 
-	const submitKeyword = (e) => {
+  const submitKeyword = (e) => {
 		e.preventDefault()
 		const form = new FormData(e.target)
 		setKeywordnya(form.get('keyword'))
@@ -46,6 +48,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
+				dispatch(emptyKos())
 				navigate('/')
 				return
 			}
@@ -55,6 +58,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 
 	return (
 		<>
+			<ToastContainer />
 			<Navbar bg="light" expand="lg" id="navbar" className="py-0">
 				<Container>
 					<Navbar.Brand as={Link} key={"/"} to="/">

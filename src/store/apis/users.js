@@ -8,9 +8,12 @@ const usersApi = createApi({
 	tagTypes: ["Users"],
 	endpoints: (build) => ({
 		listUsers: build.mutation({
-			query: (token) => ({
+			query: ({token, page}) => ({
 				url: `api/users`,
 				method: "GET",
+				params: {
+					"page": page
+				},
 				headers: {
 					authorization: `Bearer ${token}`,
 				},
@@ -58,6 +61,17 @@ const usersApi = createApi({
 			}),
 			invalidatesTags: ["Users"],
 		}),
+		createUser: build.mutation({
+			query: ({ token, body }) => ({
+				url: `/api/user/create`,
+				method: "POST",
+				body: body,
+				headers: {
+					authorization: `Bearer ${token}`,
+				},
+			}),
+			invalidatesTags: ["Users"],
+		}),
 	}),
 });
 
@@ -67,6 +81,7 @@ export const {
 	useCurrentUserMutation,
 	useDeleteMutation,
 	useEditUserMutation,
+	useCreateUserMutation
 } = usersApi;
 
 export default usersApi;

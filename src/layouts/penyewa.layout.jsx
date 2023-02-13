@@ -6,7 +6,9 @@ import NavbarComponent from "../components/navbar"
 import PenyewaRoutes from "../routes/penyewa"
 import { useCurrentUserMutation } from "../store/apis/users"
 import { emptyEmail, emptyToken } from "../store/slices/authSlice"
+import { emptyKos } from "../store/slices/kosSlice"
 import { addUser, emptyUser } from "../store/slices/userSlice"
+import { ToastContainer } from "react-toastify";
 
 const PenyewaLayout = ({ children }) => {
 	const dispatch = useDispatch()
@@ -21,6 +23,7 @@ const PenyewaLayout = ({ children }) => {
 			dispatch(emptyToken())
 			dispatch(emptyEmail())
 			dispatch(emptyUser())
+			dispatch(emptyKos())
 			navigate('/login')
 		} else {
 			if (!token.role.includes('ROLE_TN')) {
@@ -46,6 +49,7 @@ const PenyewaLayout = ({ children }) => {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
+				dispatch(emptyKos())
 				navigate('/login')
 			}
 		}
@@ -54,6 +58,7 @@ const PenyewaLayout = ({ children }) => {
 
 	return (
 		<>
+			<ToastContainer />
 			<NavbarComponent routes={PenyewaRoutes} />
 			{children}
 			<FooterComponent />

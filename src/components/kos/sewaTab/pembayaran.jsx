@@ -1,41 +1,61 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { Button, Container, Accordion } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
-import NavbarComponent from "../../../components/navbar";
-import PencariRoutes from "../../../routes/pencari";
-import NumberProgress from "../../../components/numberProgress";
-import Accordion from "react-bootstrap/Accordion";
-import FooterComponent from "../../../components/footer";
+import { useAddBuktiByPencariMutation } from "../../../store/apis/transaksi";
+import { addBooking } from "../../../store/slices/transaksiSlice";
 
-export default function PengajuanSewa3() {
+const Pembayaran = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const fileInputRef = useRef()
+
+  const transaksi = useSelector(state => state.transaksi.transaction_id)
+
+  const [
+    uploadHit,
+    { isSuccess, isError, isLoading, error }
+  ] = useAddBuktiByPencariMutation()
+
+  const handleKirimBukti = (e) => {
+    e.preventDefault()
+
+    const confirm = window.confirm("Apakah anda yakin?")
+
+    if (!confirm) {
+      return
+    }
+
+    const file = fileInputRef.current.files[0]
+
+    const formdata = new FormData()
+
+    formdata.append("file", file)
+
+    uploadHit({ body: formdata, transactionId: transaksi })
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      const initialState = {
+        status: "REVIEWED"
+      }
+
+      dispatch(addBooking(initialState))
+      navigate('/pengajuan-sewa/2')
+    }
+
+    if (isError) {
+      alert("gagal")
+      console.log(error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading])
+
   return (
     <>
-      <NavbarComponent routes={PencariRoutes} />
       <Container>
-        <Button variant="link" onClick={() => navigate(-1)}>
-          <div className="my-3 d-flex align-items-center h-100">
-            <span>
-              <svg
-                width="9"
-                height="18"
-                viewBox="0 0 9 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7.9993 17.67C7.8093 17.67 7.6193 17.6 7.4693 17.45L0.949297 10.93C-0.110703 9.87002 -0.110703 8.13002 0.949297 7.07002L7.4693 0.55002C7.7593 0.26002 8.2393 0.26002 8.5293 0.55002C8.8193 0.84002 8.8193 1.32002 8.5293 1.61002L2.0093 8.13002C1.5293 8.61002 1.5293 9.39002 2.0093 9.87002L8.5293 16.39C8.8193 16.68 8.8193 17.16 8.5293 17.45C8.3793 17.59 8.1893 17.67 7.9993 17.67Z"
-                  fill="#757575"
-                />
-              </svg>
-            </span>
-            <h6 className="ms-sm-2 my-auto">Kembali</h6>
-          </div>
-        </Button>
-        <div>
-          <NumberProgress current={3} total={4} />
-        </div>
-        {/* Item 1 */}
         <div>
           <h2 className="text-center my-2">Pembayaran</h2>
           <h4 className="text-center my-2">
@@ -138,18 +158,15 @@ export default function PengajuanSewa3() {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-                <Button
-                  variant="outline-primary"
-                  type="submit"
-                  className="my-4"
-                >
+                <label htmlFor="formInputFoto" className="btn btn-outline-primary mt-3">
                   <div className="d-flex justify-content-center align-items-center">
                     <span>
                       <img src="/document-upload.png" alt=""></img>
                     </span>
                     <p className="fw-bold mb-0 ms-1">Upload Bukti Pembayaran</p>
                   </div>
-                </Button>
+                </label>
+                <input type="file" ref={fileInputRef} id="formInputFoto" />
               </div>
             </div>
             <div className="col-12 col-lg-5 offsed-lg-1">
@@ -250,9 +267,9 @@ export default function PengajuanSewa3() {
           </div>
           <div className="w-100 text-center">
             <Button
+              onClick={handleKirimBukti}
               variant="outline-primary "
               type="submit"
-              disabled
               className="mb-5"
             >
               <div className="d-flex justify-content-center align-items-center">
@@ -285,7 +302,9 @@ export default function PengajuanSewa3() {
           </Button>
         </div>
       </Container>
-      <FooterComponent />
     </>
   );
 }
+
+
+export default Pembayaran

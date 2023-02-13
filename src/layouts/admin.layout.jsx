@@ -7,7 +7,9 @@ import NavbarComponent from "../components/navbar"
 import AdminRoutes from "../routes/admin"
 import { useCurrentUserMutation } from "../store/apis/users"
 import { emptyEmail, emptyToken } from "../store/slices/authSlice"
+import { emptyKos } from "../store/slices/kosSlice"
 import { addUser, emptyUser } from "../store/slices/userSlice"
+import { ToastContainer } from "react-toastify";
 
 const AdminLayout = ({ children }) => {
 	const dispatch = useDispatch()
@@ -22,6 +24,7 @@ const AdminLayout = ({ children }) => {
 			dispatch(emptyToken())
 			dispatch(emptyEmail())
 			dispatch(emptyUser())
+			dispatch(emptyKos())
 			navigate('/login')
 		} else {
 			if (!token.role.includes('ROLE_SUPERUSER')) {
@@ -47,6 +50,7 @@ const AdminLayout = ({ children }) => {
 				dispatch(emptyToken())
 				dispatch(emptyEmail())
 				dispatch(emptyUser())
+				dispatch(emptyKos())
 				navigate('/login')
 			}
 		}
@@ -55,6 +59,7 @@ const AdminLayout = ({ children }) => {
 
 	return (
 		<>
+			<ToastContainer />
 			<NavbarComponent routes={AdminRoutes} />
 			{children}
 			<FooterComponent />
