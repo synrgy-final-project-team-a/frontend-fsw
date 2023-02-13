@@ -43,73 +43,9 @@ const InformasiPersonal = () => {
 		const city = formRef.current.city;
 		const address = formRef.current.address;
 
-<<<<<<< HEAD
-		if (firstName === "") {
-			failed = true
-			setError((error) => ({ ...error, "firstName": "Nama depan tidak boleh kosong!" }))
-		}
-
-		if (lastName === "") {
-			failed = true
-			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
-		}
-
-		if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
-			failed = true
-			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
-		}
-
-		if (phoneNumber === "") {
-			failed = true
-			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak boleh kosong!" }))
-		}
-
-		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-			failed = true
-			setError((error) => ({ ...error, "email": "Email tidak valid!" }))
-		}
-
-		if (email === "") {
-			failed = true
-			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
-		}
-
-		if (!/[0-9]/i.test(bankAccount)) {
-			failed = true
-			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak valid!" }))
-		}
-
-		if (bankAccount === "") {
-			failed = true
-			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak boleh kosong!" }))
-		}
-
-		if (bankUsername === "") {
-			failed = true
-			setError((error) => ({ ...error, "bankUsername": "Nama pemilik rekening tidak boleh kosong!" }))
-		}
-
-		if (province === "") {
-			failed = true
-			setError((error) => ({ ...error, "province": "Provinsi tidak boleh kosong!" }))
-		}
-
-		if (city === "") {
-			failed = true
-			setError((error) => ({ ...error, "city": "Kabupaten/Kota tidak boleh kosong!" }))
-		}
-
-		if (address === "") {
-			failed = true
-			setError((error) => ({ ...error, "address": "Alamat tidak boleh kosong!" }))
-		}
-
-		if (failed) {
-=======
 		if (firstName.value === "") {
 			setError((error) => ({ ...error, firstName: "Nama depan tidak boleh kosong!" }));
 			firstName.scrollIntoView()
->>>>>>> b9ce9ff0a678f9821b7e1ccb2fb53d262615eca1
 			return
 		}
 
@@ -468,57 +404,7 @@ const InformasiPersonal = () => {
 											""
 									}
 								</Form.Group>
-<<<<<<< HEAD
-								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
-									<Form.Label>Nomor Rekening</Form.Label>
-									<Form.Control type="text" placeholder="Masukan nomor rekening"
-										defaultValue={userData.bank_account}
-										ref={(ref) => formRef.current.bankAccount = ref}
-									/>
-									{
-										(error.hasOwnProperty("bankAccount") && error.bankAccount !== "") ?
-											<Form.Text className="text-danger">
-												{error.bankAccount}
-											</Form.Text> :
-											""
-									}
-								</Form.Group>
-								<Form.Group className="mb-4" controlId="formBasicNamaBank">
-									<Form.Label>Nama Bank</Form.Label>
-									<Form.Select defaultValue={userData.bank_name}
-										ref={(ref) => formRef.current.bankName = ref}
-									>
-										<option value="BCA">BCA</option>
-										<option value="BNI">BNI</option>
-										<option value="BRI">BRI</option>
-										<option value="Mandiri">Mandiri</option>
-										<option value="Citibank">Citibank</option>
-									</Form.Select>
-									{
-										(error.hasOwnProperty("bankName") && error.bankName !== "") ?
-											<Form.Text className="text-danger">
-												{error.bankName}
-											</Form.Text> :
-											""
-									}
-								</Form.Group>
-								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
-									<Form.Label>Nama Pemilik Rekening</Form.Label>
-									<Form.Control type="text" placeholder="Masukan nama pemilik rekening"
-										defaultValue={userData.bank_username}
-										ref={(ref) => formRef.current.bankUsername = ref}
-									/>
-									{
-										(error.hasOwnProperty("bankUsername") && error.bankUsername !== "") ?
-											<Form.Text className="text-danger">
-												{error.bankUsername}
-											</Form.Text> :
-											""
-									}
-								</Form.Group>
-=======
 								<hr />
->>>>>>> b9ce9ff0a678f9821b7e1ccb2fb53d262615eca1
 								<Form.Group className="mb-3" controlId="formBasicEmail">
 									<Form.Label>Provinsi</Form.Label>
 									<Form.Control list="provinsi-list" type="text" placeholder="Masukan Provinsimu"
