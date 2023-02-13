@@ -16,7 +16,6 @@ const DataKos = ({ setKeynya }) => {
 
   const formRef = useRef({});
   const [error, setError] = useState({});
-  const [valueDescription, setValueDescription] = useState('');
 
   const [jenisKelamin, setJenisKelamin] = useState(kos.jenis)
 
@@ -33,13 +32,11 @@ const DataKos = ({ setKeynya }) => {
     let failed = false;
 
     const nama = formRef.current.nama.value;
-    const deskripsi = valueDescription;
+    const deskripsi = formRef.current.deskripsi.value;
     const tahun = formRef.current.tahun.value;
     const { Putra, Putri, Campur } = jenisKelamin;
     const fotoDepan = selectedFrontPhoto;
     const fotoDepanJauh = selectedFrontFarPhoto;
-
-    console.log(deskripsi)
 
     if (fotoDepan === undefined) {
       failed = true;
@@ -247,8 +244,8 @@ const DataKos = ({ setKeynya }) => {
               <ReactQuill
                 className="mb-5 pb-3"
                 theme="snow" 
-                value={valueDescription}
-                onChange={setValueDescription}
+                defaultValue={kos.deskripsi}
+                ref={(ref) => (formRef.current.deskripsi = ref)}
               />
               {error.hasOwnProperty("deskripsi") && error.deskripsi !== "" ? (
                 <Form.Text className="text-danger">{error.deskripsi}</Form.Text>

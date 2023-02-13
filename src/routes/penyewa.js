@@ -6,6 +6,7 @@ import InformasiPersonal from "../pages/penyewa/profile/informasiPersonal"
 
 import ListKos from "../pages/penyewa/kos/list"
 import TambahKos from "../pages/penyewa/kos/tambah"
+import DetailPengajuan from "../pages/penyewa/kos/detail-pengajuan-sewa-kos"
 
 const PenyewaRoutes = [
 	{
@@ -40,6 +41,10 @@ const PenyewaRoutes = [
 					{
 						path: "/tambah",
 						element: <TambahKos />
+					},
+					{
+						path: "/detail-pengajuan",
+						element: <DetailPengajuan />
 					}
 				]
 			}

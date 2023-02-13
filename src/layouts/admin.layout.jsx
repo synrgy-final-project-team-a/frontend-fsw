@@ -9,6 +9,7 @@ import { useCurrentUserMutation } from "../store/apis/users"
 import { emptyEmail, emptyToken } from "../store/slices/authSlice"
 import { emptyKos } from "../store/slices/kosSlice"
 import { addUser, emptyUser } from "../store/slices/userSlice"
+import { ToastContainer } from "react-toastify";
 
 const AdminLayout = ({ children }) => {
 	const dispatch = useDispatch()
@@ -58,6 +59,7 @@ const AdminLayout = ({ children }) => {
 
 	return (
 		<>
+			<ToastContainer />
 			<NavbarComponent routes={AdminRoutes} />
 			{children}
 			<FooterComponent />

@@ -1,4 +1,4 @@
-import { Button, Form, Container, Row, Col, Card, Alert } from "react-bootstrap"
+import { Button, Form, Container, Row, Col, Card } from "react-bootstrap"
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -9,6 +9,8 @@ import { useLoginMutation, useResendOtpMutation } from "../../../store/apis/auth
 import { addEmail, addToken } from "../../../store/slices/authSlice";
 import { useCurrentUserMutation } from "../../../store/apis/users";
 import { addUser } from "../../../store/slices/userSlice";
+import { toast, ToastContainer } from "react-toastify";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
 	const params = useParams()
@@ -17,6 +19,7 @@ const Login = () => {
 
 	const formRef = useRef({})
 	const [error, setError] = useState({})
+	const [buttonWidth, setButtonWidth] = useState("")
 	const roleParams = params.role
 
 	const [resendOtpHit] = useResendOtpMutation()
@@ -26,41 +29,50 @@ const Login = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault()
-		
+
 		setError({})
-		let failed = false
 
-		const email = formRef.current.email.value
-		const password = formRef.current.password.value
+		const email = formRef.current.email
+		const password = formRef.current.password
 
-
-		if (password.length < 8) {
-            failed = true
-			setError((error) => ({...error, "password": "Password tidak boleh kurang dari 8 karakter!" }))
-        }
-
-		if (password === "") {
-			failed = true
-			setError((error) => ({...error, "password": "Password tidak boleh kosong!" }))
-		}
-
-		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-			failed = true
-			setError((error) => ({...error, "email": "Email tidak valid!" }))
-		}
-
-		if (email === "") {
-			failed = true
-			setError((error) => ({...error, "email": "Email tidak boleh kosong!" }))
-		}
-
-		if (failed) {
+		if (email.value === "") {
+			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
+			email.scrollIntoView()
 			return
+		} else {
+			if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.value)) {
+				setError((error) => ({ ...error, "email": "Email tidak valid!" }))
+				email.scrollIntoView()
+				return
+			}
 		}
+
+		if (password.value === "") {
+			setError((error) => ({ ...error, "password": "Password tidak boleh kosong!" }))
+			password.scrollIntoView()
+			return
+		} else {
+			if (password.value.length < 8) {
+				setError((error) => ({ ...error, "password": "Password tidak boleh kurang dari 8 karakter!" }))
+				password.scrollIntoView()
+				return
+			}
+		}
+
+		toast.loading('Sedang melakukan login', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
 
 		const payload = {
-			"email": email,
-			"password": password,
+			"email": email.value,
+			"password": password.value,
 		}
 
 		let rolePayload = ""
@@ -75,58 +87,125 @@ const Login = () => {
 			rolePayload = "superadmin"
 		}
 
-		try {
-			loginHit({ body: payload, role: rolePayload })
-		} catch (error) {
-			setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+		loginHit({ body: payload, role: rolePayload })
+	}
+
+	const successOauthGoogle = credentialResponse => {
+		toast.loading('Sedang melakukan login', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
+
+		let rolePayload = ""
+
+		if (roleParams === "pencari" || roleParams === "seeker") {
+			rolePayload = "seeker"
 		}
+		if (roleParams === "penyewa" || roleParams === "tennant") {
+			rolePayload = "tennant"
+		}
+		if (roleParams === "superadmin") {
+			rolePayload = "superadmin"
+		}
+		const payload = {
+			"email": rolePayload + "@mail.com",
+			"password": "password",
+		}
+
+		loginHit({ body: payload, role: rolePayload })
 	}
 
 	useEffect(() => {
 		if (isSuccessLogin) {
-			if (roleParams === "superadmin" && dataLogin.role.includes('ROLE_SUPERUSER')) {
-				dispatch(addToken(dataLogin))
-				try {
+			toast.dismiss()
+			toast.success("Sukses melakukan login", {
+				position: "top-center",
+				autoClose: 500,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
+			})
+			if (roleParams === "superadmin") {
+				if (dataLogin.role.includes('ROLE_SUPERUSER')) {
+					dispatch(addToken(dataLogin))
 					currentUserHit(dataLogin.access_token)
-				} catch (error) {
-					setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+					return
 				}
 			}
 			if ((roleParams === "penyewa" || roleParams === "tennant")) {
 				if (dataLogin.role.includes('ROLE_TN')) {
 					dispatch(addToken(dataLogin))
-					try {
-						currentUserHit(dataLogin.access_token)
-					} catch (error) {
-						setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
-					}
+					currentUserHit(dataLogin.access_token)
+					return
 				}
 			}
 			if (roleParams === "pencari" || roleParams === "seeker") {
 				if (dataLogin.role.includes('ROLE_SK')) {
 					dispatch(addToken(dataLogin))
-					try {
-						currentUserHit(dataLogin.access_token)
-					} catch (error) {
-						setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
-					}
+					currentUserHit(dataLogin.access_token)
+					return
 				}
 			}
+			toast.error("Gagal melakukan login", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
+			})
 		}
 
 		if (isErrorLogin) {
-			if (Array.isArray(errorLogin.data)) {
-				errorLogin.data.forEach((el) =>
-					setError({ "alert": { "variant": "danger", "message": el.data.message } })
-				);
-			} else {
-				if (errorLogin.data.hasOwnProperty('message') && errorLogin.data.message.hasOwnProperty('is_enabled') && errorLogin.data.message.is_enabled === false) {
-					dispatch(addEmail(formRef.current.email.value))
-					resendOtpHit({ "email": formRef.current.email.value })
-					navigate('/register/verification')
+			toast.dismiss()
+			if (errorLogin.hasOwnProperty('data')) {
+				if (Array.isArray(errorLogin.data)) {
+					errorLogin.data.forEach((el) => {
+						toast.error(el.data.message, {
+							position: "top-center",
+							autoClose: 1000,
+							hideProgressBar: false,
+							closeOnClick: false,
+							pauseOnHover: false,
+							draggable: false,
+							progress: undefined,
+							theme: "light",
+						})
+					})
 				} else {
-					setError({ "alert": { "variant": "danger", "message": errorLogin.data.message } })
+					toast.error(errorLogin.data.message, {
+						position: "top-center",
+						autoClose: 1000,
+						hideProgressBar: false,
+						closeOnClick: false,
+						pauseOnHover: false,
+						draggable: false,
+						progress: undefined,
+						theme: "light",
+					})
 				}
+			} else {
+				toast.error("Gagal melakukan login", {
+					position: "top-center",
+					autoClose: 1000,
+					hideProgressBar: false,
+					closeOnClick: false,
+					pauseOnHover: false,
+					draggable: false,
+					progress: undefined,
+					theme: "light",
+				})
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,34 +213,78 @@ const Login = () => {
 
 	useEffect(() => {
 		if (isSuccessUser) {
-			if (roleParams === "superadmin") {
+			setTimeout(() => {
 				dispatch(addUser(dataUser.data))
-				return navigate('/admin')
-			}
-			if ((roleParams === "penyewa" || roleParams === "tennant")) {
-				dispatch(addUser(dataUser.data))
-				return navigate('/penyewa')
-			}
-			if (roleParams === "pencari" || roleParams === "seeker") {
-				dispatch(addUser(dataUser.data))
-				return navigate('/')
-			}
-			setError({ "alert": { "variant": "danger", "message": "Login failed!" } })
+				if (roleParams === "superadmin") {
+					navigate('/admin')
+					return
+				}
+				if ((roleParams === "penyewa" || roleParams === "tennant")) {
+					navigate('/penyewa')
+					return
+				}
+				if (roleParams === "pencari" || roleParams === "seeker") {
+					navigate('/')
+					return
+				}
+				toast.error("Gagal melakukan login", {
+					position: "top-center",
+					autoClose: 1000,
+					hideProgressBar: false,
+					closeOnClick: false,
+					pauseOnHover: false,
+					draggable: false,
+					progress: undefined,
+					theme: "light",
+				})
+			}, 500);
 		}
 
 		if (isErrorUser) {
-			if (Array.isArray(errorUser.data)) {
-				errorUser.data.forEach((el) =>
-					setError({ "alert": { "variant": "danger", "message": el.data.message } })
-				);
-			} else {
-				if (errorUser.data.message.hasOwnProperty('is_enabled') && errorUser.data.message.is_enabled === false) {
-					dispatch(addEmail(formRef.current.email.value))
-					resendOtpHit({ "email": formRef.current.email.value })
-					navigate('/register/verification')
+			toast.dismiss()
+			if (errorUser.hasOwnProperty('data')) {
+				if (Array.isArray(errorUser.data)) {
+					errorUser.data.forEach((el) => {
+						toast.error(el.data.message, {
+							position: "top-center",
+							autoClose: 1000,
+							hideProgressBar: false,
+							closeOnClick: false,
+							pauseOnHover: false,
+							draggable: false,
+							progress: undefined,
+							theme: "light",
+						})
+					})
 				} else {
-					setError({ "alert": { "variant": "danger", "message": errorUser.data.message } })
+					if (errorUser.data.message.hasOwnProperty('is_enabled') && errorUser.data.message.is_enabled === false) {
+						dispatch(addEmail(formRef.current.email.value))
+						resendOtpHit({ "email": formRef.current.email.value })
+						navigate('/register/verification')
+					} else {
+						toast.error(errorUser.data.message, {
+							position: "top-center",
+							autoClose: 1000,
+							hideProgressBar: false,
+							closeOnClick: false,
+							pauseOnHover: false,
+							draggable: false,
+							progress: undefined,
+							theme: "light",
+						})
+					}
 				}
+			} else {
+				toast.error("Gagal melakukan login", {
+					position: "top-center",
+					autoClose: 1000,
+					hideProgressBar: false,
+					closeOnClick: false,
+					pauseOnHover: false,
+					draggable: false,
+					progress: undefined,
+					theme: "light",
+				})
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,11 +294,15 @@ const Login = () => {
 		if (roleParams !== "pencari" && roleParams !== "seeker" && roleParams !== "penyewa" && roleParams !== "tennant" && roleParams !== "superadmin") {
 			navigate('/login')
 		}
+		const width = formRef.current.email.clientWidth
+
+		setButtonWidth(width.toString())
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
 		<>
+			<ToastContainer />
 			<div className="d-none d-lg-block">
 				<NavbarComponent routes={PencariRoutes} />
 			</div>
@@ -191,13 +318,6 @@ const Login = () => {
 					<Col xs={12} lg={6}>
 						<Card className="shadow-lg bg-light p-3">
 							<Card.Body>
-								{
-									(error.hasOwnProperty("alert") && error.alert.message !== "") ?
-										<Alert variant={error.alert.variant}>
-											{error.alert.message}
-										</Alert> :
-										""
-								}
 								<Form onSubmit={submitHandler}>
 									<Form.Group className="mb-3" controlId="formBasicEmail">
 										<Form.Label>Alamat Email</Form.Label>
@@ -205,6 +325,7 @@ const Login = () => {
 											type="text"
 											placeholder="Masukan alamat email"
 											ref={(ref) => formRef.current.email = ref}
+											disabled={isLoadingLogin || isLoadingUser}
 										/>
 										{
 											(error.hasOwnProperty("email") && error.email !== "") ?
@@ -221,6 +342,7 @@ const Login = () => {
 											type="password"
 											placeholder="Masukan password"
 											ref={(ref) => formRef.current.password = ref}
+											disabled={isLoadingLogin || isLoadingUser}
 										/>
 										{
 											(error.hasOwnProperty("password") && error.password !== "") ?
@@ -231,15 +353,11 @@ const Login = () => {
 										}
 									</Form.Group>
 									<div className="d-grid gap-2">
-										{
-											isLoadingLogin ?
-												<Button variant="primary" disabled>
-													Loading
-												</Button> :
-												<Button variant="primary" type="submit">
-													Login
-												</Button>
-										}
+										<Button variant="primary" type="submit"
+											disabled={isLoadingLogin || isLoadingUser}
+										>
+											Login
+										</Button>
 									</div>
 								</Form>
 								<p className="text-center mt-4">
@@ -261,6 +379,16 @@ const Login = () => {
 										Lupa Password
 									</Link>{" "}
 								</p>
+								<hr />
+								<div className="d-flex justify-content-center">
+									<GoogleLogin
+										width={buttonWidth}
+										onSuccess={successOauthGoogle}
+										onError={() => {
+											console.log('Login Failed');
+										}}
+									/>
+								</div>
 							</Card.Body>
 						</Card>
 					</Col>
