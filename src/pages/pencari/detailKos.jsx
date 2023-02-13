@@ -47,7 +47,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { addBooking } from "../../store/slices/transaksiSlice";
 import { faIdCard, faSnowflake } from "@fortawesome/free-regular-svg-icons";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const DetailKos = () => {
   const navigate = useNavigate();
@@ -67,14 +67,13 @@ const DetailKos = () => {
   const [getPriceHit, { isLoading: loadingPrice, isSuccess: successPrice, data: dataPrice }] = useGetPriceByPencariMutation();
   const [getListHit, { isError: errorList, isSuccess: successList, data: dataList, isLoading: loadingList }] = useGetListMutation();
 
-
   const handleSewaKos = (e) => {
     e.preventDefault()
 
     if (Object.keys(token).length === 0) {
       toast.error('Login terlebih dahulu!', {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: false,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: false,
@@ -182,7 +181,6 @@ const DetailKos = () => {
 
   return (
     <PencariLayout>
-      <ToastContainer />
       {isLoading ? (
         <Container>
           <Breadcrumb className="my-3">
@@ -831,8 +829,10 @@ const DetailKos = () => {
                       </Row>
                     </Col>
                     <Col xs={12} lg={3}>
-                      <Card bg="outline-primary" className="shadow-sm">
+                      <Card bg="outline-primary" className="kos-card shadow-sm">
+                        <Card.Img className="d-block d-lg-none" variant="top" src={element.inside_room_photo} alt={element.room_name} />
                         <Card.Body>
+                          <Card.Text className="text-muted fw-bolder mb-1 d-block d-lg-none">{element.room_name}</Card.Text>
                           <div>
                             {
                               kostOne.kost_type_man === true ?
@@ -907,19 +907,7 @@ const DetailKos = () => {
                               </Card.Text>
                               <Card.Text className="kos-price mb-1">
                                 <span className="fw-bold">{rupiahFormat(el.price)}</span> /
-                                {el.duration_type === "DAILY"
-                                  ? "Hari"
-                                  : el.duration_type === "WEEKLY"
-                                    ? "Minggu"
-                                    : el.duration_type === "MONTHLY"
-                                      ? "Bulan"
-                                      : el.duration_type === "QUARTER"
-                                        ? "3 Bulan"
-                                        : el.duration_type === "SEMESTER"
-                                          ? "6 Bulan"
-                                          : el.duration_type === "YEARLY"
-                                            ? "Tahun"
-                                            : ""}
+                                {durationToDurasi(el.duration_type)}
                               </Card.Text>
                               <div className="d-flex justify-content-between">
                                 <div className="tag">
@@ -963,7 +951,6 @@ const DetailKos = () => {
               }
             </Row>
           </Container>
-
           {/* End Kosan Menarik di Sekitar Lokasi */}
         </div >
       ) : (

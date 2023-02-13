@@ -6,8 +6,7 @@ import {
     Col,
     Card,
     Button,
-    Form,
-    Alert
+    Form
 } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
@@ -15,6 +14,7 @@ import NavbarComponent from "../../../components/navbar"
 import PencariRoutes from "../../../routes/pencari"
 import { useRegisterMutation } from "../../../store/apis/authentication"
 import { addEmail } from "../../../store/slices/authSlice"
+import { toast, ToastContainer } from "react-toastify";
 
 const Register = () => {
 
@@ -30,77 +30,93 @@ const Register = () => {
 
     const handleRegister = (e) => {
         e.preventDefault()
-        
-		setError({})
-        let failed = false
 
-        const firstName = formRef.current.firstName.value
-        const lastName = formRef.current.lastName.value
-        const nomorHandphone = formRef.current.nomorHandphone.value
-        const email = formRef.current.email.value
-        const password = formRef.current.password.value
-        const verifPassword = formRef.current.verifPassword.value
+        setError({})
 
-        if (password !== verifPassword) {
-            failed = true
-			setError((error) => ({...error, "verifPassword": "Verifikasi password salah!" }))
-        }
+        const firstName = formRef.current.firstName
+        const lastName = formRef.current.lastName
+        const nomorHandphone = formRef.current.nomorHandphone
+        const email = formRef.current.email
+        const password = formRef.current.password
+        const verifPassword = formRef.current.verifPassword
 
-        if (password.length < 8) {
-            failed = true
-			setError((error) => ({...error, "password": "Password tidak boleh kurang dari 8 karakter!" }))
-        }
-
-        if (verifPassword === "") {
-            failed = true
-			setError((error) => ({...error, "verifPassword": "Verifikasi password tidak boleh kosong!" }))
-        }
-
-        if (password === "") {
-            failed = true
-			setError((error) => ({...error, "password": "Password tidak boleh kosong!" }))
-        }
-
-        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-            failed = true
-			setError((error) => ({...error, "email": "Email tidak valid!" }))
-        }
-
-        if (email === "") {
-            failed = true
-			setError((error) => ({...error, "email": "Email tidak boleh kosong!" }))
-        }
-
-        if (!/^[0-9]{10,13}$/i.test(nomorHandphone)) {
-            failed = true
-			setError((error) => ({...error, "nomorHandphone": "Nomor handphone tidak valid!" }))
-        }
-
-        if (nomorHandphone === "") {
-            failed = true
-			setError((error) => ({...error, "nomorHandphone": "Nomor handphone tidak boleh kosong!" }))
-        }
-
-        if (lastName === "") {
-            failed = true
-			setError((error) => ({...error, "lastName": "Nama belakang tidak boleh kosong!" }))
-        }
-
-        if (firstName === "") {
-            failed = true
-			setError((error) => ({...error, "firstName": "Nama depan tidak boleh kosong!" }))
-        }
-
-        if (failed) {
+        if (firstName.value === "") {
+            setError((error) => ({ ...error, "firstName": "Nama depan tidak boleh kosong!" }))
+            firstName.scrollIntoView()
             return
         }
 
+        if (lastName.value === "") {
+            setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
+            lastName.scrollIntoView()
+            return
+        }
+
+        if (password.value === "") {
+            setError((error) => ({ ...error, "password": "Password tidak boleh kosong!" }))
+            password.scrollIntoView()
+            return
+        } else {
+            if (password.value.length < 8) {
+                setError((error) => ({ ...error, "password": "Password tidak boleh kurang dari 8 karakter!" }))
+                password.scrollIntoView()
+                return
+            } else {
+                if (verifPassword.value === "") {
+                    setError((error) => ({ ...error, "verifPassword": "Verifikasi password tidak boleh kosong!" }))
+                    verifPassword.scrollIntoView()
+                    return
+                } else {
+                    if (password.value !== verifPassword.value) {
+                        setError((error) => ({ ...error, "verifPassword": "Verifikasi password salah!" }))
+                        password.scrollIntoView()
+                        return
+                    }
+                }
+            }
+        }
+
+        if (email.value === "") {
+            setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
+            email.scrollIntoView()
+            return
+        } else {
+            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.value)) {
+                setError((error) => ({ ...error, "email": "Email tidak valid!" }))
+                email.scrollIntoView()
+                return
+            }
+        }
+
+        if (nomorHandphone.value === "") {
+            setError((error) => ({ ...error, "nomorHandphone": "Nomor handphone tidak boleh kosong!" }))
+            nomorHandphone.scrollIntoView()
+            return
+        } else {
+            if (!/[0-9]{10,13}$/i.test(nomorHandphone.value)) {
+                setError((error) => ({ ...error, "nomorHandphone": "Nomor handphone tidak valid!" }))
+                nomorHandphone.scrollIntoView()
+                return
+            }
+        }
+
+        toast.loading('Sedang mendaftarkan diri', {
+            position: "top-center",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+        })
+
         const payload = {
-            "email": email,
-            "password": password,
-            "firstName": firstName,
-            "lastName": lastName,
-            "phoneNumber": nomorHandphone
+            "email": email.value,
+            "password": password.value,
+            "firstName": firstName.value,
+            "lastName": lastName.value,
+            "phoneNumber": nomorHandphone.value
         }
 
         let rolePayload = ""
@@ -112,28 +128,69 @@ const Register = () => {
             rolePayload = "tennant"
         }
 
-        try {
-            registerHit({ body: payload, role: rolePayload })
-        } catch (error) {
-            setError({ "alert": { "variant": "danger", "message": "Register failed!" } })
-        }
+        registerHit({ body: payload, role: rolePayload })
 
     }
 
     useEffect(() => {
         if (isSuccess) {
-            dispatch(addEmail(formRef.current.email.value))
-            navigate('/register/verification')
+            toast.dismiss()
+            toast.success("Sukses mendaftarkan diri", {
+                position: "top-center",
+                autoClose: 500,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "light",
+            })
+            setTimeout(() => {
+                dispatch(addEmail(formRef.current.email.value))
+                navigate('/register/verification')
+            }, 500);
         }
 
         if (isError) {
-            if (Array.isArray(errorRegister.data)) {
-				errorRegister.data.forEach((el) =>
-					setError({ "alert": { "variant": "danger", "message": el.data.message } })
-				);
-			} else {
-				setError({ "alert": { "variant": "danger", "message": errorRegister.data.message } })
-			}
+            toast.dismiss()
+            if (errorRegister.hasOwnProperty('data')) {
+                if (Array.isArray(errorRegister.data)) {
+                    errorRegister.data.forEach((el) => {
+                        toast.error(el.data.message, {
+                            position: "top-center",
+                            autoClose: 1000,
+                            hideProgressBar: false,
+                            closeOnClick: false,
+                            pauseOnHover: false,
+                            draggable: false,
+                            progress: undefined,
+                            theme: "light",
+                        })
+                    })
+                } else {
+                    toast.error(errorRegister.data.message, {
+                        position: "top-center",
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: false,
+                        draggable: false,
+                        progress: undefined,
+                        theme: "light",
+                    })
+                }
+            } else {
+                toast.error("Gagal mendaftarkan diri", {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "light",
+                })
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoading])
@@ -147,6 +204,7 @@ const Register = () => {
 
     return (
         <>
+            <ToastContainer />
             <div className="d-none d-lg-block">
                 <NavbarComponent routes={PencariRoutes} />
             </div>
@@ -163,17 +221,13 @@ const Register = () => {
                         <div className="mx-lg-5">
                             <Card>
                                 <Card.Body className="m-3">
-                                    {
-                                        (error.hasOwnProperty("alert") && error.alert.message !== "") ?
-                                            <Alert variant={error.alert.variant}>
-                                                {error.alert.message}
-                                            </Alert> :
-                                            ""
-                                    }
                                     <Form onSubmit={handleRegister}>
                                         <Form.Group className="mb-3" controlId="formBasicFirstName">
                                             <Form.Label>Nama depan</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.firstName = ref} type="text" placeholder="Masukan nama depan" />
+                                            <Form.Control type="text" placeholder="Masukan nama depan"
+                                                ref={(ref) => formRef.current.firstName = ref}
+                                                disabled={isLoading}
+                                            />
                                             {
                                                 (error.hasOwnProperty("firstName") && error.firstName !== "") ?
                                                     <Form.Text className="text-danger">
@@ -185,7 +239,10 @@ const Register = () => {
 
                                         <Form.Group className="mb-3" controlId="formBasicLastName">
                                             <Form.Label>Nama belakang</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.lastName = ref} type="text" placeholder="Masukan nama belakang" />
+                                            <Form.Control type="text" placeholder="Masukan nama belakang"
+                                                ref={(ref) => formRef.current.lastName = ref}
+                                                disabled={isLoading}
+                                            />
                                             {
                                                 (error.hasOwnProperty("lastName") && error.lastName !== "") ?
                                                     <Form.Text className="text-danger">
@@ -197,7 +254,10 @@ const Register = () => {
 
                                         <Form.Group className="mb-3" controlId="formBasicNomorHandphone">
                                             <Form.Label>Nomor Handphone</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.nomorHandphone = ref} type="text" placeholder="Masukan nomor handphone" />
+                                            <Form.Control type="text" placeholder="Masukan nomor handphone"
+                                                ref={(ref) => formRef.current.nomorHandphone = ref}
+                                                disabled={isLoading}
+                                            />
                                             {
                                                 (error.hasOwnProperty("nomorHandphone") && error.nomorHandphone !== "") ?
                                                     <Form.Text className="text-danger">
@@ -209,7 +269,10 @@ const Register = () => {
 
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>Email</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.email = ref} type="text" placeholder="Masukan email" />
+                                            <Form.Control type="text" placeholder="Masukan email"
+                                                ref={(ref) => formRef.current.email = ref}
+                                                disabled={isLoading}
+                                            />
                                             {
                                                 (error.hasOwnProperty("email") && error.email !== "") ?
                                                     <Form.Text className="text-danger">
@@ -221,7 +284,10 @@ const Register = () => {
 
                                         <Form.Group className="mb-3" controlId="formBasicPassword">
                                             <Form.Label>Password</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.password = ref} type="password" placeholder="Masukan password" />
+                                            <Form.Control type="password" placeholder="Masukan password"
+                                                ref={(ref) => formRef.current.password = ref}
+                                                disabled={isLoading}
+                                            />
                                             {
                                                 (error.hasOwnProperty("password") && error.password !== "") ?
                                                     <Form.Text className="text-danger">
@@ -233,7 +299,10 @@ const Register = () => {
 
                                         <Form.Group className="mb-3" controlId="formBasicverofPassword">
                                             <Form.Label>Verifikasi Password</Form.Label>
-                                            <Form.Control ref={(ref) => formRef.current.verifPassword = ref} type="password" placeholder="Masukan ulang password" />
+                                            <Form.Control type="password" placeholder="Masukan ulang password"
+                                                ref={(ref) => formRef.current.verifPassword = ref}
+                                                disabled={isLoading}
+                                            />
                                             {
                                                 (error.hasOwnProperty("verifPassword") && error.verifPassword !== "") ?
                                                     <Form.Text className="text-danger">
@@ -244,15 +313,11 @@ const Register = () => {
                                         </Form.Group>
 
                                         <div className="d-grid">
-                                            {
-                                                isLoading ?
-                                                    <Button variant="primary" disabled>
-                                                        Loading
-                                                    </Button> :
-                                                    <Button variant="primary" type="submit">
-                                                        Register
-                                                    </Button>
-                                            }
+                                            <Button variant="primary" type="submit"
+                                                disabled={isLoading}
+                                            >
+                                                Register
+                                            </Button>
                                         </div>
 
                                         <div className="mt-2 text-center">

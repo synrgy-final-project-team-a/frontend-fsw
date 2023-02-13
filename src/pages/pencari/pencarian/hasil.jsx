@@ -9,7 +9,7 @@ import SortComponent from "../../../components/search-sort";
 import PencariLayout from "../../../layouts/pencari.layout";
 import { useGetListMutation } from "../../../store/apis/kos";
 import { searchIsBottom, searchIsTop, setSearchText } from "../../../store/slices/decorSlice";
-import { rupiahFormat } from "../../../store/utils/format";
+import { durationToDurasi, rupiahFormat } from "../../../store/utils/format";
 
 const HasilPencarian = () => {
 	const params = useParams();
@@ -116,19 +116,13 @@ const HasilPencarian = () => {
 	}, []);
 
 	useEffect(() => {
-		if (isSuccess) {
-			setLoadingFirst(false)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoading]);
-
-	useEffect(() => {
 		if (isLoading) {
 			window.removeEventListener("scroll", handleScroll);
 		}
 
 		if (isSuccess) {
 			const datanya = data.data;
+			setLoadingFirst(false)
 			setList((list) => [...list, ...datanya]);
 			setPage((page) => page + 1);
 
@@ -183,19 +177,7 @@ const HasilPencarian = () => {
 												</Card.Text>
 												<Card.Text className="kos-price mb-1">
 													<span className="fw-bold">{rupiahFormat(el.price)}</span> /
-													{el.duration_type === "DAILY"
-														? "Hari"
-														: el.duration_type === "WEEKLY"
-															? "Minggu"
-															: el.duration_type === "MONTHLY"
-																? "Bulan"
-																: el.duration_type === "QUARTER"
-																	? "3 Bulan"
-																	: el.duration_type === "SEMESTER"
-																		? "6 Bulan"
-																		: el.duration_type === "YEARLY"
-																			? "Tahun"
-																			: ""}
+													{durationToDurasi(el.duration_type)}
 												</Card.Text>
 												<div className="d-flex justify-content-between">
 													<div className="tag">

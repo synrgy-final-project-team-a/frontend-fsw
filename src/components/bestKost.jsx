@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 import { useGetListMutation } from "../store/apis/kos";
 import { useEffect } from "react";
-import { rupiahFormat } from "../store/utils/format";
+import { durationToDurasi, rupiahFormat } from "../store/utils/format";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMars, faVenus, faVenusMars } from "@fortawesome/free-solid-svg-icons";
 
@@ -54,19 +54,7 @@ function BestKost() {
                         </Card.Text>
                         <Card.Text className="kos-price mb-1">
                           <span className="fw-bold">{rupiahFormat(el.price)}</span> /
-                          {el.duration_type === "DAILY"
-                            ? "Hari"
-                            : el.duration_type === "WEEKLY"
-                              ? "Minggu"
-                              : el.duration_type === "MONTHLY"
-                                ? "Bulan"
-                                : el.duration_type === "QUARTER"
-                                  ? "3 Bulan"
-                                  : el.duration_type === "SEMESTER"
-                                    ? "6 Bulan"
-                                    : el.duration_type === "YEARLY"
-                                      ? "Tahun"
-                                      : ""}
+                          {durationToDurasi(el.duration_type)}
                         </Card.Text>
                         <div className="d-flex justify-content-between">
                           <div className="tag">

@@ -13,6 +13,20 @@
 @import "detailkos";
 @import "detail-pengajuan";
 
+@keyframes backgroundanimation {
+	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 .cursor-pointer {
 	cursor: pointer;
 }
@@ -23,4 +37,17 @@
 
 .fw-semibold {
 	font-weight: 600px;
+}
+
+table {
+	>tbody {
+		>tr {
+			>td.skeleton {
+				background: linear-gradient(-45deg, $grey-light, $grey, $grey-light);
+				background-size: 400% 400%;
+				animation: backgroundanimation 1s infinite ease;
+				border: none;
+			}
+		}
+	}
 }

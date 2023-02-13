@@ -33,6 +33,11 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
       setError((error) => ({ ...error, "hargaMaksimal": "Harga maksimal tidak boleh kosong!" }))
     }
 
+    if (parseInt(filter.price_minimum) > parseInt(filter.price_maximum)) {
+      failed = true
+      setError((error) => ({ ...error, "hargaMinimal": "Harga minimal boleh lebih dari maksimum!" }))
+    }
+
     if (failed) {
       return
     }

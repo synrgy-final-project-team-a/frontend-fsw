@@ -1,9 +1,10 @@
-import { Button, Form, Container, Row, Col, Card, Alert } from "react-bootstrap";
+import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import NavbarComponent from "../../../components/navbar";
 import PencariRoutes from "../../../routes/pencari";
 import { useChangePasswordMutation } from "../../../store/apis/authentication";
+import { toast, ToastContainer } from "react-toastify";
 
 const ForgetPassChange = () => {
 	const params = useParams()
@@ -17,59 +18,112 @@ const ForgetPassChange = () => {
 
 	const submitHandle = (e) => {
 		e.preventDefault()
-		
+
 		setError({})
-		let failed = false
 
-		const password = formRef.current.password.value
-		const verifPassword = formRef.current.verifPassword.value
+		const password = formRef.current.password
+		const verifPassword = formRef.current.verifPassword
 
-		if (password !== verifPassword) {
-			failed = true
-			setError((error) => ({...error, "verifPassword": "Verifikasi password salah!" }))
-		}
-
-		if (verifPassword === "") {
-			failed = true
-			setError((error) => ({...error, "verifPassword": "Verifikasi password tidak boleh kosong!" }))
-		}
-
-		if (password === "") {
-			failed = true
-			setError((error) => ({...error, "password": "Password tidak boleh kosong!" }))
-		}
-
-		if (failed) {
+		if (password.value === "") {
+			setError((error) => ({ ...error, "password": "Password tidak boleh kosong!" }))
+			password.scrollIntoView()
 			return
+		} else {
+			if (password.value.length < 8) {
+				setError((error) => ({ ...error, "password": "Password tidak boleh kurang dari 8 karakter!" }))
+				password.scrollIntoView()
+				return
+			} else {
+				if (verifPassword.value === "") {
+					setError((error) => ({ ...error, "verifPassword": "Verifikasi password tidak boleh kosong!" }))
+					verifPassword.scrollIntoView()
+					return
+				} else {
+					if (password.value !== verifPassword.value) {
+						setError((error) => ({ ...error, "verifPassword": "Verifikasi password salah!" }))
+						password.scrollIntoView()
+						return
+					}
+				}
+			}
 		}
+
+		toast.loading('Sedang mengubah password', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
 
 		const payload = {
 			"otp": otpParams,
-			"newPassword": password
+			"newPassword": password.value
 		}
 
-		try {
-			changePassHit(payload)
-		} catch (error) {
-			setError({ "alert": { "variant": "danger", "message": "Send link failed!" } })
-		}
+		changePassHit(payload)
 	}
 
 	useEffect(() => {
 		if (isSuccess) {
-			setError({ "alert": { "variant": "success", "message": "Berhasil mengubah password!" } })
+			toast.dismiss()
+			toast.success("Sukses mengubah password", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
+			})
 			setTimeout(() => {
 				navigate('/login')
-			}, 1500)
+			}, 1000)
 		}
 
 		if (isError) {
-			if (Array.isArray(errorForgot.data)) {
-				errorForgot.data.forEach((el) =>
-					setError({ "alert": { "variant": "danger", "message": el.data.message } })
-				);
+			toast.dismiss()
+			if (errorForgot.hasOwnProperty('data')) {
+				if (Array.isArray(errorForgot.data)) {
+					errorForgot.data.forEach((el) => {
+						toast.error(el.data.message, {
+							position: "top-center",
+							autoClose: 1000,
+							hideProgressBar: false,
+							closeOnClick: false,
+							pauseOnHover: false,
+							draggable: false,
+							progress: undefined,
+							theme: "light",
+						})
+					})
+				} else {
+					toast.error(errorForgot.data.message, {
+						position: "top-center",
+						autoClose: 1000,
+						hideProgressBar: false,
+						closeOnClick: false,
+						pauseOnHover: false,
+						draggable: false,
+						progress: undefined,
+						theme: "light",
+					})
+				}
 			} else {
-				setError({ "alert": { "variant": "danger", "message": errorForgot.data.message } })
+				toast.error("Gagal mengubah password", {
+					position: "top-center",
+					autoClose: 1000,
+					hideProgressBar: false,
+					closeOnClick: false,
+					pauseOnHover: false,
+					draggable: false,
+					progress: undefined,
+					theme: "light",
+				})
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,6 +131,7 @@ const ForgetPassChange = () => {
 
 	return (
 		<>
+			<ToastContainer />
 			<div className="d-none d-lg-block">
 				<NavbarComponent routes={PencariRoutes} />
 			</div>
@@ -92,17 +147,13 @@ const ForgetPassChange = () => {
 					<Col xs={12} lg={6}>
 						<Card className="p-3">
 							<Card.Body>
-								{
-									(error.hasOwnProperty("alert") && error.alert.message !== "") ?
-										<Alert variant={error.alert.variant}>
-											{error.alert.message}
-										</Alert> :
-										""
-								}
 								<Form onSubmit={submitHandle}>
 									<Form.Group className="mb-3" controlId="formBasicPassword">
 										<Form.Label>Password</Form.Label>
-										<Form.Control ref={(ref) => formRef.current.password = ref} type="password" placeholder="Masukan password" />
+										<Form.Control type="password" placeholder="Masukan password"
+											ref={(ref) => formRef.current.password = ref}
+											disabled={isLoading}
+										/>
 										{
 											(error.hasOwnProperty("password") && error.password !== "") ?
 												<Form.Text className="text-danger">
@@ -114,7 +165,10 @@ const ForgetPassChange = () => {
 
 									<Form.Group className="mb-3" controlId="formBasicverofPassword">
 										<Form.Label>Verifikasi Password</Form.Label>
-										<Form.Control ref={(ref) => formRef.current.verifPassword = ref} type="password" placeholder="Masukan ulang password" />
+										<Form.Control type="password" placeholder="Masukan ulang password"
+											ref={(ref) => formRef.current.verifPassword = ref}
+											disabled={isLoading}
+										/>
 										{
 											(error.hasOwnProperty("verifPassword") && error.verifPassword !== "") ?
 												<Form.Text className="text-danger">
@@ -123,9 +177,8 @@ const ForgetPassChange = () => {
 												""
 										}
 									</Form.Group>
-									<Button
-										variant="primary"
-										type="submit"
+									<Button variant="primary" type="submit"
+										disabled={isLoading}
 									>
 										Ganti Password
 									</Button>
