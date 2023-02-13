@@ -70,8 +70,35 @@ const HasilPencarian = () => {
 			payload.city = params.city;
 		}
 
-		payload.price_minimum = 0;
-		payload.price_maximum = 100000000;
+		payload.water = false
+		payload.electric = false
+		payload.laundry = false
+		payload.refrigerator = false
+		payload.dispenser = false
+		payload.wifi = false
+		payload.kitchen = false
+		payload.parking_car = false
+		payload.parking_motorcycle = false
+		payload.living_room = false
+		payload.drying_ground = false
+		payload.kost_tv = false
+		payload.ac = false
+		payload.windows = false
+		payload.springbed = false
+		payload.fan = false
+		payload.pillow = false
+		payload.furniture = false
+		payload.table_learning = false
+		payload.room_tv = false
+		payload.inside_bathroom = false
+		payload.outside_bathroom = false
+		payload.water_heater = false
+		payload.shower = false
+		payload.sitting_closet = false
+		payload.non_sitting_closet = false
+
+		payload.price_minimum = 0
+		payload.price_maximum = 100000000
 
 		payload.duration_type = "MONTHLY";
 
