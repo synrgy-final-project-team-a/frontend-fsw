@@ -681,11 +681,11 @@ const DetailKos = () => {
               room.map((element, index) => {
                 let num = 0
                 return (
-                  <Row className="justify-content-between" key={index}>
+                  <Row className="justify-content-between my-4" key={index}>
                     <Col xs={12} lg={7} className="d-none d-lg-block">
                       <Row className="g-0">
                         <Col lg={6}>
-                          <img className="img-fluid" src={element.inside_room_photo} alt={element.room_name} />
+                          <img className="img-fluid" style={{ maxHeight: "215px" }} src={element.inside_room_photo} alt={element.room_name} />
                         </Col>
                         <Col lg={6} className="px-3">
                           <h5 className="text-muted fw-bolder mb-2">{element.room_name}</h5>
@@ -831,7 +831,7 @@ const DetailKos = () => {
                     <Col xs={12} lg={3}>
                       <Card bg="outline-primary" className="kos-card shadow-sm">
                         <Card.Img className="d-block d-lg-none" variant="top" src={element.inside_room_photo} alt={element.room_name} />
-                        <Card.Body>
+                        <Card.Body className="d-flex flex-column justify-content-between">
                           <Card.Text className="text-muted fw-bolder mb-1 d-block d-lg-none">{element.room_name}</Card.Text>
                           <div>
                             {
