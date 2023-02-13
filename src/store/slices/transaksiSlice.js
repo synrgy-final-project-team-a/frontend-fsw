@@ -16,6 +16,7 @@ const initialState = {
 	check_in: "",
 	price_id: "",
 	room_id: "",
+	transaction_id: "",
 	kost_name: "",
 	room_name: "",
 	kost_address: "",

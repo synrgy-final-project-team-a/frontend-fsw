@@ -1,0 +1,9 @@
+.card {
+	&.skeleton {
+		border-radius: 16px;
+		background: linear-gradient(-45deg, $grey-light, $grey, $grey-light);
+		background-size: 400% 400%;
+		animation: backgroundanimation 1s infinite ease;
+		border: none;
+	}
+}

@@ -1,7 +1,58 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, Container, Accordion } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useAddBuktiByPencariMutation } from "../../../store/apis/transaksi";
+import { addBooking } from "../../../store/slices/transaksiSlice";
 
-export default function Pembayaran() {
+const Pembayaran = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const fileInputRef = useRef()
+
+  const transaksi = useSelector(state => state.transaksi.transaction_id)
+
+  const [
+    uploadHit,
+    { isSuccess, isError, isLoading, error }
+  ] = useAddBuktiByPencariMutation()
+
+  const handleKirimBukti = (e) => {
+    e.preventDefault()
+
+    const confirm = window.confirm("Apakah anda yakin?")
+
+    if (!confirm) {
+      return
+    }
+
+    const file = fileInputRef.current.files[0]
+
+    const formdata = new FormData()
+
+    formdata.append("file", file)
+
+    uploadHit({ body: formdata, transactionId: transaksi })
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      const initialState = {
+        status: "REVIEWED"
+      }
+
+      dispatch(addBooking(initialState))
+      navigate('/pengajuan-sewa/2')
+    }
+
+    if (isError) {
+      alert("gagal")
+      console.log(error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading])
+
   return (
     <>
       <Container>
@@ -107,18 +158,15 @@ export default function Pembayaran() {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-                <Button
-                  variant="outline-primary"
-                  type="submit"
-                  className="my-4"
-                >
+                <label htmlFor="formInputFoto" className="btn btn-outline-primary mt-3">
                   <div className="d-flex justify-content-center align-items-center">
                     <span>
                       <img src="/document-upload.png" alt=""></img>
                     </span>
                     <p className="fw-bold mb-0 ms-1">Upload Bukti Pembayaran</p>
                   </div>
-                </Button>
+                </label>
+                <input type="file" ref={fileInputRef} id="formInputFoto" />
               </div>
             </div>
             <div className="col-12 col-lg-5 offsed-lg-1">
@@ -219,9 +267,9 @@ export default function Pembayaran() {
           </div>
           <div className="w-100 text-center">
             <Button
+              onClick={handleKirimBukti}
               variant="outline-primary "
               type="submit"
-              disabled
               className="mb-5"
             >
               <div className="d-flex justify-content-center align-items-center">
@@ -257,3 +305,6 @@ export default function Pembayaran() {
     </>
   );
 }
+
+
+export default Pembayaran

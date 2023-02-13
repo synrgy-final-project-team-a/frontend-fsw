@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistStore } from 'redux-persist';
 
 import authApi from "./apis/authentication";
+import transactionApi from "./apis/transaction";
 import usersApi from "./apis/users";
 import kosApi from "./apis/kos";
 import transaksiApi from "./apis/transaksi";
@@ -19,6 +20,7 @@ export const store = configureStore({
 		[authApi.reducerPath]: authApi.reducer,
 		[usersApi.reducerPath]: usersApi.reducer,
 		[kosApi.reducerPath]: kosApi.reducer,
+		[transactionApi.reducerPath]: transactionApi.reducer,
 		[transaksiApi.reducerPath]: transaksiApi.reducer,
 		auth: authPersistReducer,
 		user: userPersistReducer,
@@ -35,6 +37,7 @@ export const store = configureStore({
 			authApi.middleware,
 			usersApi.middleware,
 			kosApi.middleware,
+			transactionApi.middleware,
 			transaksiApi.middleware
 		]),
 })

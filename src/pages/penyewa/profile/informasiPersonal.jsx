@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Breadcrumb, Button, Alert } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,194 +9,185 @@ import { useEditUserMutation } from "../../../store/apis/users";
 import { addUser } from "../../../store/slices/userSlice";
 import PenyewaLayout from "../../../layouts/penyewa.layout";
 
-const imgAllow = [
-	"image/png",
-	"image/jpg",
-	"image/jpeg",
-]
+const imgAllow = ["image/png", "image/jpg", "image/jpeg"];
 
 const InformasiPersonal = () => {
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-	const token = useSelector(state => state.auth.token.access_token);
-	const userData = useSelector(state => state.user.current);
-	const provinsi = useSelector(state => state.alamat.provinsi)
+  const token = useSelector((state) => state.auth.token.access_token);
+  const userData = useSelector((state) => state.user.current);
+  const provinsi = useSelector((state) => state.alamat.provinsi);
 
-	const formRef = useRef({})
-	const [error, setError] = useState({})
+  const formRef = useRef({});
+  const [error, setError] = useState({});
 
-	const [selectedProfile, setSelectedProfile] = useState()
-	const [previewProfile, setPreviewProfile] = useState()
+  const [selectedProfile, setSelectedProfile] = useState();
+  const [previewProfile, setPreviewProfile] = useState();
 
-	const [
-		editUserHit,
-		{ isLoading, isSuccess, isError, data: dataEdit, error: errorEdit }
-	] = useEditUserMutation()
+  const [editUserHit, { isLoading, isSuccess, isError, data: dataEdit, error: errorEdit }] = useEditUserMutation();
 
-	const editProfilSubmit = (e) => {
-		e.preventDefault()
+  const editProfilSubmit = (e) => {
+    e.preventDefault();
 
-		setError({})
-		let failed = false
+    setError({});
+    let failed = false;
 
-		const firstName = formRef.current.firstName.value
-		const lastName = formRef.current.lastName.value
-		const phoneNumber = formRef.current.phoneNumber.value
-		const email = formRef.current.email.value
-		const gender = formRef.current.gender.value
-		const status = formRef.current.status.value
-		const bankAccount = formRef.current.bankAccount.value
-		const bankName = formRef.current.bankName.value
-		const bankUsername = formRef.current.bankUsername.value
-		const province = formRef.current.province.value
-		const city = formRef.current.city.value
-		const address = formRef.current.address.value
+    const firstName = formRef.current.firstName.value;
+    const lastName = formRef.current.lastName.value;
+    const phoneNumber = formRef.current.phoneNumber.value;
+    const email = formRef.current.email.value;
+    const gender = formRef.current.gender.value;
+    const status = formRef.current.status.value;
+    const bankAccount = formRef.current.bankAccount.value;
+    const bankName = formRef.current.bankName.value;
+    const bankUsername = formRef.current.bankUsername.value;
+    const province = formRef.current.province.value;
+    const city = formRef.current.city.value;
+    const address = formRef.current.address.value;
 
-		if (firstName === "") {
-			failed = true
-			setError((error) => ({ ...error, "firstName": "Nama depan tidak boleh kosong!" }))
-		}
+    if (firstName === "") {
+      failed = true;
+      setError((error) => ({ ...error, firstName: "Nama depan tidak boleh kosong!" }));
+    }
 
-		if (lastName === "") {
-			failed = true
-			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
-		}
+    if (lastName === "") {
+      failed = true;
+      setError((error) => ({ ...error, lastName: "Nama belakang tidak boleh kosong!" }));
+    }
 
-		if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
-			failed = true
-			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
-		}
+    if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
+      failed = true;
+      setError((error) => ({ ...error, phoneNumber: "Nomor handphone tidak valid!" }));
+    }
 
-		if (phoneNumber === "") {
-			failed = true
-			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak boleh kosong!" }))
-		}
+    if (phoneNumber === "") {
+      failed = true;
+      setError((error) => ({ ...error, phoneNumber: "Nomor handphone tidak boleh kosong!" }));
+    }
 
-		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-			failed = true
-			setError((error) => ({ ...error, "email": "Email tidak valid!" }))
-		}
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      failed = true;
+      setError((error) => ({ ...error, email: "Email tidak valid!" }));
+    }
 
-		if (email === "") {
-			failed = true
-			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
-		}
+    if (email === "") {
+      failed = true;
+      setError((error) => ({ ...error, email: "Email tidak boleh kosong!" }));
+    }
 
-		if (!/[0-9]/i.test(bankAccount)) {
-			failed = true
-			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak valid!" }))
-		}
+    if (!/[0-9]/i.test(bankAccount)) {
+      failed = true;
+      setError((error) => ({ ...error, bankAccount: "Nomor rekening tidak valid!" }));
+    }
 
-		if (bankAccount === "") {
-			failed = true
-			setError((error) => ({ ...error, "bankAccount": "Nomor rekening tidak boleh kosong!" }))
-		}
+    if (bankAccount === "") {
+      failed = true;
+      setError((error) => ({ ...error, bankAccount: "Nomor rekening tidak boleh kosong!" }));
+    }
 
-		if (bankUsername === "") {
-			failed = true
-			setError((error) => ({ ...error, "bankUsername": "Nama pemilik rekening tidak boleh kosong!" }))
-		}
+    if (bankUsername === "") {
+      failed = true;
+      setError((error) => ({ ...error, bankUsername: "Nama pemilik rekening tidak boleh kosong!" }));
+    }
 
-		if (province === "") {
-			failed = true
-			setError((error) => ({ ...error, "province": "Provinsi tidak boleh kosong!" }))
-		}
+    if (province === "") {
+      failed = true;
+      setError((error) => ({ ...error, province: "Provinsi tidak boleh kosong!" }));
+    }
 
-		if (city === "") {
-			failed = true
-			setError((error) => ({ ...error, "city": "Kabupaten/Kota tidak boleh kosong!" }))
-		}
+    if (city === "") {
+      failed = true;
+      setError((error) => ({ ...error, city: "Kabupaten/Kota tidak boleh kosong!" }));
+    }
 
-		if (address === "") {
-			failed = true
-			setError((error) => ({ ...error, "address": "Alamat tidak boleh kosong!" }))
-		}
+    if (address === "") {
+      failed = true;
+      setError((error) => ({ ...error, address: "Alamat tidak boleh kosong!" }));
+    }
 
-		if (failed) {
-			return
-		}
+    if (failed) {
+      return;
+    }
 
-		const payload = new FormData()
+    const payload = new FormData();
 
-		payload.append('first_name', firstName)
-		payload.append('last_name', lastName)
-		payload.append('phone_number', phoneNumber)
-		payload.append('gender', gender)
-		payload.append('status', status)
-		payload.append('bank_account', bankAccount)
-		payload.append('bank_name', bankName)
-		payload.append('bank_username', bankUsername)
-		payload.append('province', province)
-		payload.append('city', city)
-		payload.append('address', address)
+    payload.append("first_name", firstName);
+    payload.append("last_name", lastName);
+    payload.append("phone_number", phoneNumber);
+    payload.append("gender", gender);
+    payload.append("status", status);
+    payload.append("bank_account", bankAccount);
+    payload.append("bank_name", bankName);
+    payload.append("bank_username", bankUsername);
+    payload.append("province", province);
+    payload.append("city", city);
+    payload.append("address", address);
 
-		if (!!selectedProfile) {
-			payload.append('avatar', selectedProfile)
-		}
+    if (!!selectedProfile) {
+      payload.append("avatar", selectedProfile);
+    }
 
-		editUserHit({ token: token, body: payload })
-	}
+    editUserHit({ token: token, body: payload });
+  };
 
-	const changeProfileHandler = (e) => {
-		e.preventDefault()
-		let failed = false
-		setError((error) => ({ ...error, "fotoProfil": "" }))
+  const changeProfileHandler = (e) => {
+    e.preventDefault();
+    let failed = false;
+    setError((error) => ({ ...error, fotoProfil: "" }));
 
-		if (!e.target.files || e.target.files.length === 0) {
-			setSelectedProfile(undefined)
-			return
-		}
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedProfile(undefined);
+      return;
+    }
 
-		if (!imgAllow.includes(e.target.files[0].type)) {
-			failed = true
-			setError((error) => ({ ...error, "fotoProfil": "Foto profil bukan gambar yang didukung!" }))
-		}
+    if (!imgAllow.includes(e.target.files[0].type)) {
+      failed = true;
+      setError((error) => ({ ...error, fotoProfil: "Foto profil bukan gambar yang didukung!" }));
+    }
 
-		if (failed) {
-			return
-		}
+    if (failed) {
+      return;
+    }
 
-		setSelectedProfile(e.target.files[0])
-	}
+    setSelectedProfile(e.target.files[0]);
+  };
 
-	const resetProfilehandler = (e) => {
-		e.preventDefault()
-		setSelectedProfile(undefined)
-		setPreviewProfile(undefined)
-	}
+  const resetProfilehandler = (e) => {
+    e.preventDefault();
+    setSelectedProfile(undefined);
+    setPreviewProfile(undefined);
+  };
 
-	useEffect(() => {
-		if (isSuccess) {
-			dispatch(addUser(dataEdit.data))
-			setSelectedProfile(undefined)
-			setPreviewProfile(undefined)
-			setError((error) => ({ ...error, "alert": { "variant": "success", "message": "Berhasil melakukan edit profil!" } }))
-		}
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(addUser(dataEdit.data));
+      setSelectedProfile(undefined);
+      setPreviewProfile(undefined);
+      setError((error) => ({ ...error, alert: { variant: "success", message: "Berhasil melakukan edit profil!" } }));
+    }
 
-		if (isError) {
-			if (Array.isArray(errorEdit.data)) {
-				errorEdit.data.forEach((el) =>
-					setError((error) => ({ ...error, "alert": { "variant": "danger", "message": el.data.message } }))
-				);
-			} else {
-				setError((error) => ({ ...error, "alert": { "variant": "danger", "message": errorEdit.data.message } }))
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoading])
+    if (isError) {
+      if (Array.isArray(errorEdit.data)) {
+        errorEdit.data.forEach((el) => setError((error) => ({ ...error, alert: { variant: "danger", message: el.data.message } })));
+      } else {
+        setError((error) => ({ ...error, alert: { variant: "danger", message: errorEdit.data.message } }));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
 
-	useEffect(() => {
-		if (!selectedProfile) {
-			setPreviewProfile(undefined)
-			return
-		}
+  useEffect(() => {
+    if (!selectedProfile) {
+      setPreviewProfile(undefined);
+      return;
+    }
 
-		let objectUrl = URL.createObjectURL(selectedProfile)
-		setPreviewProfile(objectUrl)
+    let objectUrl = URL.createObjectURL(selectedProfile);
+    setPreviewProfile(objectUrl);
 
-		return () => URL.revokeObjectURL(objectUrl)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedProfile])
+    return () => URL.revokeObjectURL(objectUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProfile]);
 
 	return (
 		<PenyewaLayout>
@@ -356,7 +347,7 @@ const InformasiPersonal = () => {
 								</Form.Group>
 								<Form.Group className="mb-4" controlId="formBasicNomorRekening">
 									<Form.Label>Nomor Rekening</Form.Label>
-									<Form.Control type="text" placeholder="Masukan nomor rekening"
+									<Form.Control type="text" placeholder="Masukan nama bank rekening"
 										defaultValue={userData.bank_account}
 										ref={(ref) => formRef.current.bankAccount = ref}
 									/>
@@ -465,4 +456,4 @@ const InformasiPersonal = () => {
 	);
 }
 
-export default InformasiPersonal
+export default InformasiPersonal;

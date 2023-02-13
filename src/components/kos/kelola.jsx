@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import ListKos from "./lists"
-import VerifikasiPembayaran from "./verifikasi-pembayaran"
+import InformasiAktivitas from "../../pages/penyewa/kos/informasi-aktivitas"
 
 const KelolaKos = () => {
 	const navigate = useNavigate()
@@ -17,8 +17,7 @@ const KelolaKos = () => {
 				<Button variant="primary" className="mt-3" onClick={tambahHandler}>Tambah Kos Baru</Button>
 			</div>
 			<ListKos />
-			<hr />
-			<VerifikasiPembayaran />
+			<InformasiAktivitas />
 		</div>
 	)
 

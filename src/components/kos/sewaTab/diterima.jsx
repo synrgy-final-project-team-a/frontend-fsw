@@ -1,9 +1,7 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
 export default function Diterima() {
-  const navigate = useNavigate();
   return (
     <>
       <Container>
