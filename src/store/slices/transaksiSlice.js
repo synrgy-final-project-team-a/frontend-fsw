@@ -21,7 +21,11 @@ const initialState = {
 	room_name: "",
 	kost_address: "",
 	duration_type: "",
-	price: ""
+	price: "",
+	bank_account: "",
+	bank_username: "",
+	bank_name: "",
+	booking_code: ""
 }
 
 export const slice = createSlice({

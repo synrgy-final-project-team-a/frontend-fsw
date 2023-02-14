@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useGetListbyPencariMutation } from "../../../store/apis/transaksi";
+import { useGetListbyPencariMutation, useGetOnebyPencariMutation } from "../../../store/apis/transaksi";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
@@ -27,6 +27,11 @@ const ProfilePencari = () => {
   const [getListHit, { isLoading, isSuccess, isError, data }] =
     useGetListbyPencariMutation();
 
+  const [
+    getOneHit,
+    { isLoading: loadingOne, isSuccess: successOne, data: dataOne }
+  ] = useGetOnebyPencariMutation();
+
   useEffect(() => {
     getListHit({ profileId: idProfile });
 
@@ -38,16 +43,10 @@ const ProfilePencari = () => {
     return date.toLocaleDateString();
   }
 
-  const goToTransaksi = (e, transaction_id, status) => {
+  const goToTransaksi = (e, booking) => {
     e.preventDefault();
 
-    const initialState = {
-      status: status,
-      transaction_id: transaction_id,
-    }
-
-    dispatch(addBooking(initialState))
-    navigate('/pengajuan-sewa')
+    getOneHit({ bookingId: booking })
   }
 
   const handleDisplay = (e, i) => {
@@ -56,6 +55,32 @@ const ProfilePencari = () => {
     newDisplay[i] = true
     setDisplay(newDisplay)
   }
+
+  useEffect(() => {
+    if (successOne) {
+      const result = dataOne.data[0]
+      const initialState = {
+        nama: result.name,
+        status: result.status,
+        duration_type: result.duration_type,
+        check_in: result.check_in,
+        check_out: result.check_out,
+        room_name: result.room_name,
+        kost_name: result.kost_name,
+        transaction_id: result.transaction_id,
+        bank_name: result.bank_name,
+        bank_username: result.bank_username,
+        bank_account: result.bank_account,
+        kost_address: result.address,
+        price: result.price,
+        booking_code: result.booking_code
+      }
+      dispatch(addBooking(initialState))
+      navigate('/pengajuan-sewa')
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingOne])
 
   return (
     <PencariLayout>
@@ -260,15 +285,11 @@ const ProfilePencari = () => {
                           <Col xs={12} lg={{ span: 9, offset: 3 }}>
                             <hr />
                             <div className="d-flex flex-row-reverse">
-                              {
-                                el.status === "CONFIRMED" ? (
-                                  <Button variant="primary" className="ms-2"
-                                    onClick={e => goToTransaksi(e, el.transaction_id, el.status)}
-                                  >
-                                    Bayar Kosan
-                                  </Button>
-                                ) : ""
-                              }
+                              <Button variant="primary" className="ms-2"
+                                onClick={e => goToTransaksi(e, el.booking_id)}
+                              >
+                                Baca
+                              </Button>
                               {
                                 el.status === "APPROVED" ? (
                                   <Button variant="primary" className="ms-2">
