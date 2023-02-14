@@ -9,6 +9,7 @@ import { emptyEmail, emptyToken } from "../store/slices/authSlice";
 import { emptyKos } from "../store/slices/kosSlice";
 import { addUser, emptyUser } from "../store/slices/userSlice";
 import { socket } from "../pages/pencari/chat/chatPage";
+import { ToastContainer } from "react-toastify";
 
 const PencariLayout = ({ children }) => {
   const dispatch = useDispatch();
@@ -64,7 +65,6 @@ const PencariLayout = ({ children }) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoadingUser])
-
   useEffect(() => {
     socket.on("subscribe-notification", (data) => {
       if (!notifRef.current.created_at) {
@@ -101,13 +101,14 @@ const PencariLayout = ({ children }) => {
       }
     });
   }
-  return (
-    <>
-      <NavbarComponent routes={PencariRoutes} />
-      {children}
-      <FooterComponent />
-    </>
-  );
-};
+	return (
+		<>
+			<ToastContainer />
+			<NavbarComponent routes={PencariRoutes} />
+			{children}
+			<FooterComponent />
+		</>
+	)
+}
 
 export default PencariLayout;
