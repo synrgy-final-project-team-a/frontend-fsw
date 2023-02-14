@@ -9,7 +9,7 @@ const transactionApi = createApi({
   endpoints: (build) => ({
     transactionList: build.mutation({
       query: ({token, id}) => ({
-        url: `api/tennant/transactions/list/${id}?page=0&size=10`,
+        url: `api/tennant/transactions/list/${id}?page=0&size=20`,
         method: "GET",  
         headers: {
           authorization: `Bearer ${token}`,
