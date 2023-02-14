@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row, Button, Alert } from "react-bootstrap"
+import { Col, Container, Row, Button, Alert, Card } from "react-bootstrap"
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import PenyewaLayout from "../../../layouts/penyewa.layout";
@@ -130,7 +130,11 @@ const DetailPengajuan = () => {
                 }
 
                 {isLoading ?
-                    <h5>.................</h5> :
+                    <Container>
+                        <Card className="skeleton" style={{ height: "400px" }}>
+                            &nbsp;
+                        </Card>
+                    </Container> :
                     isSuccess ?
                         data.data.map((el, i) => {
                             return (
@@ -154,9 +158,9 @@ const DetailPengajuan = () => {
                                                     <h5 className="nama-kos mb-1">{el.kost_name}</h5>
                                                     <p className="regular-text mb-1">{el.address}</p>
                                                     <p className="regular-text mb-3">{el.room_name}</p>
-                                                    <div className="d-flex flex-columm">
+                                                    <div className="d-flex">
                                                         <div>
-                                                            <div className="d-flex flex-columm pe-3">
+                                                            <div className="d-flex pe-3">
                                                                 <span><img src="/calendar-tick.png" className="border-right pe-2" alt="" /></span>
                                                                 <div className="ps-2">
                                                                     <p className="tanggal-durasi m-0">Tanggal Masuk</p>
@@ -166,7 +170,7 @@ const DetailPengajuan = () => {
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <div className="d-flex flex-columm">
+                                                            <div className="d-flex">
                                                                 <span><img src="/clock.png" className="border-right pe-2" alt="" /></span>
                                                                 <div className="ps-2">
                                                                     <p className="tanggal-durasi m-0">Durasi Sewa</p>
@@ -237,202 +241,202 @@ const DetailPengajuan = () => {
                                             :
 
                                             el.status === "CONFIRMED" ?
-                                            <Col xs={12} lg={9} className="invoice-box ps-4">
-                                                <div className="mb-2">
-                                                    <h5 className="nama-kos mb-1">{el.kost_name}</h5>
-                                                    <p className="regular-text mb-1">{el.address}</p>
-                                                    <p className="regular-text mb-3">{el.room_name}</p>
-                                                    <div className="d-flex flex-columm">
-                                                        <div>
-                                                            <div className="d-flex flex-columm pe-3">
-                                                                <span><img src="/calendar-tick.png" className="border-right pe-2" alt="" /></span>
-                                                                <div className="ps-2">
-                                                                    <p className="tanggal-durasi m-0">Tanggal Masuk</p>
-                                                                    <p className="tanggal-durasi-sub">{indoDateFormat(el.check_in)}</p>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <div className="d-flex flex-columm">
-                                                                <span><img src="/clock.png" className="border-right pe-2" alt="" /></span>
-                                                                <div className="ps-2">
-                                                                    <p className="tanggal-durasi m-0">Durasi Sewa</p>
-                                                                    <p className="tanggal-durasi-sub">{durationToDurasi(el.duration_type)}an</p>
-
+                                                <Col xs={12} lg={9} className="invoice-box ps-4">
+                                                    <div className="mb-2">
+                                                        <h5 className="nama-kos mb-1">{el.kost_name}</h5>
+                                                        <p className="regular-text mb-1">{el.address}</p>
+                                                        <p className="regular-text mb-3">{el.room_name}</p>
+                                                        <div className="d-flex">
+                                                            <div>
+                                                                <div className="d-flex pe-3">
+                                                                    <span><img src="/calendar-tick.png" className="border-right pe-2" alt="" /></span>
+                                                                    <div className="ps-2">
+                                                                        <p className="tanggal-durasi m-0">Tanggal Masuk</p>
+                                                                        <p className="tanggal-durasi-sub">{indoDateFormat(el.check_in)}</p>
+                                                                    </div>
 
                                                                 </div>
+                                                            </div>
+                                                            <div>
+                                                                <div className="d-flex">
+                                                                    <span><img src="/clock.png" className="border-right pe-2" alt="" /></span>
+                                                                    <div className="ps-2">
+                                                                        <p className="tanggal-durasi m-0">Durasi Sewa</p>
+                                                                        <p className="tanggal-durasi-sub">{durationToDurasi(el.duration_type)}an</p>
 
+
+                                                                    </div>
+
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <p className="bold-text" style={{ color: "#616161" }}>{rupiahFormat(el.price)} <span className="text-muted">/ {durationToDurasi(el.duration_type)} </span></p>
                                                     </div>
-                                                    <p className="bold-text" style={{ color: "#616161" }}>{rupiahFormat(el.price)} <span className="text-muted">/ {durationToDurasi(el.duration_type)} </span></p>
-                                                </div>
-                                                <hr />
-                                                <div className="mb-2">
-                                                    <p className="bold-text" style={{ color: "#616161" }}>Data Penghuni Kosan</p>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td className="regular-text">Nama</td>
-                                                                <td className="text-end bold-text" style={{ paddingLeft: "300px" }}>{el.name}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">No. Handphone</td>
-                                                                <td className="text-end bold-text">{el.phone_number}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <hr />
-                                                <div>
-                                                    <p className="bold-text" style={{ color: "#616161" }}>Informasi Sewa Kosan</p>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td className="regular-text">ID Booking</td>
-                                                                <td className="text-end bold-text" style={{ paddingLeft: "300px" }}>{el.booking_code}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Tanggal Sewa</td>
-                                                                <td className="text-end bold-text">{indoDateFormat(el.check_in)}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Tanggal Selesai</td>
-                                                                <td className="text-end bold-text">{indoDateFormat(el.check_out)}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Lama Sewa</td>
-                                                                <td className="text-end bold-text">{durationToDurasi(el.duration_type)}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Durasi Sewa</td>
-                                                                <td className="text-end bold-text">{durationToDurasi(el.duration_type)}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                </div>
-                                                <hr />
-                                            </Col>
-
-                                            :
-
-                                            el.status === "REJECTED" ?
-                                            navigate("/penyewa/kos")
-
-                                            :
-
-                                            <Col xs={12} lg={9} className="invoice-box-2 p-3 ms-3">
-                                                <div className="mb-2">
-                                                    <div className="d-flex" style={{ gap: "364px" }}>
-                                                        <h5 className="semibold-text mb-1">Pembayaran</h5>
-                                                        <Button className="btn-bukti-bayar"><img src="/document-download.png" className="mb-1 me-2" alt="" /><a href={el.proof_of_payment} className="text-decoration-none">Unduh Bukti Pembayaran</a></Button>
+                                                    <hr />
+                                                    <div className="mb-2">
+                                                        <p className="bold-text" style={{ color: "#616161" }}>Data Penghuni Kosan</p>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td className="regular-text">Nama</td>
+                                                                    <td className="text-end bold-text" style={{ paddingLeft: "300px" }}>{el.name}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="regular-text">No. Handphone</td>
+                                                                    <td className="text-end bold-text">{el.phone_number}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
+                                                    <hr />
+                                                    <div>
+                                                        <p className="bold-text" style={{ color: "#616161" }}>Informasi Sewa Kosan</p>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td className="regular-text">ID Booking</td>
+                                                                    <td className="text-end bold-text" style={{ paddingLeft: "300px" }}>{el.booking_code}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="regular-text">Tanggal Sewa</td>
+                                                                    <td className="text-end bold-text">{indoDateFormat(el.check_in)}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="regular-text">Tanggal Selesai</td>
+                                                                    <td className="text-end bold-text">{indoDateFormat(el.check_out)}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="regular-text">Lama Sewa</td>
+                                                                    <td className="text-end bold-text">{durationToDurasi(el.duration_type)}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="regular-text">Durasi Sewa</td>
+                                                                    <td className="text-end bold-text">{durationToDurasi(el.duration_type)}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <hr />
+                                                </Col>
+
+                                                :
+
+                                                el.status === "REJECTED" ?
+                                                    navigate("/penyewa/kos")
+
+                                                    :
+
+                                                    <Col xs={12} lg={9} className="invoice-box-2 p-3 ms-3">
+                                                        <div className="mb-2">
+                                                            <div className="d-flex" style={{ gap: "364px" }}>
+                                                                <h5 className="semibold-text mb-1">Pembayaran</h5>
+                                                                <Button className="btn-bukti-bayar"><img src="/document-download.png" className="mb-1 me-2" alt="" /><a href={el.proof_of_payment} className="text-decoration-none">Unduh Bukti Pembayaran</a></Button>
+                                                            </div>
 
 
-                                                    <p className="regular-text my-2">ID Booking {el.booking_code}</p>
-                                                    <div className="d-flex flex-columm" style={{ gap: "364px" }}>
-                                                        <div>
-                                                            <div className="d-flex flex-columm">
-                                                                <span className="py-2"><img src="/house-filled.png" className="border-right pe-1" alt="" /></span>
-                                                                <div className="ps-2 pe-1">
-                                                                    <p className="bold-text m-0">{el.kost_name}</p>
-                                                                    <p className="small-text mb-0">{el.address}</p>
+                                                            <p className="regular-text my-2">ID Booking {el.booking_code}</p>
+                                                            <div className="d-flex" style={{ gap: "364px" }}>
+                                                                <div>
+                                                                    <div className="d-flex">
+                                                                        <span className="py-2"><img src="/house-filled.png" className="border-right pe-1" alt="" /></span>
+                                                                        <div className="ps-2 pe-1">
+                                                                            <p className="bold-text m-0">{el.kost_name}</p>
+                                                                            <p className="small-text mb-0">{el.address}</p>
+                                                                        </div>
+
+                                                                    </div>
                                                                 </div>
+                                                                <div>
+                                                                    <div className="d-flex">
+                                                                        <span className="py-2"><img src="/empty-wallet-tick.png" className="border-right pe-1" alt="" /></span>
+                                                                        <div className="ps-2">
+                                                                            <p className="total-pembayaran m-0">Total Pembayaran</p>
+                                                                            <p className="total-pembayaran-sub mb-0">{rupiahFormat(el.price)}</p>
+                                                                        </div>
 
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div>
-                                                            <div className="d-flex flex-columm">
-                                                                <span className="py-2"><img src="/empty-wallet-tick.png" className="border-right pe-1" alt="" /></span>
-                                                                <div className="ps-2">
-                                                                    <p className="total-pembayaran m-0">Total Pembayaran</p>
-                                                                    <p className="total-pembayaran-sub mb-0">{rupiahFormat(el.price)}</p>
-                                                                </div>
-
-                                                            </div>
+                                                        <hr />
+                                                        <div className="mb-2">
+                                                            <p className="bold-text" style={{ color: "#616161" }}>Data Penghuni Kos</p>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td className="regular-text">Nama</td>
+                                                                        <td className="text-end bold-text" >{el.name}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="regular-text">No. Handphone</td>
+                                                                        <td className="text-end bold-text" style={{ paddingLeft: "466px" }}>{el.phone_number}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="regular-text">Tanggal Mulai Sewa</td>
+                                                                        <td className="text-end bold-text">{indoDateFormat(el.check_in)}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="regular-text">Tanggal Selesai Sewa</td>
+                                                                        <td className="text-end bold-text">{indoDateFormat(el.check_out)}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <hr />
-                                                <div className="mb-2">
-                                                    <p className="bold-text" style={{ color: "#616161" }}>Data Penghuni Kos</p>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td className="regular-text">Nama</td>
-                                                                <td className="text-end bold-text" >{el.name}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">No. Handphone</td>
-                                                                <td className="text-end bold-text" style={{ paddingLeft: "466px" }}>{el.phone_number}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Tanggal Mulai Sewa</td>
-                                                                <td className="text-end bold-text">{indoDateFormat(el.check_in)}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Tanggal Selesai Sewa</td>
-                                                                <td className="text-end bold-text">{indoDateFormat(el.check_out)}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <hr />
-                                                <div>
-                                                    <p className="bold-text" style={{ color: "#616161" }}>Detail Pembayaran</p>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td className="regular-text">ID Booking</td>
-                                                                <td className="text-end bold-text" style={{ paddingLeft: "463px" }}>{el.booking_code}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Tanggal Pembayaran</td>
-                                                                <td className="text-end bold-text">{el.date_payment}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Metode Pembayaran</td>
-                                                                <td className="text-end bold-text">{el.payment_method}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Durasi Sewa</td>
-                                                                <td className="text-end bold-text">{durationToDurasi(el.duration_type)}an</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                        <hr />
+                                                        <div>
+                                                            <p className="bold-text" style={{ color: "#616161" }}>Detail Pembayaran</p>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td className="regular-text">ID Booking</td>
+                                                                        <td className="text-end bold-text" style={{ paddingLeft: "463px" }}>{el.booking_code}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="regular-text">Tanggal Pembayaran</td>
+                                                                        <td className="text-end bold-text">{el.date_payment}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="regular-text">Metode Pembayaran</td>
+                                                                        <td className="text-end bold-text">{el.payment_method}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="regular-text">Durasi Sewa</td>
+                                                                        <td className="text-end bold-text">{durationToDurasi(el.duration_type)}an</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
 
-                                                </div>
-                                                <hr />
-                                                <div>
-                                                    <p className="bold-text" style={{ color: "#616161" }}>Total Transaksi</p>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td className="regular-text">Bank Tujuan</td>
-                                                                <td className="text-end bold-text" style={{ paddingLeft: "567px" }}>{el.bank_name}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Pembayaran DP</td>
-                                                                <td className="text-end bold-text">Rp. 0</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="regular-text">Total Pembayaran</td>
-                                                                <td className="text-end bold-text">{rupiahFormat(el.price)}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                        </div>
+                                                        <hr />
+                                                        <div>
+                                                            <p className="bold-text" style={{ color: "#616161" }}>Total Transaksi</p>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td className="regular-text">Bank Tujuan</td>
+                                                                        <td className="text-end bold-text" style={{ paddingLeft: "567px" }}>{el.bank_name}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="regular-text">Pembayaran DP</td>
+                                                                        <td className="text-end bold-text">Rp. 0</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="regular-text">Total Pembayaran</td>
+                                                                        <td className="text-end bold-text">{rupiahFormat(el.price)}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
 
-                                                </div>
-                                                {el.status === "REVIEWED" ?
-                                                    <div className="d-flex flex-row-reverse mt-3">
-                                                        <Button className="btn-terima" onClick={e => handleApprove(e, el.transaction_id)}>Terima Pembayaran</Button>
-                                                        <Button className="btn-tolak me-4" onClick={e => handleReject(e, el.transaction_id)}>Tolak</Button>
-                                                    </div> : ""
-                                                }
+                                                        </div>
+                                                        {el.status === "REVIEWED" ?
+                                                            <div className="d-flex flex-row-reverse mt-3">
+                                                                <Button className="btn-terima" onClick={e => handleApprove(e, el.transaction_id)}>Terima Pembayaran</Button>
+                                                                <Button className="btn-tolak me-4" onClick={e => handleReject(e, el.transaction_id)}>Tolak</Button>
+                                                            </div> : ""
+                                                        }
 
-                                            </Col>
+                                                    </Col>
 
                                         }
 
