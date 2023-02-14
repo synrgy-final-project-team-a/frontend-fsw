@@ -19,6 +19,7 @@
     "bootstrap-icons": "^1.10.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
+    "react-bootstrap-sweetalert": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-owl-carousel": "^2.3.3",
     "react-quill": "^2.0.0",
@@ -31,6 +32,7 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.57.1",
     "socket.io-client": "^4.5.4",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
