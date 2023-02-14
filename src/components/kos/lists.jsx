@@ -3,8 +3,10 @@ import { Badge, Button, Card, Col, Row } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useDeleteKosByPenyewaMutation, useGetListByPenyewaMutation } from "../../store/apis/kos"
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ListKos = () => {
+	const navigate = useNavigate()
 
 	const profileId = useSelector(state => state.auth.token.profile_id)
 
@@ -17,6 +19,11 @@ const ListKos = () => {
 		deleteHit,
 		{ isLoading: loadingDelete, isSuccess: successDelete, isError: errorDelete }
 	] = useDeleteKosByPenyewaMutation()
+
+	const handleEditKos = (e, id) => {
+		e.preventDefault()
+		navigate('/penyewa/kos/edit/'+id)
+	}
 
 	const handleDeleteKos = (e, id, name) => {
 		e.preventDefault()
@@ -135,6 +142,7 @@ const ListKos = () => {
 													<br />
 													<div className="d-flex flex-row-reverse">
 														<Button variant="outline-secondary" size="sm" className="m-1"
+															onClick={e => handleEditKos(e, el.id)}
 															disabled={loadingDelete}
 														>Edit</Button>
 														<Button variant="outline-danger" size="sm" className="m-1"
