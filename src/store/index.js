@@ -7,6 +7,7 @@ import usersApi from "./apis/users";
 import chatApi from "./apis/chat";
 import kosApi from "./apis/kos";
 import transaksiApi from "./apis/transaksi";
+import bannerApi from "./apis/banner";
 
 import { authPersistReducer } from "./slices/authSlice";
 import { userPersistReducer } from "./slices/userSlice";
@@ -18,33 +19,35 @@ import { decorReducer } from "./slices/decorSlice";
 import { alamatReducer } from "./slices/alamatSlice";
 
 export const store = configureStore({
-  reducer: {
-    [authApi.reducerPath]: authApi.reducer,
-    [usersApi.reducerPath]: usersApi.reducer,
-    [kosApi.reducerPath]: kosApi.reducer,
-    [transactionApi.reducerPath]: transactionApi.reducer,
-    [transaksiApi.reducerPath]: transaksiApi.reducer,
+	reducer: {
+		[authApi.reducerPath]: authApi.reducer,
+		[usersApi.reducerPath]: usersApi.reducer,
+		[kosApi.reducerPath]: kosApi.reducer,
+		[bannerApi.reducerPath]: bannerApi.reducer,
+		[transactionApi.reducerPath]: transactionApi.reducer,
+		[transaksiApi.reducerPath]: transaksiApi.reducer,
     [chatApi.reducerPath]: chatApi.reducer,
-    auth: authPersistReducer,
-    user: userPersistReducer,
-    kos: kosPersistReducer,
-    transaksi: transaksiPersistReducer,
-    decor: decorReducer,
-    alamat: alamatReducer,
+		auth: authPersistReducer,
+		user: userPersistReducer,
+		kos: kosPersistReducer,
+		transaksi: transaksiPersistReducer,
+		decor: decorReducer,
+		alamat: alamatReducer,
     chat: chatPersistReducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      immutableCheck: false,
-      serializableCheck: false,
-    }).concat([
-      authApi.middleware,
-      usersApi.middleware,
-      kosApi.middleware,
-      transactionApi.middleware,
-      transaksiApi.middleware,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			immutableCheck: false,
+			serializableCheck: false
+		}).concat([
+			authApi.middleware,
+			usersApi.middleware,
+			kosApi.middleware,
+			bannerApi.middleware,
+			transactionApi.middleware,
+			transaksiApi.middleware,
       chatApi.middleware,
-    ]),
-});
+		]),
+})
 
 export const persistor = persistStore(store);
