@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
 	searchOnTop: false,
-	searchText: ""
+	searchText: "",
+	notifNum: 0,
 }
 
 const slice = createSlice({
@@ -21,6 +22,12 @@ const slice = createSlice({
 		resetSearchText: (state) => {
 			state.searchText = ""
 		},
+		setNotifNum: (state, { payload }) => {
+			state.notifNum = payload
+		},
+		resetNotifNum: (state) => {
+			state.notifNum = 0
+		},
 	}
 })
 
@@ -28,7 +35,9 @@ export const {
 	searchIsTop,
 	searchIsBottom,
 	setSearchText,
-	resetSearchText
+	resetSearchText,
+	setNotifNum,
+	resetNotifNum
 } = slice.actions
 
 export const decorReducer = slice.reducer

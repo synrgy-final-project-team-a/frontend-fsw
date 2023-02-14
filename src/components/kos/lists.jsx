@@ -1,138 +1,174 @@
-import { useEffect, useState } from "react"
-import { Alert, Badge, Button, Card, Col, Row } from "react-bootstrap"
-import { useSelector } from "react-redux"
-import { useDeleteKosByPenyewaMutation, useGetListByPenyewaMutation } from "../../store/apis/kos"
+import { useEffect } from "react";
+import { Badge, Button, Card, Col, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import {
+  useDeleteKosByPenyewaMutation,
+  useGetListByPenyewaMutation,
+} from "../../store/apis/kos";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ListKos = () => {
+  const navigate = useNavigate()
 
-	const profileId = useSelector(state => state.auth.token.profile_id)
+  const profileId = useSelector((state) => state.auth.token.profile_id);
 
-	const [alert, setAlert] = useState({})
+  const [getListHit, { isLoading, isSuccess, isError, data }] =
+    useGetListByPenyewaMutation();
 
-	const [
-		getListHit,
-		{ isLoading, isSuccess, isError, data }
-	] = useGetListByPenyewaMutation()
+  const [
+    deleteHit,
+    {
+      isLoading: loadingDelete,
+      isSuccess: successDelete,
+      isError: errorDelete,
+    },
+  ] = useDeleteKosByPenyewaMutation();
 
-	const [
-		deleteHit,
-		{ isLoading: loadingDelete, isSuccess: successDelete, isError: errorDelete }
-	] = useDeleteKosByPenyewaMutation()
+  const handleEditKos = (e, id) => {
+    e.preventDefault()
+    navigate('/penyewa/kos/edit/' + id)
+  }
 
-	const handleDeleteKos = (e, id, name) => {
-		e.preventDefault()
+  const handleDeleteKos = (e, id, name) => {
+    e.preventDefault();
 
-		let confirm = window.confirm(`Apakah anda yakin ingin menghapus ${name}?`)
+    let confirm = window.confirm(`Apakah anda yakin ingin menghapus ${name}?`);
 
-		if (confirm) {
-			deleteHit(id)
-		}
-	}
+    if (!confirm) {
+      return;
+    }
 
-	useEffect(() => {
-		if (successDelete) {
-			setAlert({
-				variant: "success",
-				message: "Berhasil menghapus kos!",
-				show: true
-			})
+    toast.loading("Sedang menghapus kos", {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    });
 
-			const pageList = 0
-			const sizeList = 100
-			getListHit({ idProfile: profileId, page: pageList, size: sizeList })
-		}
+    deleteHit(id);
+  };
 
-		if (errorDelete) {
-			setAlert({
-				variant: "danger",
-				message: "Gagal menghapus kos!",
-				show: true
-			})
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [loadingDelete])
+  useEffect(() => {
+    if (successDelete) {
+      toast.dismiss();
+      toast.success("Sukses menghapus kos", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
 
-	useEffect(() => {
-		const pageList = 0
-		const sizeList = 100
-		getListHit({ idProfile: profileId, page: pageList, size: sizeList })
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+      const pageList = 0;
+      const sizeList = 100;
+      getListHit({ idProfile: profileId, page: pageList, size: sizeList });
+    }
 
-	return (
-		<div className="mt-3">
-			<Row className="g-3">
-				{
-					alert.hasOwnProperty('message') && alert.message !== "" && alert.show === true ?
-						<Col xs={12}>
-							<Alert variant={alert.variant} dismissible onClose={e => setAlert({ show: false })}>
-								{alert.message}
-							</Alert>
-						</Col> :
-						""
-				}
-				{
-					isLoading ?
-						<h1>Loading....</h1> :
-						isSuccess ?
-							data.data.content.length !== 0 ?
-								data.data.content.map((el, i) => {
-									return (
-										<Col xs={12} lg={6} key={i}>
-											<Card bg="outline-primary" className="flex-row">
-												<Card.Img src="/banner.png" />
-												<Card.Body className="d-flex flex-column">
-													<Card.Title>{el.kostName}</Card.Title>
-													<Card.Text>
-														{el.address}
-													</Card.Text>
-													<div>
-														{
-															el.kostTypeMan === true ?
-																<Badge bg="outline-primary">
-																	Putra
-																</Badge> :
-																""
-														}
-														{
-															el.kostTypeWoman === true ?
-																<Badge bg="outline-warning">
-																	Putri
-																</Badge> :
-																""
-														}
-														{
-															el.kostTypeMixed === true ?
-																<Badge bg="outline-info">
-																	Campuran
-																</Badge> :
-																""
-														}
-													</div>
-													<br />
-													<div className="d-flex flex-row-reverse">
-														<Button variant="outline-secondary" size="sm" className="m-1"
-															disabled={loadingDelete}
-														>Edit</Button>
-														<Button variant="outline-danger" size="sm" className="m-1"
-															disabled={loadingDelete}
-															onClick={e => handleDeleteKos(e, el.id, el.kostName)}
-														>Hapus</Button>
-													</div>
-												</Card.Body>
-											</Card>
-										</Col>
-									)
-								}) :
-								<h3>Tidak ada kos</h3> :
-							isError ?
-								<h1>Error.</h1> :
-								""
+    if (errorDelete) {
+      toast.dismiss();
+      toast.error("Gagal menghapus kos", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingDelete]);
 
-				}
-			</Row>
-		</div>
-	)
-}
+  useEffect(() => {
+    const pageList = 0;
+    const sizeList = 100;
+    getListHit({ idProfile: profileId, page: pageList, size: sizeList });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-export default ListKos
+  return (
+    <div className="mt-3">
+      <Row className="g-3">
+        {
+          isLoading ?
+            [...Array(2).keys()].map((el, i) => {
+              return (
+                <Col xs={12} lg={6} key={i}>
+                  <Card className="skeleton" style={{ height: "250px" }}>
+                    &nbsp;
+                  </Card>
+                </Col>
+              )
+            }) :
+            isSuccess ?
+              data.data.content.length !== 0 ?
+                data.data.content.map((el, i) => {
+                  return (
+                    <Col xs={12} lg={6} key={i}>
+                      <Card bg="outline-primary" className="flex-row" style={{ height: "100%" }}>
+                        <Card.Img src={el.frontBuildingPhoto} />
+                        <Card.Body className="d-flex flex-column">
+                          <Card.Title>{el.kostName}</Card.Title>
+                          <Card.Text>
+                            {el.address}
+                          </Card.Text>
+                          <div>
+                            {
+                              el.kostTypeMan === true ?
+                                <Badge bg="outline-primary">
+                                  Putra
+                                </Badge> :
+                                ""
+                            }
+                            {
+                              el.kostTypeWoman === true ?
+                                <Badge bg="outline-warning">
+                                  Putri
+                                </Badge> :
+                                ""
+                            }
+                            {
+                              el.kostTypeMixed === true ?
+                                <Badge bg="outline-info">
+                                  Campuran
+                                </Badge> :
+                                ""
+                            }
+                          </div>
+                          <br />
+                          <div className="d-flex flex-row-reverse">
+                            <Button variant="outline-secondary" size="sm" className="m-1"
+                              onClick={e => handleEditKos(e, el.id)}
+                              disabled={loadingDelete}
+                            >Edit</Button>
+                            <Button variant="outline-danger" size="sm" className="m-1"
+                              disabled={loadingDelete}
+                              onClick={e => handleDeleteKos(e, el.id, el.kostName)}
+                            >Hapus</Button>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  )
+                }) :
+                <h3>Tidak ada kos</h3> :
+              isError ?
+                <h3>Error.</h3> :
+                ""
+
+        }
+      </Row>
+    </div>
+  )
+};
+
+export default ListKos;

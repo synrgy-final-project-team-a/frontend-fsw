@@ -11,6 +11,7 @@
 @import "search";
 @import "kelola-kos";
 @import "detailkos";
+@import "chat";
 @import "detail-pengajuan";
 
 @keyframes backgroundanimation {
@@ -28,7 +29,7 @@
 }
 
 .cursor-pointer {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .quill {
@@ -36,7 +37,7 @@
 }
 
 .fw-semibold {
-	font-weight: 600px;
+  font-weight: 600px;
 }
 
 table {

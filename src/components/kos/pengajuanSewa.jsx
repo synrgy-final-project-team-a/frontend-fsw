@@ -36,7 +36,9 @@ const PengajuanSewaIndex = () => {
 				navigate('/pengajuan-sewa/4')
 			} else if (transaksi.status === "APPROVED") {
 				navigate('/pengajuan-sewa/5')
-			} 
+			} else {
+				navigate('/')
+			}
 		} else {
 			if (params.id === "1") {
 				if (transaksi.status === "") {
@@ -76,7 +78,7 @@ const PengajuanSewaIndex = () => {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [params.id])
+	}, [transaksi.status, params.id])
 
 	return (
 		<div id="tambah-kos">

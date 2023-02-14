@@ -8,8 +8,8 @@ const transaksiApi = createApi({
 	tagTypes: ['Transaksi'],
 	endpoints: (build) => ({
 		addBookingByPencari: build.mutation({
-			query: ({ body, profileId, roomId }) => ({
-				url: `api/seeker/transactions/user/${profileId}/room/${roomId}`,
+			query: ({ body, profileId, priceId }) => ({
+				url: `api/seeker/transactions/user/${profileId}/price/${priceId}`,
 				method: 'POST',
 				body: body,
 			}),
@@ -30,13 +30,21 @@ const transaksiApi = createApi({
 			}),
 			invalidatesTags: ['Transaksi'],
 		}),
+		getOnebyPencari: build.mutation({
+			query: ({ bookingId }) => ({
+				url: `api/v1/transactions/${bookingId}`,
+				method: 'GET',
+			}),
+			invalidatesTags: ['Transaksi'],
+		}),
 	}),
 })
 
 export const {
 	useAddBookingByPencariMutation,
 	useAddBuktiByPencariMutation,
-	useGetListbyPencariMutation
+	useGetListbyPencariMutation,
+	useGetOnebyPencariMutation
 } = transaksiApi
 
 export default transaksiApi

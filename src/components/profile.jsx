@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import { Badge, ListGroup } from "react-bootstrap";
 
 const ProfileNav = () => {
-	const userData = useSelector(state => state.user.current)
 	const location = useLocation()
+
+	const notifNum = useSelector(state => state.decor.notifNum)
+	const userData = useSelector(state => state.user.current)
 
 	const roleRoutes = (link) => {
 		let profilePath = link
@@ -43,11 +45,15 @@ const ProfileNav = () => {
 				<ListGroup variant="flush">
 					<ListGroup.Item as={Link} to={roleRoutes("/profile/saya")}>Informasi Pengguna</ListGroup.Item>
 					<ListGroup.Item as={Link} to={roleRoutes("/profile/histori")}>Histori Transaksi</ListGroup.Item>
-					<ListGroup.Item className="d-flex justify-content-between align-items-center">
-						<span>Notifikasi</span>
-						<Badge bg="danger" pill>
-							14
-						</Badge>
+					<ListGroup.Item className="d-flex justify-content-between align-items-center"
+						as={Link} to={roleRoutes("/profile/pemberitahuan")}
+					>
+						<span>Pemberitahuan</span>
+						{
+							notifNum > 0 ?
+								<Badge bg="danger" pill>{notifNum}</Badge>
+								: ""
+						}
 					</ListGroup.Item>
 					<ListGroup.Item>Pengaturan</ListGroup.Item>
 				</ListGroup>

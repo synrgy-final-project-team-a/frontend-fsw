@@ -1,16 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore } from 'redux-persist';
+import { persistStore } from "redux-persist";
 
 import authApi from "./apis/authentication";
 import transactionApi from "./apis/transaction";
 import usersApi from "./apis/users";
+import chatApi from "./apis/chat";
 import kosApi from "./apis/kos";
 import transaksiApi from "./apis/transaksi";
-
-
+import bannerApi from "./apis/banner";
 
 import { authPersistReducer } from "./slices/authSlice";
 import { userPersistReducer } from "./slices/userSlice";
+import { chatPersistReducer } from "./slices/chatSlice";
 import { kosPersistReducer } from "./slices/kosSlice";
 import { transaksiPersistReducer } from "./slices/transaksiSlice";
 
@@ -22,14 +23,17 @@ export const store = configureStore({
 		[authApi.reducerPath]: authApi.reducer,
 		[usersApi.reducerPath]: usersApi.reducer,
 		[kosApi.reducerPath]: kosApi.reducer,
+		[bannerApi.reducerPath]: bannerApi.reducer,
 		[transactionApi.reducerPath]: transactionApi.reducer,
 		[transaksiApi.reducerPath]: transaksiApi.reducer,
+    [chatApi.reducerPath]: chatApi.reducer,
 		auth: authPersistReducer,
 		user: userPersistReducer,
 		kos: kosPersistReducer,
 		transaksi: transaksiPersistReducer,
 		decor: decorReducer,
-		alamat: alamatReducer
+		alamat: alamatReducer,
+    chat: chatPersistReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
@@ -39,9 +43,11 @@ export const store = configureStore({
 			authApi.middleware,
 			usersApi.middleware,
 			kosApi.middleware,
+			bannerApi.middleware,
 			transactionApi.middleware,
-			transaksiApi.middleware
+			transaksiApi.middleware,
+      chatApi.middleware,
 		]),
 })
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);

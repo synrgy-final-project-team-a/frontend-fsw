@@ -8,7 +8,11 @@ import { useGetListMutation } from "../store/apis/kos";
 import { useEffect } from "react";
 import { durationToDurasi, rupiahFormat } from "../store/utils/format";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMars, faVenus, faVenusMars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMars,
+  faVenus,
+  faVenusMars,
+} from "@fortawesome/free-solid-svg-icons";
 
 function BestKost() {
   const [getListHit, { isError, isSuccess, data, isLoading }] = useGetListMutation();

@@ -76,16 +76,15 @@
 
 #informasi-aktivitas {
 	.card {
-		max-width: 400px;
-		>.card-img {
-			max-width: 121px;
-			min-height: 124px;
-			object-fit: cover;
-		}
+    border-radius: 20px;
 
-		background: #FAFDFC;
-    	border-radius: 6px;
-	}
+    >.card-img {
+      border-radius: 20px 0 0 20px;
+      max-width: 150px;
+      min-height: 100px;
+      object-fit: cover;
+    }
+  }
 
 	.nama-kos{
 		font-style: normal;

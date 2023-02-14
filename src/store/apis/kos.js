@@ -71,6 +71,20 @@ const kosApi = createApi({
       }),
       invalidatesTags: ["Kos"],
     }),
+    getOneByPenyewa: build.mutation({
+      query: (id) => ({
+        url: `api/tennant/kost/get/${id}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["Kos"],
+    }),
+    getOneKamarByPenyewa: build.mutation({
+      query: (id) => ({
+        url: `api/tennant/room/get/${id}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["Kos"],
+    }),
     insertKostByPenyewa: build.mutation({
       query: ({ idProfile, body }) => ({
         url: `api/tennant/kost/user/${idProfile}`,
@@ -87,9 +101,32 @@ const kosApi = createApi({
       }),
       invalidatesTags: ["Kos"],
     }),
+    updateKostByPenyewa: build.mutation({
+      query: ({ idKost, body }) => ({
+        url: `api/tennant/kost/${idKost}`,
+        method: "PUT",
+        body: body,
+      }),
+      invalidatesTags: ["Kos"],
+    }),
+    updateRoomByPenyewa: build.mutation({
+      query: ({ idRoom, body }) => ({
+        url: `api/tennant/room/${idRoom}`,
+        method: "PUT",
+        body: body,
+      }),
+      invalidatesTags: ["Kos"],
+    }),
     deleteKosByPenyewa: build.mutation({
       query: (id) => ({
         url: `api/tennant/kost/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Kos"],
+    }),
+    deleteRoomByPenyewa: build.mutation({
+      query: (id) => ({
+        url: `api/tennant/room/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Kos"],
@@ -127,9 +164,14 @@ export const {
   useDetilKosMutation,
   useSearchKeywordMutation,
   useGetListByPenyewaMutation,
+  useGetOneByPenyewaMutation,
+  useGetOneKamarByPenyewaMutation,
   useInsertKostByPenyewaMutation,
   useInsertRoomByPenyewaMutation,
+  useUpdateKostByPenyewaMutation,
+  useUpdateRoomByPenyewaMutation,
   useDeleteKosByPenyewaMutation,
+  useDeleteRoomByPenyewaMutation,
   useGetListMutation,
   useGetOneByPencariMutation,
   useGetPriceByPencariMutation

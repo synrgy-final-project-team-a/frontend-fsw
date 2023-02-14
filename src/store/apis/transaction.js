@@ -9,7 +9,17 @@ const transactionApi = createApi({
   endpoints: (build) => ({
     transactionList: build.mutation({
       query: ({token, id}) => ({
-        url: `api/tennant/transactions/list/${id}?page=0&size=10`,
+        url: `api/tennant/transactions/list/${id}?page=0&size=30`,
+        method: "GET",  
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Transaction"],
+    }),
+    transactionDetail: build.mutation({
+      query: ({token, id}) => ({
+        url: `api/admin/transactions/${id}`,
         method: "GET",  
         headers: {
           authorization: `Bearer ${token}`,
@@ -52,6 +62,7 @@ const transactionApi = createApi({
 
 export const {
     useTransactionListMutation,
+    useTransactionDetailMutation,
     useConfirmTransactionMutation,
     useRejectTransactionMutation,
     useApproveTransactionMutation
