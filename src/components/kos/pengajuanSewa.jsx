@@ -27,10 +27,16 @@ const PengajuanSewaIndex = () => {
 			} else if (transaksi.status === "POSTED") {
 				navigate('/pengajuan-sewa/2')
 			} else if (transaksi.status === "CONFIRMED") {
-				navigate('/pengajuan-sewa/3')
+				if (transaksi.transaction_id === "") {
+					navigate('/')
+				} else {
+					navigate('/pengajuan-sewa/3')
+				}
 			} else if (transaksi.status === "REVIEWED") {
 				navigate('/pengajuan-sewa/4')
-			}
+			} else if (transaksi.status === "APPROVED") {
+				navigate('/pengajuan-sewa/5')
+			} 
 		} else {
 			if (params.id === "1") {
 				if (transaksi.status === "") {
@@ -44,31 +50,25 @@ const PengajuanSewaIndex = () => {
 				}
 			} else if (params.id === "2") {
 				if (transaksi.status === "POSTED") {
-					if (transaksi.check_in === "" || transaksi.check_in === "") {
-						navigate('/')
-					} else {
-						setKey(params.id)
-					}
+					setKey(params.id)
 				} else {
 					navigate('/pengajuan-sewa')
 				}
 			} else if (params.id === "3") {
 				if (transaksi.status === "CONFIRMED") {
-					if (transaksi.check_in === "" || transaksi.check_in === "") {
-						navigate('/')
-					} else {
-						setKey(params.id)
-					}
+					setKey(params.id)
 				} else {
 					navigate('/pengajuan-sewa')
 				}
 			} else if (params.id === "4") {
 				if (transaksi.status === "REVIEWED") {
-					if (transaksi.check_in === "" || transaksi.check_in === "") {
-						navigate('/')
-					} else {
-						setKey(params.id)
-					}
+					setKey(params.id)
+				} else {
+					navigate('/pengajuan-sewa')
+				}
+			} else if (params.id === "5") {
+				if (transaksi.status === "APPROVED") {
+					setKey(params.id)
 				} else {
 					navigate('/pengajuan-sewa')
 				}
@@ -97,6 +97,9 @@ const PengajuanSewaIndex = () => {
 					<Pembayaran />
 				</Tab>
 				<Tab eventKey="4" title="4" disabled>
+					<KonfirmasiPemilik />
+				</Tab>
+				<Tab eventKey="5" title="5" disabled>
 					<Diterima />
 				</Tab>
 			</Tabs>

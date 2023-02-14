@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
-import { Table, Button, ButtonGroup, Alert } from "react-bootstrap"
+import { useEffect } from "react"
+import { Table, Button, ButtonGroup } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useApproveKosMutation, useListKosMutation, useRejectKosMutation } from "../../../store/apis/kos";
+import { toast } from "react-toastify";
 
 const VerifikasiKos = () => {
 	const [listKosHit, { isLoading, isSuccess, data }] = useListKosMutation();
@@ -11,28 +12,52 @@ const VerifikasiKos = () => {
 	const token = useSelector((state) => state.auth.token.access_token);
 	const param = {
 		page: 0,
-		size: 12,
+		size: 50,
 		enabled: false
 	}
-
-	const [alert, setAlert] = useState({ "show": false });
 
 	const handleRejectKos = (e, id) => {
 		e.preventDefault();
 		let confirm = window.confirm("Tolak kos ini?");
 
-		if (confirm) {
-			rejectKosHit({ token: token, id });
+		if (!confirm) {
+			return
 		}
+
+		toast.loading('Sedang menolak kos', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
+
+		rejectKosHit({ token: token, id });
 	}
 
 	const handleApproveKos = (e, id) => {
 		e.preventDefault();
 		let confirm = window.confirm("Setujui kos ini?");
 
-		if (confirm) {
-			approveKosHit({ token: token, id });
+		if (!confirm) {
+			return
 		}
+
+		toast.loading('Sedang menyetujui kos', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
+
+		approveKosHit({ token: token, id });
 	}
 
 	useEffect(() => {
@@ -42,19 +67,31 @@ const VerifikasiKos = () => {
 
 	useEffect(() => {
 		if (rejectSuccess) {
-			setAlert({
-				"variant": "success",
-				"message": "Kos berhasil ditolak!",
-				"show": true
+			toast.dismiss()
+			toast.success("Sukses menolak kos", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
 			})
 			listKosHit({ token: token, page: param.page, size: param.size, enabled: param.enabled })
 		}
 
 		if (rejectError) {
-			setAlert({
-				"variant": "danger",
-				"message": "Gagal tolak kos!",
-				"show": true
+			toast.dismiss()
+			toast.error("Gagal menolak kos", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
 			})
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,19 +99,31 @@ const VerifikasiKos = () => {
 
 	useEffect(() => {
 		if (approveSuccess) {
-			setAlert({
-				"variant": "success",
-				"message": "Kos telah disetujui!",
-				"show": true
+			toast.dismiss()
+			toast.success("Sukses menyetujui kos", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
 			})
 			listKosHit({ token: token, page: param.page, size: param.size, enabled: param.enabled })
 		}
 
 		if (approveError) {
-			setAlert({
-				"variant": "danger",
-				"message": "Gagal menyetujui kos!",
-				"show": true
+			toast.dismiss()
+			toast.error("Gagal menyetujui kos", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
 			})
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,13 +132,6 @@ const VerifikasiKos = () => {
 	return (
 		<>
 			<h3 className="mt-3">Verifikasi Kos</h3>
-			{
-				alert.show ?
-					<Alert className="mt-3" variant={alert.variant} onClose={() => setAlert({ "show": false })} dismissible>
-						{alert.message}
-					</Alert> :
-					<></>
-			}
 			<Table striped hover size="sm" className="mt-3">
 				<thead>
 					<tr>
@@ -105,7 +147,7 @@ const VerifikasiKos = () => {
 					{
 						isLoading ?
 							<tr>
-								<td colSpan={5} className="text-center">Loading...</td>
+								<td colSpan={6} className="text-center">Loading...</td>
 							</tr> :
 							isSuccess ?
 								data.data.content.map((el, i) => {
@@ -136,7 +178,7 @@ const VerifikasiKos = () => {
 									)
 								}) :
 								<tr>
-									<td colSpan={5} className="text-center">Ambil data gagal</td>
+									<td colSpan={6} className="text-center">Ambil data gagal</td>
 								</tr>
 
 					}

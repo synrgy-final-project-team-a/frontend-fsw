@@ -6,16 +6,13 @@ import KosDisetujui from "../../components/kos/kelola-kos-admin/kos-disetujui";
 const KelolaKos = () => {
 
 	return (
-		<>
-        <AdminLayout>
-            <Container>
-                <h1 className="mt-3">Kelola Kos</h1>
+		<AdminLayout>
+			<Container>
+				<h1 className="mt-3">Kelola Kos</h1>
 				<VerifikasiKos />
 				<KosDisetujui />
-            </Container>                        
-        </AdminLayout>
-			
-		</>
+			</Container>
+		</AdminLayout>
 	)
 }
 

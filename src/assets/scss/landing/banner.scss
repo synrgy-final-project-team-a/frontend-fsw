@@ -5,6 +5,14 @@
 	.owl-stage-outer {
 		width: 100%;
 		border-radius: 0 0 16px 16px;
+
+		.owl-item {
+			height: 100%;
+
+			>img {
+				object-fit: cover;
+			}
+		}
 	}
 
 	.owl-nav {

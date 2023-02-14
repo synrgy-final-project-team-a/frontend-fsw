@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
-import { Table, Button, ButtonGroup, Alert } from "react-bootstrap"
+import { useEffect } from "react"
+import { Table, Button, ButtonGroup } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useListKosMutation, useDeleteKosMutation } from "../../../store/apis/kos";
+import { toast } from "react-toastify";
 
 const KosDisetujui = () => {
 	const [listKosHit, { isLoading, isSuccess, data }] = useListKosMutation();
@@ -13,15 +14,26 @@ const KosDisetujui = () => {
 		enabled: true
 	}
 
-	const [alert, setAlert] = useState({ "show": false });
-
 	const handleDeleteKos = (e, id) => {
 		e.preventDefault();
 		let confirm = window.confirm("Hapus Kos ini?");
 
-		if (confirm) {
-			deleteKosHit({ token: token, id: id });
+		if (!confirm) {
+			return
 		}
+
+		toast.loading('Sedang menyetujui kos', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
+
+		deleteKosHit({ token: token, id: id });
 	}
 
 	useEffect(() => {
@@ -31,19 +43,31 @@ const KosDisetujui = () => {
 
 	useEffect(() => {
 		if (deleteSuccess) {
-			setAlert({
-				"variant": "success",
-				"message": "Kos berhasil dihapus!",
-				"show": true
+			toast.dismiss()
+			toast.success("Sukses menghapus kos", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
 			})
 			listKosHit({ token: token, page: param.page, size: param.size, enabled: param.enabled })
 		}
 
 		if (deleteError) {
-			setAlert({
-				"variant": "danger",
-				"message": "Gagal menghapus kos!",
-				"show": true
+			toast.dismiss()
+			toast.error("Gagal menghapus kos", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
 			})
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,13 +76,6 @@ const KosDisetujui = () => {
 	return (
 		<>
 			<h3 className="mt-3">Daftar Kos</h3>
-			{
-				alert.show ?
-					<Alert className="mt-3" variant={alert.variant} onClose={() => setAlert({ "show": false })} dismissible>
-						{alert.message}
-					</Alert> :
-					<></>
-			}
 			<Table striped hover size="sm" className="mt-3">
 				<thead>
 					<tr>
@@ -74,7 +91,7 @@ const KosDisetujui = () => {
 					{
 						isLoading ?
 							<tr>
-								<td colSpan={5} className="text-center">Loading...</td>
+								<td colSpan={6} className="text-center">Loading...</td>
 							</tr> :
 							isSuccess ?
 								data.data.content.map((el, it) => {
@@ -102,7 +119,7 @@ const KosDisetujui = () => {
 									)
 								}) :
 								<tr>
-									<td colSpan={5} className="text-center">Ambil data gagal</td>
+									<td colSpan={6} className="text-center">Ambil data gagal</td>
 								</tr>
 
 					}

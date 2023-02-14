@@ -62,7 +62,10 @@ const transactionApi = createApi({
 
 export const {
     useTransactionListMutation,
+<<<<<<< HEAD
     useTransactionDetailMutation,
+=======
+>>>>>>> 45568c4513bc4f3f9afed5c024085bce770a6c03
     useConfirmTransactionMutation,
     useRejectTransactionMutation,
     useApproveTransactionMutation
