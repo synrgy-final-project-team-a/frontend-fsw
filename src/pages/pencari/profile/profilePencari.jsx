@@ -19,8 +19,8 @@ import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import { addBooking } from "../../../store/slices/transaksiSlice";
 
 const ProfilePencari = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [display] = useState({});
   const idProfile = useSelector((state) => state.auth.token.profile_id);
@@ -38,18 +38,11 @@ const ProfilePencari = () => {
     const initialState = {
       status: status,
       transaction_id: transaction_id,
-    }
+    };
 
-    dispatch(addBooking(initialState))
-    navigate('/pengajuan-sewa')
-  }
-
-  // const handleDisplay = (e, i) => {
-  //   e.preventDefault();
-  //   let newDisplay = { ...display };
-  //   newDisplay[i] = true;
-  //   setDisplay(newDisplay);
-  // };
+    dispatch(addBooking(initialState));
+    navigate("/pengajuan-sewa");
+  };
 
   return (
     <PencariLayout>
@@ -69,9 +62,16 @@ const ProfilePencari = () => {
           </Col>
           <Col xs={12} lg={9} className="border rounded px-3 px-lg-5">
             <h5 className="fw-bold mt-5">Kelola Kos</h5>
-            {isLoading ? (
-              <h1>Loading ...</h1>
-            ) : isSuccess ? (
+            {isLoading ? 
+              [...Array(9).keys()].map((el, i) => {
+                return (
+                  <Col xs={12} lg={4} key={i}>
+                    <Card bg="none" className="skeleton card-kelola my-5" style={{ height: "250px", width: "750px" }}>
+                      &nbsp;
+                    </Card>
+                  </Col>
+                )
+              }) : isSuccess ? (
               data.data.content.length === 0 ? (
                 <h1>Data kosong</h1>
               ) : (
@@ -90,41 +90,39 @@ const ProfilePencari = () => {
                                   <Card.Title className="fw-bold w-75">
                                     {el.kost_name}
                                   </Card.Title>
-                                  {
-                                    el.status === "POSTED" ?
-                                      <Card.Text className="text-warning">
-                                        <FontAwesomeIcon icon={faClock} />{" "}
-                                        Menunggu Konfirmasi Booking Pemilik Kos
-                                      </Card.Text> :
-                                      el.status === "CONFIRMED" ?
-                                        <Card.Text className="text-danger">
-                                          <FontAwesomeIcon icon={faPaypal} />{" "}
-                                          Mohon Melakukan Pembayaran
-                                        </Card.Text> :
-                                        el.status === "REVIEWED" ?
-                                          <Card.Text className="text-warning">
-                                            <FontAwesomeIcon icon={faClock} />{" "}
-                                            Menunggu Konfirmasi Pembayaran Pemilik Kos
-                                          </Card.Text> :
-                                          el.status === "APPROVED" ?
-                                            <Card.Text className="text-success">
-                                              <FontAwesomeIcon icon={faCheckCircle} />{" "}
-                                              Berhasil
-                                            </Card.Text> :
-                                            el.status === "REJECTED" ?
-                                              <Card.Text className="text-danger">
-                                                <FontAwesomeIcon icon={faCircleXmark} />{" "}
-                                                Ditolak Pemilik Kos
-                                              </Card.Text> :
-                                              el.status === "CANCELLED" ?
-                                                <Card.Text className="text-success">
-                                                  <FontAwesomeIcon icon={faCheckCircle} />{" "}
-                                                  Dibatalkan
-                                                </Card.Text> :
-                                                <Card.Text>
-                                                  &nbsp;
-                                                </Card.Text>
-                                  }
+                                  {el.status === "POSTED" ? (
+                                    <Card.Text className="text-warning">
+                                      <FontAwesomeIcon icon={faClock} />{" "}
+                                      Menunggu Konfirmasi Booking Pemilik Kos
+                                    </Card.Text>
+                                  ) : el.status === "CONFIRMED" ? (
+                                    <Card.Text className="text-danger">
+                                      <FontAwesomeIcon icon={faPaypal} /> Mohon
+                                      Melakukan Pembayaran
+                                    </Card.Text>
+                                  ) : el.status === "REVIEWED" ? (
+                                    <Card.Text className="text-warning">
+                                      <FontAwesomeIcon icon={faClock} />{" "}
+                                      Menunggu Konfirmasi Pembayaran Pemilik Kos
+                                    </Card.Text>
+                                  ) : el.status === "APPROVED" ? (
+                                    <Card.Text className="text-success">
+                                      <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                                      Berhasil
+                                    </Card.Text>
+                                  ) : el.status === "REJECTED" ? (
+                                    <Card.Text className="text-danger">
+                                      <FontAwesomeIcon icon={faCircleXmark} />{" "}
+                                      Ditolak Pemilik Kos
+                                    </Card.Text>
+                                  ) : el.status === "CANCELLED" ? (
+                                    <Card.Text className="text-success">
+                                      <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                                      Dibatalkan
+                                    </Card.Text>
+                                  ) : (
+                                    <Card.Text>&nbsp;</Card.Text>
+                                  )}
                                 </div>
                                 <Card.Text className="mb-1">
                                   {el.address}
@@ -171,7 +169,13 @@ const ProfilePencari = () => {
                                     <Button
                                       variant="outline-primary"
                                       className="m-1"
-                                      onClick={(e) => goToTransaksi(e, el.transaction_id, el.status)}
+                                      onClick={(e) =>
+                                        goToTransaksi(
+                                          e,
+                                          el.transaction_id,
+                                          el.status
+                                        )
+                                      }
                                     >
                                       Selengkapnya{" "}
                                       <FontAwesomeIcon icon={faAngleDown} />
