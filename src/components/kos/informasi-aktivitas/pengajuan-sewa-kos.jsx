@@ -1,49 +1,14 @@
-import { useEffect, useState } from "react";
-import { Badge, Button, Card, Col, Row, Alert } from "react-bootstrap"
+import { useEffect } from "react";
+import { Badge, Button, Card, Col, Row } from "react-bootstrap"
 import { useSelector } from "react-redux";
-import { useApproveTransactionMutation, useConfirmTransactionMutation, useRejectTransactionMutation, useTransactionListMutation } from "../../../store/apis/transaction";
+import { Link } from "react-router-dom";
+import { useTransactionListMutation } from "../../../store/apis/transaction";
 
 const PengajuanSewa = () => {
 
 	const [transactionListHit, { isLoading, isSuccess, data }] = useTransactionListMutation();
 	const token = useSelector(state => state.auth.token.access_token);
-	const [confirmTransactionHit, { isSuccess: confirmSuccess, isLoading: loadingConfirm, isError: confirmError }] = useConfirmTransactionMutation();
-	const [approveTransactionHit, { isSuccess: approveSuccess, isLoading: loadingApprove, isError: approveError }] = useApproveTransactionMutation();
-	const [rejectTransactionHit, { isSuccess: rejectSuccess, isLoading: loadingReject, isError: rejectError }] = useRejectTransactionMutation();
-
 	const userData = useSelector(state => state.auth.token.profile_id);
-	const [alert, setAlert] = useState({ "show": false });
-
-	const handleConfirm = (e, id) => {
-		e.preventDefault();
-
-		let confirm = window.confirm("Konfirmasi pengajuan kos?");
-
-		if (confirm) {
-			confirmTransactionHit({ token: token, id: id });
-		}
-	}
-
-	const handleApprove = (e, id) => {
-		e.preventDefault();
-
-		let confirm = window.confirm("Setujui pengajuan kos?");
-
-		if (confirm) {
-			approveTransactionHit({ token: token, id: id });
-		}
-	}
-
-	const handleReject = (e, id) => {
-		e.preventDefault();
-
-		let confirm = window.confirm("Tolak pengajuan kos?");
-
-		if (confirm) {
-			rejectTransactionHit({ token: token, id: id });
-		}
-	}
-
 
 
 	useEffect(() => {
@@ -53,95 +18,10 @@ const PengajuanSewa = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	useEffect(() => {
-		if (confirmSuccess) {
-			setAlert({
-				"variant": "success",
-				"message": "Behasil konfirmasi!",
-				"show": true
-			})
-			transactionListHit({ token: token, id: userData });
-		}
-
-		if (confirmError) {
-			setAlert({
-				"variant": "danger",
-				"message": "Konfirmasi gagal!",
-				"show": true
-			})
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [loadingConfirm])
-
-	useEffect(() => {
-		if (approveSuccess) {
-			setAlert({
-				"variant": "success",
-				"message": "Behasil menyetujui penyewaan kos!",
-				"show": true
-			})
-			transactionListHit({ token: token, id: userData });
-		}
-
-		if (approveError) {
-			setAlert({
-				"variant": "danger",
-				"message": "Gagal menyetujui penyewaan kos!",
-				"show": true
-			})
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [loadingApprove])
-
-	useEffect(() => {
-		if (rejectSuccess) {
-			setAlert({
-				"variant": "success",
-				"message": "Pengajuan sewa kos ditolak!",
-				"show": true
-			})
-			transactionListHit({ token: token, id: userData });
-		}
-
-		if (rejectError) {
-			setAlert({
-				"variant": "danger",
-				"message": "Gagal tolak pengajuan sewa kos!",
-				"show": true
-			})
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [loadingReject])
-
-	useEffect(() => {
-		if (confirmSuccess) {
-			setAlert({
-				"variant": "success",
-				"message": "Behasil konfirmasi!",
-				"show": true
-			})
-			transactionListHit({ token: token, id: userData });
-		}
-
-		if (confirmError) {
-			setAlert({
-				"variant": "danger",
-				"message": "Konfirmasi gagal!",
-				"show": true
-			})
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [loadingConfirm])
+	
 	return (
 		<>
 			<Row >
-				{
-					alert.show ?
-						<Alert className="mt-3" variant={alert.variant} onClose={() => setAlert({ "show": false })} dismissible>
-							{alert.message}
-						</Alert> :
-						<></>
-				}
 
 				{isLoading ?
 					<h5>Sedang Mengambil Data</h5> :
