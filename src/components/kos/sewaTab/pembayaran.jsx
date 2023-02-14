@@ -1,41 +1,105 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Accordion } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
-import NavbarComponent from "../../../components/navbar";
-import PencariRoutes from "../../../routes/pencari";
-import NumberProgress from "../../../components/numberProgress";
-import Accordion from "react-bootstrap/Accordion";
-import FooterComponent from "../../../components/footer";
+import { useAddBuktiByPencariMutation } from "../../../store/apis/transaksi";
+import { addBooking } from "../../../store/slices/transaksiSlice";
 
-export default function PengajuanSewa3() {
+const imgAllow = [
+  "image/png",
+  "image/jpg",
+  "image/jpeg",
+]
+
+const Pembayaran = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const [selectedProfile, setSelectedProfile] = useState()
+  const [previewProfile, setPreviewProfile] = useState()
+
+  const transaksi = useSelector(state => state.transaksi.transaction_id)
+
+  const [
+    uploadHit,
+    { isSuccess, isError, isLoading, error }
+  ] = useAddBuktiByPencariMutation()
+
+  const handleKirimBukti = (e) => {
+    e.preventDefault()
+
+    const confirm = window.confirm("Apakah anda yakin?")
+
+    if (!confirm) {
+      return
+    }
+
+    const formdata = new FormData()
+
+    formdata.append("file", selectedProfile)
+
+    uploadHit({ body: formdata, transactionId: transaksi })
+  }
+
+  const changeProfileHandler = (e) => {
+    e.preventDefault()
+    let failed = false
+
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedProfile(undefined)
+      return
+    }
+
+    if (!imgAllow.includes(e.target.files[0].type)) {
+      failed = true
+    }
+
+    if (failed) {
+      return
+    }
+
+    setSelectedProfile(e.target.files[0])
+  }
+
+  const resetProfilehandler = (e) => {
+    e.preventDefault()
+    setSelectedProfile(undefined)
+    setPreviewProfile(undefined)
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      const initialState = {
+        status: "REVIEWED"
+      }
+
+      dispatch(addBooking(initialState))
+      navigate('/pengajuan-sewa/2')
+    }
+
+    if (isError) {
+      alert("gagal")
+      console.log(error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading])
+
+  useEffect(() => {
+    if (!selectedProfile) {
+      setPreviewProfile(undefined)
+      return
+    }
+
+    let objectUrl = URL.createObjectURL(selectedProfile)
+    setPreviewProfile(objectUrl)
+
+    return () => URL.revokeObjectURL(objectUrl)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProfile])
+
   return (
     <>
-      <NavbarComponent routes={PencariRoutes} />
       <Container>
-        <Button variant="link" onClick={() => navigate(-1)}>
-          <div className="my-3 d-flex align-items-center h-100">
-            <span>
-              <svg
-                width="9"
-                height="18"
-                viewBox="0 0 9 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7.9993 17.67C7.8093 17.67 7.6193 17.6 7.4693 17.45L0.949297 10.93C-0.110703 9.87002 -0.110703 8.13002 0.949297 7.07002L7.4693 0.55002C7.7593 0.26002 8.2393 0.26002 8.5293 0.55002C8.8193 0.84002 8.8193 1.32002 8.5293 1.61002L2.0093 8.13002C1.5293 8.61002 1.5293 9.39002 2.0093 9.87002L8.5293 16.39C8.8193 16.68 8.8193 17.16 8.5293 17.45C8.3793 17.59 8.1893 17.67 7.9993 17.67Z"
-                  fill="#757575"
-                />
-              </svg>
-            </span>
-            <h6 className="ms-sm-2 my-auto">Kembali</h6>
-          </div>
-        </Button>
-        <div>
-          <NumberProgress current={3} total={4} />
-        </div>
-        {/* Item 1 */}
         <div>
           <h2 className="text-center my-2">Pembayaran</h2>
           <h4 className="text-center my-2">
@@ -138,18 +202,32 @@ export default function PengajuanSewa3() {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-                <Button
-                  variant="outline-primary"
-                  type="submit"
-                  className="my-4"
-                >
-                  <div className="d-flex justify-content-center align-items-center">
-                    <span>
-                      <img src="/document-upload.png" alt=""></img>
-                    </span>
-                    <p className="fw-bold mb-0 ms-1">Upload Bukti Pembayaran</p>
-                  </div>
-                </Button>
+                <div className="my-3">
+                  <label htmlFor="formInputFoto" className="btn btn-outline-primary mx-2">
+                    <div className="d-flex justify-content-center align-items-center">
+                      <span>
+                        <img src="/document-upload.png" alt=""></img>
+                      </span>
+                      <p className="fw-bold mb-0 ms-1">Upload Bukti Pembayaran</p>
+                    </div>
+                  </label>
+                  {
+                    selectedProfile ?
+                      <label htmlFor="formInputFoto" className="btn btn-outline-warning mx-2" onClick={resetProfilehandler}>
+                        <div className="d-flex justify-content-center align-items-center">
+                          <p className="fw-bold mb-0 ms-1">Ulang</p>
+                        </div>
+                      </label> :
+                      ""
+                  }
+                  <input type="file" hidden id="formInputFoto" onChange={changeProfileHandler} />
+                </div>
+                <div>
+                  {
+                    selectedProfile ?
+                      <img src={previewProfile} style={{ width: "250px" }} alt="..." /> : ""
+                  }
+                </div>
               </div>
             </div>
             <div className="col-12 col-lg-5 offsed-lg-1">
@@ -250,9 +328,9 @@ export default function PengajuanSewa3() {
           </div>
           <div className="w-100 text-center">
             <Button
+              onClick={handleKirimBukti}
               variant="outline-primary "
               type="submit"
-              disabled
               className="mb-5"
             >
               <div className="d-flex justify-content-center align-items-center">
@@ -264,28 +342,10 @@ export default function PengajuanSewa3() {
             </Button>
           </div>
         </div>
-
-        {/* item2 */}
-        <div className="d-flex flex-column justify-content-center text-center">
-          <h2 className="text-center my-2">Pembayaran</h2>
-          <h4 className="text-center my-2">
-            Pengajuanmu diterima oleh pemilik kos
-          </h4>
-          <img
-            src="/image11.png"
-            alt=""
-            className="img-fluid m-auto image-sewa"
-          ></img>
-          <Button
-            variant="outline-primary"
-            type="submit"
-            className="w-sm-25 w-xs-50 m-auto mb-5 fw-bold"
-          >
-            Hubungi Penyewa Kos
-          </Button>
-        </div>
       </Container>
-      <FooterComponent />
     </>
   );
 }
+
+
+export default Pembayaran

@@ -6,6 +6,7 @@ import { useCurrentUserMutation } from "../store/apis/users";
 import { emptyEmail, emptyToken } from "../store/slices/authSlice";
 import { emptyKos } from "../store/slices/kosSlice";
 import { addUser, emptyUser } from "../store/slices/userSlice";
+import { ToastContainer } from "react-toastify";
 
 const PencarianLayout = ({ children, setKeywordnya }) => {
 	const dispatch = useDispatch()
@@ -57,6 +58,7 @@ const PencarianLayout = ({ children, setKeywordnya }) => {
 
 	return (
 		<>
+			<ToastContainer />
 			<Navbar bg="light" expand="lg" id="navbar" className="py-0">
 				<Container>
 					<Navbar.Brand as={Link} key={"/"} to="/">

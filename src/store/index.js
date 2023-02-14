@@ -2,25 +2,33 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistStore } from 'redux-persist';
 
 import authApi from "./apis/authentication";
-import kosApi from "./apis/kos";
+import transactionApi from "./apis/transaction";
 import usersApi from "./apis/users";
+import kosApi from "./apis/kos";
+import transaksiApi from "./apis/transaksi";
+import bannerApi from "./apis/banner";
 
-
-import { alamatReducer } from "./slices/alamatSlice";
 import { authPersistReducer } from "./slices/authSlice";
-import decorReducer from "./slices/decorSlice";
-import { kosPersistReducer } from "./slices/kosSlice";
 import { userPersistReducer } from "./slices/userSlice";
+import { kosPersistReducer } from "./slices/kosSlice";
+import { transaksiPersistReducer } from "./slices/transaksiSlice";
+
+import { decorReducer } from "./slices/decorSlice";
+import { alamatReducer } from "./slices/alamatSlice";
 
 export const store = configureStore({
 	reducer: {
 		[authApi.reducerPath]: authApi.reducer,
 		[usersApi.reducerPath]: usersApi.reducer,
 		[kosApi.reducerPath]: kosApi.reducer,
+		[bannerApi.reducerPath]: bannerApi.reducer,
+		[transactionApi.reducerPath]: transactionApi.reducer,
+		[transaksiApi.reducerPath]: transaksiApi.reducer,
 		auth: authPersistReducer,
 		user: userPersistReducer,
-		decor: decorReducer,
 		kos: kosPersistReducer,
+		transaksi: transaksiPersistReducer,
+		decor: decorReducer,
 		alamat: alamatReducer
 	},
 	middleware: (getDefaultMiddleware) =>
@@ -31,6 +39,9 @@ export const store = configureStore({
 			authApi.middleware,
 			usersApi.middleware,
 			kosApi.middleware,
+			bannerApi.middleware,
+			transactionApi.middleware,
+			transaksiApi.middleware
 		]),
 })
 

@@ -1,12 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Alert, Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NavbarComponent from "../../../components/navbar";
 import PencariRoutes from "../../../routes/pencari";
 import { useForgotPasswordMutation } from "../../../store/apis/authentication";
+import { toast, ToastContainer } from "react-toastify";
 
 const SuccessResetPass = () => {
 	const emailOtp = useSelector((state) => {
@@ -14,16 +15,22 @@ const SuccessResetPass = () => {
 	})
 
 	const [seconds, setSeconds] = useState(50);
-	const [error, setError] = useState({})
 
 	const [forgotPassHit, { isLoading, isSuccess, isError, error: errorForgot }] = useForgotPasswordMutation()
 
 	const handleClick = () => {
-		try {
-			forgotPassHit({ "email": emailOtp })
-		} catch (error) {
-            setError({ "alert": { "variant": "danger", "message": "Send link failed!" } })
-        }
+		toast.loading('Sedang mengirimkan email', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
+
+		forgotPassHit({ "email": emailOtp })
 	}
 
 	useEffect(() => {
@@ -37,17 +44,59 @@ const SuccessResetPass = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			setError({ "alert": { "variant": "success", "message": "Berhasil mengirimkan link!" } })
+			toast.dismiss()
+			toast.success("Sukses mengirimkan email", {
+				position: "top-center",
+				autoClose: 500,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
+			})
 			setSeconds(50)
 		}
 
 		if (isError) {
-			if (Array.isArray(errorForgot.data)) {
-				errorForgot.data.forEach((el) =>
-					setError({ "alert": { "variant": "danger", "message": el.data.message } })
-				);
+			toast.dismiss()
+			if (errorForgot.hasOwnProperty('data')) {
+				if (Array.isArray(errorForgot.data)) {
+					errorForgot.data.forEach((el) => {
+						toast.error(el.data.message, {
+							position: "top-center",
+							autoClose: 1000,
+							hideProgressBar: false,
+							closeOnClick: false,
+							pauseOnHover: false,
+							draggable: false,
+							progress: undefined,
+							theme: "light",
+						})
+					})
+				} else {
+					toast.error(errorForgot.data.message, {
+						position: "top-center",
+						autoClose: 1000,
+						hideProgressBar: false,
+						closeOnClick: false,
+						pauseOnHover: false,
+						draggable: false,
+						progress: undefined,
+						theme: "light",
+					})
+				}
 			} else {
-				setError({ "alert": { "variant": "danger", "message": errorForgot.data.message } })
+				toast.error("Gagal mengirimkan email", {
+					position: "top-center",
+					autoClose: 1000,
+					hideProgressBar: false,
+					closeOnClick: false,
+					pauseOnHover: false,
+					draggable: false,
+					progress: undefined,
+					theme: "light",
+				})
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,6 +104,7 @@ const SuccessResetPass = () => {
 
 	return (
 		<>
+			<ToastContainer />
 			<div className="d-none d-lg-block">
 				<NavbarComponent routes={PencariRoutes} />
 			</div>
@@ -62,13 +112,6 @@ const SuccessResetPass = () => {
 				<Row className="justify-content-center">
 					<Col xs={12}>
 						<div className="text-center mt-5">
-							{
-								(error.hasOwnProperty("alert") && error.alert.message !== "") ?
-									<Alert variant={error.alert.variant}>
-										{error.alert.message}
-									</Alert> :
-									""
-							}
 							<h1>Sukses</h1>
 							<h3>Link ganti password telah dikirimkan ke <b>{emailOtp}</b>. Silahkan cek email anda.</h3>
 						</div>
@@ -85,13 +128,12 @@ const SuccessResetPass = () => {
 									Link belum terkirim?<br />
 									Kirim Ulang ({seconds})
 								</p> :
-								isLoading ?
-									<Button variant="primary" disabled>
-										Loading
-									</Button> :
-									<Button variant="primary" onClick={handleClick}>
-										Kirim ulang email otp
-									</Button>
+								<Button variant="primary"
+									onClick={handleClick}
+									disabled={isLoading}
+								>
+									Kirim ulang email otp
+								</Button>
 						}
 					</Col>
 					<Col xs={12}>
