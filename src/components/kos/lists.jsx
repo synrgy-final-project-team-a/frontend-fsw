@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react"
-import { Alert, Badge, Button, Card, Col, Row } from "react-bootstrap"
+import { useEffect } from "react"
+import { Badge, Button, Card, Col, Row } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useDeleteKosByPenyewaMutation, useGetListByPenyewaMutation } from "../../store/apis/kos"
+import { toast } from "react-toastify";
 
 const ListKos = () => {
 
 	const profileId = useSelector(state => state.auth.token.profile_id)
-
-	const [alert, setAlert] = useState({})
 
 	const [
 		getListHit,
@@ -24,17 +23,36 @@ const ListKos = () => {
 
 		let confirm = window.confirm(`Apakah anda yakin ingin menghapus ${name}?`)
 
-		if (confirm) {
-			deleteHit(id)
+		if (!confirm) {
+			return
 		}
+
+		toast.loading('Sedang menghapus kos', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
+
+		deleteHit(id)
 	}
 
 	useEffect(() => {
 		if (successDelete) {
-			setAlert({
-				variant: "success",
-				message: "Berhasil menghapus kos!",
-				show: true
+			toast.dismiss()
+			toast.success("Sukses menghapus kos", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
 			})
 
 			const pageList = 0
@@ -43,10 +61,16 @@ const ListKos = () => {
 		}
 
 		if (errorDelete) {
-			setAlert({
-				variant: "danger",
-				message: "Gagal menghapus kos!",
-				show: true
+			toast.dismiss()
+			toast.error("Gagal menghapus kos", {
+				position: "top-center",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
 			})
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,17 +87,16 @@ const ListKos = () => {
 		<div className="mt-3">
 			<Row className="g-3">
 				{
-					alert.hasOwnProperty('message') && alert.message !== "" && alert.show === true ?
-						<Col xs={12}>
-							<Alert variant={alert.variant} dismissible onClose={e => setAlert({ show: false })}>
-								{alert.message}
-							</Alert>
-						</Col> :
-						""
-				}
-				{
 					isLoading ?
-						<h1>Loading....</h1> :
+						[...Array(2).keys()].map((el, i) => {
+							return (
+								<Col xs={12} lg={6} key={i}>
+									<Card className="skeleton" style={{ height: "250px" }}>
+										&nbsp;
+									</Card>
+								</Col>
+							)
+						}) :
 						isSuccess ?
 							data.data.content.length !== 0 ?
 								data.data.content.map((el, i) => {
@@ -126,7 +149,7 @@ const ListKos = () => {
 								}) :
 								<h3>Tidak ada kos</h3> :
 							isError ?
-								<h1>Error.</h1> :
+								<h3>Error.</h3> :
 								""
 
 				}

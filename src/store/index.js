@@ -6,8 +6,7 @@ import transactionApi from "./apis/transaction";
 import usersApi from "./apis/users";
 import kosApi from "./apis/kos";
 import transaksiApi from "./apis/transaksi";
-
-
+import bannerApi from "./apis/banner";
 
 import { authPersistReducer } from "./slices/authSlice";
 import { userPersistReducer } from "./slices/userSlice";
@@ -22,6 +21,7 @@ export const store = configureStore({
 		[authApi.reducerPath]: authApi.reducer,
 		[usersApi.reducerPath]: usersApi.reducer,
 		[kosApi.reducerPath]: kosApi.reducer,
+		[bannerApi.reducerPath]: bannerApi.reducer,
 		[transactionApi.reducerPath]: transactionApi.reducer,
 		[transaksiApi.reducerPath]: transaksiApi.reducer,
 		auth: authPersistReducer,
@@ -39,6 +39,7 @@ export const store = configureStore({
 			authApi.middleware,
 			usersApi.middleware,
 			kosApi.middleware,
+			bannerApi.middleware,
 			transactionApi.middleware,
 			transaksiApi.middleware
 		]),
