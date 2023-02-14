@@ -58,7 +58,7 @@ const InformasiPersonal = () => {
 			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
 		}
 
-		if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
+		if (!/[0-9]{10,13}$/i.test(phoneNumber)) {
 			failed = true
 			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
 		}

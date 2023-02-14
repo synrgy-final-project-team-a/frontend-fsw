@@ -6,7 +6,10 @@ import InformasiPersonal from "../pages/penyewa/profile/informasiPersonal"
 
 import ListKos from "../pages/penyewa/kos/list"
 import TambahKos from "../pages/penyewa/kos/tambah"
+import EditKos from "../pages/penyewa/kos/edit"
 import DetailPengajuan from "../pages/penyewa/kos/detail-pengajuan-sewa-kos"
+import EditKamar from "../pages/penyewa/kos/editKamar"
+import TambahKamar from "../pages/penyewa/kos/tambahKamar"
 
 const PenyewaRoutes = [
 	{
@@ -27,7 +30,7 @@ const PenyewaRoutes = [
 					{
 						path: "/saya",
 						element: <InformasiPersonal />,
-					},		
+					},
 				]
 			},
 			{
@@ -43,15 +46,40 @@ const PenyewaRoutes = [
 						element: <TambahKos />
 					},
 					{
+						path: "/:id",
+						element: <EditKos />
+					},
+					{
+						path: "/edit/:id",
+						element: <EditKos />
+					},
+					{
 						path: "/detail-pengajuan",
 						children: [
 							{
 								path: "/:id",
 								element: <DetailPengajuan />
 
-						}
-					]
-					}
+							}
+						]
+					},
+					{
+						path: "/kamar",
+						children: [
+							{
+								path: "/:id",
+								element: <EditKamar />
+							},
+							{
+								path: "/tambah/:id",
+								element: <TambahKamar />
+							},
+							{
+								path: "/edit/:id",
+								element: <EditKamar />
+							}
+						]
+					},
 				]
 			}
 		]

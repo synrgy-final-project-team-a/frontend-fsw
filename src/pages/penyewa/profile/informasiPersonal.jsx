@@ -19,41 +19,41 @@ import { toast } from "react-toastify";
 const imgAllow = ["image/png", "image/jpg", "image/jpeg"];
 
 const InformasiPersonal = () => {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.auth.token.access_token);
-  const userData = useSelector((state) => state.user.current);
-  const provinsi = useSelector((state) => state.alamat.provinsi);
+	const token = useSelector((state) => state.auth.token.access_token);
+	const userData = useSelector((state) => state.user.current);
+	const provinsi = useSelector((state) => state.alamat.provinsi);
 
-  const formRef = useRef({});
-  const [error, setError] = useState({});
+	const formRef = useRef({});
+	const [error, setError] = useState({});
 
-  const [selectedProfile, setSelectedProfile] = useState();
-  const [previewProfile, setPreviewProfile] = useState();
+	const [selectedProfile, setSelectedProfile] = useState();
+	const [previewProfile, setPreviewProfile] = useState();
 
   const [
     editUserHit,
     { isLoading, isSuccess, isError, data: dataEdit, error: errorEdit },
   ] = useEditUserMutation();
 
-  const editProfilSubmit = (e) => {
-    e.preventDefault();
+	const editProfilSubmit = (e) => {
+		e.preventDefault();
 
-    setError({});
-    let failed = false;
+		setError({});
+		let failed = false;
 
-    const firstName = formRef.current.firstName.value;
-    const lastName = formRef.current.lastName.value;
-    const phoneNumber = formRef.current.phoneNumber.value;
-    const email = formRef.current.email.value;
-    const gender = formRef.current.gender.value;
-    const status = formRef.current.status.value;
-    const bankAccount = formRef.current.bankAccount.value;
-    const bankName = formRef.current.bankName.value;
-    const bankUsername = formRef.current.bankUsername.value;
-    const province = formRef.current.province.value;
-    const city = formRef.current.city.value;
-    const address = formRef.current.address.value;
+		const firstName = formRef.current.firstName.value;
+		const lastName = formRef.current.lastName.value;
+		const phoneNumber = formRef.current.phoneNumber.value;
+		const email = formRef.current.email.value;
+		const gender = formRef.current.gender.value;
+		const status = formRef.current.status.value;
+		const bankAccount = formRef.current.bankAccount.value;
+		const bankName = formRef.current.bankName.value;
+		const bankUsername = formRef.current.bankUsername.value;
+		const province = formRef.current.province.value;
+		const city = formRef.current.city.value;
+		const address = formRef.current.address.value;
 
     if (firstName === "") {
       failed = true;
@@ -71,7 +71,7 @@ const InformasiPersonal = () => {
       }));
     }
 
-    if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
+    if (!/[0-9]{10,13}$/i.test(phoneNumber)) {
       failed = true;
       setError((error) => ({
         ...error,
@@ -87,15 +87,15 @@ const InformasiPersonal = () => {
       }));
     }
 
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      failed = true;
-      setError((error) => ({ ...error, email: "Email tidak valid!" }));
-    }
+		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+			failed = true;
+			setError((error) => ({ ...error, email: "Email tidak valid!" }));
+		}
 
-    if (email === "") {
-      failed = true;
-      setError((error) => ({ ...error, email: "Email tidak boleh kosong!" }));
-    }
+		if (email === "") {
+			failed = true;
+			setError((error) => ({ ...error, email: "Email tidak boleh kosong!" }));
+		}
 
     if (!/[0-9]/i.test(bankAccount)) {
       failed = true;
@@ -145,9 +145,9 @@ const InformasiPersonal = () => {
       }));
     }
 
-    if (failed) {
-      return;
-    }
+		if (failed) {
+			return;
+		}
 
     toast.loading("Sedang mengubah profil", {
       position: "top-center",
@@ -162,34 +162,34 @@ const InformasiPersonal = () => {
 
     const payload = new FormData();
 
-    payload.append("first_name", firstName);
-    payload.append("last_name", lastName);
-    payload.append("phone_number", phoneNumber);
-    payload.append("gender", gender);
-    payload.append("status", status);
-    payload.append("bank_account", bankAccount);
-    payload.append("bank_name", bankName);
-    payload.append("bank_username", bankUsername);
-    payload.append("province", province);
-    payload.append("city", city);
-    payload.append("address", address);
+		payload.append("first_name", firstName);
+		payload.append("last_name", lastName);
+		payload.append("phone_number", phoneNumber);
+		payload.append("gender", gender);
+		payload.append("status", status);
+		payload.append("bank_account", bankAccount);
+		payload.append("bank_name", bankName);
+		payload.append("bank_username", bankUsername);
+		payload.append("province", province);
+		payload.append("city", city);
+		payload.append("address", address);
 
-    if (!!selectedProfile) {
-      payload.append("avatar", selectedProfile);
-    }
+		if (!!selectedProfile) {
+			payload.append("avatar", selectedProfile);
+		}
 
-    editUserHit({ token: token, body: payload });
-  };
+		editUserHit({ token: token, body: payload });
+	};
 
-  const changeProfileHandler = (e) => {
-    e.preventDefault();
-    let failed = false;
-    setError((error) => ({ ...error, fotoProfil: "" }));
+	const changeProfileHandler = (e) => {
+		e.preventDefault();
+		let failed = false;
+		setError((error) => ({ ...error, fotoProfil: "" }));
 
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedProfile(undefined);
-      return;
-    }
+		if (!e.target.files || e.target.files.length === 0) {
+			setSelectedProfile(undefined);
+			return;
+		}
 
     if (!imgAllow.includes(e.target.files[0].type)) {
       failed = true;
@@ -199,18 +199,18 @@ const InformasiPersonal = () => {
       }));
     }
 
-    if (failed) {
-      return;
-    }
+		if (failed) {
+			return;
+		}
 
-    setSelectedProfile(e.target.files[0]);
-  };
+		setSelectedProfile(e.target.files[0]);
+	};
 
-  const resetProfilehandler = (e) => {
-    e.preventDefault();
-    setSelectedProfile(undefined);
-    setPreviewProfile(undefined);
-  };
+	const resetProfilehandler = (e) => {
+		e.preventDefault();
+		setSelectedProfile(undefined);
+		setPreviewProfile(undefined);
+	};
 
   useEffect(() => {
     if (isSuccess) {
@@ -276,18 +276,18 @@ const InformasiPersonal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
-  useEffect(() => {
-    if (!selectedProfile) {
-      setPreviewProfile(undefined);
-      return;
-    }
+	useEffect(() => {
+		if (!selectedProfile) {
+			setPreviewProfile(undefined);
+			return;
+		}
 
-    let objectUrl = URL.createObjectURL(selectedProfile);
-    setPreviewProfile(objectUrl);
+		let objectUrl = URL.createObjectURL(selectedProfile);
+		setPreviewProfile(objectUrl);
 
-    return () => URL.revokeObjectURL(objectUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedProfile]);
+		return () => URL.revokeObjectURL(objectUrl);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedProfile]);
 
   return (
     <PenyewaLayout>
