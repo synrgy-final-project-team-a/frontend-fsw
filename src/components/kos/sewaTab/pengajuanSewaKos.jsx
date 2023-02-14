@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAddBookingByPencariMutation } from "../../../store/apis/transaksi";
 import { addBooking } from "../../../store/slices/transaksiSlice";
-import { rupiahFormat } from "../../../store/utils/format";
+import { durationToDurasi, rupiahFormat } from "../../../store/utils/format";
 import { toast } from "react-toastify";
 
 const PengajuanSewaKos = () => {
@@ -171,7 +171,7 @@ const PengajuanSewaKos = () => {
               <Form.Group className="mb-3">
                 <Form.Label className="w-100 mb-0">Durasi sewa kos</Form.Label>
                 <Form.Text className="fw-bold">
-                  Per {transaksi.duration_type}
+                  Per {durationToDurasi(transaksi.duration_type)}
                 </Form.Text>
               </Form.Group>
               <Form.Group className="mb-3">

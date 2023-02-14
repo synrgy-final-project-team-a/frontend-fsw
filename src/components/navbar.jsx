@@ -13,6 +13,7 @@ const NavbarComponent = ({ routes }) => {
 
 	const [logoutHit, { isLoading, isSuccess }] = useLogoutMutation()
 
+	const notifNum = useSelector(state => state.decor.notifNum)
 	const searchTop = useSelector(state => state.decor.searchOnTop)
 	const searchText = useSelector(state => state.decor.searchText)
 
@@ -98,14 +99,16 @@ const NavbarComponent = ({ routes }) => {
 								<Button as={Link} key={"login"} to="/login" className="mx-3">
 									Masuk
 								</Button> :
-								<NavDropdown key={roleRoutes("/profile")} className="mx-3 profile-link" title={<img src={userData.avatar} className="active" alt="..." />} id="basic-nav-dropdown">
+								<NavDropdown key={roleRoutes("/profile")} className="mx-3 profile-link" title={<img src={userData.avatar} className={notifNum > 0 ? "active" : ""} alt="..." />} id="basic-nav-dropdown">
 									<NavDropdown.Item as={Link} key={roleRoutes("/profile")} to={roleRoutes("/profile")}
 										className="d-flex justify-content-between align-items-center"
 									>
 										<span>Profil</span>
-										<Badge bg="danger" pill>
-											14
-										</Badge>
+										{
+											notifNum > 0 ?
+												<Badge bg="danger" pill>{notifNum}</Badge>
+												: ""
+										}
 									</NavDropdown.Item>
 									<NavDropdown.Divider />
 									{
@@ -116,7 +119,6 @@ const NavbarComponent = ({ routes }) => {
 												Admin
 											</NavDropdown.Item> :
 											""
-
 									}
 									{
 										token.role.includes('ROLE_TN') ?
@@ -126,7 +128,6 @@ const NavbarComponent = ({ routes }) => {
 												Penyewa
 											</NavDropdown.Item> :
 											""
-
 									}
 									{
 										token.role.includes('ROLE_SK') ?
@@ -136,7 +137,6 @@ const NavbarComponent = ({ routes }) => {
 												Pencari
 											</NavDropdown.Item> :
 											""
-
 									}
 									<NavDropdown.Divider />
 									<NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>

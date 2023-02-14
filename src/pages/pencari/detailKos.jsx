@@ -791,13 +791,6 @@ const DetailKos = () => {
                               </option>
                             );
                           })}
-                          {price.map((el, i) => {
-                            return (
-                              <option key={i} value={el.durationType}>
-                                {el.durationType}
-                              </option>
-                            );
-                          })}
                         </Form.Select>
                       </Col>
                     </Row>

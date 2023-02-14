@@ -11,6 +11,7 @@ import ChatPage from "../pages/pencari/chat/chatPage";
 import Pencarian from "../pages/pencari/pencarian/pencarian";
 import HasilPencarian from "../pages/pencari/pencarian/hasil";
 import DetailKos from "../pages/pencari/detailKos";
+import Pemberitahuan from "../pages/pencari/profile/pemberitahuan";
 
 const PencariRoutes = [
   {
@@ -59,6 +60,10 @@ const PencariRoutes = [
       {
         path: "/histori",
         element: <HistoriTransaksi />,
+      },
+      {
+        path: "/pemberitahuan",
+        element: <Pemberitahuan />,
       },
     ],
   },

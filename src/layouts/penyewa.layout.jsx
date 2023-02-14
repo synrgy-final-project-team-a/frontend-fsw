@@ -10,11 +10,19 @@ import { emptyKos } from "../store/slices/kosSlice";
 import { addUser, emptyUser } from "../store/slices/userSlice";
 import { socket } from "../pages/pencari/chat/chatPage";
 import { ToastContainer } from "react-toastify";
+import { setNotifNum } from "../store/slices/decorSlice";
+import { useTransactionListMutation } from "../store/apis/transaction";
 
 const PenyewaLayout = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const notifRef = useRef({});
+
+  const [
+    getListHit,
+    { isLoading: loadingList, isSuccess: successList, data: dataList }
+  ] = useTransactionListMutation();
+
   const [
     currentUserHit,
     {
@@ -50,10 +58,24 @@ const PenyewaLayout = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    if (successList) {
+      const filterWatched = (el) => {
+        return el.watched_tn === false
+      }
+      const notifNum = dataList.data.content.filter(filterWatched)
+
+      dispatch(setNotifNum(notifNum.length))
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingList])
+
+  useEffect(() => {
     if (isSuccessUser) {
       // join room socket notification
       socket.emit("subscribe-notification", { token: token.access_token });
       dispatch(addUser(dataUser.data));
+      getListHit({ token: token.access_token, id: token.profile_id })
     }
 
     if (isErrorUser) {

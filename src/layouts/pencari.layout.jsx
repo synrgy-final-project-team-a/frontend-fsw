@@ -10,12 +10,20 @@ import { emptyKos } from "../store/slices/kosSlice";
 import { addUser, emptyUser } from "../store/slices/userSlice";
 import { socket } from "../pages/pencari/chat/chatPage";
 import { ToastContainer } from "react-toastify";
+import { useGetListbyPencariMutation } from "../store/apis/transaksi";
+import { setNotifNum } from "../store/slices/decorSlice";
 
 const PencariLayout = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [
+    getListHit,
+    { isLoading: loadingList, isSuccess: successList, data: dataList }
+  ] = useGetListbyPencariMutation();
+
   const notifRef = useRef({});
+
   const [
     currentUserHit,
     {
@@ -51,20 +59,35 @@ const PencariLayout = ({ children }) => {
       // join room socket notification
       socket.emit("subscribe-notification", { token: token.access_token });
       dispatch(addUser(dataUser.data));
+      getListHit({ profileId: token.profile_id });
     }
 
-		if (isErrorUser) {
-			if (errorUser.hasOwnProperty('data') && errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
-				dispatch(emptyToken())
-				dispatch(emptyEmail())
-				dispatch(emptyUser())
-				dispatch(emptyKos())
-				navigate('/')
-				return
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoadingUser])
+    if (isErrorUser) {
+      if (errorUser.hasOwnProperty('data') && errorUser.data.hasOwnProperty('status') && errorUser.data.status === "Token expired") {
+        dispatch(emptyToken())
+        dispatch(emptyEmail())
+        dispatch(emptyUser())
+        dispatch(emptyKos())
+        navigate('/')
+        return
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingUser])
+
+  useEffect(() => {
+    if (successList) {
+      const filterWatched = (el) => {
+        return el.watched_sk === false
+      }
+      const notifNum = dataList.data.content.filter(filterWatched)
+
+      dispatch(setNotifNum(notifNum.length))
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingList])
+
   useEffect(() => {
     socket.on("subscribe-notification", (data) => {
       if (!notifRef.current.created_at) {
@@ -81,7 +104,7 @@ const PencariLayout = ({ children }) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
-  
+
   function showNotif(title, message) {
     Notification.requestPermission(function (permission) {
       // console.log(permission);
@@ -101,14 +124,14 @@ const PencariLayout = ({ children }) => {
       }
     });
   }
-	return (
-		<>
-			<ToastContainer />
-			<NavbarComponent routes={PencariRoutes} />
-			{children}
-			<FooterComponent />
-		</>
-	)
+  return (
+    <>
+      <ToastContainer />
+      <NavbarComponent routes={PencariRoutes} />
+      {children}
+      <FooterComponent />
+    </>
+  )
 }
 
 export default PencariLayout;

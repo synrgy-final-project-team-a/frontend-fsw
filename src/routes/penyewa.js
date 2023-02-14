@@ -12,6 +12,7 @@ import EditKamar from "../pages/penyewa/kos/editKamar"
 import DetailPengajuan from "../pages/penyewa/kos/detail-pengajuan-sewa-kos"
 
 import ChatPagePenyewa from "../pages/penyewa/chat/chatPage";
+import Pemberitahuan from "../pages/penyewa/profile/pemberitahuan";
 
 const PenyewaRoutes = [
 	{
@@ -32,6 +33,10 @@ const PenyewaRoutes = [
 					{
 						path: "/saya",
 						element: <InformasiPersonal />,
+					},
+					{
+						path: "/pemberitahuan",
+						element: <Pemberitahuan />,
 					},
 				]
 			},

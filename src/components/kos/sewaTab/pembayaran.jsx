@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAddBuktiByPencariMutation } from "../../../store/apis/transaksi";
 import { addBooking } from "../../../store/slices/transaksiSlice";
+import { durationToDurasi, rupiahFormat } from "../../../store/utils/format";
 
 const imgAllow = [
   "image/png",
@@ -18,7 +19,7 @@ const Pembayaran = () => {
   const [selectedProfile, setSelectedProfile] = useState()
   const [previewProfile, setPreviewProfile] = useState()
 
-  const transaksi = useSelector(state => state.transaksi.transaction_id)
+  const transaksi = useSelector(state => state.transaksi)
 
   const [
     uploadHit,
@@ -38,7 +39,7 @@ const Pembayaran = () => {
 
     formdata.append("file", selectedProfile)
 
-    uploadHit({ body: formdata, transactionId: transaksi })
+    uploadHit({ body: formdata, transactionId: transaksi.transaction_id })
   }
 
   const changeProfileHandler = (e) => {
@@ -109,19 +110,19 @@ const Pembayaran = () => {
             <div className="col-12 col-lg-6">
               <div className="mb-3">
                 <h5>No Invoice</h5>
-                <h5 className="fw-semibold">28242874/2023/02/2422</h5>
+                <h5 className="fw-semibold">{transaksi.booking_code}</h5>
               </div>
               <div>
                 <h5>Silahkan bayar melalui </h5>
                 <div className="d-flex justify-content-between">
-                  <h5 className="fw-semibold">Transfer Rekening BCA </h5>
+                  <h5 className="fw-semibold">Transfer Rekening {transaksi.bank_name}</h5>
                   <img src="/image25.png" alt=""></img>
                 </div>
                 <div className="d-flex justify-content-between mb-3">
                   <div>
                     <p className="mb-0">Nomor Rekening Pemilik Kos </p>
-                    <p className="fw-semibold mb-0">8077772349823792312</p>
-                    <p className="mb-0">a/n. Sri Boga Sari </p>
+                    <p className="fw-semibold mb-0">{transaksi.bank_account}</p>
+                    <p className="mb-0">a/n. {transaksi.bank_username}</p>
                   </div>
                   <Button variant="link">
                     Salin{" "}
@@ -132,7 +133,7 @@ const Pembayaran = () => {
                 </div>
                 <p className="mb-0">Total Pembayaran</p>
                 <div className="d-flex justify-content-between mb-3">
-                  <p className="fw-semibold">Rp. 1.360.000</p>
+                  <p className="fw-semibold">{rupiahFormat(transaksi.price)}</p>
                   <Button variant="link">
                     Salin{" "}
                     <span>
@@ -245,11 +246,10 @@ const Pembayaran = () => {
                       style={{ width: "48px", height: "40px" }}
                     ></img>
                     <div>
-                      <p className="mb-0">Kos H.Turiman Banaran </p>
-                      <p className="mb-0">Tipe A </p>
+                      <p className="mb-0">{transaksi.kost_name}</p>
+                      <p className="mb-0">{transaksi.room_name}</p>
                       <p className="mb-0" style={{ fontSize: "12px" }}>
-                        Jl. Banaran No.117, Banaran Sekarang Gunung Pati
-                        Semarang{" "}
+                      {transaksi.kost_address}
                       </p>
                     </div>
                   </div>
@@ -258,36 +258,36 @@ const Pembayaran = () => {
                   className="my-1"
                   style={{ borderBottom: "1px solid #ACCED0" }}
                 >
-                  <p className="fw-bold">Detail Infromasi </p>
+                  <p className="fw-bold">Detail Infromasi</p>
                   <div className="d-flex justify-content-between mb-1">
                     <p style={{ fontSize: "14px" }} className="mb-0">
                       ID Booking{" "}
                     </p>
-                    <p className="fw-semibold mb-0">KOSAN32534543</p>
+                    <p className="fw-semibold mb-0">{transaksi.booking_code}</p>
                   </div>
                   <div className="d-flex justify-content-between mb-1">
                     <p style={{ fontSize: "14px" }} className="mb-0">
                       Nama Penyewa{" "}
                     </p>
-                    <p className="fw-semibold mb-0">Dion Kurniawan</p>
+                    <p className="fw-semibold mb-0">{transaksi.nama}</p>
                   </div>
                   <div className="d-flex justify-content-between mb-1">
                     <p style={{ fontSize: "14px" }} className="mb-0">
                       Tanggal Mulai Sewa{" "}
                     </p>
-                    <p className="fw-semibold mb-0">Kamis, 23 Februari 2023</p>
+                    <p className="fw-semibold mb-0">{new Date(transaksi.check_in).toDateString()}</p>
                   </div>
                   <div className="d-flex justify-content-between mb-1">
                     <p style={{ fontSize: "14px" }} className="mb-0">
                       Tanggal Selesai Sewa{" "}
                     </p>
-                    <p className="fw-semibold mb-0">Kamis, 23 Maret 2023 </p>
+                    <p className="fw-semibold mb-0">{new Date(transaksi.check_out).toDateString()}</p>
                   </div>
                   <div className="d-flex justify-content-between mb-1 pb-2">
                     <p style={{ fontSize: "14px" }} className="mb-0">
                       Durasi Sewa
                     </p>
-                    <p className="fw-semibold mb-0"> 1 bulan</p>
+                    <p className="fw-semibold mb-0">{durationToDurasi(transaksi.durationtype)}</p>
                   </div>
                 </div>
                 <div className="my-1">
@@ -296,7 +296,7 @@ const Pembayaran = () => {
                     <p style={{ fontSize: "14px" }} className="mb-0">
                       Bank Tujuan{" "}
                     </p>
-                    <p className=" mb-0">BCA</p>
+                    <p className=" mb-0">{transaksi.bank_name}</p>
                   </div>
                   <div className="d-flex justify-content-between mb-1">
                     <p style={{ fontSize: "14px" }} className="mb-0">
@@ -308,7 +308,7 @@ const Pembayaran = () => {
                     <p style={{ fontSize: "14px" }} className="mb-0">
                       Biaya Sewa
                     </p>
-                    <p className=" mb-0">Rp. 1.350.000</p>
+                    <p className=" mb-0">{rupiahFormat(transaksi.price)}</p>
                   </div>
                   <div className="d-flex justify-content-between mb-1">
                     <p style={{ fontSize: "14px" }} className="mb-0">
@@ -320,7 +320,7 @@ const Pembayaran = () => {
                     <p style={{ fontSize: "14px" }} className="mb-0">
                       Total Pembayaran
                     </p>
-                    <p className="fw-bolder mb-0"> Rp.1.360.000</p>
+                    <p className="fw-bolder mb-0">{rupiahFormat(parseInt(transaksi.price) + 10000)}</p>
                   </div>
                 </div>
               </div>
