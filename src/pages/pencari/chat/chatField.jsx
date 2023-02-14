@@ -22,16 +22,10 @@ export default function ChatField({ socket, room, header }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const chatRef = useRef({});
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    try {
-      getHistoryChatHit({ token: token.access_token, body: { roomId: room } });
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
+    getHistoryChatHit({ token: token.access_token, body: { roomId: room } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room]);
 
   useEffect(() => {
@@ -102,7 +96,7 @@ export default function ChatField({ socket, room, header }) {
                 <div
                   key={index}
                   className="message"
-                  id={userData.id != messageContent.sender_id ? "you" : "other"}
+                  id={userData.id !== messageContent.sender_id ? "you" : "other"}
                 >
                   <div>
                     <div className="message-content">

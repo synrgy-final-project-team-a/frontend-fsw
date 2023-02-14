@@ -103,7 +103,7 @@ const ListKos = () => {
 									return (
 										<Col xs={12} lg={6} key={i}>
 											<Card bg="outline-primary" className="flex-row">
-												<Card.Img src="/banner.png" />
+												<Card.Img src={el.frontBuildingPhoto} />
 												<Card.Body className="d-flex flex-column">
 													<Card.Title>{el.kostName}</Card.Title>
 													<Card.Text>

@@ -26,7 +26,7 @@ const PencariRoutes = [
   {
     name: "Chat",
     path: "/chat",
-    element: <Landing />,
+    element: <ChatPage />,
   },
   {
     path: "/kos/:id",
@@ -59,10 +59,6 @@ const PencariRoutes = [
       {
         path: "/histori",
         element: <HistoriTransaksi />,
-      },
-      {
-        path: "/chat",
-        element: <ChatPage />,
       },
     ],
   },

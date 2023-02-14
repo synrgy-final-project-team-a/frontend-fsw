@@ -218,23 +218,31 @@ const DetailKos = () => {
 
   const onClickNewChatHandler = (e) => {
     e.preventDefault();
-    if (!token) {
-      alert("silahkan Login Kembali");
+
+    if (Object.keys(token).length === 0) {
+      toast.error("Login terlebih dahulu!", {
+        position: "top-center",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
+
     const idKos = params.id;
-    console.log(idKos);
-    try {
-      addNewChat({ token: token.access_token, body: { kostId: idKos } });
-    } catch (error) {
-      console.log(error);
-    }
+
+    addNewChat({ token: token.access_token, body: { kostId: idKos } });
   };
+
   useEffect(() => {
     if (isSuccessNewChat) {
       dispatch(createChat(dataNewChat));
       navigate(
-        `/profile/chat?newChat=true&nameKost=${kostOne.kost_name}&avatar=${kostOne.front_building_photo}`
+        `/chat?newChat=true&nameKost=${kostOne.kost_name}&avatar=${kostOne.front_building_photo}`
       );
     }
 
@@ -783,7 +791,6 @@ const DetailKos = () => {
                               </option>
                             );
                           })}
-                          >
                           {price.map((el, i) => {
                             return (
                               <option key={i} value={el.durationType}>
@@ -801,13 +808,16 @@ const DetailKos = () => {
                     >
                       Pilih Tipe Kos
                     </Button>
-                    <Button
-                      variant="primary "
-                      className="col-12"
-                      onClick={onClickNewChatHandler}
-                    >
-                      Chat Penyewa Kos
-                    </Button>
+                    {
+                      Object.keys(token).length !== 0 ?
+                        <Button
+                          variant="primary"
+                          className="col-12"
+                          onClick={onClickNewChatHandler}
+                        >
+                          Chat Penyewa Kos
+                        </Button> : ""
+                    }
                   </Card.Body>
                 </Card>
               </Col>

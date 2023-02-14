@@ -1,8 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Button, Col, Container, Nav, Row, Spinner } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Breadcrumb, Button, Container, Spinner } from "react-bootstrap";
 import { Link, useSearchParams } from "react-router-dom";
-import Profile from "../../../components/profile";
-import PencariRoutes from "../../../routes/pencari";
 import io from "socket.io-client";
 import ChatField from "./chatField";
 import PencariLayout from "../../../layouts/pencari.layout";
@@ -59,6 +57,7 @@ export default function ChatPage() {
 
     // join socket list room chat
     socket.emit("load-room-chat", { token: token.access_token });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -84,6 +83,7 @@ export default function ChatPage() {
         console.log(error);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   const joinRoom = ({ roomId, nameKos, avatar, urutan }) => {
@@ -105,127 +105,109 @@ export default function ChatPage() {
     <>
       <PencariLayout>
         <Container className="mt-2" id="chat">
-          <Nav aria-label="breadcrumb">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <Link to="/" className="text-decoration-none">
-                  Home
-                </Link>
-              </li>
-              <li className="breadcrumb-item">
-                <Link to="/profile" className="text-decoration-none">
-                  User Pencari Kos
-                </Link>
-              </li>
-              <li className="breadcrumb-item active" aria-current="page">
-                Chat
-              </li>
-            </ol>
-          </Nav>
-          <Row className="mt-md-5 ">
-            <Col className="mb-3">
-              <Profile routes={PencariRoutes} />
-            </Col>
-            <Col xs={12} lg={9} className="border rounded">
-              <Container>
-                <div
-                  className="d-flex flex-column"
-                  style={{ widht: "100vw", height: "60vh" }}
-                >
-                  <h6 className="fw-bold m-5">Chat</h6>
-                  <div className="row">
-                    <div
-                      className="col-4  p-3 "
-                      style={{
-                        overflow: "scroll",
-                        overflowX: "hidden",
-                        height: "450px",
-                      }}
-                    >
-                      {loading ? (
-                        <Spinner animation="border" role="status">
-                          <span className="visually-hidden"></span>
-                        </Spinner>
-                      ) : roomChat ? (
-                        roomChat.map((room, index) => {
-                          return (
-                            <Button
-                              key={index}
-                              variant="link"
-                              className="w-100 p-0 text-decoration-none"
-                              onClick={(e) =>
-                                joinRoom({
-                                  urutan: index,
-                                  roomId: room.room_id,
-                                  nameKos: room.kost_name,
-                                  avatar: room.kost_photo_1,
-                                })
-                              }
-                            >
-                              <div className="d-flex border rounded p-2 align-items-center mb-1 w-100">
-                                <img
-                                  src={room.kost_photo_1}
-                                  alt=""
-                                  className=""
-                                  style={{ width: "48px", height: "48px" }}
-                                ></img>
-                                <div className="ms-2 d-flex flex-column w-100">
-                                  <h6 className="mb-0 ms-1 text-start">
-                                    {!room ? (
-                                      <></>
-                                    ) : room.kost_name.length > 20 ? (
-                                      room.kost_name.substring(0, 19) + "..."
-                                    ) : (
-                                      room.kost_name
-                                    )}
-                                  </h6>
-                                  <p className="mb-0 ms-1 text-start fs-6">
-                                    pesan : {room.message}
-                                  </p>
-                                </div>
-                                <span
-                                  className={
-                                    room.sender_id === token.profile_id ||
-                                    room.status_message === "READED"
-                                      ? "visually-hidden translate-middle p-2 bg-danger border border-light rounded-circle"
-                                      : " translate-middle p-2 bg-danger border border-light rounded-circle"
-                                  }
-                                  id={`status${index}`}
-                                >
-                                  <span className="visually-hidden">
-                                    {"New alerts"}
-                                  </span>
-                                </span>
-                              </div>
-                            </Button>
-                          );
-                        })
-                      ) : (
-                        <>Tidak ada riwayat Chat</>
-                      )}
-                    </div>
-                    <div className="col-8">
-                      {!showChat ? (
-                        <>
+          <Breadcrumb>
+            <Breadcrumb.Item
+              linkAs={Link}
+              linkProps={{ to: "/", className: "text-decoration-none" }}
+            >
+              Beranda
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>Chat</Breadcrumb.Item>
+          </Breadcrumb>
+          <div
+            className="d-flex flex-column"
+          >
+            <h6 className="fw-bold m-5">Chat</h6>
+            <div className="row">
+              <div
+                className="col-4  p-3 "
+                style={{
+                  overflow: "scroll",
+                  overflowX: "hidden",
+                  height: "450px",
+                }}
+              >
+                {loading ? (
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden"></span>
+                  </Spinner>
+                ) : roomChat ? (
+                  roomChat.map((room, index) => {
+                    return (
+                      <Button
+                        key={index}
+                        variant="link"
+                        className="w-100 p-0 text-decoration-none"
+                        onClick={(e) =>
+                          joinRoom({
+                            urutan: index,
+                            roomId: room.room_id,
+                            nameKos: room.kost_name,
+                            avatar: room.kost_photo_1,
+                          })
+                        }
+                      >
+                        <div className="d-flex border rounded p-2 align-items-center mb-1 w-100">
                           <img
-                            src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/zeus/kratos/349f0f78.png"
+                            src={room.kost_photo_1}
                             alt=""
-                            className="w-100"
+                            className=""
+                            style={{ width: "48px", height: "48px" }}
                           ></img>
-                        </>
-                      ) : (
-                        <ChatField
-                          socket={socket}
-                          room={room}
-                          header={header}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </Container>
-            </Col>
-          </Row>
+                          <div className="ms-2 d-flex flex-column w-100">
+                            <h6 className="mb-0 ms-1 text-start">
+                              {!room ? (
+                                <></>
+                              ) : room.kost_name.length > 20 ? (
+                                room.kost_name.substring(0, 19) + "..."
+                              ) : (
+                                room.kost_name
+                              )}
+                            </h6>
+                            <p className="mb-0 ms-1 text-start fs-6">
+                              pesan : {room.message}
+                            </p>
+                          </div>
+                          <span
+                            className={
+                              room.sender_id === token.profile_id ||
+                                room.status_message === "READED"
+                                ? "visually-hidden translate-middle p-2 bg-danger border border-light rounded-circle"
+                                : " translate-middle p-2 bg-danger border border-light rounded-circle"
+                            }
+                            id={`status${index}`}
+                          >
+                            <span className="visually-hidden">
+                              {"New alerts"}
+                            </span>
+                          </span>
+                        </div>
+                      </Button>
+                    );
+                  })
+                ) : (
+                  <div>Tidak ada riwayat Chat</div>
+                )}
+              </div>
+              <div className="col-8">
+                {!showChat ? (
+                  <>
+                    <img
+                      src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/zeus/kratos/349f0f78.png"
+                      alt=""
+                      className="w-100"
+                    ></img>
+                  </>
+                ) : (
+                  <ChatField
+                    socket={socket}
+                    room={room}
+                    header={header}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
         </Container>
       </PencariLayout>
     </>

@@ -19,6 +19,11 @@ const PenyewaRoutes = [
         element: <Dashboard />,
       },
       {
+        name: "Chat",
+        path: "/chat",
+        element: <ChatPagePenyewa />,
+      },
+      {
         path: "/profile",
         children: [
           {
@@ -28,10 +33,6 @@ const PenyewaRoutes = [
           {
             path: "/saya",
             element: <InformasiPersonal />,
-          },
-          {
-            path: "/chat",
-            element: <ChatPagePenyewa />,
           },
         ],
       },
