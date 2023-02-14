@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useGetListRoomChatMutation } from "../../../store/apis/chat";
 import { addlistRoomChat } from "../../../store/slices/chatSlice";
 
-export const socket = io.connect("http://localhost:8090");
+export const socket = io.connect("https://backend-fsw-development.up.railway.app");
 
 // module.esport = socket;
 export default function ChatPage() {
