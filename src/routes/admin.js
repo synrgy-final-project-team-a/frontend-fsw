@@ -22,6 +22,8 @@ import ForgetPassChange from "../pages/admin/authentication/forgetPasswordChange
 import KelolaKos from "../pages/admin/kelola-kos"
 import EditUser from "../pages/admin/users/editUser"
 
+import ListBanner from "../pages/admin/banners/list"
+
 const AdminRoutes = [
 	{
 		path: "/admin",
@@ -41,7 +43,7 @@ const AdminRoutes = [
 					{
 						path: "/saya",
 						element: <InformasiPersonal />,
-					},		
+					},
 				]
 			},
 			{
@@ -66,7 +68,11 @@ const AdminRoutes = [
 					}
 				]
 			},
-
+			{
+				path: "/banners",
+				name: "Banners",
+				element: <ListBanner />
+			},
 			{
 				name: "Kos",
 				path: "/kos",

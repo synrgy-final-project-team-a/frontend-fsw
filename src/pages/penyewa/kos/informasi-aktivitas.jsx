@@ -3,7 +3,7 @@ import PengajuanSewa from "../../../components/kos/informasi-aktivitas/pengajuan
 
 const InformasiAktivitas = () => {
     return (
-        <div className="mt-3" id="informasi-aktivitas">
+        <div className="mt-5" id="informasi-aktivitas">
             <h3>Informasi Aktivitas</h3>
 			<PengajuanSewa />
 			<PembayaranSewa />			    

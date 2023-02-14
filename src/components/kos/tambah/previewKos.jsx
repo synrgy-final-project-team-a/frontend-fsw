@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useInsertKostByPenyewaMutation, useInsertRoomByPenyewaMutation } from "../../../store/apis/kos";
 import { emptyKos, submitForm } from "../../../store/slices/kosSlice";
 import { rupiahFormat } from "../../../store/utils/format";
+import { toast } from "react-toastify";
 
 const PreviewKos = ({ setKeynya }) => {
   const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const PreviewKos = ({ setKeynya }) => {
   const kos = useSelector((state) => state.kos);
   const profileId = useSelector((state) => state.auth.token.profile_id);
 
+  const loadingRef = useRef();
   const [previewFrontPhoto, setPreviewFrontPhoto] = useState();
   const [previewFrontFarPhoto, setPreviewFarRoadPhoto] = useState();
   const [previewFotoDalam, setPreviewFotoDalam] = useState();
@@ -42,6 +44,17 @@ const PreviewKos = ({ setKeynya }) => {
     if (!confirm) {
       return
     }
+
+    loadingRef.current = toast.loading('Sedang menambahkan kos', {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    })
 
     let formdata = new FormData()
 
@@ -86,6 +99,19 @@ const PreviewKos = ({ setKeynya }) => {
 
   useEffect(() => {
     if (successKos) {
+      toast.update(loadingRef.current, {
+        render: "Sedang menambahkan kamar",
+        isLoading: true,
+        position: "top-center",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      })
+
       let kostId = dataKos.data.id
       let formdata = new FormData()
 
@@ -122,24 +148,115 @@ const PreviewKos = ({ setKeynya }) => {
 
     if (errorKos) {
       console.log(errorsKos)
+      toast.dismiss()
+      if (errorsKos.hasOwnProperty('data')) {
+        if (Array.isArray(errorsKos.data)) {
+          errorsKos.data.forEach((el) => {
+            toast.error(el.data.message, {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+              theme: "light",
+            })
+          })
+        } else {
+          toast.error(errorsKos.data.message, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          })
+        }
+      } else {
+        toast.error("Gagal menambahkan kos", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+        })
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingKos])
 
   useEffect(() => {
     if (successRoom) {
-      let payload = {
-        submitted: true
-      }
+      toast.dismiss()
+      toast.success("Sukses menambahkan kos", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      })
 
-      dispatch(submitForm(payload));
-      dispatch(emptyKos())
-      alert("Berhasil menambahkan kos!")
-      navigate('/penyewa/kos')
+      setTimeout(() => {
+        let payload = {
+          submitted: true
+        }
+
+        dispatch(submitForm(payload));
+        dispatch(emptyKos())
+        navigate('/penyewa/kos')
+      }, 1000);
     }
 
     if (errorRoom) {
       console.log(errorsRoom)
+      toast.dismiss()
+      if (errorsRoom.hasOwnProperty('data')) {
+        if (Array.isArray(errorsRoom.data)) {
+          errorsRoom.data.forEach((el) => {
+            toast.error(el.data.message, {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+              theme: "light",
+            })
+          })
+        } else {
+          toast.error(errorsRoom.data.message, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          })
+        }
+      } else {
+        toast.error("Gagal menambahkan kamar", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+        })
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingRoom])
