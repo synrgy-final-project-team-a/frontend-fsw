@@ -29,6 +29,7 @@ const ProfilePencari = () => {
 
   useEffect(() => {
     getListHit({ profileId: idProfile });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -37,12 +38,24 @@ const ProfilePencari = () => {
     return date.toLocaleDateString();
   }
 
-	const handleDisplay = (e, i) => {
-		e.preventDefault()
-		let newDisplay = { ...display }
-		newDisplay[i] = true
-		setDisplay(newDisplay)
-	}
+  const goToTransaksi = (e, transaction_id, status) => {
+    e.preventDefault();
+
+    const initialState = {
+      status: status,
+      transaction_id: transaction_id,
+    }
+
+    dispatch(addBooking(initialState))
+    navigate('/pengajuan-sewa')
+  }
+
+  const handleDisplay = (e, i) => {
+    e.preventDefault()
+    let newDisplay = { ...display }
+    newDisplay[i] = true
+    setDisplay(newDisplay)
+  }
 
   return (
     <PencariLayout>
@@ -62,7 +75,7 @@ const ProfilePencari = () => {
           </Col>
           <Col xs={12} lg={9} className="border rounded px-3 px-lg-5">
             <h5 className="fw-bold mt-5">Kelola Kos</h5>
-            {isLoading ? 
+            {isLoading ?
               [...Array(9).keys()].map((el, i) => {
                 return (
                   <Col xs={12} lg={4} key={i}>
@@ -72,201 +85,211 @@ const ProfilePencari = () => {
                   </Col>
                 )
               }) : isSuccess ? (
-              data.data.content.length === 0 ? (
-                <h1>Data kosong</h1>
-              ) : (
-                data.data.content.map((el, i) => {
-                  return (
-                    <Row className="gy-3 card-kelola my-4" key={i}>
-                      <Col xs={12}>
-                        <Card bg="outline-primary">
-                          <Row className="g-0">
-                            <Col xs={2} lg={3}>
-                              <Card.Img src="/banner.png" />
-                            </Col>
-                            <Col xs={10} lg={9}>
-                              <Card.Body className="d-flex flex-column">
-                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                  <Card.Title className="fw-bold w-75">
-                                    {el.kost_name}
-                                  </Card.Title>
-                                  {el.status === "POSTED" ? (
-                                    <Card.Text className="text-warning">
-                                      <FontAwesomeIcon icon={faClock} />{" "}
-                                      Menunggu Konfirmasi Booking Pemilik Kos
-                                    </Card.Text>
-                                  ) : el.status === "CONFIRMED" ? (
-                                    <Card.Text className="text-danger">
-                                      <FontAwesomeIcon icon={faPaypal} /> Mohon
-                                      Melakukan Pembayaran
-                                    </Card.Text>
-                                  ) : el.status === "REVIEWED" ? (
-                                    <Card.Text className="text-warning">
-                                      <FontAwesomeIcon icon={faClock} />{" "}
-                                      Menunggu Konfirmasi Pembayaran Pemilik Kos
-                                    </Card.Text>
-                                  ) : el.status === "APPROVED" ? (
-                                    <Card.Text className="text-success">
-                                      <FontAwesomeIcon icon={faCheckCircle} />{" "}
-                                      Berhasil
-                                    </Card.Text>
-                                  ) : el.status === "REJECTED" ? (
-                                    <Card.Text className="text-danger">
-                                      <FontAwesomeIcon icon={faCircleXmark} />{" "}
-                                      Ditolak Pemilik Kos
-                                    </Card.Text>
-                                  ) : el.status === "CANCELLED" ? (
-                                    <Card.Text className="text-success">
-                                      <FontAwesomeIcon icon={faCheckCircle} />{" "}
-                                      Dibatalkan
-                                    </Card.Text>
-                                  ) : (
-                                    <Card.Text>&nbsp;</Card.Text>
-                                  )}
-                                </div>
-                                <Card.Text className="mb-1">
-                                  {el.address}
-                                </Card.Text>
-                                <Card.Text className="fw-bold mb-2">
-                                  {el.room_name}
-                                </Card.Text>
-                                <div className="d-flex mb-2">
-                                  <div className="d-flex align-items-center me-4">
-                                    <h2 className="me-2 mb-0">
-                                      <FontAwesomeIcon icon={faCalendarDays} />
-                                    </h2>
-                                    <div>
-                                      <Card.Text className="text-muted mb-0">
-                                        Tanggal Masuk
+                data.data.content.length === 0 ? (
+                  <h1>Data kosong</h1>
+                ) : (
+                  data.data.content.map((el, i) => {
+                    return (
+                      <Row className="gy-3 card-kelola my-4" key={i}>
+                        <Col xs={12}>
+                          <Card bg="outline-primary">
+                            <Row className="g-0">
+                              <Col xs={2} lg={3}>
+                                <Card.Img src="/banner.png" />
+                              </Col>
+                              <Col xs={10} lg={9}>
+                                <Card.Body className="d-flex flex-column">
+                                  <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <Card.Title className="fw-bold w-75">
+                                      {el.kost_name}
+                                    </Card.Title>
+                                    {el.status === "POSTED" ? (
+                                      <Card.Text className="text-warning">
+                                        <FontAwesomeIcon icon={faClock} />{" "}
+                                        Menunggu Konfirmasi Booking Pemilik Kos
                                       </Card.Text>
-                                      <Card.Text className="fw-bold">
-                                        {getFormattedDate(el.check_in)}
+                                    ) : el.status === "CONFIRMED" ? (
+                                      <Card.Text className="text-danger">
+                                        <FontAwesomeIcon icon={faPaypal} /> Mohon
+                                        Melakukan Pembayaran
                                       </Card.Text>
-                                    </div>
+                                    ) : el.status === "REVIEWED" ? (
+                                      <Card.Text className="text-warning">
+                                        <FontAwesomeIcon icon={faClock} />{" "}
+                                        Menunggu Konfirmasi Pembayaran Pemilik Kos
+                                      </Card.Text>
+                                    ) : el.status === "APPROVED" ? (
+                                      <Card.Text className="text-success">
+                                        <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                                        Berhasil
+                                      </Card.Text>
+                                    ) : el.status === "REJECTED" ? (
+                                      <Card.Text className="text-danger">
+                                        <FontAwesomeIcon icon={faCircleXmark} />{" "}
+                                        Ditolak Pemilik Kos
+                                      </Card.Text>
+                                    ) : el.status === "CANCELLED" ? (
+                                      <Card.Text className="text-success">
+                                        <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                                        Dibatalkan
+                                      </Card.Text>
+                                    ) : (
+                                      <Card.Text>&nbsp;</Card.Text>
+                                    )}
                                   </div>
-                                  <div className="d-flex align-items-center">
-                                    <h2 className="me-2 mb-0">
-                                      <FontAwesomeIcon icon={faClock} />
-                                    </h2>
-                                    <div>
-                                      <Card.Text className="text-muted mb-0">
-                                        Durasi Sewa
-                                      </Card.Text>
-                                      <Card.Text className="fw-bold">
-                                        {el.duration_type}
-                                      </Card.Text>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="d-flex justify-content-between align-items-center">
-                                  <Card.Text className="mb-0">
-                                    <span className="fw-bold">
-                                      Rp. {el.price}
-                                    </span>{" "}
-                                    / bulan
+                                  <Card.Text className="mb-1">
+                                    {el.address}
                                   </Card.Text>
-                                  {display && display[i] !== true ? (
-                                    <Button
-                                      variant="outline-primary"
-                                      className="m-1"
-                                      onClick={(e) => handleDisplay(e, i)}
-                                    >
-                                      Selengkapnya{" "}
-                                      <FontAwesomeIcon icon={faAngleDown} />
-                                    </Button>
-                                  ) : (
-                                    ""
-                                  )}
+                                  <Card.Text className="fw-bold mb-2">
+                                    {el.room_name}
+                                  </Card.Text>
+                                  <div className="d-flex mb-2">
+                                    <div className="d-flex align-items-center me-4">
+                                      <h2 className="me-2 mb-0">
+                                        <FontAwesomeIcon icon={faCalendarDays} />
+                                      </h2>
+                                      <div>
+                                        <Card.Text className="text-muted mb-0">
+                                          Tanggal Masuk
+                                        </Card.Text>
+                                        <Card.Text className="fw-bold">
+                                          {getFormattedDate(el.check_in)}
+                                        </Card.Text>
+                                      </div>
+                                    </div>
+                                    <div className="d-flex align-items-center">
+                                      <h2 className="me-2 mb-0">
+                                        <FontAwesomeIcon icon={faClock} />
+                                      </h2>
+                                      <div>
+                                        <Card.Text className="text-muted mb-0">
+                                          Durasi Sewa
+                                        </Card.Text>
+                                        <Card.Text className="fw-bold">
+                                          {el.duration_type}
+                                        </Card.Text>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <Card.Text className="mb-0">
+                                      <span className="fw-bold">
+                                        Rp. {el.price}
+                                      </span>{" "}
+                                      / bulan
+                                    </Card.Text>
+                                    {display && display[i] !== true ? (
+                                      <Button
+                                        variant="outline-primary"
+                                        className="m-1"
+                                        onClick={(e) => handleDisplay(e, i)}
+                                      >
+                                        Selengkapnya{" "}
+                                        <FontAwesomeIcon icon={faAngleDown} />
+                                      </Button>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </Card.Body>
+                              </Col>
+                            </Row>
+                          </Card>
+                        </Col>
+                        {display && display[i] === true ? (
+                          <Col xs={12} lg={{ span: 9, offset: 3 }}>
+                            <Card>
+                              <Card.Body className="d-flex flex-column">
+                                <Card.Title className="fw-bold mb-2">
+                                  Data Penghuni Kosan
+                                </Card.Title>
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                  <Card.Text className="mb-0">Nama</Card.Text>
+                                  <Card.Text>{el.name}</Card.Text>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                  <Card.Text className="mb-0">
+                                    No Handphone
+                                  </Card.Text>
+                                  <Card.Text>{el.phone_number}</Card.Text>
                                 </div>
                               </Card.Body>
-                            </Col>
-                          </Row>
-                        </Card>
-                      </Col>
-                      {display && display[i] === true ? (
-                        <Col xs={12} lg={{ span: 9, offset: 3 }}>
-                          <Card>
-                            <Card.Body className="d-flex flex-column">
-                              <Card.Title className="fw-bold mb-2">
-                                Data Penghuni Kosan
-                              </Card.Title>
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                                <Card.Text className="mb-0">Nama</Card.Text>
-                                <Card.Text>{el.name}</Card.Text>
-                              </div>
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                                <Card.Text className="mb-0">
-                                  No Handphone
-                                </Card.Text>
-                                <Card.Text>{el.phone_number}</Card.Text>
-                              </div>
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      ) : (
-                        ""
-                      )}
-                      {display && display[i] === true ? (
-                        <Col xs={12} lg={{ span: 9, offset: 3 }}>
-                          <Card>
-                            <Card.Body className="d-flex flex-column">
-                              <Card.Title className="fw-bold mb-2">
-                                Informasi Sewa Kosan
-                              </Card.Title>
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                                <Card.Text className="mb-0">
-                                  ID Booking
-                                </Card.Text>
-                                <Card.Text>{el.booking_code}</Card.Text>
-                              </div>
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                                <Card.Text className="mb-0">
-                                  Tanggal Sewa
-                                </Card.Text>
-                                <Card.Text>{getFormattedDate(el.check_in)}</Card.Text>
-                              </div>
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                                <Card.Text className="mb-0">
-                                  Tanggal Selesai
-                                </Card.Text>
-                                <Card.Text>{getFormattedDate(el.check_out)}</Card.Text>
-                              </div>
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                                <Card.Text className="mb-0">
-                                  Durasi Sewa
-                                </Card.Text>
-                                <Card.Text>{el.duration_type}</Card.Text>
-                              </div>
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      ) : (
-                        ""
-                      )}
-                      {display && display[i] === true ? (
-                        <Col xs={12} lg={{ span: 9, offset: 3 }}>
-                          <hr />
-                          <div className="d-flex flex-row-reverse">
-                            <Button variant="primary" className="ms-2">
-                              Perpanjang Sewa Lagi
-                            </Button>
-                            <Button variant="outline-primary" className="ms-2">
-                              Cari Kosan Lain
-                            </Button>
-                          </div>
-                        </Col>
-                      ) : (
-                        ""
-                      )}
-                    </Row>
-                  );
-                })
-              )
-            ) : isError ? (
-              <h1>Error</h1>
-            ) : (
-              ""
-            )}
+                            </Card>
+                          </Col>
+                        ) : (
+                          ""
+                        )}
+                        {display && display[i] === true ? (
+                          <Col xs={12} lg={{ span: 9, offset: 3 }}>
+                            <Card>
+                              <Card.Body className="d-flex flex-column">
+                                <Card.Title className="fw-bold mb-2">
+                                  Informasi Sewa Kosan
+                                </Card.Title>
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                  <Card.Text className="mb-0">
+                                    ID Booking
+                                  </Card.Text>
+                                  <Card.Text>{el.booking_code}</Card.Text>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                  <Card.Text className="mb-0">
+                                    Tanggal Sewa
+                                  </Card.Text>
+                                  <Card.Text>{getFormattedDate(el.check_in)}</Card.Text>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                  <Card.Text className="mb-0">
+                                    Tanggal Selesai
+                                  </Card.Text>
+                                  <Card.Text>{getFormattedDate(el.check_out)}</Card.Text>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                  <Card.Text className="mb-0">
+                                    Durasi Sewa
+                                  </Card.Text>
+                                  <Card.Text>{el.duration_type}</Card.Text>
+                                </div>
+                              </Card.Body>
+                            </Card>
+                          </Col>
+                        ) : (
+                          ""
+                        )}
+                        {display && display[i] === true ? (
+                          <Col xs={12} lg={{ span: 9, offset: 3 }}>
+                            <hr />
+                            <div className="d-flex flex-row-reverse">
+                              {
+                                el.status === "CONFIRMED" ? (
+                                  <Button variant="primary" className="ms-2"
+                                    onClick={e => goToTransaksi(e, el.transaction_id, el.status)}
+                                  >
+                                    Bayar Kosan
+                                  </Button>
+                                ) : ""
+                              }
+                              {
+                                el.status === "APPROVED" ? (
+                                  <Button variant="primary" className="ms-2">
+                                    Perpanjang Sewa
+                                  </Button>
+                                ) : ""
+                              }
+                            </div>
+                          </Col>
+                        ) : (
+                          ""
+                        )}
+                      </Row>
+                    );
+                  })
+                )
+              ) : isError ? (
+                <h1>Error</h1>
+              ) : (
+                ""
+              )}
           </Col>
         </Row>
       </Container>
