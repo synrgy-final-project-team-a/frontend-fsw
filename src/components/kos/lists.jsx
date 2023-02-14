@@ -110,7 +110,7 @@ const ListKos = () => {
                     className="flex-row"
                     style={{ height: "100%" }}
                   >
-                    <Card.Img src="/banner.png" />
+                    <Card.Img src={el.frontBuildingPhoto} />
                     <Card.Body className="d-flex flex-column">
                       <Card.Title>{el.kostName}</Card.Title>
                       <Card.Text>{el.address}</Card.Text>

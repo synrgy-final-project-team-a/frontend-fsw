@@ -44,7 +44,13 @@ const PenyewaRoutes = [
 					},
 					{
 						path: "/detail-pengajuan",
-						element: <DetailPengajuan />
+						children: [
+							{
+								path: "/:id",
+								element: <DetailPengajuan />
+
+						}
+					]
 					}
 				]
 			}

@@ -8,6 +8,8 @@ import kosApi from "./apis/kos";
 import transaksiApi from "./apis/transaksi";
 import bannerApi from "./apis/banner";
 
+
+
 import { authPersistReducer } from "./slices/authSlice";
 import { userPersistReducer } from "./slices/userSlice";
 import { kosPersistReducer } from "./slices/kosSlice";
