@@ -9,6 +9,7 @@ import TambahKos from "../pages/penyewa/kos/tambah"
 import EditKos from "../pages/penyewa/kos/edit"
 import DetailPengajuan from "../pages/penyewa/kos/detail-pengajuan-sewa-kos"
 import EditKamar from "../pages/penyewa/kos/editKamar"
+import TambahKamar from "../pages/penyewa/kos/tambahKamar"
 
 const PenyewaRoutes = [
 	{
@@ -68,6 +69,10 @@ const PenyewaRoutes = [
 							{
 								path: "/:id",
 								element: <EditKamar />
+							},
+							{
+								path: "/tambah/:id",
+								element: <TambahKamar />
 							},
 							{
 								path: "/edit/:id",

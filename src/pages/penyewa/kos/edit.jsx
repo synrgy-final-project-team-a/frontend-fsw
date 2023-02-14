@@ -760,7 +760,15 @@ const EditKos = () => {
 											</div>
 										</Form>
 										<hr />
-										<h3 className="my-2">Data Kamar</h3>
+										<div className="d-flex justify-content-between my-2">
+											<h3>Data Kamar</h3>
+											<Button size="sm" variant="primary"
+												disabled={loadingUpdate || loadingDelete}
+												onClick={e => navigate('/penyewa/kos/kamar/tambah/' + dataOne.kost[0].kost_id)}
+											>
+												Tambah Kamar
+											</Button>
+										</div>
 										<Table responsive striped bordered>
 											<thead>
 												<tr>
