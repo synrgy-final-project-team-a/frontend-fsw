@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Badge, Button, Card, Col, Row, Alert } from "react-bootstrap"
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { useApproveTransactionMutation, useConfirmTransactionMutation, useRejectTransactionMutation, useTransactionListMutation } from "../../../store/apis/transaction";
 
 const PengajuanSewa = () => {
