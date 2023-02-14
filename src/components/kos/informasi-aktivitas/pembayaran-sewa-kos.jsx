@@ -6,7 +6,7 @@ const PembayaranSewa = () => {
         <>
             <Row className="mt-3">
 				<Col xs={12} lg={4}>
-					<Card className="flex-row border-0">
+					<Card className="flex-row rounded-4" bg="outline-primary">
 						<Card.Img src="/banner.png" />
 						<Card.Body className="d-flex flex-column pe-0 pb-0 pt-1">
 							<Card.Title className="fw-bold fs-5 lh-base fs-6">Pembayaran Sewa Kos</Card.Title>
