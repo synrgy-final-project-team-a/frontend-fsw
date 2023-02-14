@@ -35,38 +35,6 @@
 	height: 200px;
 }
 
-<<<<<<< HEAD
-.fontcolor {
-	color: #616161;
-}
-
-// responsive
-@media only screen and (max-width: 576) {
-	.line:before {
-		width: 50%;
-	}
-
-	.rightborder {
-		border-right: 0px;
-		border-bottom: 2px solid #c4c4c4;
-	}
-
-	.image-sewa {
-		max-width: 90%;
-	}
-}
-
-// /* Medium devices (landscape tablets, 768px and up) */
-// @media only screen and (min-width: 768px) {...}
-// /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-	.line:before {
-		max-width: 60%;
-	}
-}
-
-=======
->>>>>>> b9ce9ff0a678f9821b7e1ccb2fb53d262615eca1
 .fw-semibold {
 	font-weight: 600px;
 }

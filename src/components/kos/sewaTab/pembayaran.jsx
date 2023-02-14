@@ -1,15 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Accordion } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAddBuktiByPencariMutation } from "../../../store/apis/transaksi";
 import { addBooking } from "../../../store/slices/transaksiSlice";
 
+const imgAllow = [
+  "image/png",
+  "image/jpg",
+  "image/jpeg",
+]
+
 const Pembayaran = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  const fileInputRef = useRef()
+  const [selectedProfile, setSelectedProfile] = useState()
+  const [previewProfile, setPreviewProfile] = useState()
 
   const transaksi = useSelector(state => state.transaksi.transaction_id)
 
@@ -27,13 +34,37 @@ const Pembayaran = () => {
       return
     }
 
-    const file = fileInputRef.current.files[0]
-
     const formdata = new FormData()
 
-    formdata.append("file", file)
+    formdata.append("file", selectedProfile)
 
     uploadHit({ body: formdata, transactionId: transaksi })
+  }
+
+  const changeProfileHandler = (e) => {
+    e.preventDefault()
+    let failed = false
+
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedProfile(undefined)
+      return
+    }
+
+    if (!imgAllow.includes(e.target.files[0].type)) {
+      failed = true
+    }
+
+    if (failed) {
+      return
+    }
+
+    setSelectedProfile(e.target.files[0])
+  }
+
+  const resetProfilehandler = (e) => {
+    e.preventDefault()
+    setSelectedProfile(undefined)
+    setPreviewProfile(undefined)
   }
 
   useEffect(() => {
@@ -52,6 +83,19 @@ const Pembayaran = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
+
+  useEffect(() => {
+    if (!selectedProfile) {
+      setPreviewProfile(undefined)
+      return
+    }
+
+    let objectUrl = URL.createObjectURL(selectedProfile)
+    setPreviewProfile(objectUrl)
+
+    return () => URL.revokeObjectURL(objectUrl)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProfile])
 
   return (
     <>
@@ -158,15 +202,32 @@ const Pembayaran = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-                <label htmlFor="formInputFoto" className="btn btn-outline-primary mt-3">
-                  <div className="d-flex justify-content-center align-items-center">
-                    <span>
-                      <img src="/document-upload.png" alt=""></img>
-                    </span>
-                    <p className="fw-bold mb-0 ms-1">Upload Bukti Pembayaran</p>
-                  </div>
-                </label>
-                <input type="file" ref={fileInputRef} id="formInputFoto" />
+                <div className="my-3">
+                  <label htmlFor="formInputFoto" className="btn btn-outline-primary mx-2">
+                    <div className="d-flex justify-content-center align-items-center">
+                      <span>
+                        <img src="/document-upload.png" alt=""></img>
+                      </span>
+                      <p className="fw-bold mb-0 ms-1">Upload Bukti Pembayaran</p>
+                    </div>
+                  </label>
+                  {
+                    selectedProfile ?
+                      <label htmlFor="formInputFoto" className="btn btn-outline-warning mx-2" onClick={resetProfilehandler}>
+                        <div className="d-flex justify-content-center align-items-center">
+                          <p className="fw-bold mb-0 ms-1">Ulang</p>
+                        </div>
+                      </label> :
+                      ""
+                  }
+                  <input type="file" hidden id="formInputFoto" onChange={changeProfileHandler} />
+                </div>
+                <div>
+                  {
+                    selectedProfile ?
+                      <img src={previewProfile} style={{ width: "250px" }} alt="..." /> : ""
+                  }
+                </div>
               </div>
             </div>
             <div className="col-12 col-lg-5 offsed-lg-1">
@@ -280,26 +341,6 @@ const Pembayaran = () => {
               </div>
             </Button>
           </div>
-        </div>
-
-        {/* item2 */}
-        <div className="d-flex flex-column justify-content-center text-center">
-          <h2 className="text-center my-2">Pembayaran</h2>
-          <h4 className="text-center my-2">
-            Pengajuanmu diterima oleh pemilik kos
-          </h4>
-          <img
-            src="/image11.png"
-            alt=""
-            className="img-fluid m-auto image-sewa"
-          ></img>
-          <Button
-            variant="outline-primary"
-            type="submit"
-            className="w-sm-25 w-xs-50 m-auto mb-5 fw-bold"
-          >
-            Hubungi Penyewa Kos
-          </Button>
         </div>
       </Container>
     </>
