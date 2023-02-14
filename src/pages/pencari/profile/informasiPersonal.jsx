@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Container, Row, Col, Form, Breadcrumb, Button, Alert } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { Container, Row, Col, Form, Breadcrumb, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileNav from "../../../components/profile";
 import PencariLayout from "../../../layouts/pencari.layout";
 import { useEditUserMutation } from "../../../store/apis/users";
 import { addUser } from "../../../store/slices/userSlice";
+import { toast } from "react-toastify";
 
 const imgAllow = [
 	"image/png",
@@ -59,7 +58,7 @@ const InformasiPersonal = () => {
 			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
 		}
 
-		if (!/^[0-9]{10,13}$/i.test(phoneNumber)) {
+		if (!/[0-9]{10,13}$/i.test(phoneNumber)) {
 			failed = true
 			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
 		}
@@ -97,6 +96,17 @@ const InformasiPersonal = () => {
 		if (failed) {
 			return
 		}
+
+		toast.loading('Sedang mengubah profil', {
+			position: "top-center",
+			autoClose: false,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			progress: undefined,
+			theme: "light",
+		})
 
 		const payload = new FormData()
 
@@ -146,19 +156,63 @@ const InformasiPersonal = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			dispatch(addUser(dataEdit.data))
-			setSelectedProfile(undefined)
-			setPreviewProfile(undefined)
-			setError((error) => ({ ...error, "alert": { "variant": "success", "message": "Berhasil melakukan edit profil!" } }))
+			toast.dismiss()
+			toast.success("Sukses mengubah profil", {
+				position: "top-center",
+				autoClose: 500,
+				hideProgressBar: false,
+				closeOnClick: false,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light",
+			})
+			setTimeout(() => {
+				dispatch(addUser(dataEdit.data));
+				setSelectedProfile(undefined);
+				setPreviewProfile(undefined);
+			}, 500);
 		}
 
 		if (isError) {
-			if (Array.isArray(errorEdit.data)) {
-				errorEdit.data.forEach((el) =>
-					setError((error) => ({ ...error, "alert": { "variant": "danger", "message": el.data.message } }))
-				);
+			toast.dismiss()
+			if (errorEdit.hasOwnProperty('data')) {
+				if (Array.isArray(errorEdit.data)) {
+					errorEdit.data.forEach((el) => {
+						toast.error(el.data.message, {
+							position: "top-center",
+							autoClose: 1000,
+							hideProgressBar: false,
+							closeOnClick: false,
+							pauseOnHover: false,
+							draggable: false,
+							progress: undefined,
+							theme: "light",
+						})
+					})
+				} else {
+					toast.error(errorEdit.data.message, {
+						position: "top-center",
+						autoClose: 1000,
+						hideProgressBar: false,
+						closeOnClick: false,
+						pauseOnHover: false,
+						draggable: false,
+						progress: undefined,
+						theme: "light",
+					})
+				}
 			} else {
-				setError((error) => ({ ...error, "alert": { "variant": "danger", "message": errorEdit.data.message } }))
+				toast.error("Gagal mendaftarkan diri", {
+					position: "top-center",
+					autoClose: 1000,
+					hideProgressBar: false,
+					closeOnClick: false,
+					pauseOnHover: false,
+					draggable: false,
+					progress: undefined,
+					theme: "light",
+				})
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -192,21 +246,7 @@ const InformasiPersonal = () => {
 						<ProfileNav />
 					</Col>
 					<Col xs={12} lg={9} className="border rounded px-3 px-lg-5" id="profile-information">
-						{
-							isLoading ?
-								<div className="overlay">
-									<FontAwesomeIcon icon={faSpinner} spin />
-								</div> :
-								""
-						}
 						<Form className="px-0 px-lg-5" onSubmit={editProfilSubmit}>
-							{
-								(error.hasOwnProperty("alert") && error.alert.message !== "") ?
-									<Alert variant={error.alert.variant} className="mt-5">
-										{error.alert.message}
-									</Alert> :
-									""
-							}
 							<div className="d-flex justify-content-between align-items-center mt-5">
 								<h6 className="fw-bold">Edit Profil</h6>
 								<Button variant="outline-primary" type="submit">Simpan</Button>

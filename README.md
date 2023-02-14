@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+## SYNERGY ACADEMY BATCH V - TEAM A
+KOSANKU merupakan projek aplikasi website menggunakan ReactJs. Aplikasi ini dibuat sebagai tugas akhir (final project) dalam program SYNRGY ACADEMY BATCH V. KOSANKU adalah aplikasi yang dirancang untuk membantu melakukan pencarian kost di Indonesia. Terdapat tiga peran dalam penggunaan aplikasi ini, yaitu penyewa, pencari, dan super admin. Tujuan dibuatnya aplikasi ini adalah untuk mempermudah proses pencarian kost bagi pencari dan mempermudah penyewa untuk menawarkan kostnya. Harapannya KOSANKU dapat mempermudah penyewa kost dan pencari kost kedepannya.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Features
+- Umum
+  - Login
+  - Register
+  - Chat
+  - Pencarian (search)
+  - Profil user
+- Penyewa (Tenant)
+  - Create, read, update, delete (CRUD) kost
+  - Dashboard (homepage) penyewa
+  - Verifikasi pembayaran
+  - Verifikasi pemesanan kost
+- Pencari (Seeker)
+  - Dashboard (homepage)
+  - Favorit
+  - Pembayaran kamar kost (transaksi)
+  - Pemesanan kamar kost
+  - Histori transaksi
+  - Melihat detail kost
+- Superadmin
+  - Create, read, update, delete (CRUD) user
+  - Verifikasi pendaftaran kost
 
-## Available Scripts
+# Technologies Used
+- ReactJs
+- HTML
+- SCSS
+- Redux
+- Bootstrap
 
-In the project directory, you can run:
+# How to Use
+Cukup akses link berikut https://frontend-fsw.vercel.app/ 
 
-### `npm start`
+# Contributor
+Developer 1
+- Nama  : Dita
+- Email : ditanoviyanti91@gmail.com
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Developer 2
+- Nama  : Fayyadh Syafiq Rabbani
+- Email : fayyadhsyafiq5@gmail.com
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Developer 3
+- Nama  : Ilyas Mahfud
+- Email : ilyasmahfud39@gmail.com
 
-### `npm test`
+Developer 4
+- Nama  : Raihan Pambagyo Fadhila 
+- Email : raihanpambagyo@gmail.com
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Developer 5
+- Nama  : Rindho Ananta Samat
+- Email : rindho.ananta@ti.ukdw.ac.id
 
-### `npm run build`
+Developer 6
+- Nama  : Ryan Jonathan
+- Email : ryanjnthan@gmail.com
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Developer 7
+- Nama  : Trivena Yuli Necia Panjaitan
+- Email : trivenapanjaitan7.1.3@gmail.com
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Developer 8
+- Nama  : Wahyu Rendra Kurniawan
+- Email : wrendra57@gmail.com

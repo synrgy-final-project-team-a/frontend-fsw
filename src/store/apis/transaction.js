@@ -17,6 +17,16 @@ const transactionApi = createApi({
       }),
       invalidatesTags: ["Transaction"],
     }),
+    transactionDetail: build.mutation({
+      query: ({token, id}) => ({
+        url: `api/admin/transactions/${id}`,
+        method: "GET",  
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Transaction"],
+    }),
     confirmTransaction: build.mutation({
       query: ({token, id}) => ({
         url: `api/tennant/transactions/confirm/${id}`,
@@ -52,6 +62,7 @@ const transactionApi = createApi({
 
 export const {
     useTransactionListMutation,
+    useTransactionDetailMutation,
     useConfirmTransactionMutation,
     useRejectTransactionMutation,
     useApproveTransactionMutation
