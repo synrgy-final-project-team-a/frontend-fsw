@@ -22,7 +22,7 @@ const ProfilePencari = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [display] = useState({});
+  const [display, setDisplay] = useState({})
   const idProfile = useSelector((state) => state.auth.token.profile_id);
   const [getListHit, { isLoading, isSuccess, isError, data }] =
     useGetListbyPencariMutation();
@@ -32,17 +32,17 @@ const ProfilePencari = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const goToTransaksi = (e, transaction_id, status) => {
-    e.preventDefault();
+  const getFormattedDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString();
+  }
 
-    const initialState = {
-      status: status,
-      transaction_id: transaction_id,
-    };
-
-    dispatch(addBooking(initialState));
-    navigate("/pengajuan-sewa");
-  };
+	const handleDisplay = (e, i) => {
+		e.preventDefault()
+		let newDisplay = { ...display }
+		newDisplay[i] = true
+		setDisplay(newDisplay)
+	}
 
   return (
     <PencariLayout>
@@ -128,7 +128,7 @@ const ProfilePencari = () => {
                                   {el.address}
                                 </Card.Text>
                                 <Card.Text className="fw-bold mb-2">
-                                  Tipe A
+                                  {el.room_name}
                                 </Card.Text>
                                 <div className="d-flex mb-2">
                                   <div className="d-flex align-items-center me-4">
@@ -140,7 +140,7 @@ const ProfilePencari = () => {
                                         Tanggal Masuk
                                       </Card.Text>
                                       <Card.Text className="fw-bold">
-                                        23 February 2023
+                                        {getFormattedDate(el.check_in)}
                                       </Card.Text>
                                     </div>
                                   </div>
@@ -153,7 +153,7 @@ const ProfilePencari = () => {
                                         Durasi Sewa
                                       </Card.Text>
                                       <Card.Text className="fw-bold">
-                                        Bulanan
+                                        {el.duration_type}
                                       </Card.Text>
                                     </div>
                                   </div>
@@ -169,13 +169,7 @@ const ProfilePencari = () => {
                                     <Button
                                       variant="outline-primary"
                                       className="m-1"
-                                      onClick={(e) =>
-                                        goToTransaksi(
-                                          e,
-                                          el.transaction_id,
-                                          el.status
-                                        )
-                                      }
+                                      onClick={(e) => handleDisplay(e, i)}
                                     >
                                       Selengkapnya{" "}
                                       <FontAwesomeIcon icon={faAngleDown} />
@@ -198,13 +192,13 @@ const ProfilePencari = () => {
                               </Card.Title>
                               <div className="d-flex justify-content-between align-items-center mb-2">
                                 <Card.Text className="mb-0">Nama</Card.Text>
-                                <Card.Text>Dion Kurniawan</Card.Text>
+                                <Card.Text>{el.name}</Card.Text>
                               </div>
                               <div className="d-flex justify-content-between align-items-center mb-2">
                                 <Card.Text className="mb-0">
                                   No Handphone
                                 </Card.Text>
-                                <Card.Text>082148372834</Card.Text>
+                                <Card.Text>{el.phone_number}</Card.Text>
                               </div>
                             </Card.Body>
                           </Card>
@@ -229,19 +223,19 @@ const ProfilePencari = () => {
                                 <Card.Text className="mb-0">
                                   Tanggal Sewa
                                 </Card.Text>
-                                <Card.Text>Kamis, 23 Februari 2023</Card.Text>
+                                <Card.Text>{getFormattedDate(el.check_in)}</Card.Text>
                               </div>
                               <div className="d-flex justify-content-between align-items-center mb-2">
                                 <Card.Text className="mb-0">
                                   Tanggal Selesai
                                 </Card.Text>
-                                <Card.Text>Kamis, 23 Maret 2023</Card.Text>
+                                <Card.Text>{getFormattedDate(el.check_out)}</Card.Text>
                               </div>
                               <div className="d-flex justify-content-between align-items-center mb-2">
                                 <Card.Text className="mb-0">
                                   Durasi Sewa
                                 </Card.Text>
-                                <Card.Text>Bulanan</Card.Text>
+                                <Card.Text>{el.duration_type}</Card.Text>
                               </div>
                             </Card.Body>
                           </Card>
