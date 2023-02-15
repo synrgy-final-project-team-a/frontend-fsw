@@ -6,7 +6,8 @@ import {
 	faCheckCircle,
 	faHouse,
 	faWallet,
-	faFolder
+	faFolder,
+	faDownload
 } from "@fortawesome/free-solid-svg-icons";
 import PencariLayout from "../../../layouts/pencari.layout";
 import ProfileNav from "../../../components/profile";
@@ -32,10 +33,11 @@ const HistoriTransaksi = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
+			console.log(data.data.content)
 			const filterWatched = (el) => {
 				return (el.status === "REVIEWED" || el.status === "APPROVED")
 			}
-
+			
 			const result = data.data.content.filter(filterWatched)
 			setList(result)
 		}
@@ -170,8 +172,12 @@ const HistoriTransaksi = () => {
 																		<hr />
 																		<div className="d-flex flex-row-reverse">
 																			<Button variant="outline-primary" className="ms-2" as="a" href={el.proof_of_payment} target="_blank" rel="noreferrer">
-																				<FontAwesomeIcon icon={faFolder} />{" "}
+																				<FontAwesomeIcon icon={faDownload} />{" "}
 																				Unduh Bukti Pembayaran
+																			</Button>
+																			<Button variant="outline-secondary" className="ms-2" as="a" href={"/nota/"+el.booking_id} target="_blank" rel="noreferrer">
+																				<FontAwesomeIcon icon={faFolder} />{" "}
+																				Nota
 																			</Button>
 																		</div>
 																	</> :

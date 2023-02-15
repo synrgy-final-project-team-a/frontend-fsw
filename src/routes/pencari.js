@@ -12,6 +12,7 @@ import Pencarian from "../pages/pencari/pencarian/pencarian";
 import HasilPencarian from "../pages/pencari/pencarian/hasil";
 import DetailKos from "../pages/pencari/detailKos";
 import Pemberitahuan from "../pages/pencari/profile/pemberitahuan";
+import Receipt from "../pages/pencari/receipt";
 
 const PencariRoutes = [
   {
@@ -32,6 +33,10 @@ const PencariRoutes = [
   {
     path: "/kos/:id",
     element: <DetailKos />,
+  },
+  {
+    path: "/nota/:id",
+    element: <Receipt />,
   },
   {
     path: "/pengajuan-sewa",

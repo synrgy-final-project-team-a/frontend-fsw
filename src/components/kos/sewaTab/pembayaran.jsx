@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAddBuktiByPencariMutation } from "../../../store/apis/transaksi";
 import { addBooking } from "../../../store/slices/transaksiSlice";
 import { durationToDurasi, rupiahFormat } from "../../../store/utils/format";
+import { toast } from "react-toastify";
 
 const imgAllow = [
   "image/png",
@@ -34,6 +35,17 @@ const Pembayaran = () => {
     if (!confirm) {
       return
     }
+
+    toast.loading("Sedang mengirim bukti pembayaran", {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    });
 
     const formdata = new FormData()
 
@@ -70,17 +82,40 @@ const Pembayaran = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const initialState = {
-        status: "REVIEWED"
-      }
+      toast.dismiss();
+      toast.success("Sukses mengirim bukti pembayaran", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
 
-      dispatch(addBooking(initialState))
-      navigate('/pengajuan-sewa/2')
+      setTimeout(() => {
+        const initialState = {
+          status: "REVIEWED"
+        }
+        dispatch(addBooking(initialState))
+        navigate('/pengajuan-sewa/2')
+      }, 1000);
     }
 
     if (isError) {
-      alert("gagal")
       console.log(error)
+      toast.dismiss();
+      toast.error("Gagal mengajukan penyewaan", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
@@ -249,7 +284,7 @@ const Pembayaran = () => {
                       <p className="mb-0">{transaksi.kost_name}</p>
                       <p className="mb-0">{transaksi.room_name}</p>
                       <p className="mb-0" style={{ fontSize: "12px" }}>
-                      {transaksi.kost_address}
+                        {transaksi.kost_address}
                       </p>
                     </div>
                   </div>
