@@ -101,7 +101,7 @@ export default function ChatField({ socket, room, header }) {
                 <div
                   key={index}
                   className="message"
-                  id={messageContent.sender_id !== userData.id ? "you" : "other"}
+                  id={parseInt(messageContent.sender_id) !== parseInt(userData.id) ? "you" : "other"}
                 >
                   <div>
                     <div className="message-content">
