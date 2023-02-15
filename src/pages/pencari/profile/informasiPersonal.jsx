@@ -36,64 +36,68 @@ const InformasiPersonal = () => {
 		e.preventDefault()
 
 		setError({})
-		let failed = false
 
-		const firstName = formRef.current.firstName.value
-		const lastName = formRef.current.lastName.value
-		const phoneNumber = formRef.current.phoneNumber.value
-		const email = formRef.current.email.value
-		const gender = formRef.current.gender.value
-		const status = formRef.current.status.value
-		const province = formRef.current.province.value
-		const city = formRef.current.city.value
-		const address = formRef.current.address.value
+		const firstName = formRef.current.firstName
+		const lastName = formRef.current.lastName
+		const phoneNumber = formRef.current.phoneNumber
+		const email = formRef.current.email
+		const gender = formRef.current.gender
+		const status = formRef.current.status
+		const province = formRef.current.province
+		const city = formRef.current.city
+		const address = formRef.current.address
 
-		if (firstName === "") {
-			failed = true
+		if (firstName.value === "") {
 			setError((error) => ({ ...error, "firstName": "Nama depan tidak boleh kosong!" }))
+			firstName.scrollIntoView()
+			return
 		}
 
-		if (lastName === "") {
-			failed = true
+		if (lastName.value === "") {
 			setError((error) => ({ ...error, "lastName": "Nama belakang tidak boleh kosong!" }))
+			lastName.scrollIntoView()
+			return
 		}
 
-		if (!/[0-9]{10,13}$/i.test(phoneNumber)) {
-			failed = true
-			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
-		}
-
-		if (phoneNumber === "") {
-			failed = true
+		if (phoneNumber.value === "") {
 			setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak boleh kosong!" }))
+			phoneNumber.scrollIntoView()
+			return
+		} else {
+			if (!/[0-9]{10,13}$/i.test(phoneNumber.value)) {
+				setError((error) => ({ ...error, "phoneNumber": "Nomor handphone tidak valid!" }))
+				phoneNumber.scrollIntoView()
+				return
+			}
 		}
 
-		if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-			failed = true
-			setError((error) => ({ ...error, "email": "Email tidak valid!" }))
-		}
-
-		if (email === "") {
-			failed = true
+		if (email.value === "") {
 			setError((error) => ({ ...error, "email": "Email tidak boleh kosong!" }))
+			email.scrollIntoView()
+			return
+		} else {
+			if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.value)) {
+				setError((error) => ({ ...error, "email": "Email tidak valid!" }))
+				email.scrollIntoView()
+				return
+			}
 		}
 
-		if (province === "") {
-			failed = true
+		if (province.value === "") {
 			setError((error) => ({ ...error, "province": "Provinsi tidak boleh kosong!" }))
+			province.scrollIntoView()
+			return
 		}
 
-		if (city === "") {
-			failed = true
+		if (city.value === "") {
 			setError((error) => ({ ...error, "city": "Kabupaten/Kota tidak boleh kosong!" }))
+			city.scrollIntoView()
+			return
 		}
 
-		if (address === "") {
-			failed = true
+		if (address.value === "") {
 			setError((error) => ({ ...error, "address": "Alamat tidak boleh kosong!" }))
-		}
-
-		if (failed) {
+			address.scrollIntoView()
 			return
 		}
 
@@ -110,14 +114,14 @@ const InformasiPersonal = () => {
 
 		const payload = new FormData()
 
-		payload.append('first_name', firstName)
-		payload.append('last_name', lastName)
-		payload.append('phone_number', phoneNumber)
-		payload.append('gender', gender)
-		payload.append('status', status)
-		payload.append('province', province)
-		payload.append('city', city)
-		payload.append('address', address)
+		payload.append('first_name', firstName.value)
+		payload.append('last_name', lastName.value)
+		payload.append('phone_number', phoneNumber.value)
+		payload.append('gender', gender.value)
+		payload.append('status', status.value)
+		payload.append('province', province.value)
+		payload.append('city', city.value)
+		payload.append('address', address.value)
 
 		if (!!selectedProfile) {
 			payload.append('avatar', selectedProfile)
@@ -290,6 +294,7 @@ const InformasiPersonal = () => {
 									<Form.Control type="text" placeholder="Masukan nama depan"
 										defaultValue={userData.first_name}
 										ref={(ref) => formRef.current.firstName = ref}
+										disabled={isLoading}
 									/>
 									{
 										(error.hasOwnProperty("firstName") && error.firstName !== "") ?
@@ -304,6 +309,7 @@ const InformasiPersonal = () => {
 									<Form.Control type="text" placeholder="Masukan nama belakang"
 										defaultValue={userData.last_name}
 										ref={(ref) => formRef.current.lastName = ref}
+										disabled={isLoading}
 									/>
 									{
 										(error.hasOwnProperty("lastName") && error.lastName !== "") ?
@@ -318,6 +324,7 @@ const InformasiPersonal = () => {
 									<Form.Control type="text" placeholder="Masukan nomor handphonemu"
 										defaultValue={userData.phone_number}
 										ref={(ref) => formRef.current.phoneNumber = ref}
+										disabled={isLoading}
 									/>
 									{
 										(error.hasOwnProperty("phoneNumber") && error.phoneNumber !== "") ?
@@ -346,6 +353,7 @@ const InformasiPersonal = () => {
 									<Form.Label>Jenis Kelamin</Form.Label>
 									<Form.Select defaultValue={userData.gender}
 										ref={(ref) => formRef.current.gender = ref}
+										disabled={isLoading}
 									>
 										<option value="MALE">Laki-Laki</option>
 										<option value="FEMALE">Perempuan</option>
@@ -362,6 +370,7 @@ const InformasiPersonal = () => {
 									<Form.Label>Pekerjaan</Form.Label>
 									<Form.Select defaultValue={userData.status}
 										ref={(ref) => formRef.current.status = ref}
+										disabled={isLoading}
 									>
 										<option value="STUDENT">Mahasiswa</option>
 										<option value="WORKER">Pekerja</option>
@@ -374,11 +383,13 @@ const InformasiPersonal = () => {
 											""
 									}
 								</Form.Group>
+								<hr />
 								<Form.Group className="mb-3" controlId="formBasicEmail">
 									<Form.Label>Provinsi</Form.Label>
 									<Form.Control list="provinsi-list" type="text" placeholder="Masukan Provinsimu"
 										defaultValue={userData.province}
 										ref={(ref) => formRef.current.province = ref}
+										disabled={isLoading}
 									/>
 									{
 										(error.hasOwnProperty("province") && error.province !== "") ?
@@ -402,6 +413,7 @@ const InformasiPersonal = () => {
 									<Form.Control type="text" placeholder="Masukan kabupaten/kota-mu"
 										defaultValue={userData.city}
 										ref={(ref) => formRef.current.city = ref}
+										disabled={isLoading}
 									/>
 									{
 										(error.hasOwnProperty("city") && error.city !== "") ?
@@ -416,6 +428,7 @@ const InformasiPersonal = () => {
 									<Form.Control as="textarea" rows={3}
 										defaultValue={userData.address}
 										ref={(ref) => formRef.current.address = ref}
+										disabled={isLoading}
 									/>
 									{
 										(error.hasOwnProperty("address") && error.address !== "") ?
