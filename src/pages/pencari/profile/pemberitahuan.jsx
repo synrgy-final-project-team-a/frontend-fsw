@@ -58,6 +58,8 @@ const Pemberitahuan = () => {
 			const initialState = {
 				nama: result.name,
 				status: result.status,
+				kost_id: result.kost_id,
+				front_building_photo: result.front_building_photo,
 				duration_type: result.duration_type,
 				check_in: result.check_in,
 				check_out: result.check_out,
