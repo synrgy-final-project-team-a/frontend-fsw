@@ -9,44 +9,46 @@ import {
 	faFolder,
 	faDownload
 } from "@fortawesome/free-solid-svg-icons";
-import PencariLayout from "../../../layouts/pencari.layout";
+import PenyewaLayout from "../../../layouts/penyewa.layout";
 import ProfileNav from "../../../components/profile";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useGetListbyPencariMutation } from "../../../store/apis/transaksi";
 import { durationToDurasi, indoDateFormat, rupiahFormat } from "../../../store/utils/format";
+import { useTransactionListMutation } from "../../../store/apis/transaction";
 
 const HistoriTransaksi = () => {
 	const navigate = useNavigate()
 
+	const token = useSelector((state) => state.auth.token);
 	const [display, setDisplay] = useState({})
-	const idProfile = useSelector((state) => state.auth.token.profile_id);
 	const [list, setList] = useState([])
 
-	const [getListHit, { isLoading, isSuccess, isError, data }] =
-		useGetListbyPencariMutation();
+	const [
+		getListHit,
+		{ isLoading: loadingList, isSuccess: successList, data: dataList, error: errorList }
+	] = useTransactionListMutation();
 
 	useEffect(() => {
-		getListHit({ profileId: idProfile });
+		getListHit({ token: token.access_token, id: token.profile_id })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		if (isSuccess) {
+		if (successList) {
 			const filterWatched = (el) => {
 				return (el.status === "REVIEWED" || el.status === "APPROVED")
 			}
-			
-			const result = data.data.content.filter(filterWatched)
+
+			const result = dataList.data.content.filter(filterWatched)
 			setList(result)
 		}
 
-		if (isError) {
-			navigate("/")
+		if (errorList) {
+			navigate("/penyewa")
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoading])
+	}, [loadingList])
 
 	const handleDisplay = (e, i) => {
 		e.preventDefault()
@@ -56,13 +58,13 @@ const HistoriTransaksi = () => {
 	}
 
 	return (
-		<PencariLayout>
+		<PenyewaLayout>
 			<Container className="mt-3" id="profile-kelola-kos">
 				<Breadcrumb>
-					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/", className: "text-decoration-none" }}>
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/penyewa", className: "text-decoration-none" }}>
 						Beranda
 					</Breadcrumb.Item>
-					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile", className: "text-decoration-none" }}>Profil</Breadcrumb.Item>
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/penyewa/profile", className: "text-decoration-none" }}>Profil</Breadcrumb.Item>
 					<Breadcrumb.Item active>Histori Transaksi</Breadcrumb.Item>
 				</Breadcrumb>
 				<Row className="mt-5">
@@ -72,7 +74,7 @@ const HistoriTransaksi = () => {
 					<Col xs={12} lg={9} className="border rounded px-3 px-lg-5">
 						<h5 className="fw-bold mt-5">Histori Transaksi</h5>
 						{
-							isLoading ?
+							loadingList ?
 								[...Array(3).keys()].map((el, i) => {
 									return (
 										<Row className="gy-3 my-4" key={i}>
@@ -174,7 +176,7 @@ const HistoriTransaksi = () => {
 																				<FontAwesomeIcon icon={faDownload} />{" "}
 																				Unduh Bukti Pembayaran
 																			</Button>
-																			<Button variant="outline-secondary" className="ms-2" as="a" href={"https://transaction-service.herokuapp.com/api/seeker/transactions/download/"+el.transaction_id} target="_blank" rel="noreferrer">
+																			<Button variant="outline-secondary" className="ms-2" as="a" href={"https://transaction-service.herokuapp.com/api/seeker/transactions/download/" + el.transaction_id} target="_blank" rel="noreferrer">
 																				<FontAwesomeIcon icon={faFolder} />{" "}
 																				Nota
 																			</Button>
@@ -192,7 +194,7 @@ const HistoriTransaksi = () => {
 					</Col>
 				</Row>
 			</Container>
-		</PencariLayout>
+		</PenyewaLayout>
 	);
 }
 
