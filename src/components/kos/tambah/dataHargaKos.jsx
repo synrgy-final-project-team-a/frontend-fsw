@@ -220,10 +220,6 @@ const DataHargaKos = ({ setKeynya }) => {
 												placeholder={el}
 												ref={(ref) => (inputRef.current[i] = ref)}
 												defaultValue={price[el]}
-												disabled={
-													checkRef.current[i] !== undefined &&
-													!checkRef.current[i].checked
-												}
 											/>
 											{error.hasOwnProperty(el) && error[el] !== "" ? (
 												<Form.Text className="text-danger">{error[el]}</Form.Text>
