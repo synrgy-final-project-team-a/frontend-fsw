@@ -166,10 +166,10 @@ const ProfilePencari = () => {
           <Col xs={12} lg={9} className="border rounded px-3 px-lg-5">
             <h5 className="fw-bold mt-5">Kelola Kos</h5>
             {isLoading ?
-              [...Array(9).keys()].map((el, i) => {
+              [...Array(3).keys()].map((el, i) => {
                 return (
-                  <Row className="gy-3 my-4">
-                    <Col xs={12} key={i}>
+                  <Row className="gy-3 my-4" key={i}>
+                    <Col xs={12}>
                       <Card bg="none" className="skeleton" style={{ height: "250px" }}>
                         &nbsp;
                       </Card>
