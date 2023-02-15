@@ -3,7 +3,7 @@ import { Breadcrumb, Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileNav from "../../../components/profile";
-import PencariLayout from "../../../layouts/pencari.layout";
+import PenyewaLayout from "../../../layouts/penyewa.layout";
 import { useTransactionListMutation, useTransactionDetailMutation } from "../../../store/apis/transaction";
 import { setNotifNum } from "../../../store/slices/decorSlice";
 
@@ -60,7 +60,7 @@ const Pemberitahuan = () => {
 	}, [loadingOne])
 
 	return (
-		<PencariLayout>
+		<PenyewaLayout>
 			<Container className="mt-3" id="profile-kelola-kos">
 				<Breadcrumb>
 					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/penyewa", className: "text-decoration-none" }}>
@@ -70,7 +70,7 @@ const Pemberitahuan = () => {
 					<Breadcrumb.Item active>Pemberitahuan</Breadcrumb.Item>
 				</Breadcrumb>
 				<Row className="mt-5">
-					<Col xs={12} lg={3}>
+					<Col xs={12} lg={3}>	
 						<ProfileNav />
 					</Col>
 					<Col xs={12} lg={9} className="border rounded px-3 px-lg-5">
@@ -230,7 +230,7 @@ const Pemberitahuan = () => {
 					</Col>
 				</Row>
 			</Container>
-		</PencariLayout>
+		</PenyewaLayout>
 	);
 }
 

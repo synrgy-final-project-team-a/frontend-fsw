@@ -37,6 +37,13 @@ const transaksiApi = createApi({
 			}),
 			invalidatesTags: ['Transaksi'],
 		}),
+		batalbyPencari: build.mutation({
+			query: ({ transactionId }) => ({
+				url: `api/seeker/transactions/${transactionId}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['Transaksi'],
+		}),
 	}),
 })
 
@@ -44,7 +51,8 @@ export const {
 	useAddBookingByPencariMutation,
 	useAddBuktiByPencariMutation,
 	useGetListbyPencariMutation,
-	useGetOnebyPencariMutation
+	useGetOnebyPencariMutation,
+	useBatalbyPencariMutation
 } = transaksiApi
 
 export default transaksiApi

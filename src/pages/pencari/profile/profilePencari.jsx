@@ -12,11 +12,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useGetListbyPencariMutation, useGetOnebyPencariMutation } from "../../../store/apis/transaksi";
+import { useBatalbyPencariMutation, useGetListbyPencariMutation, useGetOnebyPencariMutation } from "../../../store/apis/transaksi";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import { addBooking } from "../../../store/slices/transaksiSlice";
+import { toast } from "react-toastify";
 
 const ProfilePencari = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const ProfilePencari = () => {
 
   const [display, setDisplay] = useState({})
   const idProfile = useSelector((state) => state.auth.token.profile_id);
+
   const [getListHit, { isLoading, isSuccess, isError, data }] =
     useGetListbyPencariMutation();
 
@@ -31,6 +33,10 @@ const ProfilePencari = () => {
     getOneHit,
     { isLoading: loadingOne, isSuccess: successOne, data: dataOne }
   ] = useGetOnebyPencariMutation();
+  const [
+    batalHit,
+    { isLoading: loadingBatal, isSuccess: successBatal, isError: errorBatal }
+  ] = useBatalbyPencariMutation();
 
   useEffect(() => {
     getListHit({ profileId: idProfile });
@@ -49,6 +55,29 @@ const ProfilePencari = () => {
     getOneHit({ bookingId: booking })
   }
 
+  const handleBatal = (e, transaksi) => {
+    e.preventDefault();
+
+    const confirm = window.confirm("Apakah anda yakin?")
+
+    if (!confirm) {
+      return
+    }
+
+    toast.loading('Sedang membatalkan booking', {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    })
+
+    batalHit({ transactionId: transaksi })
+  }
+
   const handleDisplay = (e, i) => {
     e.preventDefault()
     let newDisplay = { ...display }
@@ -62,6 +91,8 @@ const ProfilePencari = () => {
       const initialState = {
         nama: result.name,
         status: result.status,
+        kost_id: result.kost_id,
+        front_building_photo: result.front_building_photo,
         duration_type: result.duration_type,
         check_in: result.check_in,
         check_out: result.check_out,
@@ -81,6 +112,40 @@ const ProfilePencari = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingOne])
+
+  useEffect(() => {
+    if (successBatal) {
+      toast.dismiss()
+      toast.success("Sukses membatalkan booking", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      })
+      setDisplay([])
+      getListHit({ profileId: idProfile });
+    }
+
+    if (errorBatal) {
+      toast.dismiss()
+      toast.error("Gagal membatalkan booking", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      })
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingBatal])
 
   return (
     <PencariLayout>
@@ -103,11 +168,13 @@ const ProfilePencari = () => {
             {isLoading ?
               [...Array(9).keys()].map((el, i) => {
                 return (
-                  <Col xs={12} lg={4} key={i}>
-                    <Card bg="none" className="skeleton card-kelola my-5" style={{ height: "250px", width: "750px" }}>
-                      &nbsp;
-                    </Card>
-                  </Col>
+                  <Row className="gy-3 my-4">
+                    <Col xs={12} key={i}>
+                      <Card bg="none" className="skeleton" style={{ height: "250px" }}>
+                        &nbsp;
+                      </Card>
+                    </Col>
+                  </Row>
                 )
               }) : isSuccess ? (
                 data.data.content.length === 0 ? (
@@ -120,7 +187,7 @@ const ProfilePencari = () => {
                           <Card bg="outline-primary">
                             <Row className="g-0">
                               <Col xs={2} lg={3}>
-                                <Card.Img src="/banner.png" />
+                                <Card.Img src={el.front_building_photo} />
                               </Col>
                               <Col xs={10} lg={9}>
                                 <Card.Body className="d-flex flex-column">
@@ -291,8 +358,17 @@ const ProfilePencari = () => {
                                 Baca
                               </Button>
                               {
+                                el.status === "POSTED" ? (
+                                  <Button variant="danger" className="ms-2"
+                                    onClick={e => handleBatal(e, el.transaction_id)}
+                                  >
+                                    Batal
+                                  </Button>
+                                ) : ""
+                              }
+                              {
                                 el.status === "APPROVED" ? (
-                                  <Button variant="primary" className="ms-2">
+                                  <Button variant="warning" className="ms-2">
                                     Perpanjang Sewa
                                   </Button>
                                 ) : ""

@@ -139,13 +139,15 @@ const DetailKos = () => {
 
     const initialState = {
       status: "",
+      kost_id: kostOne.kost_id,
+      room_id: selectedRoom.room_id,
+      front_building_photo: kostOne.front_building_photo,
+      duration_type: selectedPrice.durationType,
       check_in: new Date(date).toISOString(),
       price_id: selectedPrice.id,
-      room_id: selectedRoom.room_id,
       kost_name: kostOne.kost_name,
       room_name: selectedRoom.room_name,
       kost_address: kostOne.kost_name,
-      duration_type: selectedPrice.durationType,
       price: selectedPrice.price,
     };
 
