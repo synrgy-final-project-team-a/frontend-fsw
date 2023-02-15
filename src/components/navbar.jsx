@@ -104,6 +104,11 @@ const NavbarComponent = ({ routes }) => {
 										className="d-flex justify-content-between align-items-center"
 									>
 										<span>Profil</span>
+									</NavDropdown.Item>
+									<NavDropdown.Item as={Link} key={roleRoutes("/profile/pemberitahuan")} to={roleRoutes("/profile/pemberitahuan")}
+										className="d-flex justify-content-between align-items-center"
+									>
+										<span>Notifikasi</span>
 										{
 											notifNum > 0 ?
 												<Badge bg="danger" pill>{notifNum}</Badge>

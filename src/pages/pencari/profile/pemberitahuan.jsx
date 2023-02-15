@@ -97,104 +97,58 @@ const Pemberitahuan = () => {
 					<Col xs={12} lg={9} className="border rounded px-3 px-lg-5">
 						<h5 className="fw-bold mt-5">Pemberitahuan</h5>
 						{
-							(user.address === null || user.address === "" || user.address === undefined)
-								|| (user.city === null || user.city === "" || user.city === undefined)
-								|| (user.first_name === null || user.first_name === "" || user.first_name === undefined)
-								|| (user.last_name === null || user.last_name === "" || user.last_name === undefined)
-								|| (user.phone_number === null || user.phone_number === "" || user.phone_number === undefined)
-								|| (user.province === null || user.province === "" || user.province === undefined) ?
-								<Row className="gy-3 card-kelola my-4">
-									<Col xs={12}>
-										<Card bg="outline-primary">
-											<Card.Body className="d-flex flex-column">
-												<Card.Title className="fw-bold">Lengkapi Profilmu</Card.Title>
-												<Card.Text>
-													Lengkapi profilmu agar kamu mendapatkan promo yang menarik dari kosanku dan memudahkan pemilik kos mengetahui profil kamu
-												</Card.Text>
-												<Card.Text className="text-end">
-													{new Date(user.updated_at).toDateString()}
-												</Card.Text>
-											</Card.Body>
-										</Card>
-									</Col>
-								</Row> : ""
-						}
-						{
-							notif.length !== 0 ?
-								notif.map((el, i) => {
+							loadingList ?
+								[...Array(3).keys()].map((el, i) => {
 									return (
-										<Row className="gy-3 card-kelola my-4" key={i}>
-											<Col xs={12}>
-												<Card bg="outline-primary">
-													{
-														el.status === "POSTED" ?
-															<Card.Body className="d-flex flex-column">
-																<Card.Title className="fw-bold">Booking Berhasil</Card.Title>
-																<Card.Text>
-																	Booking kamu berhasil!
-																</Card.Text>
-																<Card.Text>
-																	Silahkan tunggu konfirmasi booking oleh pemilik {el.kost_name}
-																</Card.Text>
-																<div className="d-flex justify-content-between align-items-center">
-																	<Button variant="outline-primary"
-																		onClick={e => goToTransaksi(e, el.booking_id)}
-																	>
-																		Baca
-																	</Button>
-																	<Card.Text>
-																		{new Date(el.updated_at).toDateString()}
-																	</Card.Text>
-																</div>
-															</Card.Body> :
-															el.status === "CONFIRMED" ?
-																<Card.Body className="d-flex flex-column">
-																	<Card.Title className="fw-bold">Selesaikan Pembayaran</Card.Title>
-																	<Card.Text>
-																		Akhirnyaaaaa!
-																	</Card.Text>
-																	<Card.Text>
-																		Pengajuan kos mu pada {el.kost_name} akhirnya disetujui oleh pemiliki, segera selesaikan pembayaran agar kamu dapat segara menempati kos tersebut.
-																	</Card.Text>
-																	<div className="d-flex justify-content-between align-items-center">
-																		<Button variant="outline-primary"
-																			onClick={e => goToTransaksi(e, el.booking_id)}
-																		>
-																			Baca
-																		</Button>
-																		<Card.Text>
-																			{new Date(el.updated_at).toDateString()}
-																		</Card.Text>
-																	</div>
-																</Card.Body> :
-																el.status === "REVIEWED" ?
-																	<Card.Body className="d-flex flex-column">
-																		<Card.Title className="fw-bold">Mengirim Bukti Pembayaran Berhasil</Card.Title>
-																		<Card.Text>
-																			Kamu berhasil mengirimkan bukti pembayaran ke pemilik!
-																		</Card.Text>
-																		<Card.Text>
-																			Silahkan tunggu konfirmasi pembayaran oleh pemilik {el.kost_name}
-																		</Card.Text>
-																		<div className="d-flex justify-content-between align-items-center">
-																			<Button variant="outline-primary"
-																				onClick={e => goToTransaksi(e, el.booking_id)}
-																			>
-																				Baca
-																			</Button>
-																			<Card.Text>
-																				{new Date(el.updated_at).toDateString()}
-																			</Card.Text>
-																		</div>
-																	</Card.Body> :
-																	el.status === "APPROVED" ?
+										<Row className="gy-3 my-4">
+											<Col xs={12} key={i}>
+												<Card bg="none" className="skeleton" style={{ height: "250px" }}>
+													&nbsp;
+												</Card>
+											</Col>
+										</Row>
+									)
+								}) :
+								<>
+									{
+										(user.address === null || user.address === "" || user.address === undefined)
+											|| (user.city === null || user.city === "" || user.city === undefined)
+											|| (user.first_name === null || user.first_name === "" || user.first_name === undefined)
+											|| (user.last_name === null || user.last_name === "" || user.last_name === undefined)
+											|| (user.phone_number === null || user.phone_number === "" || user.phone_number === undefined)
+											|| (user.province === null || user.province === "" || user.province === undefined) ?
+											<Row className="gy-3 card-kelola my-4">
+												<Col xs={12}>
+													<Card bg="outline-primary">
+														<Card.Body className="d-flex flex-column">
+															<Card.Title className="fw-bold">Lengkapi Profilmu</Card.Title>
+															<Card.Text>
+																Lengkapi profilmu agar kamu mendapatkan promo yang menarik dari kosanku dan memudahkan pemilik kos mengetahui profil kamu
+															</Card.Text>
+															<Card.Text className="text-end">
+																{new Date(user.updated_at).toDateString()}
+															</Card.Text>
+														</Card.Body>
+													</Card>
+												</Col>
+											</Row> : ""
+									}
+									{
+										notif.length !== 0 ?
+											notif.map((el, i) => {
+												return (
+													<Row className="gy-3 card-kelola my-4" key={i}>
+														<Col xs={12}>
+															<Card bg="outline-primary">
+																{
+																	el.status === "POSTED" ?
 																		<Card.Body className="d-flex flex-column">
-																			<Card.Title className="fw-bold">Tempati Kosmu</Card.Title>
+																			<Card.Title className="fw-bold">Booking Berhasil</Card.Title>
 																			<Card.Text>
-																				Pengajuan kosmu berhasil!
+																				Booking kamu berhasil!
 																			</Card.Text>
 																			<Card.Text>
-																				Pembayaran kos mu pada {el.kost_name} akhirnya disetujui oleh pemiliki. Segera tempatkan dirimu di kos barumu!
+																				Silahkan tunggu konfirmasi booking oleh pemilik {el.kost_name}
 																			</Card.Text>
 																			<div className="d-flex justify-content-between align-items-center">
 																				<Button variant="outline-primary"
@@ -207,49 +161,111 @@ const Pemberitahuan = () => {
 																				</Card.Text>
 																			</div>
 																		</Card.Body> :
-																		el.status === "REJECTED" ?
+																		el.status === "CONFIRMED" ?
 																			<Card.Body className="d-flex flex-column">
-																				<Card.Title className="fw-bold">Pengajuan Ditolak</Card.Title>
+																				<Card.Title className="fw-bold">Selesaikan Pembayaran</Card.Title>
 																				<Card.Text>
-																					Mungkin bukan jodohmu :(
+																					Akhirnyaaaaa!
 																				</Card.Text>
 																				<Card.Text>
-																					Pengajuan kos mu pada {el.kost_name} ditolak oleh pemilik. Mungkin lain hari akan lebih baik!
+																					Pengajuan kos mu pada {el.kost_name} akhirnya disetujui oleh pemiliki, segera selesaikan pembayaran agar kamu dapat segara menempati kos tersebut.
 																				</Card.Text>
 																				<div className="d-flex justify-content-between align-items-center">
 																					<Button variant="outline-primary"
 																						onClick={e => goToTransaksi(e, el.booking_id)}
 																					>
-																						Cari kos lain
+																						Baca
 																					</Button>
 																					<Card.Text>
 																						{new Date(el.updated_at).toDateString()}
 																					</Card.Text>
 																				</div>
 																			</Card.Body> :
-																			el.status === "CANCELLED" ?
+																			el.status === "REVIEWED" ?
 																				<Card.Body className="d-flex flex-column">
-																					<Card.Title className="fw-bold">Pengajuan Dibatalkan</Card.Title>
+																					<Card.Title className="fw-bold">Mengirim Bukti Pembayaran Berhasil</Card.Title>
 																					<Card.Text>
-																						Kamu berhasil membatalkan pesanan!
+																						Kamu berhasil mengirimkan bukti pembayaran ke pemilik!
+																					</Card.Text>
+																					<Card.Text>
+																						Silahkan tunggu konfirmasi pembayaran oleh pemilik {el.kost_name}
 																					</Card.Text>
 																					<div className="d-flex justify-content-between align-items-center">
 																						<Button variant="outline-primary"
 																							onClick={e => goToTransaksi(e, el.booking_id)}
 																						>
-																							Cari kos lain
+																							Baca
 																						</Button>
 																						<Card.Text>
 																							{new Date(el.updated_at).toDateString()}
 																						</Card.Text>
 																					</div>
-																				</Card.Body> : ""
-													}
-												</Card>
-											</Col>
-										</Row>
-									)
-								}) : ""
+																				</Card.Body> :
+																				el.status === "APPROVED" ?
+																					<Card.Body className="d-flex flex-column">
+																						<Card.Title className="fw-bold">Tempati Kosmu</Card.Title>
+																						<Card.Text>
+																							Pengajuan kosmu berhasil!
+																						</Card.Text>
+																						<Card.Text>
+																							Pembayaran kos mu pada {el.kost_name} akhirnya disetujui oleh pemiliki. Segera tempatkan dirimu di kos barumu!
+																						</Card.Text>
+																						<div className="d-flex justify-content-between align-items-center">
+																							<Button variant="outline-primary"
+																								onClick={e => goToTransaksi(e, el.booking_id)}
+																							>
+																								Baca
+																							</Button>
+																							<Card.Text>
+																								{new Date(el.updated_at).toDateString()}
+																							</Card.Text>
+																						</div>
+																					</Card.Body> :
+																					el.status === "REJECTED" ?
+																						<Card.Body className="d-flex flex-column">
+																							<Card.Title className="fw-bold">Pengajuan Ditolak</Card.Title>
+																							<Card.Text>
+																								Mungkin bukan jodohmu :(
+																							</Card.Text>
+																							<Card.Text>
+																								Pengajuan kos mu pada {el.kost_name} ditolak oleh pemilik. Mungkin lain hari akan lebih baik!
+																							</Card.Text>
+																							<div className="d-flex justify-content-between align-items-center">
+																								<Button variant="outline-primary"
+																									onClick={e => goToTransaksi(e, el.booking_id)}
+																								>
+																									Cari kos lain
+																								</Button>
+																								<Card.Text>
+																									{new Date(el.updated_at).toDateString()}
+																								</Card.Text>
+																							</div>
+																						</Card.Body> :
+																						el.status === "CANCELLED" ?
+																							<Card.Body className="d-flex flex-column">
+																								<Card.Title className="fw-bold">Pengajuan Dibatalkan</Card.Title>
+																								<Card.Text>
+																									Kamu berhasil membatalkan pesanan!
+																								</Card.Text>
+																								<div className="d-flex justify-content-between align-items-center">
+																									<Button variant="outline-primary"
+																										onClick={e => goToTransaksi(e, el.booking_id)}
+																									>
+																										Cari kos lain
+																									</Button>
+																									<Card.Text>
+																										{new Date(el.updated_at).toDateString()}
+																									</Card.Text>
+																								</div>
+																							</Card.Body> : ""
+																}
+															</Card>
+														</Col>
+													</Row>
+												)
+											}) : ""
+									}
+								</>
 						}
 					</Col>
 				</Row>

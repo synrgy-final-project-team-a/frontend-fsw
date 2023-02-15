@@ -48,7 +48,7 @@ const ProfileNav = () => {
 					<ListGroup.Item className="d-flex justify-content-between align-items-center"
 						as={Link} to={roleRoutes("/profile/pemberitahuan")}
 					>
-						<span>Pemberitahuan</span>
+						<span>Notifikasi</span>
 						{
 							notifNum > 0 ?
 								<Badge bg="danger" pill>{notifNum}</Badge>
