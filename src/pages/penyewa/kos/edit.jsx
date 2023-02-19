@@ -23,6 +23,7 @@ const EditKos = () => {
 	const formRef = useRef({});
 	const ruleRef = useRef([]);
 	const facilityRef = useRef([]);
+	const [descState, setDescState] = useState("");
 	const [error, setError] = useState({});
 	const [jenisKelamin, setJenisKelamin] = useState({})
 	const [selectedFrontPhoto, setSelectedFrontPhoto] = useState();
@@ -58,7 +59,7 @@ const EditKos = () => {
 		setError({})
 
 		const nama = formRef.current.nama;
-		const deskripsi = formRef.current.deskripsi;
+		const deskripsi = descState;
 		const tahun = formRef.current.tahun;
 		const jeniskelamin = formRef.current.jenisKelamin;
 		const foto = formRef.current.foto;
@@ -373,8 +374,8 @@ const EditKos = () => {
 			setJenisKelamin(temp)
 
 			formRef.current.nama.value = kos.kost_name
-			formRef.current.deskripsi.value = kos.description
 			formRef.current.tahun.value = kos.year_since
+			setDescState(kos.description)
 			setPreviewFrontPhoto(kos.front_building_photo)
 			setPreviewFarRoadPhoto(kos.front_farbuilding_photo)
 			formRef.current.provinsi.value = kos.province
@@ -543,7 +544,8 @@ const EditKos = () => {
 												<ReactQuill
 													className="mb-5 pb-3"
 													theme="snow"
-													ref={(ref) => (formRef.current.deskripsi = ref)}
+													value={descState}
+													onChange={setDescState}
 												/>
 												{error.hasOwnProperty("deskripsi") && error.deskripsi !== "" ? (
 													<Form.Text className="text-danger">{error.deskripsi}</Form.Text>
