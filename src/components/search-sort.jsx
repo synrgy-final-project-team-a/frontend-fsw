@@ -28,9 +28,9 @@ const SortComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, listSe
           <p className={"cursor-pointer p-2" + (payloadQuery["sort-by"] === "price" && payloadQuery["order-type"] === "desc" ? " bg-primary text-white" : "")} onClick={(e) => handleSort(e, "price", "desc")}>
             Harga Tertinggi
           </p>
-          <p className={"cursor-pointer p-2"}>Terpopuler</p>
+          {/* <p className={"cursor-pointer p-2"}>Terpopuler</p>
           <p className={"cursor-pointer p-2"}>Terdekat</p>
-          <p className={"cursor-pointer p-2"}>Rating Tertinggi</p>
+          <p className={"cursor-pointer p-2"}>Rating Tertinggi</p> */}
         </Col>
       </Row>
     </div>

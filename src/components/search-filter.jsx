@@ -1,11 +1,16 @@
-import { faFemale, faMale, faStar, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFemale,
+  faMale,
+  // faStar, 
+  faUsers
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Accordion, Button, Card, Col, Form, Row } from "react-bootstrap";
 
 const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, listSetter, displayFilter }) => {
   const [error, setError] = useState({})
-  const [rating, setRating] = useState({})
+  // const [rating, setRating] = useState({})
   const [filter, setFilter] = useState({ ...payloadQuery })
 
   const handleSubmitFilter = (e) => {
@@ -53,17 +58,23 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
   const handleFilterChange = (tipe, value) => {
     let temp = { ...filter }
 
+    if (tipe === "kost_type_man" || tipe === "kost_type_woman" || tipe === "kost_type_mixed") {
+      temp.kost_type_man = false
+      temp.kost_type_woman = false
+      temp.kost_type_mixed = false
+    }
+
     temp[tipe] = value
 
     setFilter(temp)
   }
 
-  const handleRatingChange = (tipe) => {
-    let temp = { ...rating };
-    temp[tipe] = !temp[tipe];
+  // const handleRatingChange = (tipe) => {
+  //   let temp = { ...rating };
+  //   temp[tipe] = !temp[tipe];
 
-    setRating(temp);
-  };
+  //   setRating(temp);
+  // };
 
   return (
     <Form onSubmit={handleSubmitFilter}>
@@ -185,7 +196,7 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
             </Form.Group>
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="3">
+        {/* <Accordion.Item eventKey="3">
           <Accordion.Header>Rating Kos</Accordion.Header>
           <Accordion.Body>
             <Form.Group controlId="formBasicRating">
@@ -236,9 +247,9 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
               />
             </Form.Group>
           </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="4">
-          <Accordion.Header>Durasi Kos</Accordion.Header>
+        </Accordion.Item> */}
+        <Accordion.Item eventKey="3">
+          <Accordion.Header>Fasilitas Kos</Accordion.Header>
           <Accordion.Body>
             <Form.Group controlId="formBasicDurasi" className="row row-cols-xs-2 row-cols-lg-4">
               <Form.Label className="w-100 mt-2">Fasilitas Umum</Form.Label>
@@ -352,7 +363,7 @@ const FilterComponent = ({ loadKost, payloadQuery, paramsQuery, pageSetter, list
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      <div className="text-center">
+      <div className="text-center mt-3">
         <Button type="submit" variant="primary">
           <span className="mx-5 px-3">Cari</span>
         </Button>
